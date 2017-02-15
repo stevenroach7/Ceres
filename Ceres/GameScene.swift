@@ -11,79 +11,76 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
+    let asteroid = SKSpriteNode(imageNamed: "asteroid1")
     
     override func didMove(to view: SKView) {
+        // Called immediately after scene is presented.
         
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
-        }
+        backgroundColor = SKColor.black // Set background color of scene.
         
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
         
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
-            
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(M_PI), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
-        }
+        asteroid.position = CGPoint(x: size.width * 0.5, y: size.height * 0.15)
+        asteroid.name = "asteroid"
+        asteroid.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
+        
+        addChild(asteroid)
+        
+        let backgroundMusic = SKAudioNode(fileNamed: "cosmos.mp3")
+        backgroundMusic.autoplayLooped = true
+        addChild(backgroundMusic)
+    }
+    
+    // Helper methods to generate random numbers.
+    func random() -> CGFloat {
+        return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
+    }
+    
+    func random(min: CGFloat, max: CGFloat) -> CGFloat {
+        return random() * (max - min) + min
     }
     
     
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
+    private func addGem() {
+        // Creates a gem sprite node and adds it to a random position on the upper half of the screen.
+        
+        let gem = SKSpriteNode(imageNamed: "rock-gem")
+        gem.setScale(2) // Double the size of the sprite.
+        gem.name = "gem"
+        
+        // Calculate random position within upper half of the screen.
+        let actualX = random(min: gem.size.width/2, max: size.width - gem.size.width/2)
+        let actualY = random(min: size.height/2, max: size.height - gem.size.height/2)
+        
+        gem.position = CGPoint(x: actualX, y: actualY)
+        
+        addChild(gem)
     }
     
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
-    }
     
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
-    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+        // Method to handle touch events.
+        
+        // Choose the first touch to work with.
+        guard let touch = touches.first else {
+            return
         }
         
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+        let touchLocation = touch.location(in: self)
+        
+        let touchedNode = atPoint(touchLocation)
+        
+        if let name = touchedNode.name {
+            if name == "asteroid" { // Add a gem if user touches asteroid.
+                addGem()
+            } else if name == "gem" { // If user touches gem, remove it.
+                touchedNode.removeFromParent()
+            }
+        }
+        
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-    }
 }
+
+
+// TODO: Create classes for asteroid and gems and handle touch events within those classes rather than in touchesBegan in GameScene.

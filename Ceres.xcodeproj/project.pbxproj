@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B0708D701E5507CE008A9950 /* cosmos.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B0708D6F1E5507CE008A9950 /* cosmos.mp3 */; };
 		B07805E01E5506C300073DD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07805DF1E5506C300073DD6 /* AppDelegate.swift */; };
 		B07805E21E5506C300073DD6 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B07805E11E5506C300073DD6 /* GameScene.sks */; };
 		B07805E41E5506C300073DD6 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B07805E31E5506C300073DD6 /* Actions.sks */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B0708D6F1E5507CE008A9950 /* cosmos.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cosmos.mp3; sourceTree = "<group>"; };
 		B07805DC1E5506C300073DD6 /* Ceres.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ceres.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B07805DF1E5506C300073DD6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B07805E11E5506C300073DD6 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -80,6 +82,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B0708D6E1E5507CE008A9950 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				B0708D6F1E5507CE008A9950 /* cosmos.mp3 */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 		B07805D31E5506C300073DD6 = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +113,7 @@
 		B07805DE1E5506C300073DD6 /* Ceres */ = {
 			isa = PBXGroup;
 			children = (
+				B0708D6E1E5507CE008A9950 /* Sounds */,
 				B07805DF1E5506C300073DD6 /* AppDelegate.swift */,
 				B07805E11E5506C300073DD6 /* GameScene.sks */,
 				B07805E31E5506C300073DD6 /* Actions.sks */,
@@ -246,6 +257,7 @@
 			files = (
 				B07805EB1E5506C300073DD6 /* Main.storyboard in Resources */,
 				B07805E21E5506C300073DD6 /* GameScene.sks in Resources */,
+				B0708D701E5507CE008A9950 /* cosmos.mp3 in Resources */,
 				B07805ED1E5506C300073DD6 /* Assets.xcassets in Resources */,
 				B07805F01E5506C300073DD6 /* LaunchScreen.storyboard in Resources */,
 				B07805E41E5506C300073DD6 /* Actions.sks in Resources */,
@@ -524,6 +536,7 @@
 				B078060C1E5506C400073DD6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B078060D1E5506C400073DD6 /* Build configuration list for PBXNativeTarget "CeresTests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +545,7 @@
 				B078060F1E5506C400073DD6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B07806101E5506C400073DD6 /* Build configuration list for PBXNativeTarget "CeresUITests" */ = {
 			isa = XCConfigurationList;
@@ -540,6 +554,7 @@
 				B07806121E5506C400073DD6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
