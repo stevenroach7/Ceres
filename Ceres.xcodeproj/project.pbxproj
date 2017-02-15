@@ -1,0 +1,547 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B07805E01E5506C300073DD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07805DF1E5506C300073DD6 /* AppDelegate.swift */; };
+		B07805E21E5506C300073DD6 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B07805E11E5506C300073DD6 /* GameScene.sks */; };
+		B07805E41E5506C300073DD6 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B07805E31E5506C300073DD6 /* Actions.sks */; };
+		B07805E61E5506C300073DD6 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07805E51E5506C300073DD6 /* GameScene.swift */; };
+		B07805E81E5506C300073DD6 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07805E71E5506C300073DD6 /* GameViewController.swift */; };
+		B07805EB1E5506C300073DD6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B07805E91E5506C300073DD6 /* Main.storyboard */; };
+		B07805ED1E5506C300073DD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B07805EC1E5506C300073DD6 /* Assets.xcassets */; };
+		B07805F01E5506C300073DD6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B07805EE1E5506C300073DD6 /* LaunchScreen.storyboard */; };
+		B07805FB1E5506C400073DD6 /* CeresTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07805FA1E5506C400073DD6 /* CeresTests.swift */; };
+		B07806061E5506C400073DD6 /* CeresUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07806051E5506C400073DD6 /* CeresUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B07805F71E5506C400073DD6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B07805D41E5506C300073DD6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B07805DB1E5506C300073DD6;
+			remoteInfo = Ceres;
+		};
+		B07806021E5506C400073DD6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B07805D41E5506C300073DD6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B07805DB1E5506C300073DD6;
+			remoteInfo = Ceres;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B07805DC1E5506C300073DD6 /* Ceres.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ceres.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B07805DF1E5506C300073DD6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B07805E11E5506C300073DD6 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		B07805E31E5506C300073DD6 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
+		B07805E51E5506C300073DD6 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		B07805E71E5506C300073DD6 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		B07805EA1E5506C300073DD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B07805EC1E5506C300073DD6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B07805EF1E5506C300073DD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B07805F11E5506C300073DD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B07805F61E5506C400073DD6 /* CeresTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CeresTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B07805FA1E5506C400073DD6 /* CeresTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CeresTests.swift; sourceTree = "<group>"; };
+		B07805FC1E5506C400073DD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B07806011E5506C400073DD6 /* CeresUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CeresUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B07806051E5506C400073DD6 /* CeresUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CeresUITests.swift; sourceTree = "<group>"; };
+		B07806071E5506C400073DD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B07805D91E5506C300073DD6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B07805F31E5506C400073DD6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B07805FE1E5506C400073DD6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B07805D31E5506C300073DD6 = {
+			isa = PBXGroup;
+			children = (
+				B07805DE1E5506C300073DD6 /* Ceres */,
+				B07805F91E5506C400073DD6 /* CeresTests */,
+				B07806041E5506C400073DD6 /* CeresUITests */,
+				B07805DD1E5506C300073DD6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B07805DD1E5506C300073DD6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B07805DC1E5506C300073DD6 /* Ceres.app */,
+				B07805F61E5506C400073DD6 /* CeresTests.xctest */,
+				B07806011E5506C400073DD6 /* CeresUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B07805DE1E5506C300073DD6 /* Ceres */ = {
+			isa = PBXGroup;
+			children = (
+				B07805DF1E5506C300073DD6 /* AppDelegate.swift */,
+				B07805E11E5506C300073DD6 /* GameScene.sks */,
+				B07805E31E5506C300073DD6 /* Actions.sks */,
+				B07805E51E5506C300073DD6 /* GameScene.swift */,
+				B07805E71E5506C300073DD6 /* GameViewController.swift */,
+				B07805E91E5506C300073DD6 /* Main.storyboard */,
+				B07805EC1E5506C300073DD6 /* Assets.xcassets */,
+				B07805EE1E5506C300073DD6 /* LaunchScreen.storyboard */,
+				B07805F11E5506C300073DD6 /* Info.plist */,
+			);
+			path = Ceres;
+			sourceTree = "<group>";
+		};
+		B07805F91E5506C400073DD6 /* CeresTests */ = {
+			isa = PBXGroup;
+			children = (
+				B07805FA1E5506C400073DD6 /* CeresTests.swift */,
+				B07805FC1E5506C400073DD6 /* Info.plist */,
+			);
+			path = CeresTests;
+			sourceTree = "<group>";
+		};
+		B07806041E5506C400073DD6 /* CeresUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B07806051E5506C400073DD6 /* CeresUITests.swift */,
+				B07806071E5506C400073DD6 /* Info.plist */,
+			);
+			path = CeresUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B07805DB1E5506C300073DD6 /* Ceres */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B078060A1E5506C400073DD6 /* Build configuration list for PBXNativeTarget "Ceres" */;
+			buildPhases = (
+				B07805D81E5506C300073DD6 /* Sources */,
+				B07805D91E5506C300073DD6 /* Frameworks */,
+				B07805DA1E5506C300073DD6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Ceres;
+			productName = Ceres;
+			productReference = B07805DC1E5506C300073DD6 /* Ceres.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B07805F51E5506C400073DD6 /* CeresTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B078060D1E5506C400073DD6 /* Build configuration list for PBXNativeTarget "CeresTests" */;
+			buildPhases = (
+				B07805F21E5506C400073DD6 /* Sources */,
+				B07805F31E5506C400073DD6 /* Frameworks */,
+				B07805F41E5506C400073DD6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B07805F81E5506C400073DD6 /* PBXTargetDependency */,
+			);
+			name = CeresTests;
+			productName = CeresTests;
+			productReference = B07805F61E5506C400073DD6 /* CeresTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B07806001E5506C400073DD6 /* CeresUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B07806101E5506C400073DD6 /* Build configuration list for PBXNativeTarget "CeresUITests" */;
+			buildPhases = (
+				B07805FD1E5506C400073DD6 /* Sources */,
+				B07805FE1E5506C400073DD6 /* Frameworks */,
+				B07805FF1E5506C400073DD6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B07806031E5506C400073DD6 /* PBXTargetDependency */,
+			);
+			name = CeresUITests;
+			productName = CeresUITests;
+			productReference = B07806011E5506C400073DD6 /* CeresUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B07805D41E5506C300073DD6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = Stellanova;
+				TargetAttributes = {
+					B07805DB1E5506C300073DD6 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 73KM478VN4;
+						ProvisioningStyle = Automatic;
+					};
+					B07805F51E5506C400073DD6 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 73KM478VN4;
+						ProvisioningStyle = Automatic;
+						TestTargetID = B07805DB1E5506C300073DD6;
+					};
+					B07806001E5506C400073DD6 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 73KM478VN4;
+						ProvisioningStyle = Automatic;
+						TestTargetID = B07805DB1E5506C300073DD6;
+					};
+				};
+			};
+			buildConfigurationList = B07805D71E5506C300073DD6 /* Build configuration list for PBXProject "Ceres" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B07805D31E5506C300073DD6;
+			productRefGroup = B07805DD1E5506C300073DD6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B07805DB1E5506C300073DD6 /* Ceres */,
+				B07805F51E5506C400073DD6 /* CeresTests */,
+				B07806001E5506C400073DD6 /* CeresUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B07805DA1E5506C300073DD6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B07805EB1E5506C300073DD6 /* Main.storyboard in Resources */,
+				B07805E21E5506C300073DD6 /* GameScene.sks in Resources */,
+				B07805ED1E5506C300073DD6 /* Assets.xcassets in Resources */,
+				B07805F01E5506C300073DD6 /* LaunchScreen.storyboard in Resources */,
+				B07805E41E5506C300073DD6 /* Actions.sks in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B07805F41E5506C400073DD6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B07805FF1E5506C400073DD6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B07805D81E5506C300073DD6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B07805E61E5506C300073DD6 /* GameScene.swift in Sources */,
+				B07805E81E5506C300073DD6 /* GameViewController.swift in Sources */,
+				B07805E01E5506C300073DD6 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B07805F21E5506C400073DD6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B07805FB1E5506C400073DD6 /* CeresTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B07805FD1E5506C400073DD6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B07806061E5506C400073DD6 /* CeresUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B07805F81E5506C400073DD6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B07805DB1E5506C300073DD6 /* Ceres */;
+			targetProxy = B07805F71E5506C400073DD6 /* PBXContainerItemProxy */;
+		};
+		B07806031E5506C400073DD6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B07805DB1E5506C300073DD6 /* Ceres */;
+			targetProxy = B07806021E5506C400073DD6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B07805E91E5506C300073DD6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B07805EA1E5506C300073DD6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B07805EE1E5506C300073DD6 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B07805EF1E5506C300073DD6 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B07806081E5506C400073DD6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B07806091E5506C400073DD6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B078060B1E5506C400073DD6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 73KM478VN4;
+				INFOPLIST_FILE = Ceres/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Stellanova.Ceres;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		B078060C1E5506C400073DD6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 73KM478VN4;
+				INFOPLIST_FILE = Ceres/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Stellanova.Ceres;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		B078060E1E5506C400073DD6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 73KM478VN4;
+				INFOPLIST_FILE = CeresTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Stellanova.CeresTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ceres.app/Ceres";
+			};
+			name = Debug;
+		};
+		B078060F1E5506C400073DD6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 73KM478VN4;
+				INFOPLIST_FILE = CeresTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Stellanova.CeresTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ceres.app/Ceres";
+			};
+			name = Release;
+		};
+		B07806111E5506C400073DD6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = 73KM478VN4;
+				INFOPLIST_FILE = CeresUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Stellanova.CeresUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = Ceres;
+			};
+			name = Debug;
+		};
+		B07806121E5506C400073DD6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = 73KM478VN4;
+				INFOPLIST_FILE = CeresUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Stellanova.CeresUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = Ceres;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B07805D71E5506C300073DD6 /* Build configuration list for PBXProject "Ceres" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B07806081E5506C400073DD6 /* Debug */,
+				B07806091E5506C400073DD6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B078060A1E5506C400073DD6 /* Build configuration list for PBXNativeTarget "Ceres" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B078060B1E5506C400073DD6 /* Debug */,
+				B078060C1E5506C400073DD6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		B078060D1E5506C400073DD6 /* Build configuration list for PBXNativeTarget "CeresTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B078060E1E5506C400073DD6 /* Debug */,
+				B078060F1E5506C400073DD6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		B07806101E5506C400073DD6 /* Build configuration list for PBXNativeTarget "CeresUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B07806111E5506C400073DD6 /* Debug */,
+				B07806121E5506C400073DD6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B07805D41E5506C300073DD6 /* Project object */;
+}
