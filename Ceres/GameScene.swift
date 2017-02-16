@@ -12,11 +12,21 @@ import GameplayKit
 class GameScene: SKScene {
     
     let asteroid = SKSpriteNode(imageNamed: "asteroid1")
+    var starfield:SKEmitterNode!
     
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
-        
+       
         backgroundColor = SKColor.black // Set background color of scene.
+        starfield = SKEmitterNode(fileNamed: "starShower")
+        starfield.position = CGPoint(x: 0, y:size.height)
+        starfield.advanceSimulationTime(10)
+     
+        
+        
+        self.addChild(starfield)
+        
+        starfield.zPosition = -1
         
         
         asteroid.position = CGPoint(x: size.width * 0.5, y: size.height * 0.15)
