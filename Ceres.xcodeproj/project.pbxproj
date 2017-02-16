@@ -18,6 +18,7 @@
 		B07805F01E5506C300073DD6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B07805EE1E5506C300073DD6 /* LaunchScreen.storyboard */; };
 		B07805FB1E5506C400073DD6 /* CeresTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07805FA1E5506C400073DD6 /* CeresTests.swift */; };
 		B07806061E5506C400073DD6 /* CeresUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07806051E5506C400073DD6 /* CeresUITests.swift */; };
+		B0B969AA1E56321B005C587D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B0B969A91E56321B005C587D /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		B07806011E5506C400073DD6 /* CeresUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CeresUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B07806051E5506C400073DD6 /* CeresUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CeresUITests.swift; sourceTree = "<group>"; };
 		B07806071E5506C400073DD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B0B969A91E56321B005C587D /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 		B07805D31E5506C300073DD6 = {
 			isa = PBXGroup;
 			children = (
+				B0B969A91E56321B005C587D /* .gitignore */,
 				B07805DE1E5506C300073DD6 /* Ceres */,
 				B07805F91E5506C400073DD6 /* CeresTests */,
 				B07806041E5506C400073DD6 /* CeresUITests */,
@@ -256,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B07805EB1E5506C300073DD6 /* Main.storyboard in Resources */,
+				B0B969AA1E56321B005C587D /* .gitignore in Resources */,
 				B07805E21E5506C300073DD6 /* GameScene.sks in Resources */,
 				B0708D701E5507CE008A9950 /* cosmos.mp3 in Resources */,
 				B07805ED1E5506C300073DD6 /* Assets.xcassets in Resources */,
