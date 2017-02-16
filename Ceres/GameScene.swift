@@ -19,7 +19,7 @@ class GameScene: SKScene {
        
         backgroundColor = SKColor.black // Set background color of scene.
         starfield = SKEmitterNode(fileNamed: "starShower")
-        starfield.position = CGPoint(x: 0, y:size.height)
+        starfield.position = CGPoint(x: 0, y: size.height)
         starfield.advanceSimulationTime(10)
      
         
