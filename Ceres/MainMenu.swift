@@ -20,23 +20,39 @@ class MenuScene: SKScene {
     var instructionsButton = SKSpriteNode()
     let instructionsButtonTex = SKTexture(imageNamed: "instructions")
     
+    var starfield:SKEmitterNode!
+    
+    var ship = SKSpriteNode()
+    let shipTex = SKTexture(imageNamed: "Spaceship")
+    
     override func didMove(to view: SKView) {
         
         title.text = game
         title.fontSize = 45
         title.fontColor = SKColor.white
-        title.position = CGPoint(x: size.width/2, y: size.height - size.height/4)
+        title.position = CGPoint(x: size.width/2, y: size.height - size.height/6)
         addChild(title)
         
         playButton = SKSpriteNode(texture: playButtonTex)
         playButton.setScale(1/2)
-        playButton.position = CGPoint(x: frame.midX, y: frame.midY)
+        playButton.position = CGPoint(x: frame.midX, y: frame.midY + size.height/12)
         addChild(playButton)
         
         instructionsButton = SKSpriteNode(texture: instructionsButtonTex)
         instructionsButton.setScale(1/2)
-        instructionsButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height/4)
+        instructionsButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height/8)
         addChild(instructionsButton)
+        
+        starfield = SKEmitterNode(fileNamed: "starShower")
+        starfield.position = CGPoint(x: 0, y: size.height)
+        starfield.advanceSimulationTime(10)
+        self.addChild(starfield)
+        starfield.zPosition = -1
+        
+        ship = SKSpriteNode(texture: shipTex)
+        ship.setScale(1/4)
+        ship.position = CGPoint(x: size.width/2, y: size.height/2 - size.height/3)
+        addChild(ship)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
