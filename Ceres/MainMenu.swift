@@ -10,6 +10,9 @@ import Foundation
 import SpriteKit
 
 class MenuScene: SKScene {
+    /***
+    Initializes Nodes and Labels
+    */
     
     let game = "Expedition Ceres"
     let title = SKLabelNode(fontNamed: "MarkerFelt-Thin")
@@ -26,6 +29,9 @@ class MenuScene: SKScene {
     let shipTex = SKTexture(imageNamed: "Spaceship")
     
     override func didMove(to view: SKView) {
+        /***
+        positions labels and nodes on screen
+        */
         
         title.text = game
         title.fontSize = 45
@@ -56,14 +62,25 @@ class MenuScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //looks for a touch
         if let touch = touches.first{
             let pos = touch.location(in: self)
             let node = self.atPoint(pos)
             
+            //transitions to game screen if play button is touched
             if node == playButton {
                 if view != nil {
                     let transition:SKTransition = SKTransition.fade(withDuration: 1)
                     let scene:SKScene = GameScene(size: self.size)
+                    self.view?.presentScene(scene, transition: transition)
+                }
+            }
+            
+            //transitions to instructions screen if instructions button is touched
+            if node == instructionsButton {
+                if view != nil {
+                    let transition:SKTransition = SKTransition.fade(withDuration: 1)
+                    let scene:SKScene = InstructionsScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)
                 }
             }

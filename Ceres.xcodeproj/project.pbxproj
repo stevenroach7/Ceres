@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3CB7250C1E5B91B300B28AE5 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB7250B1E5B91B300B28AE5 /* MainMenu.swift */; };
+		3CB725101E5BE16600B28AE5 /* InstructionsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB7250F1E5BE16600B28AE5 /* InstructionsScreen.swift */; };
 		B0708D701E5507CE008A9950 /* cosmos.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B0708D6F1E5507CE008A9950 /* cosmos.mp3 */; };
 		B07805E01E5506C300073DD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07805DF1E5506C300073DD6 /* AppDelegate.swift */; };
 		B07805E21E5506C300073DD6 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B07805E11E5506C300073DD6 /* GameScene.sks */; };
@@ -40,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3CB7250B1E5B91B300B28AE5 /* MainMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
+		3CB7250F1E5BE16600B28AE5 /* InstructionsScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsScreen.swift; sourceTree = "<group>"; };
 		B0708D6F1E5507CE008A9950 /* cosmos.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cosmos.mp3; sourceTree = "<group>"; };
 		B07805DC1E5506C300073DD6 /* Ceres.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ceres.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B07805DF1E5506C300073DD6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +133,8 @@
 				B07805EC1E5506C300073DD6 /* Assets.xcassets */,
 				B07805EE1E5506C300073DD6 /* LaunchScreen.storyboard */,
 				B07805F11E5506C300073DD6 /* Info.plist */,
+				3CB7250B1E5B91B300B28AE5 /* MainMenu.swift */,
+				3CB7250F1E5BE16600B28AE5 /* InstructionsScreen.swift */,
 			);
 			path = Ceres;
 			sourceTree = "<group>";
@@ -219,7 +225,6 @@
 				TargetAttributes = {
 					B07805DB1E5506C300073DD6 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 73KM478VN4;
 						ProvisioningStyle = Automatic;
 					};
 					B07805F51E5506C400073DD6 = {
@@ -296,6 +301,8 @@
 				B07805E61E5506C300073DD6 /* GameScene.swift in Sources */,
 				B07805E81E5506C300073DD6 /* GameViewController.swift in Sources */,
 				B07805E01E5506C300073DD6 /* AppDelegate.swift in Sources */,
+				3CB7250C1E5B91B300B28AE5 /* MainMenu.swift in Sources */,
+				3CB725101E5BE16600B28AE5 /* InstructionsScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,7 +452,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 73KM478VN4;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Ceres/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Stellanova.Ceres;
@@ -458,7 +465,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 73KM478VN4;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Ceres/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Stellanova.Ceres;
