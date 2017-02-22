@@ -11,7 +11,7 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    let asteroid = SKSpriteNode(imageNamed: "asteroid1")
+    let gemSource = SKSpriteNode(imageNamed: "asteroid1")
     let spaceship = SKSpriteNode(imageNamed: "Spaceship") //Temporary asset for what will become space mine cart
     var starfield:SKEmitterNode!
     
@@ -30,11 +30,11 @@ class GameScene: SKScene {
         starfield.zPosition = -1
         
         
-        asteroid.position = CGPoint(x: size.width * 0.5, y: size.height * 0.15)
-        asteroid.name = "asteroid"
-        asteroid.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
+        gemSource.position = CGPoint(x: size.width * 0.5, y: size.height * 0.15)
+        gemSource.name = "gemSource"
+        gemSource.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
         
-        addChild(asteroid)
+        addChild(gemSource)
         
         //Replace this with space minecart when available
 //        spaceship.setScale(1/4)
@@ -101,7 +101,7 @@ class GameScene: SKScene {
         let touchedNode = atPoint(touchLocation)
         
         if let name = touchedNode.name {
-            if name == "asteroid" { // Add a gem if user touches asteroid.
+            if name == "gemSource" { // Add a gem if user touches asteroid.
                 addGem()
 //            } else if name == "gem" { // If user touches gem, remove it.
 //                touchedNode.removeFromParent()
