@@ -62,9 +62,10 @@ class GameScene: SKScene {
     private func addGem() {
         // Creates a gem sprite node and adds it to a random position on the upper half of the screen.
         
-        let gem = SKSpriteNode(imageNamed: "rock-gem")
+        let gem = Gem(imageNamed: "rock-gem")
         gem.setScale(2) // Double the size of the sprite.
         gem.name = "gem"
+        gem.isUserInteractionEnabled = true
         
         // Calculate random position within upper half of the screen.
         let actualX = random(min: gem.size.width/2, max: size.width - gem.size.width/2)
@@ -76,17 +77,15 @@ class GameScene: SKScene {
     }
     
     
-    private func dragSprite(currNode: SKNode, translation: CGPoint){
-        // Dragging functionality
-        
-        print("dragSprite is being called!")
-        
-        let position = currNode.position
-        
-        if currNode.name == "gem" {
-            currNode.position = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
-        }
-    }
+//    private func dragSprite(currNode: SKNode, translation: CGPoint){
+//        // Dragging functionality
+//        
+//        let position = currNode.position
+//        
+//        if currNode.name == "gem" {
+//            currNode.position = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
+//        }
+//    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Method to handle touch events.
@@ -112,18 +111,18 @@ class GameScene: SKScene {
     }
     
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else {
-            return
-        }
-        let positionInScene = touch.location(in: self)
-        let touchedNode = atPoint(positionInScene)
-        let previousPosition = touch.previousLocation(in: self)
-        let translation = CGPoint(x: positionInScene.x - previousPosition.x, y: positionInScene.y - previousPosition.y)
-        
-        
-        dragSprite(currNode: touchedNode, translation: translation)
-    }
+//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        guard let touch = touches.first else {
+//            return
+//        }
+//        let positionInScene = touch.location(in: self)
+//        let touchedNode = atPoint(positionInScene)
+//        let previousPosition = touch.previousLocation(in: self)
+//        let translation = CGPoint(x: positionInScene.x - previousPosition.x, y: positionInScene.y - previousPosition.y)
+//        
+//        
+//        dragSprite(currNode: touchedNode, translation: translation)
+//    }
     
 }
 
