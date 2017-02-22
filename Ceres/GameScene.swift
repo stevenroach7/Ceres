@@ -11,6 +11,10 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    var backButton = SKSpriteNode()
+    let backButtonTex = SKTexture(imageNamed: "back")
+    
+    
     let asteroid = SKSpriteNode(imageNamed: "asteroid1")
     let spaceship = SKSpriteNode(imageNamed: "Spaceship") //Temporary asset for what will become space mine cart
     var starfield:SKEmitterNode!
@@ -22,12 +26,13 @@ class GameScene: SKScene {
         starfield = SKEmitterNode(fileNamed: "starShower")
         starfield.position = CGPoint(x: 0, y: size.height)
         starfield.advanceSimulationTime(10)
-     
-        
-        
         self.addChild(starfield)
-        
         starfield.zPosition = -1
+        
+        backButton = SKSpriteNode(texture: backButtonTex)
+        backButton.setScale(1/3)
+        backButton.position = CGPoint(x: size.width/6, y: size.height - size.height/24)
+        addChild(backButton)
         
         
         asteroid.position = CGPoint(x: size.width * 0.5, y: size.height * 0.15)
@@ -123,6 +128,23 @@ class GameScene: SKScene {
         
         
         dragSprite(currNode: touchedNode, translation: translation)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //looks for a touch
+        if let touch = touches.first{
+            let pos = touch.location(in: self)
+            let node = self.atPoint(pos)
+            
+            //transitions back to menu screen if back button is touched
+            if node == backButton {
+                if view != nil {
+                    let transition:SKTransition = SKTransition.fade(withDuration: 1)
+                    let scene:SKScene = MenuScene(size: self.size)
+                    self.view?.presentScene(scene, transition: transition)
+                }
+            }
+        }
     }
     
 }

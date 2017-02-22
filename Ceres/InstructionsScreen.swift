@@ -19,6 +19,9 @@ class InstructionsScene: SKScene {
     
     var backButton = SKSpriteNode()
     let backButtonTex = SKTexture(imageNamed: "back")
+    
+    var text = SKSpriteNode()
+    let textTex = SKTexture(imageNamed: "instructionsText")
 
     override func didMove(to view: SKView) {
         /***
@@ -35,6 +38,11 @@ class InstructionsScene: SKScene {
         backButton.setScale(1/3)
         backButton.position = CGPoint(x: size.width/6, y: size.height - size.height/24)
         addChild(backButton)
+        
+        text = SKSpriteNode(texture: textTex)
+        text.setScale(1/2)
+        text.position = CGPoint(x: frame.midX, y: frame.midY)
+        addChild(text)
 
     }
     
