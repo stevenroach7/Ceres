@@ -14,8 +14,7 @@ class GameScene: SKScene {
     var backButton = SKSpriteNode()
     let backButtonTex = SKTexture(imageNamed: "back")
     
-    
-    let asteroid = SKSpriteNode(imageNamed: "asteroid1")
+    let gemSource = SKSpriteNode(imageNamed: "asteroid1")
     let spaceship = SKSpriteNode(imageNamed: "Spaceship") //Temporary asset for what will become space mine cart
     var starfield:SKEmitterNode!
     
@@ -35,11 +34,11 @@ class GameScene: SKScene {
         addChild(backButton)
         
         
-        asteroid.position = CGPoint(x: size.width * 0.5, y: size.height * 0.15)
-        asteroid.name = "asteroid"
-        asteroid.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
+        gemSource.position = CGPoint(x: size.width * 0.5, y: size.height * 0.15)
+        gemSource.name = "gemSource"
+        gemSource.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
         
-        addChild(asteroid)
+        addChild(gemSource)
         
         //Replace this with space minecart when available
 //        spaceship.setScale(1/4)
@@ -67,9 +66,10 @@ class GameScene: SKScene {
     private func addGem() {
         // Creates a gem sprite node and adds it to a random position on the upper half of the screen.
         
-        let gem = SKSpriteNode(imageNamed: "rock-gem")
+        let gem = Gem(imageNamed: "rock-gem")
         gem.setScale(2) // Double the size of the sprite.
         gem.name = "gem"
+        gem.isUserInteractionEnabled = true
         
         // Calculate random position within upper half of the screen.
         let actualX = random(min: gem.size.width/2, max: size.width - gem.size.width/2)
@@ -81,17 +81,15 @@ class GameScene: SKScene {
     }
     
     
-    private func dragSprite(currNode: SKNode, translation: CGPoint){
-        // Dragging functionality
-        
-        print("dragSprite is being called!")
-        
-        let position = currNode.position
-        
-        if currNode.name == "gem" {
-            currNode.position = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
-        }
-    }
+//    private func dragSprite(currNode: SKNode, translation: CGPoint){
+//        // Dragging functionality
+//        
+//        let position = currNode.position
+//        
+//        if currNode.name == "gem" {
+//            currNode.position = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
+//        }
+//    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Method to handle touch events.
@@ -106,7 +104,7 @@ class GameScene: SKScene {
         let touchedNode = atPoint(touchLocation)
         
         if let name = touchedNode.name {
-            if name == "asteroid" { // Add a gem if user touches asteroid.
+            if name == "gemSource" { // Add a gem if user touches asteroid.
                 addGem()
 //            } else if name == "gem" { // If user touches gem, remove it.
 //                touchedNode.removeFromParent()
@@ -117,18 +115,18 @@ class GameScene: SKScene {
     }
     
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else {
-            return
-        }
-        let positionInScene = touch.location(in: self)
-        let touchedNode = atPoint(positionInScene)
-        let previousPosition = touch.previousLocation(in: self)
-        let translation = CGPoint(x: positionInScene.x - previousPosition.x, y: positionInScene.y - previousPosition.y)
-        
-        
-        dragSprite(currNode: touchedNode, translation: translation)
-    }
+//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        guard let touch = touches.first else {
+//            return
+//        }
+//        let positionInScene = touch.location(in: self)
+//        let touchedNode = atPoint(positionInScene)
+//        let previousPosition = touch.previousLocation(in: self)
+//        let translation = CGPoint(x: positionInScene.x - previousPosition.x, y: positionInScene.y - previousPosition.y)
+//        
+//        
+//        dragSprite(currNode: touchedNode, translation: translation)
+//    }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         //looks for a touch
