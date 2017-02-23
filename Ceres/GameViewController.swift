@@ -14,7 +14,6 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         // Called when view is loaded
-        
         super.viewDidLoad()
         let scene = MenuScene(size: view.bounds.size)
         let skView = view as! SKView
@@ -28,5 +27,4 @@ class GameViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
 }

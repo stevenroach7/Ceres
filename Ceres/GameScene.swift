@@ -9,14 +9,18 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, Alerts {
     
     var backButton = SKSpriteNode()
     let backButtonTex = SKTexture(imageNamed: "back")
     
+    var pauseButton = SKSpriteNode()
+    let pauseButtonTex = SKTexture(imageNamed: "pause")
+    
     let gemSource = SKSpriteNode(imageNamed: "asteroid1")
     let spaceship = SKSpriteNode(imageNamed: "Spaceship") //Temporary asset for what will become space mine cart
     var starfield:SKEmitterNode!
+
     
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
@@ -33,6 +37,10 @@ class GameScene: SKScene {
         backButton.position = CGPoint(x: size.width/6, y: size.height - size.height/24)
         addChild(backButton)
         
+        pauseButton = SKSpriteNode(texture: pauseButtonTex)
+        pauseButton.setScale(1/4)
+        pauseButton.position = CGPoint(x: 9*size.width/10, y: size.height - size.height/19)
+        addChild(pauseButton)
         
         gemSource.position = CGPoint(x: size.width * 0.5, y: size.height * 0.15)
         gemSource.name = "gemSource"
@@ -136,6 +144,7 @@ class GameScene: SKScene {
             
             //transitions back to menu screen if back button is touched
             if node == backButton {
+                createAlert(title: "WARNING", message: "You will lose your current progress")
                 if view != nil {
                     let transition:SKTransition = SKTransition.fade(withDuration: 1)
                     let scene:SKScene = MenuScene(size: self.size)
@@ -144,6 +153,8 @@ class GameScene: SKScene {
             }
         }
     }
+    
+    
     
 }
 
