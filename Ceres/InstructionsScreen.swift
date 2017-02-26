@@ -22,6 +22,11 @@ class InstructionsScene: SKScene {
     
     var text = SKSpriteNode()
     let textTex = SKTexture(imageNamed: "instructionsText")
+    
+    var starfield:SKEmitterNode!
+    
+    var ship = SKSpriteNode()
+    let shipTex = SKTexture(imageNamed: "Spaceship")
 
     override func didMove(to view: SKView) {
         /***
@@ -43,7 +48,17 @@ class InstructionsScene: SKScene {
         text.setScale(1/2)
         text.position = CGPoint(x: frame.midX, y: frame.midY)
         addChild(text)
-
+        
+        starfield = SKEmitterNode(fileNamed: "starShower")
+        starfield.position = CGPoint(x: 0, y: size.height)
+        starfield.advanceSimulationTime(10)
+        self.addChild(starfield)
+        starfield.zPosition = -1
+        
+        ship = SKSpriteNode(texture: shipTex)
+        ship.setScale(1/4)
+        ship.position = CGPoint(x: size.width/2, y: size.height/2 - size.height/3)
+        addChild(ship)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
