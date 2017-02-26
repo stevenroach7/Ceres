@@ -145,17 +145,9 @@ class GameScene: SKScene, Alerts {
             //transitions back to menu screen if back button is touched
             if node == backButton {
                 createAlert(title: "WARNING", message: "You will lose your current progress")
-                if view != nil {
-                    let transition:SKTransition = SKTransition.fade(withDuration: 1)
-                    let scene:SKScene = MenuScene(size: self.size)
-                    self.view?.presentScene(scene, transition: transition)
-                }
             }
         }
     }
-    
-    
-    
 }
 
 
