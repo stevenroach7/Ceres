@@ -79,7 +79,7 @@ class MenuScene: SKScene {
             //transitions to instructions screen if instructions button is touched
             if node == instructionsButton {
                 if view != nil {
-                    let transition:SKTransition = SKTransition.fade(withDuration: 1)
+                    let transition:SKTransition = SKTransition.doorsOpenHorizontal(withDuration: 1)
                     let scene:SKScene = InstructionsScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)
                 }

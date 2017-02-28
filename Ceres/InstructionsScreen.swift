@@ -70,7 +70,7 @@ class InstructionsScene: SKScene {
             //transitions back to menu screen if back button is touched
             if node == backButton {
                 if view != nil {
-                    let transition:SKTransition = SKTransition.fade(withDuration: 1)
+                    let transition:SKTransition = SKTransition.doorsCloseHorizontal(withDuration: 1)
                     let scene:SKScene = MenuScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)
                 }

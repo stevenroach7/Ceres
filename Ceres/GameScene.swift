@@ -20,7 +20,7 @@ class GameScene: SKScene, Alerts {
     let gemSource = SKSpriteNode(imageNamed: "asteroid1")
     let spaceship = SKSpriteNode(imageNamed: "Spaceship") //Temporary asset for what will become space mine cart
     var starfield:SKEmitterNode!
-
+    
     
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
@@ -144,7 +144,14 @@ class GameScene: SKScene, Alerts {
             
             //transitions back to menu screen if back button is touched
             if node == backButton {
-                createAlert(title: "WARNING", message: "You will lose your current progress")
+                let okAction = UIAlertAction(title: "CONTINUE", style: UIAlertActionStyle.cancel)  { (action:UIAlertAction!) in
+                    if self.view != nil {
+                        let transition:SKTransition = SKTransition.fade(withDuration: 1)
+                        let scene:SKScene = MenuScene(size: self.size)
+                        self.view?.presentScene(scene, transition: transition)
+                    }}
+                
+                createAlert(title: "WARNING", message: "You will lose your current progress", success: okAction)
             }
         }
     }
