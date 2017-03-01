@@ -114,14 +114,7 @@ class GameScene: SKScene, Alerts {
             
             self.isPaused = true
             
-            let gameOverAction = UIAlertAction(title: "Back to Home", style: .default)  { (action:UIAlertAction!) in
-                if self.view != nil {
-                    let transition:SKTransition = SKTransition.fade(withDuration: 1)
-                    let scene:SKScene = MenuScene(size: self.size)
-                    self.view?.presentScene(scene, transition: transition)
-                }}
-            
-            createAlert(title: "Game Over", message: "Score is \(gemsCollected)", success: gameOverAction)
+            gameOverAlert(title: "Game Over", message: "Score is \(gemsCollected)")
             removeAllActions()
         }
     }
@@ -191,14 +184,7 @@ class GameScene: SKScene, Alerts {
             case backButton:
                 // self.isPaused = true // Pause action events. Add this back after a function to restart the game is written
                 
-                let okAction = UIAlertAction(title: "CONTINUE", style: UIAlertActionStyle.cancel)  { (action:UIAlertAction!) in
-                    if self.view != nil {
-                        let transition:SKTransition = SKTransition.fade(withDuration: 1)
-                        let scene:SKScene = MenuScene(size: self.size)
-                        self.view?.presentScene(scene, transition: transition)
-                    }}
-                
-                createAlert(title: "WARNING", message: "You will lose your current progress", success: okAction)
+                backAlert(title: "WARNING", message: "You will lose your current progress")
             case pauseButton:
                 self.isPaused = !self.isPaused
             default: break

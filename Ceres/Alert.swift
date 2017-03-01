@@ -12,24 +12,37 @@ import SpriteKit
 protocol Alerts { }
 extension Alerts where Self: SKScene {
     
-    func createAlert(title: String, message: String, success: UIAlertAction) {
+    func backAlert(title: String, message: String) {
 
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         
-        let okAction = success
-
+        let okAction =    UIAlertAction(title: "Main Menu", style: UIAlertActionStyle.destructive)  { (action:UIAlertAction!) in
+            if self.view != nil {
+                let transition:SKTransition = SKTransition.fade(withDuration: 1)
+                let scene:SKScene = MenuScene(size: self.size)
+                self.view?.presentScene(scene, transition: transition)
+            }}
         
-//        let okAction =    UIAlertAction(title: "CONTINUE", style: UIAlertActionStyle.cancel)  { (action:UIAlertAction!) in
-//            if self.view != nil {
-//                let transition:SKTransition = SKTransition.fade(withDuration: 1)
-//                let scene:SKScene = MenuScene(size: self.size)
-//                self.view?.presentScene(scene, transition: transition)
-//            }}
-        
-        let cancelAction = UIAlertAction(title: "CANCEL",   style: UIAlertActionStyle.destructive)        
+        let cancelAction = UIAlertAction(title: "RESUME",   style: UIAlertActionStyle.default)
 
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
+        
+        self.view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
+    }
+    
+    func gameOverAlert(title: String, message: String) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        let gameOverAction = UIAlertAction(title: "Back to Home", style: .default)  { (action:UIAlertAction!) in
+            if self.view != nil {
+                let transition:SKTransition = SKTransition.fade(withDuration: 1)
+                let scene:SKScene = MenuScene(size: self.size)
+                self.view?.presentScene(scene, transition: transition)
+            }}
+        
+        alertController.addAction(gameOverAction)
         
         self.view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
     }
