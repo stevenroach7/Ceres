@@ -17,8 +17,15 @@ class GameScene: SKScene, Alerts {
     var pauseButton = SKSpriteNode()
     let pauseButtonTex = SKTexture(imageNamed: "pause")
     
+    var scoreLabel: SKLabelNode!
+    var gemsCollected = 0 {
+        didSet {
+            scoreLabel.text = "Gems Collected: \(gemsCollected)"
+        }
+    }
+    
     let gemSource = SKSpriteNode(imageNamed: "asteroid1")
-    let spaceship = SKSpriteNode(imageNamed: "Spaceship") //Temporary asset for what will become space mine cart
+    let spaceship = SKSpriteNode(imageNamed: "Spaceship") // Temporary asset for what will become space mine cart
     var starfield:SKEmitterNode!
     
     
@@ -34,13 +41,20 @@ class GameScene: SKScene, Alerts {
         
         backButton = SKSpriteNode(texture: backButtonTex)
         backButton.setScale(1/3)
-        backButton.position = CGPoint(x: size.width/6, y: size.height - size.height/24)
+        backButton.position = CGPoint(x: size.width/6, y: size.height - size.height/24) // TODO: Change how to calculate hieght, use constants
         addChild(backButton)
         
         pauseButton = SKSpriteNode(texture: pauseButtonTex)
         pauseButton.setScale(1/4)
-        pauseButton.position = CGPoint(x: 9*size.width/10, y: size.height - size.height/19)
+        pauseButton.position = CGPoint(x: 9*size.width/10, y: size.height - size.height/19) // TODO: Change how to calculate hieght
         addChild(pauseButton)
+        
+        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        scoreLabel.text = "Gems Collected: 0"
+        scoreLabel.fontSize = 13
+        scoreLabel.horizontalAlignmentMode = .right
+        scoreLabel.position = CGPoint(x: size.width * (4/5), y: size.height - size.height/19)
+        addChild(scoreLabel)
         
         gemSource.position = CGPoint(x: size.width * 0.5, y: size.height * 0.15)
         gemSource.name = "gemSource"
@@ -74,10 +88,11 @@ class GameScene: SKScene, Alerts {
     private func addGem() {
         // Creates a gem sprite node and adds it to a random position on the upper half of the screen.
         
-        let gem = Gem(imageNamed: "rock-gem")
+        // I changed the gem object back to being a SKSpriteNode because touch detection is now being handled in the Game Scene.
+        let gem = SKSpriteNode(imageNamed: "rock-gem")
         gem.setScale(2) // Double the size of the sprite.
         gem.name = "gem"
-        gem.isUserInteractionEnabled = true
+        gem.isUserInteractionEnabled = false
         
         // Calculate random position within upper half of the screen.
         let actualX = random(min: gem.size.width/2, max: size.width - gem.size.width/2)
@@ -88,16 +103,6 @@ class GameScene: SKScene, Alerts {
         addChild(gem)
     }
     
-    
-//    private func dragSprite(currNode: SKNode, translation: CGPoint){
-//        // Dragging functionality
-//        
-//        let position = currNode.position
-//        
-//        if currNode.name == "gem" {
-//            currNode.position = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
-//        }
-//    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Method to handle touch events.
@@ -112,35 +117,25 @@ class GameScene: SKScene, Alerts {
         let touchedNode = atPoint(touchLocation)
         
         if let name = touchedNode.name {
-            if name == "gemSource" { // Add a gem if user touches asteroid.
+            
+            switch name {
+            case "gemSource":
                 addGem()
-//            } else if name == "gem" { // If user touches gem, remove it.
-//                touchedNode.removeFromParent()
-//            
-//       }
+            case "gem":
+                touchedNode.removeFromParent()
+                gemsCollected += 1
+            default: break
+                
             }
         }
     }
     
     
-//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        guard let touch = touches.first else {
-//            return
-//        }
-//        let positionInScene = touch.location(in: self)
-//        let touchedNode = atPoint(positionInScene)
-//        let previousPosition = touch.previousLocation(in: self)
-//        let translation = CGPoint(x: positionInScene.x - previousPosition.x, y: positionInScene.y - previousPosition.y)
-//        
-//        
-//        dragSprite(currNode: touchedNode, translation: translation)
-//    }
-    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         //looks for a touch
         if let touch = touches.first{
             let pos = touch.location(in: self)
-            let node = self.atPoint(pos)
+            let node = atPoint(pos)
             
             //transitions back to menu screen if back button is touched
             if node == backButton {
@@ -156,6 +151,3 @@ class GameScene: SKScene, Alerts {
         }
     }
 }
-
-
-// TODO: Create classes for asteroid and gems and handle touch events within those classes rather than in touchesBegan in GameScene.
