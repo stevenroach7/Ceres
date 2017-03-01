@@ -12,21 +12,19 @@ import SpriteKit
 protocol Alerts { }
 extension Alerts where Self: SKScene {
     
-    func backAlert(title: String, message: String) {
+    func backAlert(title: String, message: String, resumeAction: UIAlertAction) {
 
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         
-        let okAction =    UIAlertAction(title: "Main Menu", style: UIAlertActionStyle.destructive)  { (action:UIAlertAction!) in
+        let okAction = UIAlertAction(title: "Main Menu", style: UIAlertActionStyle.destructive)  { (action:UIAlertAction!) in
             if self.view != nil {
                 let transition:SKTransition = SKTransition.fade(withDuration: 1)
                 let scene:SKScene = MenuScene(size: self.size)
                 self.view?.presentScene(scene, transition: transition)
             }}
         
-        let cancelAction = UIAlertAction(title: "RESUME",   style: UIAlertActionStyle.default)
-
         alertController.addAction(okAction)
-        alertController.addAction(cancelAction)
+        alertController.addAction(resumeAction)
         
         self.view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
     }

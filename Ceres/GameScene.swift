@@ -25,7 +25,7 @@ class GameScene: SKScene, Alerts {
     }
     
     var timerLabel: SKLabelNode!
-    var timerSeconds = 60 {
+    var timerSeconds = 20 {
         didSet {
             timerLabel.text = "Time: \(timerSeconds)"
         }
@@ -67,7 +67,7 @@ class GameScene: SKScene, Alerts {
         
         
         timerLabel = SKLabelNode(fontNamed: "American Typewriter")
-        timerLabel.text = "Timer: 60"
+        timerLabel.text = "Timer: 20"
         timerLabel.fontSize = 15
         timerLabel.horizontalAlignmentMode = .right
         timerLabel.position = CGPoint(x: size.width * (11/20), y: size.height - size.height/19)
@@ -182,9 +182,11 @@ class GameScene: SKScene, Alerts {
             
             switch node {
             case backButton:
-                // self.isPaused = true // Pause action events. Add this back after a function to restart the game is written
-                
-                backAlert(title: "WARNING", message: "You will lose your current progress")
+                 self.isPaused = true // Pause action events. Add this back after a function to restart the game is written
+                let resumeAction = UIAlertAction(title: "Resume", style: UIAlertActionStyle.default)  { (action:UIAlertAction!) in
+                    self.isPaused = false
+                }
+                backAlert(title: "WARNING", message: "You will lose your current progress", resumeAction: resumeAction)
             case pauseButton:
                 self.isPaused = !self.isPaused
             default: break
