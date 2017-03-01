@@ -18,7 +18,7 @@ class InstructionsScene: SKScene {
     let title = SKLabelNode(fontNamed: "MarkerFelt-Thin")
     
     var backButton = SKSpriteNode()
-    let backButtonTex = SKTexture(imageNamed: "back")
+    let backButtonTex = SKTexture(imageNamed: "backLogo")
     
     var text = SKSpriteNode()
     let textTex = SKTexture(imageNamed: "instructionsText")
@@ -40,7 +40,7 @@ class InstructionsScene: SKScene {
         addChild(title)
         
         backButton = SKSpriteNode(texture: backButtonTex)
-        backButton.setScale(1/3)
+        backButton.setScale(3/4)
         backButton.position = CGPoint(x: size.width/6, y: size.height - size.height/24)
         addChild(backButton)
         

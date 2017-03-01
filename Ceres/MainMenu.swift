@@ -15,13 +15,13 @@ class MenuScene: SKScene {
     */
     
     let game = "Expedition Ceres"
-    let title = SKLabelNode(fontNamed: "MarkerFelt-Thin")
+    let title = SKLabelNode(fontNamed: "GillSans-Bold")
     
     var playButton = SKSpriteNode()
     let playButtonTex = SKTexture(imageNamed: "play")
     
     var instructionsButton = SKSpriteNode()
-    let instructionsButtonTex = SKTexture(imageNamed: "instructions")
+    let instructionsButtonTex = SKTexture(imageNamed: "InstructionsLogo")
     
     var starfield:SKEmitterNode!
     
@@ -34,7 +34,7 @@ class MenuScene: SKScene {
         */
         
         title.text = game
-        title.fontSize = 45
+        title.fontSize = 28
         title.fontColor = SKColor.white
         title.position = CGPoint(x: size.width/2, y: size.height - size.height/6)
         addChild(title)
@@ -45,7 +45,7 @@ class MenuScene: SKScene {
         addChild(playButton)
         
         instructionsButton = SKSpriteNode(texture: instructionsButtonTex)
-        instructionsButton.setScale(1/2)
+        instructionsButton.setScale(3/4)
         instructionsButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height/8)
         addChild(instructionsButton)
         

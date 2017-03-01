@@ -12,7 +12,7 @@ import GameplayKit
 class GameScene: SKScene, Alerts {
     
     var backButton = SKSpriteNode()
-    let backButtonTex = SKTexture(imageNamed: "back")
+    let backButtonTex = SKTexture(imageNamed: "backLogo")
     
     var pauseButton = SKSpriteNode()
     let pauseButtonTex = SKTexture(imageNamed: "pause")
@@ -31,7 +31,9 @@ class GameScene: SKScene, Alerts {
         }
     }
     
-    let gemSource = SKSpriteNode(imageNamed: "asteroid1")
+    let gemCollector = SKSpriteNode(imageNamed: "collectorActive")
+    let stagePlanet = SKSpriteNode(imageNamed: "planet")
+    let gemSource = SKSpriteNode(imageNamed: "astronaut")
     let spaceship = SKSpriteNode(imageNamed: "Spaceship") // Temporary asset for what will become space mine cart
     var starfield:SKEmitterNode!
     
@@ -43,25 +45,26 @@ class GameScene: SKScene, Alerts {
         starfield = SKEmitterNode(fileNamed: "starShower")
         starfield.position = CGPoint(x: 0, y: size.height)
         starfield.advanceSimulationTime(10)
-        self.addChild(starfield)
+        addChild(starfield)
         starfield.zPosition = -1
         
         backButton = SKSpriteNode(texture: backButtonTex)
-        backButton.setScale(1/3)
+        backButton.setScale(3/4)
         backButton.position = CGPoint(x: size.width/6, y: size.height - size.height/24) // TODO: Change how to calculate hieght, use constants
         addChild(backButton)
         
         pauseButton = SKSpriteNode(texture: pauseButtonTex)
-        pauseButton.setScale(1/4)
-        pauseButton.position = CGPoint(x: 9*size.width/10, y: size.height - size.height/19) // TODO: Change how to calculate hieght
+        pauseButton.setScale(0.175)
+        pauseButton.position = CGPoint(x: 9*size.width/10, y: size.height - size.height/24) // TODO: Change how to calculate hieght
         addChild(pauseButton)
         
-        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        scoreLabel = SKLabelNode(fontNamed: "Menlo-Bold")
         scoreLabel.text = "Gems: 0"
         scoreLabel.fontSize = 13
         scoreLabel.horizontalAlignmentMode = .right
         scoreLabel.position = CGPoint(x: size.width * (4/5), y: size.height - size.height/19)
         addChild(scoreLabel)
+        
         
         timerLabel = SKLabelNode(fontNamed: "American Typewriter")
         timerLabel.text = "Timer: 60"
@@ -77,18 +80,26 @@ class GameScene: SKScene, Alerts {
                 ])
         ))
         
-        gemSource.position = CGPoint(x: size.width * 0.5, y: size.height * 0.15)
+
+        stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.05)
+        stagePlanet.setScale(0.55)
+        stagePlanet.name = "stagePlanet"
+        addChild(stagePlanet)
+        
+        gemCollector.position = CGPoint(x: size.width * 0.25, y: size.height * 0.075)
+        gemCollector.setScale(0.2)
+        gemCollector.name = "gemCollector"
+        gemCollector.zPosition = 2
+        //gemCollector.isUserInteractionEnabled = false
+        addChild(gemCollector)
+        
+        
+        gemSource.position = CGPoint(x: size.width * 0.75, y: size.height * 0.1)
+        gemSource.setScale(0.175)
         gemSource.name = "gemSource"
+        gemSource.zPosition = 3
         gemSource.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
-        
         addChild(gemSource)
-        
-        //Replace this with space minecart when available
-//        spaceship.setScale(1/4)
-//        spaceship.position = CGPoint(x: size.width * 0.3, y: size.height * 0.40)
-//        spaceship.name = "spaceship"
-//        spaceship.isUserInteractionEnabled = true
-//        self.addChild(spaceship)
         
         let backgroundMusic = SKAudioNode(fileNamed: "cosmos.mp3")
         backgroundMusic.autoplayLooped = true
@@ -128,14 +139,14 @@ class GameScene: SKScene, Alerts {
         // Creates a gem sprite node and adds it to a random position on the upper half of the screen.
         
         // I changed the gem object back to being a SKSpriteNode because touch detection is now being handled in the Game Scene.
-        let gem = SKSpriteNode(imageNamed: "rock-gem")
-        gem.setScale(2) // Double the size of the sprite.
+        let gem = SKSpriteNode(imageNamed: "gemShape1")
+        gem.setScale(0.1) // Double the size of the sprite.
         gem.name = "gem"
         gem.isUserInteractionEnabled = false
         
         // Calculate random position within upper half of the screen.
         let actualX = random(min: gem.size.width/2, max: size.width - gem.size.width/2)
-        let actualY = random(min: size.height/2, max: size.height - gem.size.height/2)
+        let actualY = random(min: size.height * 0.25, max: size.height - pauseButton.size.height - gem.size.height/2)
         
         gem.position = CGPoint(x: actualX, y: actualY)
         addChild(gem)
