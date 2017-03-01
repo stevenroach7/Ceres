@@ -112,7 +112,9 @@ class GameScene: SKScene, Alerts {
         timerSeconds -= 1
         if (timerSeconds <= 0) {
             
-            let gameOverAction = UIAlertAction(title: "Back to Home", style: UIAlertActionStyle.cancel)  { (action:UIAlertAction!) in
+            self.isPaused = true
+            
+            let gameOverAction = UIAlertAction(title: "Back to Home", style: .default)  { (action:UIAlertAction!) in
                 if self.view != nil {
                     let transition:SKTransition = SKTransition.fade(withDuration: 1)
                     let scene:SKScene = MenuScene(size: self.size)
@@ -138,7 +140,7 @@ class GameScene: SKScene, Alerts {
     private func addGem() {
         // Creates a gem sprite node and adds it to a random position on the upper half of the screen.
         
-        // I changed the gem object back to being a SKSpriteNode because touch detection is now being handled in the Game Scene.
+        // I changed the gem object back to being a SKSpriteNode because touch detection is now being handled in the Game Scene. SR
         let gem = SKSpriteNode(imageNamed: "gemShape1")
         gem.setScale(0.1) // Double the size of the sprite.
         gem.name = "gem"
@@ -185,8 +187,10 @@ class GameScene: SKScene, Alerts {
             let pos = touch.location(in: self)
             let node = atPoint(pos)
             
-            //transitions back to menu screen if back button is touched
-            if node == backButton {
+            switch node {
+            case backButton:
+                // self.isPaused = true // Pause action events. Add this back after a function to restart the game is written
+                
                 let okAction = UIAlertAction(title: "CONTINUE", style: UIAlertActionStyle.cancel)  { (action:UIAlertAction!) in
                     if self.view != nil {
                         let transition:SKTransition = SKTransition.fade(withDuration: 1)
@@ -195,6 +199,9 @@ class GameScene: SKScene, Alerts {
                     }}
                 
                 createAlert(title: "WARNING", message: "You will lose your current progress", success: okAction)
+            case pauseButton:
+                self.isPaused = !self.isPaused
+            default: break
             }
         }
     }
