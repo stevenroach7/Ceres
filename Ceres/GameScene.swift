@@ -142,7 +142,7 @@ class GameScene: SKScene, Alerts {
         
         // I changed the gem object back to being a SKSpriteNode because touch detection is now being handled in the Game Scene. SR
         let gem = SKSpriteNode(imageNamed: "gemShape1")
-        gem.setScale(0.1) // Double the size of the sprite.
+        gem.setScale(0.15)
         gem.name = "gem"
         gem.isUserInteractionEnabled = false
         

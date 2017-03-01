@@ -225,6 +225,7 @@
 				TargetAttributes = {
 					B07805DB1E5506C300073DD6 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 73KM478VN4;
 						ProvisioningStyle = Automatic;
 					};
 					B07805F51E5506C400073DD6 = {
@@ -452,7 +453,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 73KM478VN4;
 				INFOPLIST_FILE = Ceres/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Stellanova.Ceres;
@@ -465,7 +466,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 73KM478VN4;
 				INFOPLIST_FILE = Ceres/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Stellanova.Ceres;
