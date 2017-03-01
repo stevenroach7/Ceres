@@ -20,7 +20,14 @@ class GameScene: SKScene, Alerts {
     var scoreLabel: SKLabelNode!
     var gemsCollected = 0 {
         didSet {
-            scoreLabel.text = "Gems Collected: \(gemsCollected)"
+            scoreLabel.text = "Gems: \(gemsCollected)"
+        }
+    }
+    
+    var timerLabel: SKLabelNode!
+    var timerSeconds = 60 {
+        didSet {
+            timerLabel.text = "Time: \(timerSeconds)"
         }
     }
     
@@ -50,11 +57,25 @@ class GameScene: SKScene, Alerts {
         addChild(pauseButton)
         
         scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
-        scoreLabel.text = "Gems Collected: 0"
+        scoreLabel.text = "Gems: 0"
         scoreLabel.fontSize = 13
         scoreLabel.horizontalAlignmentMode = .right
         scoreLabel.position = CGPoint(x: size.width * (4/5), y: size.height - size.height/19)
         addChild(scoreLabel)
+        
+        timerLabel = SKLabelNode(fontNamed: "American Typewriter")
+        timerLabel.text = "Timer: 60"
+        timerLabel.fontSize = 15
+        timerLabel.horizontalAlignmentMode = .right
+        timerLabel.position = CGPoint(x: size.width * (11/20), y: size.height - size.height/19)
+        addChild(timerLabel)
+        
+        run(SKAction.repeatForever(
+            SKAction.sequence([
+                SKAction.wait(forDuration: 1.0),
+                SKAction.run(decrementTimer)
+                ])
+        ))
         
         gemSource.position = CGPoint(x: size.width * 0.5, y: size.height * 0.15)
         gemSource.name = "gemSource"
@@ -67,13 +88,31 @@ class GameScene: SKScene, Alerts {
 //        spaceship.position = CGPoint(x: size.width * 0.3, y: size.height * 0.40)
 //        spaceship.name = "spaceship"
 //        spaceship.isUserInteractionEnabled = true
-//        
 //        self.addChild(spaceship)
         
         let backgroundMusic = SKAudioNode(fileNamed: "cosmos.mp3")
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
     }
+    
+    
+    private func decrementTimer() {
+        
+        timerSeconds -= 1
+        if (timerSeconds <= 0) {
+            
+            let gameOverAction = UIAlertAction(title: "Back to Home", style: UIAlertActionStyle.cancel)  { (action:UIAlertAction!) in
+                if self.view != nil {
+                    let transition:SKTransition = SKTransition.fade(withDuration: 1)
+                    let scene:SKScene = MenuScene(size: self.size)
+                    self.view?.presentScene(scene, transition: transition)
+                }}
+            
+            createAlert(title: "Game Over", message: "Score is \(gemsCollected)", success: gameOverAction)
+            removeAllActions()
+        }
+    }
+    
     
     // Helper methods to generate random numbers.
     private func random() -> CGFloat {
@@ -99,7 +138,6 @@ class GameScene: SKScene, Alerts {
         let actualY = random(min: size.height/2, max: size.height - gem.size.height/2)
         
         gem.position = CGPoint(x: actualX, y: actualY)
-        
         addChild(gem)
     }
     
@@ -113,7 +151,6 @@ class GameScene: SKScene, Alerts {
         }
         
         let touchLocation = touch.location(in: self)
-        
         let touchedNode = atPoint(touchLocation)
         
         if let name = touchedNode.name {
