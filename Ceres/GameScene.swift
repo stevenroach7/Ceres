@@ -86,7 +86,7 @@ class GameScene: SKScene, Alerts {
         stagePlanet.name = "stagePlanet"
         addChild(stagePlanet)
         
-        gemCollector.position = CGPoint(x: size.width * 0.25, y: size.height * 0.075)
+        gemCollector.position = CGPoint(x: size.width * 0.75, y: size.height * 0.075)
         gemCollector.setScale(0.2)
         gemCollector.name = "gemCollector"
         gemCollector.zPosition = 2
@@ -94,7 +94,7 @@ class GameScene: SKScene, Alerts {
         addChild(gemCollector)
         
         
-        gemSource.position = CGPoint(x: size.width * 0.75, y: size.height * 0.1)
+        gemSource.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1)
         gemSource.setScale(0.175)
         gemSource.name = "gemSource"
         gemSource.zPosition = 3
@@ -142,7 +142,7 @@ class GameScene: SKScene, Alerts {
         
         // I changed the gem object back to being a SKSpriteNode because touch detection is now being handled in the Game Scene. SR
         let gem = SKSpriteNode(imageNamed: "gemShape1")
-        gem.setScale(0.15)
+        gem.setScale(0.18)
         gem.name = "gem"
         gem.isUserInteractionEnabled = false
         
