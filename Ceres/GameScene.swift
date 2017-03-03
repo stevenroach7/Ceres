@@ -25,7 +25,7 @@ class GameScene: SKScene, Alerts {
     }
     
     var timerLabel: SKLabelNode!
-    var timerSeconds = 20 {
+    var timerSeconds = 30 {
         didSet {
             timerLabel.text = "Time: \(timerSeconds)"
         }
@@ -67,7 +67,7 @@ class GameScene: SKScene, Alerts {
         
         
         timerLabel = SKLabelNode(fontNamed: "American Typewriter")
-        timerLabel.text = "Timer: 20"
+        timerLabel.text = "Time: \(timerSeconds)"
         timerLabel.fontSize = 15
         timerLabel.horizontalAlignmentMode = .right
         timerLabel.position = CGPoint(x: size.width * (11/20), y: size.height - size.height/19)
