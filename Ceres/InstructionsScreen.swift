@@ -21,7 +21,7 @@ class InstructionsScene: SKScene {
     let backButtonTex = SKTexture(imageNamed: "backLogo")
     
     var text = SKSpriteNode()
-    let textTex = SKTexture(imageNamed: "instructionsText")
+    let textTex = SKTexture(imageNamed: "profitInstructions")
     
     var starfield:SKEmitterNode!
     
@@ -45,7 +45,7 @@ class InstructionsScene: SKScene {
         addChild(backButton)
         
         text = SKSpriteNode(texture: textTex)
-        text.setScale(1/2)
+        text.setScale(1)
         text.position = CGPoint(x: frame.midX, y: frame.midY)
         addChild(text)
         
