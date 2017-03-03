@@ -189,6 +189,12 @@ class GameScene: SKScene, Alerts {
                 backAlert(title: "WARNING", message: "You will lose your current progress", resumeAction: resumeAction)
             case pauseButton:
                 self.isPaused = !self.isPaused
+                
+                if self.isPaused {
+                    pauseButton.texture = SKTexture(imageNamed:"play-1")
+                } else {
+                    pauseButton.texture = SKTexture(imageNamed:"pause")
+                }
             default: break
             }
         }
