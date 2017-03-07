@@ -34,7 +34,6 @@ class GameScene: SKScene, Alerts {
     let gemCollector = SKSpriteNode(imageNamed: "collectorActive")
     let stagePlanet = SKSpriteNode(imageNamed: "planet")
     let gemSource = SKSpriteNode(imageNamed: "astronaut")
-    let spaceship = SKSpriteNode(imageNamed: "Spaceship") // Temporary asset for what will become space mine cart
     var starfield:SKEmitterNode!
     
     
@@ -73,14 +72,13 @@ class GameScene: SKScene, Alerts {
         timerLabel.position = CGPoint(x: size.width * (11/20), y: size.height - size.height/19)
         addChild(timerLabel)
         
-        run(SKAction.repeatForever(
+        run(SKAction.repeatForever( // Serves as timer
             SKAction.sequence([
                 SKAction.wait(forDuration: 1.0),
                 SKAction.run(decrementTimer)
                 ])
         ))
         
-
         stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.05)
         stagePlanet.setScale(0.55)
         stagePlanet.name = "stagePlanet"
@@ -106,19 +104,15 @@ class GameScene: SKScene, Alerts {
         addChild(backgroundMusic)
     }
     
-    
     private func decrementTimer() {
         
         timerSeconds -= 1
         if (timerSeconds <= 0) {
-            
             self.isPaused = true
-            
             gameOverAlert(title: "Game Over", message: "Score is \(gemsCollected)")
             removeAllActions()
         }
     }
-    
     
     // Helper methods to generate random numbers.
     private func random() -> CGFloat {
@@ -128,7 +122,6 @@ class GameScene: SKScene, Alerts {
     private func random(min: CGFloat, max: CGFloat) -> CGFloat {
         return random() * (max - min) + min
     }
-    
     
     private func addGem() {
         // Creates a gem sprite node and adds it to a random position on the upper half of the screen.
@@ -147,11 +140,39 @@ class GameScene: SKScene, Alerts {
         addChild(gem)
     }
     
+    private func onGemSourceTouch() {
+        addGem()
+    }
+    
+    private func onGemTouch(touchedNode: SKNode) {
+        touchedNode.removeFromParent()
+        gemsCollected += 1
+    }
+    
+    private func onBackButtonTouch() {
+        self.isPaused = true // Pause action events. Add this back after a function to restart the game is written
+        
+        let resumeAction = UIAlertAction(title: "Resume", style: UIAlertActionStyle.default)  { (action:UIAlertAction!) in
+            self.isPaused = false
+        }
+        backAlert(title: "WARNING", message: "You will lose your current progress", resumeAction: resumeAction)
+    }
+    
+    private func onPauseButtonTouch() {
+        
+        self.isPaused = !self.isPaused
+        
+        if self.isPaused {
+            pauseButton.texture = SKTexture(imageNamed:"play-1")
+        } else {
+            pauseButton.texture = SKTexture(imageNamed:"pause")
+        }
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // Method to handle touch events.
+        // Method to handle touch events. Senses when user touches down.
         
-        // Choose the first touch to work with.
+        // Choose first touch
         guard let touch = touches.first else {
             return
         }
@@ -163,40 +184,33 @@ class GameScene: SKScene, Alerts {
             
             switch name {
             case "gemSource":
-                addGem()
+                onGemSourceTouch()
             case "gem":
-                touchedNode.removeFromParent()
-                gemsCollected += 1
+                onGemTouch(touchedNode: touchedNode)
             default: break
                 
             }
         }
     }
-    
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //looks for a touch
-        if let touch = touches.first{
-            let pos = touch.location(in: self)
-            let node = atPoint(pos)
-            
-            switch node {
-            case backButton:
-                 self.isPaused = true // Pause action events. Add this back after a function to restart the game is written
-                let resumeAction = UIAlertAction(title: "Resume", style: UIAlertActionStyle.default)  { (action:UIAlertAction!) in
-                    self.isPaused = false
-                }
-                backAlert(title: "WARNING", message: "You will lose your current progress", resumeAction: resumeAction)
-            case pauseButton:
-                self.isPaused = !self.isPaused
-                
-                if self.isPaused {
-                    pauseButton.texture = SKTexture(imageNamed:"play-1")
-                } else {
-                    pauseButton.texture = SKTexture(imageNamed:"pause")
-                }
-            default: break
-            }
+        // Method to handle touch events. Senses when user touches up.
+        
+        // Choose first touch
+        guard let touch = touches.first else {
+            return
+        }
+        
+        let touchLocation = touch.location(in: self)
+        let touchedNode = atPoint(touchLocation)
+        
+        switch touchedNode {
+        case backButton:
+            onBackButtonTouch()
+        case pauseButton:
+            onPauseButtonTouch()
+        default: break
         }
     }
+    
 }
