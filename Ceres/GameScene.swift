@@ -204,7 +204,7 @@ class GameScene: SKScene, Alerts {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // Method to handle touch events. Senses when user touches up.
+        // Method to handle touch events. Senses when user touches up (removes finger from screen).
         
         // Choose first touch
         guard let touch = touches.first else {
