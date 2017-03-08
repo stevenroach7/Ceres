@@ -150,11 +150,20 @@ class GameScene: SKScene, Alerts {
     }
     
     private func onBackButtonTouch() {
-        self.isPaused = true // Pause action events. Add this back after a function to restart the game is written
+        
+        var wasPaused: Bool
+        if self.isPaused {
+            wasPaused = true
+        } else {
+            wasPaused = false
+            self.isPaused = true
+        }
         
         let resumeAction = UIAlertAction(title: "Resume", style: UIAlertActionStyle.default)  { (action:UIAlertAction!) in
-            self.pauseButton.texture = SKTexture(imageNamed:"pause")
-            self.isPaused = false
+            if !wasPaused { // Only play game if game wasn't paused when back button was touched
+                self.pauseButton.texture = SKTexture(imageNamed:"pause")
+                self.isPaused = false
+            }
         }
         backAlert(title: "WARNING", message: "You will lose your current progress", resumeAction: resumeAction)
     }
