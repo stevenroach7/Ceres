@@ -153,6 +153,7 @@ class GameScene: SKScene, Alerts {
         self.isPaused = true // Pause action events. Add this back after a function to restart the game is written
         
         let resumeAction = UIAlertAction(title: "Resume", style: UIAlertActionStyle.default)  { (action:UIAlertAction!) in
+            self.pauseButton.texture = SKTexture(imageNamed:"pause")
             self.isPaused = false
         }
         backAlert(title: "WARNING", message: "You will lose your current progress", resumeAction: resumeAction)
@@ -160,12 +161,12 @@ class GameScene: SKScene, Alerts {
     
     private func onPauseButtonTouch() {
         
-        self.isPaused = !self.isPaused
-        
         if self.isPaused {
-            pauseButton.texture = SKTexture(imageNamed:"play-1")
-        } else {
             pauseButton.texture = SKTexture(imageNamed:"pause")
+            self.isPaused = false
+        } else {
+            pauseButton.texture = SKTexture(imageNamed:"play-1")
+            self.isPaused = true
         }
     }
     
