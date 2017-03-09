@@ -36,6 +36,7 @@ class GameScene: SKScene, Alerts {
     let gemSource = SKSpriteNode(imageNamed: "astronaut")
     var starfield:SKEmitterNode!
     
+    var currSprite: SKNode! = nil //Meant to represent the current sprite
     
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
@@ -198,9 +199,13 @@ class GameScene: SKScene, Alerts {
         addGem()
     }
     
-    private func onGemTouch(touchedNode: SKNode) {
-        touchedNode.removeFromParent()
-        gemsCollected += 1
+    var touchPoint: CGPoint = CGPoint();
+    var touching: Bool = false;
+    
+    private func onGemTouch(touchedNode: SKNode, touchLocation: CGPoint) {
+        currSprite = touchedNode //Set the current node touching
+        touchPoint = touchLocation
+        touching = true
     }
     
     private func onBackButtonTouch() {
@@ -250,15 +255,26 @@ class GameScene: SKScene, Alerts {
             case "gemSource":
                 onGemSourceTouch()
             case "gem":
-                onGemTouch(touchedNode: touchedNode)
+                onGemTouch(touchedNode: touchedNode, touchLocation: touchLocation)
             default: break
                 
             }
         }
     }
     
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else {
+            return
+        }
+        let touchLocation = touch.location(in: self)
+        touchPoint = touchLocation
+    }
+    
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Method to handle touch events. Senses when user touches up (removes finger from screen).
+        
+        touching = false
         
         // Choose first touch
         guard let touch = touches.first else {
@@ -274,6 +290,15 @@ class GameScene: SKScene, Alerts {
         case pauseButton:
             onPauseButtonTouch()
         default: break
+        }
+    }
+    
+    override func update(_ currentTime: CFTimeInterval) {
+        if touching {
+            let dt:CGFloat = 1.0/60.0
+            let distance = CGVector(dx: touchPoint.x - currSprite.position.x, dy: touchPoint.y - currSprite.position.y)
+            let velocity = CGVector(dx: distance.dx / dt, dy: distance.dy / dt)
+            currSprite.physicsBody!.velocity = velocity
         }
     }
     
