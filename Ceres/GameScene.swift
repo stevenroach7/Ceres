@@ -45,7 +45,7 @@ class GameScene: SKScene, Alerts {
         starfield.position = CGPoint(x: 0, y: size.height)
         starfield.advanceSimulationTime(10)
         addChild(starfield)
-        starfield.zPosition = -1
+        starfield.zPosition = -10
         
         backButton = SKSpriteNode(texture: backButtonTex)
         backButton.setScale(3/4)
@@ -64,7 +64,6 @@ class GameScene: SKScene, Alerts {
         scoreLabel.position = CGPoint(x: size.width * (4/5), y: size.height - size.height/19)
         addChild(scoreLabel)
         
-        
         timerLabel = SKLabelNode(fontNamed: "American Typewriter")
         timerLabel.text = "Time: \(timerSeconds)"
         timerLabel.fontSize = 15
@@ -82,6 +81,11 @@ class GameScene: SKScene, Alerts {
         stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.05)
         stagePlanet.setScale(0.55)
         stagePlanet.name = "stagePlanet"
+        stagePlanet.zPosition  = -1
+        let planetPath = createPlanetPath()
+        stagePlanet.physicsBody = SKPhysicsBody(polygonFrom: planetPath)
+        stagePlanet.physicsBody?.usesPreciseCollisionDetection = true
+        stagePlanet.physicsBody?.isDynamic = false
         addChild(stagePlanet)
         
         gemCollector.position = CGPoint(x: size.width * 0.75, y: size.height * 0.075)
@@ -90,7 +94,6 @@ class GameScene: SKScene, Alerts {
         gemCollector.zPosition = 2
         //gemCollector.isUserInteractionEnabled = false
         addChild(gemCollector)
-        
         
         gemSource.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1)
         gemSource.setScale(0.175)
@@ -102,6 +105,9 @@ class GameScene: SKScene, Alerts {
         let backgroundMusic = SKAudioNode(fileNamed: "cosmos.mp3")
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
+        
+        // Create edge boundary around scene.
+        createSceneContents()
     }
     
     private func decrementTimer() {
@@ -113,6 +119,43 @@ class GameScene: SKScene, Alerts {
             removeAllActions()
         }
     }
+    
+    private func createPlanetPath() -> CGPath {
+        // Creates a path that is the shape of the stage planet.
+        
+        let offsetX = CGFloat(stagePlanet.frame.size.width * stagePlanet.anchorPoint.x)
+        let offsetY = CGFloat(stagePlanet.frame.size.height * stagePlanet.anchorPoint.y)
+        
+        
+        // TODO: Edit path to better approsimate object
+        let path = CGMutablePath()
+        path.move(to: CGPoint(x: 61 - offsetX, y: 6 - offsetY))
+        path.addLine(to: CGPoint(x: 61 - offsetX, y: 43 - offsetY))
+        path.addLine(to: CGPoint(x: 74 - offsetX, y: 45 - offsetY))
+        path.addLine(to: CGPoint(x: 87 - offsetX, y: 48 - offsetY))
+        path.addLine(to: CGPoint(x: 111 - offsetX, y: 59 - offsetY))
+        path.addLine(to: CGPoint(x: 139 - offsetX, y: 64 - offsetY))
+        path.addLine(to: CGPoint(x: 173 - offsetX, y: 78 - offsetY))
+        path.addLine(to: CGPoint(x: 288 - offsetX, y: 74 - offsetY))
+        path.addLine(to: CGPoint(x: 245 - offsetX, y: 76 - offsetY))
+        path.addLine(to: CGPoint(x: 258 - offsetX, y: 78 - offsetY))
+        path.addLine(to: CGPoint(x: 274 - offsetX, y: 75 - offsetY))
+        path.addLine(to: CGPoint(x: 294 - offsetX, y: 75 - offsetY))
+        path.addLine(to: CGPoint(x: 319 - offsetX, y: 74 - offsetY))
+        path.addLine(to: CGPoint(x: 342 - offsetX, y: 72 - offsetY))
+        path.addLine(to: CGPoint(x: 364 - offsetX, y: 69 - offsetY))
+        path.addLine(to: CGPoint(x: 379 - offsetX, y: 67 - offsetY))
+        path.addLine(to: CGPoint(x: 383 - offsetX, y: 66 - offsetY))
+        path.addLine(to: CGPoint(x: 399 - offsetX, y: 67 - offsetY))
+        path.addLine(to: CGPoint(x: 418 - offsetX, y: 62 - offsetY))
+        path.addLine(to: CGPoint(x: 424 - offsetX, y: 57 - offsetY))
+        path.addLine(to: CGPoint(x: 450 - offsetX, y: 48 - offsetY))
+        path.addLine(to: CGPoint(x: 470 - offsetX, y: 43 - offsetY))
+        path.addLine(to: CGPoint(x: 470 - offsetX, y: 7 - offsetY))
+        path.closeSubpath();
+        return path
+    }
+    
     
     // Helper methods to generate random numbers.
     private func random() -> CGFloat {
@@ -132,6 +175,17 @@ class GameScene: SKScene, Alerts {
         gem.name = "gem"
         gem.isUserInteractionEnabled = false
         
+        
+        gem.physicsBody = SKPhysicsBody(circleOfRadius: max(gem.size.width / 2, gem.size.height / 2)) // Creating a circular physics body around each of the gems. Maybe change this shape later.
+        gem.physicsBody?.usesPreciseCollisionDetection = true
+        gem.physicsBody?.allowsRotation = true
+        gem.physicsBody?.restitution = 0.9
+        let velocity =  self.physicsBody!.velocity
+        let dx = velocity.dx
+        let dy = velocity.dy
+        print(dx, dy)
+        gem.physicsBody?.velocity = CGVector(dx: dx, dy: dy)
+
         // Calculate random position within upper half of the screen.
         let actualX = random(min: gem.size.width/2, max: size.width - gem.size.width/2)
         let actualY = random(min: size.height * 0.25, max: size.height - pauseButton.size.height - gem.size.height/2)
@@ -221,6 +275,12 @@ class GameScene: SKScene, Alerts {
             onPauseButtonTouch()
         default: break
         }
+    }
+    
+    
+    func createSceneContents() {
+        self.scaleMode = .aspectFit
+        self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
     }
     
 }
