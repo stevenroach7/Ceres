@@ -25,7 +25,7 @@ class GameScene: SKScene, Alerts {
     }
     
     var timerLabel: SKLabelNode!
-    var timerSeconds = 30 {
+    var timerSeconds = 120 {
         didSet {
             timerLabel.text = "Time: \(timerSeconds)"
         }
@@ -172,7 +172,7 @@ class GameScene: SKScene, Alerts {
         
         // I changed the gem object back to being a SKSpriteNode because touch detection is now being handled in the Game Scene. SR
         let gem = SKSpriteNode(imageNamed: "gemShape1")
-        gem.setScale(0.18)
+        gem.setScale(0.23)
         gem.name = "gem"
         gem.isUserInteractionEnabled = false
         
