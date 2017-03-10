@@ -22,6 +22,8 @@
 		B07806061E5506C400073DD6 /* CeresUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07806051E5506C400073DD6 /* CeresUITests.swift */; };
 		B0B969AA1E56321B005C587D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B0B969A91E56321B005C587D /* .gitignore */; };
 		B28F8DD81E56663E005D803B /* starShower.sks in Resources */ = {isa = PBXBuildFile; fileRef = B28F8DD71E56663E005D803B /* starShower.sks */; };
+		B2A6A25A1E726FD100F64EAF /* anvil.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B2A6A2581E726FD100F64EAF /* anvil.mp3 */; };
+		B2A6A25D1E7271C300F64EAF /* pinDrop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B2A6A25C1E7271C300F64EAF /* pinDrop.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		B07806071E5506C400073DD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B0B969A91E56321B005C587D /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		B28F8DD71E56663E005D803B /* starShower.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = starShower.sks; sourceTree = "<group>"; };
+		B2A6A2581E726FD100F64EAF /* anvil.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = anvil.mp3; sourceTree = "<group>"; };
+		B2A6A25C1E7271C300F64EAF /* pinDrop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = pinDrop.mp3; path = ../pinDrop.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +97,8 @@
 		B0708D6E1E5507CE008A9950 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				B2A6A2581E726FD100F64EAF /* anvil.mp3 */,
+				B2A6A25C1E7271C300F64EAF /* pinDrop.mp3 */,
 				B0708D6F1E5507CE008A9950 /* cosmos.mp3 */,
 			);
 			path = Sounds;
@@ -267,10 +273,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2A6A25A1E726FD100F64EAF /* anvil.mp3 in Resources */,
 				B07805EB1E5506C300073DD6 /* Main.storyboard in Resources */,
 				B0B969AA1E56321B005C587D /* .gitignore in Resources */,
 				B0708D701E5507CE008A9950 /* cosmos.mp3 in Resources */,
 				B07805ED1E5506C300073DD6 /* Assets.xcassets in Resources */,
+				B2A6A25D1E7271C300F64EAF /* pinDrop.mp3 in Resources */,
 				B07805F01E5506C300073DD6 /* LaunchScreen.storyboard in Resources */,
 				B28F8DD81E56663E005D803B /* starShower.sks in Resources */,
 			);

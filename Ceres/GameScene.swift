@@ -11,6 +11,13 @@ import GameplayKit
 
 class GameScene: SKScene, Alerts {
     
+    let active = SKTexture(imageNamed: "collectorActive")
+    
+    //let collectorWait = SKAction.wait(forDuration: 0.75)
+    //let animateCollector = SKAction.animate(with: active, timePerFrame: 0.1, resize: false, restore: true)
+    let gemCollectedSound = SKAction.playSoundFileNamed("pinDrop.mp3", waitForCompletion: false)
+    let gemCreatedSound   = SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false)
+    
     var backButton = SKSpriteNode()
     let backButtonTex = SKTexture(imageNamed: "backLogo")
     
@@ -30,8 +37,9 @@ class GameScene: SKScene, Alerts {
             timerLabel.text = "Time: \(timerSeconds)"
         }
     }
+
     
-    let gemCollector = SKSpriteNode(imageNamed: "collectorActive")
+    let gemCollector = SKSpriteNode(imageNamed: "collectorInactive")
     let stagePlanet = SKSpriteNode(imageNamed: "planet")
     let gemSource = SKSpriteNode(imageNamed: "astronaut")
     var starfield:SKEmitterNode!
@@ -102,6 +110,8 @@ class GameScene: SKScene, Alerts {
         let backgroundMusic = SKAudioNode(fileNamed: "cosmos.mp3")
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
+        
+       
     }
     
     private func decrementTimer() {
@@ -142,11 +152,16 @@ class GameScene: SKScene, Alerts {
     
     private func onGemSourceTouch() {
         addGem()
+        self.run(gemCreatedSound)
     }
     
     private func onGemTouch(touchedNode: SKNode) {
         touchedNode.removeFromParent()
         gemsCollected += 1
+        self.run(gemCollectedSound)
+        
+        
+        
     }
     
     private func onBackButtonTouch() {
