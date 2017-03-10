@@ -109,6 +109,15 @@ class GameScene: SKScene, Alerts {
         
         // Create edge boundary around scene.
         createSceneContents()
+        
+        
+        // Adjust gravity of scene
+        self.physicsWorld.gravity = CGVector(dx: 0, dy: -0.27) // Gravity on Ceres is 0.27 m/s²
+        
+//        let gravityFieldNode = SKFieldNode.radialGravityField()
+//        gravityFieldNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
+//        addChild(gravityFieldNode)
+//
     }
     
     private func decrementTimer() {
