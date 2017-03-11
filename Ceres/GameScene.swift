@@ -110,7 +110,6 @@ class GameScene: SKScene, Alerts {
         // Create edge boundary around scene.
         createSceneContents()
         
-        
         // Adjust gravity of scene
         self.physicsWorld.gravity = CGVector(dx: 0, dy: -0.27) // Gravity on Ceres is 0.27 m/s²
         
@@ -179,28 +178,9 @@ class GameScene: SKScene, Alerts {
     private func addGem() {
         // Creates a gem sprite node and adds it to a random position on the upper half of the screen.
         
-        // I changed the gem object back to being a SKSpriteNode because touch detection is now being handled in the Game Scene. SR
-        let gem = SKSpriteNode(imageNamed: "gemShape1")
-        gem.setScale(0.23)
-        gem.name = "gem"
-        gem.isUserInteractionEnabled = false
-        
-        
-        gem.physicsBody = SKPhysicsBody(circleOfRadius: max(gem.size.width / 2, gem.size.height / 2)) // Creating a circular physics body around each of the gems. Maybe change this shape later.
-        gem.physicsBody?.usesPreciseCollisionDetection = true
-        gem.physicsBody?.allowsRotation = true
-        gem.physicsBody?.restitution = 0.9
-        let velocity =  self.physicsBody!.velocity
-        let dx = velocity.dx
-        let dy = velocity.dy
-        print(dx, dy)
-        gem.physicsBody?.velocity = CGVector(dx: dx, dy: dy)
-
-        // Calculate random position within upper half of the screen.
-        let actualX = random(min: gem.size.width/2, max: size.width - gem.size.width/2)
-        let actualY = random(min: size.height * 0.25, max: size.height - pauseButton.size.height - gem.size.height/2)
-        
-        gem.position = CGPoint(x: actualX, y: actualY)
+        let gem = Gem(imageNamed: "gemShape1")
+        gem.setGemProperties()
+        gem.position = CGPoint(x: size.width / 2, y: size.height / 10)
         addChild(gem)
     }
     
@@ -316,5 +296,4 @@ class GameScene: SKScene, Alerts {
         self.scaleMode = .aspectFit
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
     }
-    
 }
