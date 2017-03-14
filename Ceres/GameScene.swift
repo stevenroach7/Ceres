@@ -36,7 +36,7 @@ class GameScene: SKScene, Alerts {
     let gemSource = SKSpriteNode(imageNamed: "astronaut")
     var starfield:SKEmitterNode!
     
-    var currSprite: SKNode! = nil //Meant to represent the current sprite
+    var currSprite: SKNode! = nil
     
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
@@ -93,6 +93,9 @@ class GameScene: SKScene, Alerts {
         gemCollector.setScale(0.2)
         gemCollector.name = "gemCollector"
         gemCollector.zPosition = 2
+        gemCollector.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: gemCollector.size.width, height: gemCollector.size.height))
+        gemCollector.physicsBody?.usesPreciseCollisionDetection = true
+        gemCollector.physicsBody?.isDynamic = false
         //gemCollector.isUserInteractionEnabled = false
         addChild(gemCollector)
         
@@ -100,7 +103,12 @@ class GameScene: SKScene, Alerts {
         gemSource.setScale(0.175)
         gemSource.name = "gemSource"
         gemSource.zPosition = 3
+//        let gemSourcePath = createGemSourcePath()
+//        gemSource.physicsBody = SKPhysicsBody(polygonFrom: gemSourcePath)
+//        gemSource.physicsBody?.usesPreciseCollisionDetection = true
+//        gemSource.physicsBody?.isDynamic = false
         gemSource.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
+        
         addChild(gemSource)
         
         let backgroundMusic = SKAudioNode(fileNamed: "cosmos.mp3")
@@ -136,7 +144,7 @@ class GameScene: SKScene, Alerts {
         let offsetY = CGFloat(stagePlanet.frame.size.height * stagePlanet.anchorPoint.y)
         
         
-        // TODO: Edit path to better approsimate object
+        // TODO: Edit path to better approximate object
         let path = CGMutablePath()
         path.move(to: CGPoint(x: 61 - offsetX, y: 6 - offsetY))
         path.addLine(to: CGPoint(x: 61 - offsetX, y: 43 - offsetY))
@@ -161,6 +169,36 @@ class GameScene: SKScene, Alerts {
         path.addLine(to: CGPoint(x: 450 - offsetX, y: 48 - offsetY))
         path.addLine(to: CGPoint(x: 470 - offsetX, y: 43 - offsetY))
         path.addLine(to: CGPoint(x: 470 - offsetX, y: 7 - offsetY))
+        path.closeSubpath();
+        return path
+    }
+    
+    private func createGemSourcePath() -> CGPath {
+        // Creates a path in the shape of the astronaut
+        
+        let offsetX = CGFloat(gemSource.frame.size.width * gemSource.anchorPoint.x)
+        let offsetY = CGFloat(gemSource.frame.size.height * gemSource.anchorPoint.y)
+        
+        let path = CGMutablePath()
+        
+        //Currently not very precise
+        path.move(to: CGPoint(x: 130 - offsetX, y: 4 - offsetY))
+        path.addLine(to: CGPoint(x: 158 - offsetX, y: 141 - offsetY))
+        path.addLine(to: CGPoint(x: 133 - offsetX, y: 198 - offsetY))
+        path.addLine(to: CGPoint(x: 114 - offsetX, y: 207 - offsetY))
+        path.addLine(to: CGPoint(x: 114 - offsetX, y: 217 - offsetY))
+        path.addLine(to: CGPoint(x: 110 - offsetX, y: 230 - offsetY))
+        path.addLine(to: CGPoint(x: 103 - offsetX, y: 240 - offsetY))
+        path.addLine(to: CGPoint(x: 90 - offsetX, y: 248 - offsetY))
+        path.addLine(to: CGPoint(x: 71 - offsetX, y: 249 - offsetY))
+        path.addLine(to: CGPoint(x: 59 - offsetX, y: 242 - offsetY))
+        path.addLine(to: CGPoint(x: 49 - offsetX, y: 229 - offsetY))
+        path.addLine(to: CGPoint(x: 46 - offsetX, y: 208 - offsetY))
+        path.addLine(to: CGPoint(x: 27 - offsetX, y: 199 - offsetY))
+        path.addLine(to: CGPoint(x: 2 - offsetX, y: 142 - offsetY))
+        path.addLine(to: CGPoint(x: 28 - offsetX, y: 93 - offsetY))
+        path.addLine(to: CGPoint(x: 29 - offsetX, y: 60 - offsetY))
+        path.addLine(to: CGPoint(x: 31 - offsetX, y: 4 - offsetY))
         path.closeSubpath();
         return path
     }
