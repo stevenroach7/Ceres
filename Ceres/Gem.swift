@@ -10,8 +10,7 @@ import Foundation
 import GameplayKit
 
 class Gem: SKSpriteNode {
-        
-
+    
     func setGemProperties() {
         // Initializes initial properties a gem should have.
         
@@ -22,7 +21,15 @@ class Gem: SKSpriteNode {
         physicsBody?.usesPreciseCollisionDetection = true
         physicsBody?.allowsRotation = true
         physicsBody?.restitution = 0.9
-        physicsBody?.velocity = CGVector(dx: 100, dy: 500)
+        
+        let angle = GameScene.random(min: CGFloat.pi/4, max: CGFloat.pi * (3/4))
+        physicsBody?.velocity = createProjectileVector(velocity: 250, angle: angle)
     }
     
+    private func createProjectileVector(velocity: CGFloat, angle: CGFloat) -> CGVector {
+        // Takes a velocity and an angle in radians and returns a vector with the inputted angle and velocity.
+        let dx = cos(angle) * velocity
+        let dy = sin(angle) * velocity
+        return CGVector(dx: dx, dy: dy)
+    }
 }

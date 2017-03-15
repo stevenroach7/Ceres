@@ -143,7 +143,6 @@ class GameScene: SKScene, Alerts {
         let offsetX = CGFloat(stagePlanet.frame.size.width * stagePlanet.anchorPoint.x)
         let offsetY = CGFloat(stagePlanet.frame.size.height * stagePlanet.anchorPoint.y)
         
-        
         // TODO: Edit path to better approximate object
         let path = CGMutablePath()
         path.move(to: CGPoint(x: 61 - offsetX, y: 6 - offsetY))
@@ -204,12 +203,13 @@ class GameScene: SKScene, Alerts {
     }
     
     
+    // TODO: The random methods are used in multiple classes. We should maybe put them in their own class or structure.
     // Helper methods to generate random numbers.
-    private func random() -> CGFloat {
+    private static func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
     }
     
-    private func random(min: CGFloat, max: CGFloat) -> CGFloat {
+    public static func random(min: CGFloat, max: CGFloat) -> CGFloat {
         return random() * (max - min) + min
     }
     
@@ -297,10 +297,8 @@ class GameScene: SKScene, Alerts {
         touchPoint = touchLocation
     }
     
-    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Method to handle touch events. Senses when user touches up (removes finger from screen).
-        
         touching = false
         
         // Choose first touch
@@ -328,7 +326,6 @@ class GameScene: SKScene, Alerts {
             currSprite.physicsBody!.velocity = velocity
         }
     }
-    
     
     func createSceneContents() {
         self.scaleMode = .aspectFit
