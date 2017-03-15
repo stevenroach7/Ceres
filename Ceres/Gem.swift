@@ -20,13 +20,13 @@ class Gem: SKSpriteNode {
         physicsBody = SKPhysicsBody(circleOfRadius: max(size.width / 2, size.height / 2)) // Creating a circular physics body around each of the gems. Maybe change this shape later.
         physicsBody?.usesPreciseCollisionDetection = true
         physicsBody?.allowsRotation = true
-        physicsBody?.restitution = 0.9
+        physicsBody?.restitution = 0.5
         physicsBody?.categoryBitMask = GameScene.PhysicsCategory.Gem;
         physicsBody?.contactTestBitMask = GameScene.PhysicsCategory.GemCollector;
         physicsBody?.collisionBitMask = GameScene.PhysicsCategory.Gem | GameScene.PhysicsCategory.GemSource | GameScene.PhysicsCategory.StagePlanet;
         
-        let angle = GameScene.random(min: CGFloat.pi/4, max: CGFloat.pi * (3/4))
-        physicsBody?.velocity = createProjectileVector(velocity: 250, angle: angle)
+        let angle = GameScene.random(min: CGFloat.pi * (3/8), max: CGFloat.pi * (5/8))
+        physicsBody?.velocity = createProjectileVector(velocity: 220, angle: angle)
     }
     
     private func createProjectileVector(velocity: CGFloat, angle: CGFloat) -> CGVector {

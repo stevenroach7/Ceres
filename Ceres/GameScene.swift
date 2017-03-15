@@ -122,7 +122,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
 //        gemSource.physicsBody?.usesPreciseCollisionDetection = true
 //        gemSource.physicsBody?.isDynamic = false
         gemSource.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
-        
         addChild(gemSource)
         
         let backgroundMusic = SKAudioNode(fileNamed: "cosmos.mp3")
