@@ -9,7 +9,7 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene, Alerts {
+class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     var backButton = SKSpriteNode()
     let backButtonTex = SKTexture(imageNamed: "backLogo")
@@ -36,10 +36,21 @@ class GameScene: SKScene, Alerts {
     let gemSource = SKSpriteNode(imageNamed: "astronaut")
     var starfield:SKEmitterNode!
     
+    public struct PhysicsCategory {
+        static let None      : UInt32 = 0
+        static let All       : UInt32 = UInt32.max
+        static let GemCollector   : UInt32 = 0b1       // 1
+        static let Gem: UInt32 = 0b10      // 2
+        static let GemSource: UInt32 = 0b11
+        static let StagePlanet: UInt32 = 0b100
+    }
+    
     var currSprite: SKNode! = nil
     
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
+        
+        physicsWorld.contactDelegate = self
        
         backgroundColor = SKColor.black // Set background color of scene.
         starfield = SKEmitterNode(fileNamed: "starShower")
@@ -96,6 +107,9 @@ class GameScene: SKScene, Alerts {
         gemCollector.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: gemCollector.size.width, height: gemCollector.size.height))
         gemCollector.physicsBody?.usesPreciseCollisionDetection = true
         gemCollector.physicsBody?.isDynamic = false
+        gemCollector.physicsBody?.categoryBitMask = PhysicsCategory.GemCollector;
+        gemCollector.physicsBody?.contactTestBitMask = PhysicsCategory.Gem;
+        gemCollector.physicsBody?.collisionBitMask = PhysicsCategory.None;
         //gemCollector.isUserInteractionEnabled = false
         addChild(gemCollector)
         
@@ -125,6 +139,38 @@ class GameScene: SKScene, Alerts {
 //        gravityFieldNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
 //        addChild(gravityFieldNode)
 //
+    }
+    
+    func gemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
+        //removes gem from game scene and increments number of gems collected
+        
+        print("Collected")
+        gemsCollected = gemsCollected + 1
+        gem.removeFromParent()
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        //Called everytime two physics bodies collide
+        
+        var firstBody: SKPhysicsBody
+        var secondBody: SKPhysicsBody
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+        } else {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        
+        
+        if ((firstBody.categoryBitMask & PhysicsCategory.GemCollector != 0) &&
+            (secondBody.categoryBitMask & PhysicsCategory.Gem != 0)) {
+            if let collector = firstBody.node as? SKSpriteNode, let
+                gem = secondBody.node as? SKSpriteNode {
+                gemDidCollideWithCollector(gem: gem, collector: collector)
+            }
+        }
+        
     }
     
     private func decrementTimer() {

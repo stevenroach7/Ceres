@@ -21,6 +21,9 @@ class Gem: SKSpriteNode {
         physicsBody?.usesPreciseCollisionDetection = true
         physicsBody?.allowsRotation = true
         physicsBody?.restitution = 0.9
+        physicsBody?.categoryBitMask = GameScene.PhysicsCategory.Gem;
+        physicsBody?.contactTestBitMask = GameScene.PhysicsCategory.GemCollector;
+        physicsBody?.collisionBitMask = GameScene.PhysicsCategory.Gem | GameScene.PhysicsCategory.GemSource | GameScene.PhysicsCategory.StagePlanet;
         
         let angle = GameScene.random(min: CGFloat.pi/4, max: CGFloat.pi * (3/4))
         physicsBody?.velocity = createProjectileVector(velocity: 250, angle: angle)
