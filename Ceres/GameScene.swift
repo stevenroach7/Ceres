@@ -17,6 +17,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var pauseButton = SKSpriteNode()
     let pauseButtonTex = SKTexture(imageNamed: "pause")
     
+    let roof = SKSpriteNode(imageNamed: "roof")
+    let pirate = SKSpriteNode(imageNamed: "SpacePirate")
+    let monster = SKSpriteNode(imageNamed: "SpaceMonster")
+    
     var scoreLabel: SKLabelNode!
     var gemsCollected = 0 {
         didSet {
@@ -39,10 +43,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     public struct PhysicsCategory {
         static let None      : UInt32 = 0
         static let All       : UInt32 = UInt32.max
-        static let GemCollector   : UInt32 = 0b1       // 1
-        static let Gem: UInt32 = 0b10      // 2
-        static let GemSource: UInt32 = 0b11
-        static let StagePlanet: UInt32 = 0b100
+        static let GemCollector   : UInt32 = 0b1
+        static let Roof: UInt32 = 0b10
+        static let Gem: UInt32 = 0b11
+        static let GemSource: UInt32 = 0b100
+        static let StagePlanet: UInt32 = 0b101
+
     }
     
     var currSprite: SKNode! = nil
@@ -90,6 +96,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                 ])
         ))
         
+        roof.position = CGPoint(x: size.width/2, y: size.height*1.45)
+        roof.setScale(0.3)
+        roof.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: roof.size.width, height: roof.size.height))
+        roof.physicsBody?.usesPreciseCollisionDetection = true
+        roof.physicsBody?.isDynamic = false
+        roof.physicsBody?.categoryBitMask = PhysicsCategory.Roof;
+        roof.physicsBody?.contactTestBitMask = PhysicsCategory.Gem;
+        roof.physicsBody?.collisionBitMask = PhysicsCategory.None;
+        addChild(roof)
+        
+        pirate.position = CGPoint(x: -size.width/0.5, y: size.height/2)
+        pirate.setScale(0.5)
+        pirate.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pirate.size.width, height: pirate.size.height))
+        pirate.physicsBody?.usesPreciseCollisionDetection = true
+        pirate.physicsBody?.isDynamic = false
+        pirate.physicsBody?.categoryBitMask = PhysicsCategory.Roof;
+        pirate.physicsBody?.contactTestBitMask = PhysicsCategory.Gem;
+        pirate.physicsBody?.collisionBitMask = PhysicsCategory.None;
+        addChild(pirate)
+
+        monster.position = CGPoint(x: size.width*1.7, y: size.height/2)
+        monster.setScale(0.2)
+        monster.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: monster.size.width, height: monster.size.height))
+        monster.physicsBody?.usesPreciseCollisionDetection = true
+        monster.physicsBody?.isDynamic = false
+        monster.physicsBody?.categoryBitMask = PhysicsCategory.Roof;
+        monster.physicsBody?.contactTestBitMask = PhysicsCategory.Gem;
+        monster.physicsBody?.collisionBitMask = PhysicsCategory.None;
+        addChild(monster)
+        
         stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.05)
         stagePlanet.setScale(0.55)
         stagePlanet.name = "stagePlanet"
@@ -98,6 +134,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         stagePlanet.physicsBody = SKPhysicsBody(polygonFrom: planetPath)
         stagePlanet.physicsBody?.usesPreciseCollisionDetection = true
         stagePlanet.physicsBody?.isDynamic = false
+        stagePlanet.physicsBody?.categoryBitMask = PhysicsCategory.StagePlanet;
+        stagePlanet.physicsBody?.contactTestBitMask = PhysicsCategory.Gem;
+        stagePlanet.physicsBody?.collisionBitMask = PhysicsCategory.None;
         addChild(stagePlanet)
         
         gemCollector.position = CGPoint(x: size.width * 0.75, y: size.height * 0.075)
@@ -128,11 +167,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
         
-        // Create edge boundary around scene.
-        createSceneContents()
-        
         // Adjust gravity of scene
-        self.physicsWorld.gravity = CGVector(dx: 0, dy: -0.27) // Gravity on Ceres is 0.27 m/s²
+        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0.27) // Gravity on Ceres is 0.27 m/s²
         
 //        let gravityFieldNode = SKFieldNode.radialGravityField()
 //        gravityFieldNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
@@ -148,11 +184,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         gem.removeFromParent()
     }
     
+    func gemOffScreen(gem: SKSpriteNode, roof: SKSpriteNode) {
+        //removes gems from game scene when they fly off screen
+        
+        print("Lost Gem")
+        gem.removeFromParent()
+    }
+    
     func didBegin(_ contact: SKPhysicsContact) {
         //Called everytime two physics bodies collide
         
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
+        
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
             firstBody = contact.bodyA
             secondBody = contact.bodyB
@@ -161,15 +205,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             secondBody = contact.bodyA
         }
         
-        
-        if ((firstBody.categoryBitMask & PhysicsCategory.GemCollector != 0) &&
-            (secondBody.categoryBitMask & PhysicsCategory.Gem != 0)) {
+        if ((firstBody.categoryBitMask == PhysicsCategory.GemCollector) &&
+            (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
             if let collector = firstBody.node as? SKSpriteNode, let
                 gem = secondBody.node as? SKSpriteNode {
                 gemDidCollideWithCollector(gem: gem, collector: collector)
             }
         }
-        
+
+        if ((firstBody.categoryBitMask == PhysicsCategory.Roof) &&
+            (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
+            if let roof = firstBody.node as? SKSpriteNode, let
+                gem = secondBody.node as? SKSpriteNode {
+                gemOffScreen(gem: gem, roof: roof)
+            }
+        }
     }
     
     private func decrementTimer() {
@@ -370,10 +420,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             let velocity = CGVector(dx: distance.dx / dt, dy: distance.dy / dt)
             currSprite.physicsBody!.velocity = velocity
         }
-    }
-    
-    func createSceneContents() {
-        self.scaleMode = .aspectFit
-        self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
     }
 }
