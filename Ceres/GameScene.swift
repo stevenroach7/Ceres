@@ -40,6 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let gemSource = SKSpriteNode(imageNamed: "astronaut")
     var starfield:SKEmitterNode!
     
+    //Used to determine how collisions should work between different objects
     public struct PhysicsCategory {
         static let None      : UInt32 = 0
         static let All       : UInt32 = UInt32.max
@@ -156,10 +157,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         gemSource.setScale(0.175)
         gemSource.name = "gemSource"
         gemSource.zPosition = 3
-//        let gemSourcePath = createGemSourcePath()
-//        gemSource.physicsBody = SKPhysicsBody(polygonFrom: gemSourcePath)
-//        gemSource.physicsBody?.usesPreciseCollisionDetection = true
-//        gemSource.physicsBody?.isDynamic = false
+        // Currently using a rectangular body, may change to something more precise later
+        gemSource.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 0.8*(gemSource.size.width), height: 0.9*(gemSource.size.height)))
+        gemSource.physicsBody?.usesPreciseCollisionDetection = true
+        gemSource.physicsBody?.isDynamic = false
         gemSource.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
         addChild(gemSource)
         
@@ -176,7 +177,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
 //
     }
     
-    func gemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
+    func gemDidCollideWithCollector(gem: SKSpriteNode) {
         //removes gem from game scene and increments number of gems collected
         
         print("Collected")
@@ -184,7 +185,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         gem.removeFromParent()
     }
     
-    func gemOffScreen(gem: SKSpriteNode, roof: SKSpriteNode) {
+    func gemOffScreen(gem: SKSpriteNode) {
         //removes gems from game scene when they fly off screen
         
         print("Lost Gem")
@@ -197,6 +198,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
         
+        //categoryBitMasks are UInt32 values
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
             firstBody = contact.bodyA
             secondBody = contact.bodyB
@@ -205,19 +207,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             secondBody = contact.bodyA
         }
         
+        //If the two colliding bodies are a gem and gemCollector, remove the gem
         if ((firstBody.categoryBitMask == PhysicsCategory.GemCollector) &&
             (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
-            if let collector = firstBody.node as? SKSpriteNode, let
-                gem = secondBody.node as? SKSpriteNode {
-                gemDidCollideWithCollector(gem: gem, collector: collector)
+            if let gem = secondBody.node as? SKSpriteNode {
+                gemDidCollideWithCollector(gem: gem)
             }
         }
 
         if ((firstBody.categoryBitMask == PhysicsCategory.Roof) &&
             (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
-            if let roof = firstBody.node as? SKSpriteNode, let
-                gem = secondBody.node as? SKSpriteNode {
-                gemOffScreen(gem: gem, roof: roof)
+            if let gem = secondBody.node as? SKSpriteNode {
+                gemOffScreen(gem: gem)
             }
         }
     }
@@ -267,36 +268,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         return path
     }
     
-    private func createGemSourcePath() -> CGPath {
-        // Creates a path in the shape of the astronaut
-        
-        let offsetX = CGFloat(gemSource.frame.size.width * gemSource.anchorPoint.x)
-        let offsetY = CGFloat(gemSource.frame.size.height * gemSource.anchorPoint.y)
-        
-        let path = CGMutablePath()
-        
-        //Currently not very precise
-        path.move(to: CGPoint(x: 130 - offsetX, y: 4 - offsetY))
-        path.addLine(to: CGPoint(x: 158 - offsetX, y: 141 - offsetY))
-        path.addLine(to: CGPoint(x: 133 - offsetX, y: 198 - offsetY))
-        path.addLine(to: CGPoint(x: 114 - offsetX, y: 207 - offsetY))
-        path.addLine(to: CGPoint(x: 114 - offsetX, y: 217 - offsetY))
-        path.addLine(to: CGPoint(x: 110 - offsetX, y: 230 - offsetY))
-        path.addLine(to: CGPoint(x: 103 - offsetX, y: 240 - offsetY))
-        path.addLine(to: CGPoint(x: 90 - offsetX, y: 248 - offsetY))
-        path.addLine(to: CGPoint(x: 71 - offsetX, y: 249 - offsetY))
-        path.addLine(to: CGPoint(x: 59 - offsetX, y: 242 - offsetY))
-        path.addLine(to: CGPoint(x: 49 - offsetX, y: 229 - offsetY))
-        path.addLine(to: CGPoint(x: 46 - offsetX, y: 208 - offsetY))
-        path.addLine(to: CGPoint(x: 27 - offsetX, y: 199 - offsetY))
-        path.addLine(to: CGPoint(x: 2 - offsetX, y: 142 - offsetY))
-        path.addLine(to: CGPoint(x: 28 - offsetX, y: 93 - offsetY))
-        path.addLine(to: CGPoint(x: 29 - offsetX, y: 60 - offsetY))
-        path.addLine(to: CGPoint(x: 31 - offsetX, y: 4 - offsetY))
-        path.closeSubpath();
-        return path
-    }
-    
     
     // TODO: The random methods are used in multiple classes. We should maybe put them in their own class or structure.
     // Helper methods to generate random numbers.
@@ -325,7 +296,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var touching: Bool = false;
     
     private func onGemTouch(touchedNode: SKNode, touchLocation: CGPoint) {
-        currSprite = touchedNode //Set the current node touching
+        currSprite = touchedNode //Set the current node touched
         touchPoint = touchLocation
         touching = true
     }
@@ -415,7 +386,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     override func update(_ currentTime: CFTimeInterval) {
         if touching {
-            let dt:CGFloat = 1.0/60.0
+            let dt:CGFloat = 1.0/60.0 //determines drag and flick speed
             let distance = CGVector(dx: touchPoint.x - currSprite.position.x, dy: touchPoint.y - currSprite.position.y)
             let velocity = CGVector(dx: distance.dx / dt, dy: distance.dy / dt)
             currSprite.physicsBody!.velocity = velocity
