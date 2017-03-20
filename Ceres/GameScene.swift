@@ -11,7 +11,13 @@ import GameplayKit
 
 class GameScene: SKScene, Alerts {
     
-    let active = SKTexture(imageNamed: "collectorActive")
+    var collectorAtlas = SKTextureAtlas()
+    var collectorFrames = [SKTexture]()
+    
+    var hammerAtlas = SKTextureAtlas()
+    var hammerFrames = [SKTexture]()
+    
+    
     
     //let collectorWait = SKAction.wait(forDuration: 0.75)
     //let animateCollector = SKAction.animate(with: active, timePerFrame: 0.1, resize: false, restore: true)
@@ -41,8 +47,11 @@ class GameScene: SKScene, Alerts {
     
     let gemCollector = SKSpriteNode(imageNamed: "collectorInactive")
     let stagePlanet = SKSpriteNode(imageNamed: "planet")
-    let gemSource = SKSpriteNode(imageNamed: "astronaut")
+    let gemSource = SKSpriteNode(imageNamed: "hammerInactive")
+    let astronaut = SKSpriteNode(imageNamed: "astronautActive")
     var starfield:SKEmitterNode!
+    
+    
     
     
     override func didMove(to view: SKView) {
@@ -73,7 +82,7 @@ class GameScene: SKScene, Alerts {
         addChild(scoreLabel)
         
         
-        timerLabel = SKLabelNode(fontNamed: "American Typewriter")
+        timerLabel = SKLabelNode(fontNamed: "Menlo-Bold")
         timerLabel.text = "Time: \(timerSeconds)"
         timerLabel.fontSize = 15
         timerLabel.horizontalAlignmentMode = .right
@@ -100,18 +109,42 @@ class GameScene: SKScene, Alerts {
         addChild(gemCollector)
         
         
-        gemSource.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1)
-        gemSource.setScale(0.175)
+        astronaut.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1)
+        astronaut.setScale(0.175)
+        astronaut.name = "astronaut"
+        astronaut.zPosition = 2
+        astronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
+        addChild(astronaut)
+        
+        gemSource.position = CGPoint(x: astronaut.position.x, y: size.height * 0.1 - astronaut.size.height/5)
+        gemSource.setScale(0.18)
         gemSource.name = "gemSource"
         gemSource.zPosition = 3
         gemSource.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
         addChild(gemSource)
+        
+        collectorAtlas = SKTextureAtlas(named: "collectorImages")
+        collectorFrames.append(SKTexture(imageNamed: "collectorActive.png"))
+        collectorFrames.append(SKTexture(imageNamed: "collectorInactive.png"))
+        
+        hammerAtlas = SKTextureAtlas(named: "hammerImages")
+        hammerFrames.append(SKTexture(imageNamed: "hammerActive.png"))
+        hammerFrames.append(SKTexture(imageNamed: "hammerInactive.png"))
+        
         
         let backgroundMusic = SKAudioNode(fileNamed: "cosmos.mp3")
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
         
        
+    }
+    
+    private func animateCollector(){
+        gemCollector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
+    }
+    
+    private func animateHammer(){
+        gemSource.run(SKAction.repeat(SKAction.animate(with: hammerFrames, timePerFrame: 0.15), count: 1))
     }
     
     private func decrementTimer() {
@@ -153,13 +186,14 @@ class GameScene: SKScene, Alerts {
     private func onGemSourceTouch() {
         addGem()
         self.run(gemCreatedSound)
+        animateHammer()
     }
     
     private func onGemTouch(touchedNode: SKNode) {
         touchedNode.removeFromParent()
         gemsCollected += 1
         self.run(gemCollectedSound)
-        
+        animateCollector()
         
         
     }
