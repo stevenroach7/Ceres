@@ -26,7 +26,7 @@ class Gem: SKSpriteNode {
         physicsBody?.collisionBitMask = GameScene.PhysicsCategory.Gem | GameScene.PhysicsCategory.GemSource | GameScene.PhysicsCategory.StagePlanet;
         
         let angle = GameScene.random(min: CGFloat.pi * (3/8), max: CGFloat.pi * (5/8))
-        physicsBody?.velocity = createProjectileVector(velocity: 220, angle: angle)
+        physicsBody?.velocity = createProjectileVector(velocity: 180, angle: angle)
     }
     
     private func createProjectileVector(velocity: CGFloat, angle: CGFloat) -> CGVector {
