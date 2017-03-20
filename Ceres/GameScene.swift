@@ -40,7 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let gemSource = SKSpriteNode(imageNamed: "astronaut")
     var starfield:SKEmitterNode!
     
-    //Used to determine how collisions should work between different objects
+    // Used to determine how collisions should work between different objects
     public struct PhysicsCategory {
         static let None      : UInt32 = 0
         static let All       : UInt32 = UInt32.max
@@ -54,6 +54,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     var currSprite: SKNode! = nil
     
+    // TODO: Decompose this method
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
         
@@ -97,6 +98,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                 ])
         ))
         
+        // TODO: Rename this variable
         roof.position = CGPoint(x: size.width/2, y: size.height*1.45)
         roof.setScale(0.3)
         roof.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: roof.size.width, height: roof.size.height))
@@ -177,7 +179,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
 //
     }
     
-    func gemDidCollideWithCollector(gem: SKSpriteNode) {
+    private func gemDidCollideWithCollector(gem: SKSpriteNode) {
         //removes gem from game scene and increments number of gems collected
         
         print("Collected")
@@ -185,7 +187,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         gem.removeFromParent()
     }
     
-    func gemOffScreen(gem: SKSpriteNode) {
+    private func gemOffScreen(gem: SKSpriteNode) {
         //removes gems from game scene when they fly off screen
         
         print("Lost Gem")
