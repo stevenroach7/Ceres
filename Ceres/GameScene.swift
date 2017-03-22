@@ -9,7 +9,7 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene, Alerts {
+class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     var collectorAtlas = SKTextureAtlas()
     var collectorFrames = [SKTexture]()
@@ -30,6 +30,10 @@ class GameScene: SKScene, Alerts {
     var pauseButton = SKSpriteNode()
     let pauseButtonTex = SKTexture(imageNamed: "pause")
     
+    let roof = SKSpriteNode(imageNamed: "roof")
+    let pirate = SKSpriteNode(imageNamed: "SpacePirate")
+    let monster = SKSpriteNode(imageNamed: "SpaceMonster")
+    
     var scoreLabel: SKLabelNode!
     var gemsCollected = 0 {
         didSet {
@@ -38,7 +42,7 @@ class GameScene: SKScene, Alerts {
     }
     
     var timerLabel: SKLabelNode!
-    var timerSeconds = 30 {
+    var timerSeconds = 120 {
         didSet {
             timerLabel.text = "Time: \(timerSeconds)"
         }
@@ -51,18 +55,37 @@ class GameScene: SKScene, Alerts {
     let astronaut = SKSpriteNode(imageNamed: "astronautActive")
     var starfield:SKEmitterNode!
     
+    // Used to determine how collisions should work between different objects
+    public struct PhysicsCategory {
+        static let None      : UInt32 = 0
+        static let All       : UInt32 = UInt32.max
+        static let GemCollector   : UInt32 = 0b1
+        static let Roof: UInt32 = 0b10
+        static let Gem: UInt32 = 0b11
+        static let GemSource: UInt32 = 0b100
+        static let StagePlanet: UInt32 = 0b101
+
+    }
+    
+    var currSprite: SKNode! = nil
+    
+<<<<<<< HEAD
     
     
-    
+=======
+    // TODO: Decompose this method
+>>>>>>> 30eb66389f7fe29521c55f30bcfc6036412a5cb6
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
+        
+        physicsWorld.contactDelegate = self
        
         backgroundColor = SKColor.black // Set background color of scene.
         starfield = SKEmitterNode(fileNamed: "starShower")
         starfield.position = CGPoint(x: 0, y: size.height)
         starfield.advanceSimulationTime(10)
         addChild(starfield)
-        starfield.zPosition = -1
+        starfield.zPosition = -10
         
         backButton = SKSpriteNode(texture: backButtonTex)
         backButton.setScale(3/4)
@@ -81,8 +104,12 @@ class GameScene: SKScene, Alerts {
         scoreLabel.position = CGPoint(x: size.width * (4/5), y: size.height - size.height/19)
         addChild(scoreLabel)
         
+<<<<<<< HEAD
         
         timerLabel = SKLabelNode(fontNamed: "Menlo-Bold")
+=======
+        timerLabel = SKLabelNode(fontNamed: "American Typewriter")
+>>>>>>> 30eb66389f7fe29521c55f30bcfc6036412a5cb6
         timerLabel.text = "Time: \(timerSeconds)"
         timerLabel.fontSize = 15
         timerLabel.horizontalAlignmentMode = .right
@@ -96,18 +123,64 @@ class GameScene: SKScene, Alerts {
                 ])
         ))
         
+        // TODO: Rename this variable
+        roof.position = CGPoint(x: size.width/2, y: size.height*1.45)
+        roof.setScale(0.3)
+        roof.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: roof.size.width, height: roof.size.height))
+        roof.physicsBody?.usesPreciseCollisionDetection = true
+        roof.physicsBody?.isDynamic = false
+        roof.physicsBody?.categoryBitMask = PhysicsCategory.Roof;
+        roof.physicsBody?.contactTestBitMask = PhysicsCategory.Gem;
+        roof.physicsBody?.collisionBitMask = PhysicsCategory.None;
+        addChild(roof)
+        
+        pirate.position = CGPoint(x: -size.width/0.5, y: size.height/2)
+        pirate.setScale(0.5)
+        pirate.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pirate.size.width, height: pirate.size.height))
+        pirate.physicsBody?.usesPreciseCollisionDetection = true
+        pirate.physicsBody?.isDynamic = false
+        pirate.physicsBody?.categoryBitMask = PhysicsCategory.Roof;
+        pirate.physicsBody?.contactTestBitMask = PhysicsCategory.Gem;
+        pirate.physicsBody?.collisionBitMask = PhysicsCategory.None;
+        addChild(pirate)
+
+        monster.position = CGPoint(x: size.width*1.7, y: size.height/2)
+        monster.setScale(0.2)
+        monster.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: monster.size.width, height: monster.size.height))
+        monster.physicsBody?.usesPreciseCollisionDetection = true
+        monster.physicsBody?.isDynamic = false
+        monster.physicsBody?.categoryBitMask = PhysicsCategory.Roof;
+        monster.physicsBody?.contactTestBitMask = PhysicsCategory.Gem;
+        monster.physicsBody?.collisionBitMask = PhysicsCategory.None;
+        addChild(monster)
+        
         stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.05)
         stagePlanet.setScale(0.55)
         stagePlanet.name = "stagePlanet"
+        stagePlanet.zPosition  = -1
+        let planetPath = createPlanetPath()
+        stagePlanet.physicsBody = SKPhysicsBody(polygonFrom: planetPath)
+        stagePlanet.physicsBody?.usesPreciseCollisionDetection = true
+        stagePlanet.physicsBody?.isDynamic = false
+        stagePlanet.physicsBody?.categoryBitMask = PhysicsCategory.StagePlanet;
+        stagePlanet.physicsBody?.contactTestBitMask = PhysicsCategory.Gem;
+        stagePlanet.physicsBody?.collisionBitMask = PhysicsCategory.None;
         addChild(stagePlanet)
         
         gemCollector.position = CGPoint(x: size.width * 0.75, y: size.height * 0.075)
         gemCollector.setScale(0.2)
         gemCollector.name = "gemCollector"
         gemCollector.zPosition = 2
+        gemCollector.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: gemCollector.size.width, height: gemCollector.size.height))
+        gemCollector.physicsBody?.usesPreciseCollisionDetection = true
+        gemCollector.physicsBody?.isDynamic = false
+        gemCollector.physicsBody?.categoryBitMask = PhysicsCategory.GemCollector;
+        gemCollector.physicsBody?.contactTestBitMask = PhysicsCategory.Gem;
+        gemCollector.physicsBody?.collisionBitMask = PhysicsCategory.None;
         //gemCollector.isUserInteractionEnabled = false
         addChild(gemCollector)
         
+<<<<<<< HEAD
         
         astronaut.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1)
         astronaut.setScale(0.175)
@@ -118,8 +191,16 @@ class GameScene: SKScene, Alerts {
         
         gemSource.position = CGPoint(x: astronaut.position.x, y: size.height * 0.1 - astronaut.size.height/5)
         gemSource.setScale(0.18)
+=======
+        gemSource.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1)
+        gemSource.setScale(0.175)
+>>>>>>> 30eb66389f7fe29521c55f30bcfc6036412a5cb6
         gemSource.name = "gemSource"
         gemSource.zPosition = 3
+        // Currently using a rectangular body, may change to something more precise later
+        gemSource.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 0.8*(gemSource.size.width), height: 0.9*(gemSource.size.height)))
+        gemSource.physicsBody?.usesPreciseCollisionDetection = true
+        gemSource.physicsBody?.isDynamic = false
         gemSource.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
         addChild(gemSource)
         
@@ -136,6 +217,7 @@ class GameScene: SKScene, Alerts {
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
         
+<<<<<<< HEAD
        
     }
     
@@ -145,6 +227,61 @@ class GameScene: SKScene, Alerts {
     
     private func animateHammer(){
         gemSource.run(SKAction.repeat(SKAction.animate(with: hammerFrames, timePerFrame: 0.15), count: 1))
+=======
+        // Adjust gravity of scene
+        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0.27) // Gravity on Ceres is 0.27 m/s²
+        
+//        let gravityFieldNode = SKFieldNode.radialGravityField()
+//        gravityFieldNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
+//        addChild(gravityFieldNode)
+//
+    }
+    
+    private func gemDidCollideWithCollector(gem: SKSpriteNode) {
+        //removes gem from game scene and increments number of gems collected
+        
+        print("Collected")
+        gemsCollected = gemsCollected + 1
+        gem.removeFromParent()
+    }
+    
+    private func gemOffScreen(gem: SKSpriteNode) {
+        //removes gems from game scene when they fly off screen
+        
+        print("Lost Gem")
+        gem.removeFromParent()
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        //Called everytime two physics bodies collide
+        
+        var firstBody: SKPhysicsBody
+        var secondBody: SKPhysicsBody
+        
+        //categoryBitMasks are UInt32 values
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+        } else {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        
+        //If the two colliding bodies are a gem and gemCollector, remove the gem
+        if ((firstBody.categoryBitMask == PhysicsCategory.GemCollector) &&
+            (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
+            if let gem = secondBody.node as? SKSpriteNode {
+                gemDidCollideWithCollector(gem: gem)
+            }
+        }
+
+        if ((firstBody.categoryBitMask == PhysicsCategory.Roof) &&
+            (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
+            if let gem = secondBody.node as? SKSpriteNode {
+                gemOffScreen(gem: gem)
+            }
+        }
+>>>>>>> 30eb66389f7fe29521c55f30bcfc6036412a5cb6
     }
     
     private func decrementTimer() {
@@ -157,29 +294,58 @@ class GameScene: SKScene, Alerts {
         }
     }
     
+    private func createPlanetPath() -> CGPath {
+        // Creates a path that is the shape of the stage planet.
+        
+        let offsetX = CGFloat(stagePlanet.frame.size.width * stagePlanet.anchorPoint.x)
+        let offsetY = CGFloat(stagePlanet.frame.size.height * stagePlanet.anchorPoint.y)
+        
+        // TODO: Edit path to better approximate object
+        let path = CGMutablePath()
+        path.move(to: CGPoint(x: 61 - offsetX, y: 6 - offsetY))
+        path.addLine(to: CGPoint(x: 61 - offsetX, y: 43 - offsetY))
+        path.addLine(to: CGPoint(x: 74 - offsetX, y: 45 - offsetY))
+        path.addLine(to: CGPoint(x: 87 - offsetX, y: 48 - offsetY))
+        path.addLine(to: CGPoint(x: 111 - offsetX, y: 59 - offsetY))
+        path.addLine(to: CGPoint(x: 139 - offsetX, y: 64 - offsetY))
+        path.addLine(to: CGPoint(x: 173 - offsetX, y: 78 - offsetY))
+        path.addLine(to: CGPoint(x: 288 - offsetX, y: 74 - offsetY))
+        path.addLine(to: CGPoint(x: 245 - offsetX, y: 76 - offsetY))
+        path.addLine(to: CGPoint(x: 258 - offsetX, y: 78 - offsetY))
+        path.addLine(to: CGPoint(x: 274 - offsetX, y: 75 - offsetY))
+        path.addLine(to: CGPoint(x: 294 - offsetX, y: 75 - offsetY))
+        path.addLine(to: CGPoint(x: 319 - offsetX, y: 74 - offsetY))
+        path.addLine(to: CGPoint(x: 342 - offsetX, y: 72 - offsetY))
+        path.addLine(to: CGPoint(x: 364 - offsetX, y: 69 - offsetY))
+        path.addLine(to: CGPoint(x: 379 - offsetX, y: 67 - offsetY))
+        path.addLine(to: CGPoint(x: 383 - offsetX, y: 66 - offsetY))
+        path.addLine(to: CGPoint(x: 399 - offsetX, y: 67 - offsetY))
+        path.addLine(to: CGPoint(x: 418 - offsetX, y: 62 - offsetY))
+        path.addLine(to: CGPoint(x: 424 - offsetX, y: 57 - offsetY))
+        path.addLine(to: CGPoint(x: 450 - offsetX, y: 48 - offsetY))
+        path.addLine(to: CGPoint(x: 470 - offsetX, y: 43 - offsetY))
+        path.addLine(to: CGPoint(x: 470 - offsetX, y: 7 - offsetY))
+        path.closeSubpath();
+        return path
+    }
+    
+    
+    // TODO: The random methods are used in multiple classes. We should maybe put them in their own class or structure.
     // Helper methods to generate random numbers.
-    private func random() -> CGFloat {
+    private static func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
     }
     
-    private func random(min: CGFloat, max: CGFloat) -> CGFloat {
+    public static func random(min: CGFloat, max: CGFloat) -> CGFloat {
         return random() * (max - min) + min
     }
     
     private func addGem() {
         // Creates a gem sprite node and adds it to a random position on the upper half of the screen.
         
-        // I changed the gem object back to being a SKSpriteNode because touch detection is now being handled in the Game Scene. SR
-        let gem = SKSpriteNode(imageNamed: "gemShape1")
-        gem.setScale(0.18)
-        gem.name = "gem"
-        gem.isUserInteractionEnabled = false
-        
-        // Calculate random position within upper half of the screen.
-        let actualX = random(min: gem.size.width/2, max: size.width - gem.size.width/2)
-        let actualY = random(min: size.height * 0.25, max: size.height - pauseButton.size.height - gem.size.height/2)
-        
-        gem.position = CGPoint(x: actualX, y: actualY)
+        let gem = Gem(imageNamed: "gemShape1")
+        gem.setGemProperties()
+        gem.position = CGPoint(x: size.width / 2, y: size.height / 10)
         addChild(gem)
     }
     
@@ -189,6 +355,7 @@ class GameScene: SKScene, Alerts {
         animateHammer()
     }
     
+<<<<<<< HEAD
     private func onGemTouch(touchedNode: SKNode) {
         touchedNode.removeFromParent()
         gemsCollected += 1
@@ -196,6 +363,15 @@ class GameScene: SKScene, Alerts {
         animateCollector()
         
         
+=======
+    var touchPoint: CGPoint = CGPoint();
+    var touching: Bool = false;
+    
+    private func onGemTouch(touchedNode: SKNode, touchLocation: CGPoint) {
+        currSprite = touchedNode //Set the current node touched
+        touchPoint = touchLocation
+        touching = true
+>>>>>>> 30eb66389f7fe29521c55f30bcfc6036412a5cb6
     }
     
     private func onBackButtonTouch() {
@@ -245,15 +421,24 @@ class GameScene: SKScene, Alerts {
             case "gemSource":
                 onGemSourceTouch()
             case "gem":
-                onGemTouch(touchedNode: touchedNode)
+                onGemTouch(touchedNode: touchedNode, touchLocation: touchLocation)
             default: break
                 
             }
         }
     }
     
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else {
+            return
+        }
+        let touchLocation = touch.location(in: self)
+        touchPoint = touchLocation
+    }
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Method to handle touch events. Senses when user touches up (removes finger from screen).
+        touching = false
         
         // Choose first touch
         guard let touch = touches.first else {
@@ -272,4 +457,12 @@ class GameScene: SKScene, Alerts {
         }
     }
     
+    override func update(_ currentTime: CFTimeInterval) {
+        if touching {
+            let dt:CGFloat = 1.0/60.0 //determines drag and flick speed
+            let distance = CGVector(dx: touchPoint.x - currSprite.position.x, dy: touchPoint.y - currSprite.position.y)
+            let velocity = CGVector(dx: distance.dx / dt, dy: distance.dy / dt)
+            currSprite.physicsBody!.velocity = velocity
+        }
+    }
 }

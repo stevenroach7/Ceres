@@ -11,27 +11,28 @@ import GameplayKit
 
 class Gem: SKSpriteNode {
     
-    private func dragSprite(currNode: SKNode, translation: CGPoint){
-        // Dragging functionality
-
-        let position = currNode.position
-
-        if currNode.name == "gem" {
-            currNode.position = CGPoint(x: position.x + translation.x, y: position.y + translation.y)
-        }
+    func setGemProperties() {
+        // Initializes initial properties a gem should have.
+        
+        setScale(0.23)
+        name = "gem"
+        isUserInteractionEnabled = false
+        physicsBody = SKPhysicsBody(circleOfRadius: max(size.width / 2, size.height / 2)) // Creating a circular physics body around each of the gems. Maybe change this shape later.
+        physicsBody?.usesPreciseCollisionDetection = true
+        physicsBody?.allowsRotation = true
+        physicsBody?.restitution = 0.5
+        physicsBody?.categoryBitMask = GameScene.PhysicsCategory.Gem;
+        physicsBody?.contactTestBitMask = GameScene.PhysicsCategory.GemCollector;
+        physicsBody?.collisionBitMask = GameScene.PhysicsCategory.Gem | GameScene.PhysicsCategory.GemSource | GameScene.PhysicsCategory.StagePlanet;
+        
+        let angle = GameScene.random(min: CGFloat.pi * (3/8), max: CGFloat.pi * (5/8))
+        physicsBody?.velocity = createProjectileVector(velocity: 180, angle: angle)
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else {
-            return
-        }
-        let positionInScene = touch.location(in: self)
-        let touchedNode = atPoint(positionInScene)
-        let previousPosition = touch.previousLocation(in: self)
-        let translation = CGPoint(x: positionInScene.x - previousPosition.x, y: positionInScene.y - previousPosition.y)
-
-
-        dragSprite(currNode: touchedNode, translation: translation)
+    private func createProjectileVector(velocity: CGFloat, angle: CGFloat) -> CGVector {
+        // Takes a velocity and an angle in radians and returns a vector with the inputted angle and velocity.
+        let dx = cos(angle) * velocity
+        let dy = sin(angle) * velocity
+        return CGVector(dx: dx, dy: dy)
     }
-    
 }
