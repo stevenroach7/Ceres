@@ -162,6 +162,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         gemSource.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
         addChild(gemSource)
         
+        makeWall(location: CGPoint(x: size.width/2, y: size.height+50), size: CGSize(width: size.width*1.5, height: 1))
+        makeWall(location: CGPoint(x: -50, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
+        makeWall(location: CGPoint(x: size.width+50, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
+        
         collectorAtlas = SKTextureAtlas(named: "collectorImages")
         collectorFrames.append(SKTexture(imageNamed: "collectorActive.png"))
         collectorFrames.append(SKTexture(imageNamed: "collectorInactive.png"))
