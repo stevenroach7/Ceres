@@ -19,9 +19,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     
     
-    //let collectorWait = SKAction.wait(forDuration: 0.75)
-    //let animateCollector = SKAction.animate(with: active, timePerFrame: 0.1, resize: false, restore: true)
-    let gemCollectedSound = SKAction.playSoundFileNamed("pinDrop.mp3", waitForCompletion: false)
+    let gemCollectedSound = SKAction.playSoundFileNamed("hydraulicSound.wav", waitForCompletion: false)
     let gemCreatedSound   = SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false)
     
     var backButton = SKSpriteNode()
@@ -69,12 +67,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     var currSprite: SKNode! = nil
     
-<<<<<<< HEAD
-    
-    
-=======
+
     // TODO: Decompose this method
->>>>>>> 30eb66389f7fe29521c55f30bcfc6036412a5cb6
+
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
         
@@ -104,12 +99,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         scoreLabel.position = CGPoint(x: size.width * (4/5), y: size.height - size.height/19)
         addChild(scoreLabel)
         
-<<<<<<< HEAD
         
         timerLabel = SKLabelNode(fontNamed: "Menlo-Bold")
-=======
-        timerLabel = SKLabelNode(fontNamed: "American Typewriter")
->>>>>>> 30eb66389f7fe29521c55f30bcfc6036412a5cb6
+
         timerLabel.text = "Time: \(timerSeconds)"
         timerLabel.fontSize = 15
         timerLabel.horizontalAlignmentMode = .right
@@ -180,7 +172,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         //gemCollector.isUserInteractionEnabled = false
         addChild(gemCollector)
         
-<<<<<<< HEAD
         
         astronaut.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1)
         astronaut.setScale(0.175)
@@ -189,12 +180,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         astronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
         addChild(astronaut)
         
-        gemSource.position = CGPoint(x: astronaut.position.x, y: size.height * 0.1 - astronaut.size.height/5)
+        gemSource.position = CGPoint(x: astronaut.position.x, y: astronaut.position.y - astronaut.size.height/5)
         gemSource.setScale(0.18)
-=======
-        gemSource.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1)
-        gemSource.setScale(0.175)
->>>>>>> 30eb66389f7fe29521c55f30bcfc6036412a5cb6
         gemSource.name = "gemSource"
         gemSource.zPosition = 3
         // Currently using a rectangular body, may change to something more precise later
@@ -217,24 +204,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
         
-<<<<<<< HEAD
+        // Adjust gravity of scene
+        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0.27) // Gravity on Ceres is 0.27 m/s²
+        
+        //        let gravityFieldNode = SKFieldNode.radialGravityField()
+        //        gravityFieldNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        //        addChild(gravityFieldNode)
+
        
     }
     
     private func animateCollector(){
         gemCollector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
+        gemCollector.run(gemCollectedSound)
     }
     
     private func animateHammer(){
         gemSource.run(SKAction.repeat(SKAction.animate(with: hammerFrames, timePerFrame: 0.15), count: 1))
-=======
-        // Adjust gravity of scene
-        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0.27) // Gravity on Ceres is 0.27 m/s²
+        gemSource.run(gemCreatedSound)
         
-//        let gravityFieldNode = SKFieldNode.radialGravityField()
-//        gravityFieldNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
-//        addChild(gravityFieldNode)
-//
     }
     
     private func gemDidCollideWithCollector(gem: SKSpriteNode) {
@@ -242,7 +230,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         
         print("Collected")
         gemsCollected = gemsCollected + 1
+        animateCollector()
         gem.removeFromParent()
+        
     }
     
     private func gemOffScreen(gem: SKSpriteNode) {
@@ -281,7 +271,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                 gemOffScreen(gem: gem)
             }
         }
->>>>>>> 30eb66389f7fe29521c55f30bcfc6036412a5cb6
+
     }
     
     private func decrementTimer() {
@@ -351,30 +341,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func onGemSourceTouch() {
         addGem()
-        self.run(gemCreatedSound)
         animateHammer()
     }
     
-<<<<<<< HEAD
-    private func onGemTouch(touchedNode: SKNode) {
-        touchedNode.removeFromParent()
-        gemsCollected += 1
-        self.run(gemCollectedSound)
-        animateCollector()
+
+//    private func onGemTouch(touchedNode: SKNode) {
+  //      touchedNode.removeFromParent()
+    //    gemsCollected += 1
+      //  animateCollector()
+    //}
         
-        
-=======
+
     var touchPoint: CGPoint = CGPoint();
     var touching: Bool = false;
     
-    private func onGemTouch(touchedNode: SKNode, touchLocation: CGPoint) {
+    func onGemTouch(touchedNode: SKNode, touchLocation: CGPoint) {
         currSprite = touchedNode //Set the current node touched
         touchPoint = touchLocation
         touching = true
->>>>>>> 30eb66389f7fe29521c55f30bcfc6036412a5cb6
+
     }
     
-    private func onBackButtonTouch() {
+    //I had to change some functions from private to get everything running, should make them private again later.
+    
+    func onBackButtonTouch() {
         
         var wasPaused: Bool
         if self.isPaused {
@@ -393,7 +383,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         backAlert(title: "WARNING", message: "You will lose your current progress", resumeAction: resumeAction)
     }
     
-    private func onPauseButtonTouch() {
+    func onPauseButtonTouch() {
         
         if self.isPaused {
             pauseButton.texture = SKTexture(imageNamed:"pause")
