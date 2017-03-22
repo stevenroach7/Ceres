@@ -17,16 +17,10 @@ class MenuScene: SKScene {
     let game = "Expedition Ceres"
     let title = SKLabelNode(fontNamed: "GillSans-Bold")
     
-    var playButton = SKSpriteNode()
-    let playButtonTex = SKTexture(imageNamed: "play")
-    
-    var instructionsButton = SKSpriteNode()
-    let instructionsButtonTex = SKTexture(imageNamed: "InstructionsLogo")
-    
+    var playButton = SKSpriteNode(imageNamed: "play")
+    var instructionsButton = SKSpriteNode(imageNamed: "InstructionsLogo")
+    var ship = SKSpriteNode(imageNamed: "Spaceship")
     var starfield:SKEmitterNode!
-    
-    var ship = SKSpriteNode()
-    let shipTex = SKTexture(imageNamed: "Spaceship")
     
     override func didMove(to view: SKView) {
         /***
@@ -34,17 +28,15 @@ class MenuScene: SKScene {
         */
         
         title.text = game
-        title.fontSize = 28
+        title.fontSize = 32
         title.fontColor = SKColor.white
         title.position = CGPoint(x: size.width/2, y: size.height - size.height/6)
         addChild(title)
         
-        playButton = SKSpriteNode(texture: playButtonTex)
-        playButton.setScale(1/2)
+        playButton.setScale(3/5)
         playButton.position = CGPoint(x: frame.midX, y: frame.midY + size.height/12)
         addChild(playButton)
         
-        instructionsButton = SKSpriteNode(texture: instructionsButtonTex)
         instructionsButton.setScale(3/4)
         instructionsButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height/8)
         addChild(instructionsButton)
@@ -55,7 +47,6 @@ class MenuScene: SKScene {
         self.addChild(starfield)
         starfield.zPosition = -1
         
-        ship = SKSpriteNode(texture: shipTex)
         ship.setScale(1/4)
         ship.position = CGPoint(x: size.width/2, y: size.height/2 - size.height/3)
         addChild(ship)

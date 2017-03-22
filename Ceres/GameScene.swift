@@ -20,11 +20,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let gemCollectedSound = SKAction.playSoundFileNamed("hydraulicSound.wav", waitForCompletion: false)
     let gemCreatedSound   = SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false)
     
-    var backButton = SKSpriteNode()
-    let backButtonTex = SKTexture(imageNamed: "backLogo")
-    
-    var pauseButton = SKSpriteNode()
-    let pauseButtonTex = SKTexture(imageNamed: "pause")
+    var backButton = SKSpriteNode(imageNamed: "backLogo")
+    var pauseButton = SKSpriteNode(imageNamed: "pause")
+    let gemCollector = SKSpriteNode(imageNamed: "collectorInactive")
+    let stagePlanet = SKSpriteNode(imageNamed: "planet")
+    let gemSource = SKSpriteNode(imageNamed: "hammerInactive")
+    let astronaut = SKSpriteNode(imageNamed: "astronautActive")
+    var starfield:SKEmitterNode!
     
     var scoreLabel: SKLabelNode!
     var gemsCollected = 0 {
@@ -39,12 +41,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             timerLabel.text = "Time: \(timerSeconds)"
         }
     }
-    
-    let gemCollector = SKSpriteNode(imageNamed: "collectorInactive")
-    let stagePlanet = SKSpriteNode(imageNamed: "planet")
-    let gemSource = SKSpriteNode(imageNamed: "hammerInactive")
-    let astronaut = SKSpriteNode(imageNamed: "astronautActive")
-    var starfield:SKEmitterNode!
     
     // Determines collisions between different objects
     public struct PhysicsCategory {
@@ -72,12 +68,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addChild(starfield)
         starfield.zPosition = -10
         
-        backButton = SKSpriteNode(texture: backButtonTex)
         backButton.setScale(3/4)
         backButton.position = CGPoint(x: size.width/6, y: size.height - size.height/24) // TODO: Change how to calculate hieght, use constants
         addChild(backButton)
         
-        pauseButton = SKSpriteNode(texture: pauseButtonTex)
         pauseButton.setScale(0.175)
         pauseButton.position = CGPoint(x: 9*size.width/10, y: size.height - size.height/24) // TODO: Change how to calculate hieght
         addChild(pauseButton)
@@ -91,9 +85,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         
         timerLabel = SKLabelNode(fontNamed: "Menlo-Bold")
         timerLabel.text = "Time: \(timerSeconds)"
-        timerLabel.fontSize = 15
+        timerLabel.fontSize = 13
         timerLabel.horizontalAlignmentMode = .right
-        timerLabel.position = CGPoint(x: size.width * (11/20), y: size.height - size.height/19)
+        timerLabel.position = CGPoint(x: size.width * (23/40), y: size.height - size.height/19)
         addChild(timerLabel)
         
         run(SKAction.repeatForever( // Serves as timer
@@ -128,7 +122,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         gemCollector.physicsBody?.collisionBitMask = PhysicsCategory.None;
         //gemCollector.isUserInteractionEnabled = false
         addChild(gemCollector)
-        
         
         astronaut.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1)
         astronaut.setScale(0.175)
@@ -352,7 +345,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             pauseButton.texture = SKTexture(imageNamed:"pause")
             self.isPaused = false
         } else {
-            pauseButton.texture = SKTexture(imageNamed:"play-1")
+            pauseButton.texture = SKTexture(imageNamed:"play")
             self.isPaused = true
         }
     }
