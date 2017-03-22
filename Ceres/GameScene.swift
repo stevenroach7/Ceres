@@ -17,8 +17,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var hammerAtlas = SKTextureAtlas()
     var hammerFrames = [SKTexture]()
     
-    
-    
     let gemCollectedSound = SKAction.playSoundFileNamed("hydraulicSound.wav", waitForCompletion: false)
     let gemCreatedSound   = SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false)
     
@@ -27,10 +25,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     var pauseButton = SKSpriteNode()
     let pauseButtonTex = SKTexture(imageNamed: "pause")
-    
-    let roof = SKSpriteNode(imageNamed: "roof")
-    let pirate = SKSpriteNode(imageNamed: "SpacePirate")
-    let monster = SKSpriteNode(imageNamed: "SpaceMonster")
     
     var scoreLabel: SKLabelNode!
     var gemsCollected = 0 {
@@ -45,7 +39,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             timerLabel.text = "Time: \(timerSeconds)"
         }
     }
-
     
     let gemCollector = SKSpriteNode(imageNamed: "collectorInactive")
     let stagePlanet = SKSpriteNode(imageNamed: "planet")
@@ -53,7 +46,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let astronaut = SKSpriteNode(imageNamed: "astronautActive")
     var starfield:SKEmitterNode!
     
-    // Used to determine how collisions should work between different objects
+    // Determines collisions between different objects
     public struct PhysicsCategory {
         static let None      : UInt32 = 0
         static let All       : UInt32 = UInt32.max
@@ -62,14 +55,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         static let Gem: UInt32 = 0b11
         static let GemSource: UInt32 = 0b100
         static let StagePlanet: UInt32 = 0b101
-
     }
     
     var currSprite: SKNode! = nil
-    
 
     // TODO: Decompose this method
-
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
         
@@ -99,9 +89,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         scoreLabel.position = CGPoint(x: size.width * (4/5), y: size.height - size.height/19)
         addChild(scoreLabel)
         
-        
         timerLabel = SKLabelNode(fontNamed: "Menlo-Bold")
-
         timerLabel.text = "Time: \(timerSeconds)"
         timerLabel.fontSize = 15
         timerLabel.horizontalAlignmentMode = .right
@@ -114,8 +102,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                 SKAction.run(decrementTimer)
                 ])
         ))
-        
-        
         
         stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.05)
         stagePlanet.setScale(0.55)
@@ -174,19 +160,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         hammerFrames.append(SKTexture(imageNamed: "hammerActive.png"))
         hammerFrames.append(SKTexture(imageNamed: "hammerInactive.png"))
         
-        
         let backgroundMusic = SKAudioNode(fileNamed: "cosmos.mp3")
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
         
         // Adjust gravity of scene
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0.27) // Gravity on Ceres is 0.27 m/s²
-        
         //        let gravityFieldNode = SKFieldNode.radialGravityField()
         //        gravityFieldNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
         //        addChild(gravityFieldNode)
-
-       
     }
     
     private func animateCollector(){
@@ -197,22 +179,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func animateHammer(){
         gemSource.run(SKAction.repeat(SKAction.animate(with: hammerFrames, timePerFrame: 0.15), count: 1))
         gemSource.run(gemCreatedSound)
-        
     }
     
     private func gemDidCollideWithCollector(gem: SKSpriteNode) {
         //removes gem from game scene and increments number of gems collected
-        
         print("Collected")
         gemsCollected = gemsCollected + 1
         animateCollector()
         gem.removeFromParent()
-        
     }
     
     private func gemOffScreen(gem: SKSpriteNode) {
         //removes gems from game scene when they fly off screen
-        
         print("Lost Gem")
         gem.removeFromParent()
     }
@@ -240,13 +218,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             }
         }
 
+        //If the two colliding bodies are a gem and wall, remove the gem
         if ((firstBody.categoryBitMask == PhysicsCategory.Wall) &&
             (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
             if let gem = secondBody.node as? SKSpriteNode {
                 gemOffScreen(gem: gem)
             }
         }
-
     }
     
     func makeWall(location: CGPoint, size: CGSize) {
@@ -262,7 +240,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     private func decrementTimer() {
-        
         timerSeconds -= 1
         if (timerSeconds <= 0) {
             self.isPaused = true
@@ -346,7 +323,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         currSprite = touchedNode //Set the current node touched
         touchPoint = touchLocation
         touching = true
-
     }
     
     //I had to change some functions from private to get everything running, should make them private again later.
@@ -400,7 +376,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             case "gem":
                 onGemTouch(touchedNode: touchedNode, touchLocation: touchLocation)
             default: break
-                
             }
         }
     }
