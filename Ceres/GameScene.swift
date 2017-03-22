@@ -23,7 +23,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var backButton = SKSpriteNode(imageNamed: "backLogo")
     var pauseButton = SKSpriteNode(imageNamed: "pause")
     let gemCollector = SKSpriteNode(imageNamed: "collectorInactive")
-    let stagePlanet = SKSpriteNode(imageNamed: "planet")
     let gemSource = SKSpriteNode(imageNamed: "hammerInactive")
     let astronaut = SKSpriteNode(imageNamed: "astronautActive")
     var starfield:SKEmitterNode!
@@ -97,18 +96,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                 ])
         ))
         
-        stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.05)
-        stagePlanet.setScale(0.55)
-        stagePlanet.name = "stagePlanet"
-        stagePlanet.zPosition  = -1
-        let planetPath = createPlanetPath()
-        stagePlanet.physicsBody = SKPhysicsBody(polygonFrom: planetPath)
-        stagePlanet.physicsBody?.usesPreciseCollisionDetection = true
-        stagePlanet.physicsBody?.isDynamic = false
-        stagePlanet.physicsBody?.categoryBitMask = PhysicsCategory.StagePlanet;
-        stagePlanet.physicsBody?.contactTestBitMask = PhysicsCategory.Gem;
-        stagePlanet.physicsBody?.collisionBitMask = PhysicsCategory.None;
-        addChild(stagePlanet)
+        addStagePlanet()
         
         gemCollector.position = CGPoint(x: size.width * 0.75, y: size.height * 0.075)
         gemCollector.setScale(0.2)
@@ -241,41 +229,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         }
     }
     
-    private func createPlanetPath() -> CGPath {
-        // Creates a path that is the shape of the stage planet.
-        
-        let offsetX = CGFloat(stagePlanet.frame.size.width * stagePlanet.anchorPoint.x)
-        let offsetY = CGFloat(stagePlanet.frame.size.height * stagePlanet.anchorPoint.y)
-        
-        // TODO: Edit path to better approximate object
-        let path = CGMutablePath()
-        path.move(to: CGPoint(x: 61 - offsetX, y: 6 - offsetY))
-        path.addLine(to: CGPoint(x: 61 - offsetX, y: 43 - offsetY))
-        path.addLine(to: CGPoint(x: 74 - offsetX, y: 45 - offsetY))
-        path.addLine(to: CGPoint(x: 87 - offsetX, y: 48 - offsetY))
-        path.addLine(to: CGPoint(x: 111 - offsetX, y: 59 - offsetY))
-        path.addLine(to: CGPoint(x: 139 - offsetX, y: 64 - offsetY))
-        path.addLine(to: CGPoint(x: 173 - offsetX, y: 78 - offsetY))
-        path.addLine(to: CGPoint(x: 288 - offsetX, y: 74 - offsetY))
-        path.addLine(to: CGPoint(x: 245 - offsetX, y: 76 - offsetY))
-        path.addLine(to: CGPoint(x: 258 - offsetX, y: 78 - offsetY))
-        path.addLine(to: CGPoint(x: 274 - offsetX, y: 75 - offsetY))
-        path.addLine(to: CGPoint(x: 294 - offsetX, y: 75 - offsetY))
-        path.addLine(to: CGPoint(x: 319 - offsetX, y: 74 - offsetY))
-        path.addLine(to: CGPoint(x: 342 - offsetX, y: 72 - offsetY))
-        path.addLine(to: CGPoint(x: 364 - offsetX, y: 69 - offsetY))
-        path.addLine(to: CGPoint(x: 379 - offsetX, y: 67 - offsetY))
-        path.addLine(to: CGPoint(x: 383 - offsetX, y: 66 - offsetY))
-        path.addLine(to: CGPoint(x: 399 - offsetX, y: 67 - offsetY))
-        path.addLine(to: CGPoint(x: 418 - offsetX, y: 62 - offsetY))
-        path.addLine(to: CGPoint(x: 424 - offsetX, y: 57 - offsetY))
-        path.addLine(to: CGPoint(x: 450 - offsetX, y: 48 - offsetY))
-        path.addLine(to: CGPoint(x: 470 - offsetX, y: 43 - offsetY))
-        path.addLine(to: CGPoint(x: 470 - offsetX, y: 7 - offsetY))
-        path.closeSubpath();
-        return path
-    }
-    
     
     // TODO: The random methods are used in multiple classes. We should maybe put them in their own class or structure.
     // Helper methods to generate random numbers.
@@ -294,6 +247,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         gem.setGemProperties()
         gem.position = CGPoint(x: size.width / 2, y: size.height / 10)
         addChild(gem)
+    }
+    
+    private func addStagePlanet() {
+        let stagePlanet = StagePlanet(imageNamed: "planet")
+        stagePlanet.setStagePlanetProperties()
+        stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.05)
+        addChild(stagePlanet)
     }
     
     private func onGemSourceTouch() {
