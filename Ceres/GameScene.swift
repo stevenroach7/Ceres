@@ -58,7 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         static let None      : UInt32 = 0
         static let All       : UInt32 = UInt32.max
         static let GemCollector   : UInt32 = 0b1
-        static let Roof: UInt32 = 0b10
+        static let Wall: UInt32 = 0b10
         static let Gem: UInt32 = 0b11
         static let GemSource: UInt32 = 0b100
         static let StagePlanet: UInt32 = 0b101
@@ -115,36 +115,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                 ])
         ))
         
-        // TODO: Rename this variable
-        roof.position = CGPoint(x: size.width/2, y: size.height*1.45)
-        roof.setScale(0.3)
-        roof.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: roof.size.width, height: roof.size.height))
-        roof.physicsBody?.usesPreciseCollisionDetection = true
-        roof.physicsBody?.isDynamic = false
-        roof.physicsBody?.categoryBitMask = PhysicsCategory.Roof;
-        roof.physicsBody?.contactTestBitMask = PhysicsCategory.Gem;
-        roof.physicsBody?.collisionBitMask = PhysicsCategory.None;
-        addChild(roof)
         
-        pirate.position = CGPoint(x: -size.width/0.5, y: size.height/2)
-        pirate.setScale(0.5)
-        pirate.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pirate.size.width, height: pirate.size.height))
-        pirate.physicsBody?.usesPreciseCollisionDetection = true
-        pirate.physicsBody?.isDynamic = false
-        pirate.physicsBody?.categoryBitMask = PhysicsCategory.Roof;
-        pirate.physicsBody?.contactTestBitMask = PhysicsCategory.Gem;
-        pirate.physicsBody?.collisionBitMask = PhysicsCategory.None;
-        addChild(pirate)
-
-        monster.position = CGPoint(x: size.width*1.7, y: size.height/2)
-        monster.setScale(0.2)
-        monster.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: monster.size.width, height: monster.size.height))
-        monster.physicsBody?.usesPreciseCollisionDetection = true
-        monster.physicsBody?.isDynamic = false
-        monster.physicsBody?.categoryBitMask = PhysicsCategory.Roof;
-        monster.physicsBody?.contactTestBitMask = PhysicsCategory.Gem;
-        monster.physicsBody?.collisionBitMask = PhysicsCategory.None;
-        addChild(monster)
         
         stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.05)
         stagePlanet.setScale(0.55)
@@ -265,13 +236,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             }
         }
 
-        if ((firstBody.categoryBitMask == PhysicsCategory.Roof) &&
+        if ((firstBody.categoryBitMask == PhysicsCategory.Wall) &&
             (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
             if let gem = secondBody.node as? SKSpriteNode {
                 gemOffScreen(gem: gem)
             }
         }
 
+    }
+    
+    func makeWall(location: CGPoint, size: CGSize) {
+        let shape = SKShapeNode(rectOf: size)
+        shape.position = location
+        shape.physicsBody = SKPhysicsBody(rectangleOf: size)
+        shape.physicsBody?.isDynamic = false
+        shape.physicsBody?.usesPreciseCollisionDetection = true
+        shape.physicsBody?.categoryBitMask = PhysicsCategory.Wall;
+        shape.physicsBody?.contactTestBitMask = PhysicsCategory.Gem;
+        shape.physicsBody?.collisionBitMask = PhysicsCategory.None;
+        self.addChild(shape)
     }
     
     private func decrementTimer() {
