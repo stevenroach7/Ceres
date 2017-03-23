@@ -56,15 +56,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     // TODO: Decompose this method
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
-        
         physicsWorld.contactDelegate = self
        
         backgroundColor = SKColor.black // Set background color of scene.
         starfield = SKEmitterNode(fileNamed: "starShower")
         starfield.position = CGPoint(x: 0, y: size.height)
+        starfield.zPosition = -10
         starfield.advanceSimulationTime(10)
         addChild(starfield)
-        starfield.zPosition = -10
         
         backButton.setScale(3/4)
         backButton.position = CGPoint(x: size.width/6, y: size.height - size.height/24) // TODO: Change how to calculate hieght, use constants
@@ -74,19 +73,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         pauseButton.position = CGPoint(x: 9*size.width/10, y: size.height - size.height/24) // TODO: Change how to calculate hieght
         addChild(pauseButton)
         
-        scoreLabel = SKLabelNode(fontNamed: "Menlo-Bold")
-        scoreLabel.text = "Gems: 0"
-        scoreLabel.fontSize = 13
-        scoreLabel.horizontalAlignmentMode = .right
-        scoreLabel.position = CGPoint(x: size.width * (4/5), y: size.height - size.height/19)
-        addChild(scoreLabel)
-        
-        timerLabel = SKLabelNode(fontNamed: "Menlo-Bold")
-        timerLabel.text = "Time: \(timerSeconds)"
-        timerLabel.fontSize = 13
-        timerLabel.horizontalAlignmentMode = .right
-        timerLabel.position = CGPoint(x: size.width * (23/40), y: size.height - size.height/19)
-        addChild(timerLabel)
+        setScoreLabel()
+        setTimerLabel()
         
         run(SKAction.repeatForever( // Serves as timer
             SKAction.sequence([
@@ -98,13 +86,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addStagePlanet()
         addGemCollector()
         addGemSource()
-        
-        astronaut.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1)
-        astronaut.setScale(0.175)
-        astronaut.name = "astronaut"
-        astronaut.zPosition = 2
-        astronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
-        addChild(astronaut)
+        addAstronaut()
         
         makeWall(location: CGPoint(x: size.width/2, y: size.height+50), size: CGSize(width: size.width*1.5, height: 1))
         makeWall(location: CGPoint(x: -50, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
@@ -185,7 +167,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         }
     }
     
-    func makeWall(location: CGPoint, size: CGSize) {
+    private func makeWall(location: CGPoint, size: CGSize) {
         let shape = SKShapeNode(rectOf: size)
         shape.position = location
         shape.physicsBody = SKPhysicsBody(rectangleOf: size)
@@ -197,6 +179,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         self.addChild(shape)
     }
     
+    private func setScoreLabel() {
+        scoreLabel = SKLabelNode(fontNamed: "Menlo-Bold")
+        scoreLabel.text = "Gems: 0"
+        scoreLabel.fontSize = 13
+        scoreLabel.horizontalAlignmentMode = .right
+        scoreLabel.position = CGPoint(x: size.width * (4/5), y: size.height - size.height/19)
+        addChild(scoreLabel)
+    }
+    
+    private func setTimerLabel() {
+        timerLabel = SKLabelNode(fontNamed: "Menlo-Bold")
+        timerLabel.text = "Time: \(timerSeconds)"
+        timerLabel.fontSize = 13
+        timerLabel.horizontalAlignmentMode = .right
+        timerLabel.position = CGPoint(x: size.width * (23/40), y: size.height - size.height/19)
+        addChild(timerLabel)
+    }
+    
     private func decrementTimer() {
         timerSeconds -= 1
         if (timerSeconds <= 0) {
@@ -205,7 +205,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             removeAllActions()
         }
     }
-    
     
     // TODO: The random methods are used in multiple classes. We should maybe put them in their own class or structure.
     // Helper methods to generate random numbers.
@@ -244,6 +243,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         gemSource.setGemSourceProperties()
         gemSource.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1 - 20)
         addChild(gemSource)
+    }
+    
+    private func addAstronaut() {
+        astronaut.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1)
+        astronaut.setScale(0.175)
+        astronaut.name = "astronaut"
+        astronaut.zPosition = 2
+        astronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
+        addChild(astronaut)
     }
     
     private func onGemSourceTouch(source: SKSpriteNode) {
