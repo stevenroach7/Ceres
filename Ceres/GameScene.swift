@@ -22,7 +22,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     var backButton = SKSpriteNode(imageNamed: "backLogo")
     var pauseButton = SKSpriteNode(imageNamed: "pause")
-    let gemCollector = SKSpriteNode(imageNamed: "collectorInactive")
     let gemSource = SKSpriteNode(imageNamed: "hammerInactive")
     let astronaut = SKSpriteNode(imageNamed: "astronautActive")
     var starfield:SKEmitterNode!
@@ -97,19 +96,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         ))
         
         addStagePlanet()
-        
-        gemCollector.position = CGPoint(x: size.width * 0.75, y: size.height * 0.075)
-        gemCollector.setScale(0.2)
-        gemCollector.name = "gemCollector"
-        gemCollector.zPosition = 2
-        gemCollector.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: gemCollector.size.width, height: gemCollector.size.height))
-        gemCollector.physicsBody?.usesPreciseCollisionDetection = true
-        gemCollector.physicsBody?.isDynamic = false
-        gemCollector.physicsBody?.categoryBitMask = PhysicsCategory.GemCollector;
-        gemCollector.physicsBody?.contactTestBitMask = PhysicsCategory.Gem;
-        gemCollector.physicsBody?.collisionBitMask = PhysicsCategory.None;
-        //gemCollector.isUserInteractionEnabled = false
-        addChild(gemCollector)
+        addGemCollector()
         
         astronaut.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1)
         astronaut.setScale(0.175)
@@ -152,9 +139,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         //        addChild(gravityFieldNode)
     }
     
-    private func animateCollector(){
-        gemCollector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
-        gemCollector.run(gemCollectedSound)
+    private func animateCollector(collector: SKSpriteNode){
+        collector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
+        collector.run(gemCollectedSound)
     }
     
     private func animateHammer(){
@@ -162,11 +149,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         gemSource.run(gemCreatedSound)
     }
     
-    private func gemDidCollideWithCollector(gem: SKSpriteNode) {
+    private func gemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
         //removes gem from game scene and increments number of gems collected
         print("Collected")
         gemsCollected = gemsCollected + 1
-        animateCollector()
+        animateCollector(collector: collector)
         gem.removeFromParent()
     }
     
@@ -194,8 +181,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         //If the two colliding bodies are a gem and gemCollector, remove the gem
         if ((firstBody.categoryBitMask == PhysicsCategory.GemCollector) &&
             (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
-            if let gem = secondBody.node as? SKSpriteNode {
-                gemDidCollideWithCollector(gem: gem)
+            if let gem = secondBody.node as? SKSpriteNode, let collector = firstBody.node as? SKSpriteNode {
+                gemDidCollideWithCollector(gem: gem, collector: collector)
             }
         }
 
@@ -256,18 +243,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addChild(stagePlanet)
     }
     
+    private func addGemCollector() {
+        let gemCollector = GemCollector(imageNamed: "collectorInactive")
+        gemCollector.setGemCollectorProperties()
+        gemCollector.position = CGPoint(x: size.width * 0.75, y: size.height * 0.075)
+        addChild(gemCollector)
+    }
+    
     private func onGemSourceTouch() {
         addGem()
         animateHammer()
     }
-    
-
-//    private func onGemTouch(touchedNode: SKNode) {
-  //      touchedNode.removeFromParent()
-    //    gemsCollected += 1
-      //  animateCollector()
-    //}
-        
 
     var touchPoint: CGPoint = CGPoint();
     var touching: Bool = false;
