@@ -97,6 +97,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         
         addStagePlanet()
         addGemCollector()
+        addGemSource()
         
         astronaut.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1)
         astronaut.setScale(0.175)
@@ -104,17 +105,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         astronaut.zPosition = 2
         astronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
         addChild(astronaut)
-        
-        gemSource.position = CGPoint(x: astronaut.position.x, y: astronaut.position.y - astronaut.size.height/5)
-        gemSource.setScale(0.18)
-        gemSource.name = "gemSource"
-        gemSource.zPosition = 3
-        // Currently using a rectangular body, may change to something more precise later
-        gemSource.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 0.8*(gemSource.size.width), height: 0.9*(gemSource.size.height)))
-        gemSource.physicsBody?.usesPreciseCollisionDetection = true
-        gemSource.physicsBody?.isDynamic = false
-        gemSource.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
-        addChild(gemSource)
         
         makeWall(location: CGPoint(x: size.width/2, y: size.height+50), size: CGSize(width: size.width*1.5, height: 1))
         makeWall(location: CGPoint(x: -50, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
@@ -139,14 +129,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         //        addChild(gravityFieldNode)
     }
     
-    private func animateCollector(collector: SKSpriteNode){
+    private func animateCollector(collector: SKSpriteNode) {
         collector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
         collector.run(gemCollectedSound)
     }
     
-    private func animateHammer(){
-        gemSource.run(SKAction.repeat(SKAction.animate(with: hammerFrames, timePerFrame: 0.15), count: 1))
-        gemSource.run(gemCreatedSound)
+    private func animateHammer(source: SKSpriteNode) {
+        source.run(SKAction.repeat(SKAction.animate(with: hammerFrames, timePerFrame: 0.15), count: 1))
+        source.run(gemCreatedSound)
     }
     
     private func gemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
@@ -229,7 +219,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func addGem() {
         // Creates a gem sprite node and adds it to a random position on the upper half of the screen.
-        
         let gem = Gem(imageNamed: "gemShape1")
         gem.setGemProperties()
         gem.position = CGPoint(x: size.width / 2, y: size.height / 10)
@@ -250,9 +239,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addChild(gemCollector)
     }
     
-    private func onGemSourceTouch() {
+    private func addGemSource() {
+        let gemSource = GemSource(imageNamed: "hammerInactive")
+        gemSource.setGemSourceProperties()
+        gemSource.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1 - 20)
+        addChild(gemSource)
+    }
+    
+    private func onGemSourceTouch(source: SKSpriteNode) {
         addGem()
-        animateHammer()
+        animateHammer(source: source)
     }
 
     var touchPoint: CGPoint = CGPoint();
@@ -305,15 +301,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         }
         
         let touchLocation = touch.location(in: self)
-        let touchedNode = atPoint(touchLocation)
+        let touchedNode = atPoint(touchLocation) as? SKSpriteNode
         
-        if let name = touchedNode.name {
+        if let name = touchedNode?.name {
             
             switch name {
             case "gemSource":
-                onGemSourceTouch()
+                onGemSourceTouch(source: touchedNode!)
             case "gem":
-                onGemTouch(touchedNode: touchedNode, touchLocation: touchLocation)
+                onGemTouch(touchedNode: touchedNode!, touchLocation: touchLocation)
             default: break
             }
         }
