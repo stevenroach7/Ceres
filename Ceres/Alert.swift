@@ -16,10 +16,10 @@ extension Alerts where Self: SKScene {
 
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         
-        let okAction = UIAlertAction(title: "Main Menu", style: UIAlertActionStyle.destructive)  { (action:UIAlertAction!) in
+        let okAction = UIAlertAction(title: "Quit Game", style: UIAlertActionStyle.destructive)  { (action:UIAlertAction!) in
             if self.view != nil {
                 let transition:SKTransition = SKTransition.fade(withDuration: 0.3)
-                let scene:SKScene = MenuScene(size: self.size)
+                let scene:SKScene = GameOverScreen(size: self.size)
                 self.view?.presentScene(scene, transition: transition)
             }}
         

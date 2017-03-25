@@ -20,7 +20,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let gemCollectedSound = SKAction.playSoundFileNamed("hydraulicSound.wav", waitForCompletion: false)
     let gemCreatedSound   = SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false)
     
-    var backButton = SKSpriteNode(imageNamed: "backLogo")
+    var backButton = SKSpriteNode(imageNamed: "back")
     var pauseButton = SKSpriteNode(imageNamed: "pause")
     let gemSource = SKSpriteNode(imageNamed: "hammerInactive")
     let astronaut = SKSpriteNode(imageNamed: "astronautActive")
@@ -201,7 +201,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         timerSeconds -= 1
         if (timerSeconds <= 0) {
             self.isPaused = true
-            gameOverAlert(title: "Game Over", message: "Score is \(gemsCollected)")
+            if view != nil {
+                let transition:SKTransition = SKTransition.fade(withDuration: 1)
+                let scene:SKScene = GameScene(size: self.size)
+                self.view?.presentScene(scene, transition: transition)
+            }
+            //gameOverAlert(title: "Game Over", message: "Score is \(gemsCollected)")
             removeAllActions()
         }
     }
@@ -280,7 +285,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             self.isPaused = true
         }
         
-        let resumeAction = UIAlertAction(title: "Resume", style: UIAlertActionStyle.default)  { (action:UIAlertAction!) in
+        let resumeAction = UIAlertAction(title: "Resume Game", style: UIAlertActionStyle.default)  { (action:UIAlertAction!) in
             if !wasPaused { // Only play game if game wasn't paused when back button was touched
                 self.pauseButton.texture = SKTexture(imageNamed:"pause")
                 self.isPaused = false

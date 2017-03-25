@@ -18,7 +18,7 @@ class InstructionsScene: SKScene {
     let title = SKLabelNode(fontNamed: "MarkerFelt-Thin")
     
     var backButton = SKSpriteNode()
-    let backButtonTex = SKTexture(imageNamed: "backLogo")
+    let backButtonTex = SKTexture(imageNamed: "back")
     
     var text = SKSpriteNode()
     let textTex = SKTexture(imageNamed: "profitInstructions")

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C3BFDC91E871CC90059D6CE /* GameOverScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3BFDC81E871CC90059D6CE /* GameOverScreen.swift */; };
 		3C67AD991E8331E100C8B980 /* StagePlanet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AD981E8331E100C8B980 /* StagePlanet.swift */; };
 		3C67AD9B1E835C3500C8B980 /* GemCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AD9A1E835C3500C8B980 /* GemCollector.swift */; };
 		3C67AD9D1E84310000C8B980 /* GemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AD9C1E84310000C8B980 /* GemSource.swift */; };
@@ -28,7 +29,6 @@
 		B2557EE61E8225B10078C13F /* hammerImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B2557EE51E8225B10078C13F /* hammerImages.atlas */; };
 		B28F8DD81E56663E005D803B /* starShower.sks in Resources */ = {isa = PBXBuildFile; fileRef = B28F8DD71E56663E005D803B /* starShower.sks */; };
 		B29319B01E7F7C7700147924 /* collectorImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B29319AF1E7F7C7700147924 /* collectorImages.atlas */; };
-		B29319BA1E7F8DED00147924 /* astronautActive.png in Resources */ = {isa = PBXBuildFile; fileRef = B29319B91E7F8DED00147924 /* astronautActive.png */; };
 		B2A6A25A1E726FD100F64EAF /* anvil.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B2A6A2581E726FD100F64EAF /* anvil.mp3 */; };
 		B2CDC03C1E8368DA00AA93DC /* hammerEffect.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2CDC03B1E8368DA00AA93DC /* hammerEffect.sks */; };
 /* End PBXBuildFile section */
@@ -51,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C3BFDC81E871CC90059D6CE /* GameOverScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScreen.swift; sourceTree = "<group>"; };
 		3C67AD981E8331E100C8B980 /* StagePlanet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StagePlanet.swift; sourceTree = "<group>"; };
 		3C67AD9A1E835C3500C8B980 /* GemCollector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GemCollector.swift; sourceTree = "<group>"; };
 		3C67AD9C1E84310000C8B980 /* GemSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GemSource.swift; sourceTree = "<group>"; };
@@ -78,7 +79,6 @@
 		B2557EE51E8225B10078C13F /* hammerImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = hammerImages.atlas; sourceTree = "<group>"; };
 		B28F8DD71E56663E005D803B /* starShower.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = starShower.sks; sourceTree = "<group>"; };
 		B29319AF1E7F7C7700147924 /* collectorImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = collectorImages.atlas; sourceTree = "<group>"; };
-		B29319B91E7F8DED00147924 /* astronautActive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = astronautActive.png; sourceTree = "<group>"; };
 		B2A6A2581E726FD100F64EAF /* anvil.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = anvil.mp3; sourceTree = "<group>"; };
 		B2CDC03B1E8368DA00AA93DC /* hammerEffect.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = hammerEffect.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,11 +146,11 @@
 				B0708D6E1E5507CE008A9950 /* Sounds */,
 				B07805DF1E5506C300073DD6 /* AppDelegate.swift */,
 				B07805E51E5506C300073DD6 /* GameScene.swift */,
+				3C3BFDC81E871CC90059D6CE /* GameOverScreen.swift */,
 				B2CDC03B1E8368DA00AA93DC /* hammerEffect.sks */,
 				B28F8DD71E56663E005D803B /* starShower.sks */,
 				B07805E71E5506C300073DD6 /* GameViewController.swift */,
 				B07805E91E5506C300073DD6 /* Main.storyboard */,
-				B29319B91E7F8DED00147924 /* astronautActive.png */,
 				B29319AF1E7F7C7700147924 /* collectorImages.atlas */,
 				B07805EC1E5506C300073DD6 /* Assets.xcassets */,
 				B2557EE51E8225B10078C13F /* hammerImages.atlas */,
@@ -297,7 +297,6 @@
 				B2A6A25A1E726FD100F64EAF /* anvil.mp3 in Resources */,
 				B29319B01E7F7C7700147924 /* collectorImages.atlas in Resources */,
 				B07805EB1E5506C300073DD6 /* Main.storyboard in Resources */,
-				B29319BA1E7F8DED00147924 /* astronautActive.png in Resources */,
 				B0B969AA1E56321B005C587D /* .gitignore in Resources */,
 				B0708D701E5507CE008A9950 /* cosmos.mp3 in Resources */,
 				B07805ED1E5506C300073DD6 /* Assets.xcassets in Resources */,
@@ -330,6 +329,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C3BFDC91E871CC90059D6CE /* GameOverScreen.swift in Sources */,
 				B07805E61E5506C300073DD6 /* GameScene.swift in Sources */,
 				B07805E81E5506C300073DD6 /* GameViewController.swift in Sources */,
 				3C67AD9D1E84310000C8B980 /* GemSource.swift in Sources */,
