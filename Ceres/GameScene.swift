@@ -27,14 +27,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var starfield:SKEmitterNode!
     
     var scoreLabel: SKLabelNode!
-    var gemsCollected = 0 {
+    var gemsPlusMinus = 0 {
         didSet {
-            scoreLabel.text = "Gems: \(gemsCollected)"
+            scoreLabel.text = "+/-: \(gemsPlusMinus)"
         }
     }
+    let losingGemPlusMinus = -5
     
     var timerLabel: SKLabelNode!
-    var timerSeconds = 10 {
+    var timerSeconds = 0 {
         didSet {
             timerLabel.text = "Time: \(timerSeconds)"
         }
@@ -76,10 +77,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         setScoreLabel()
         setTimerLabel()
         
-        run(SKAction.repeatForever( // Serves as timer
+        run(SKAction.repeatForever( // Serves as timer, Could potentially refactor to use group actions later.
             SKAction.sequence([
+                SKAction.run(spawnGems),
                 SKAction.wait(forDuration: 1.0),
-                SKAction.run(decrementTimer)
+                SKAction.run(incrementTimer)
                 ])
         ))
         
@@ -122,17 +124,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     private func gemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
-        //removes gem from game scene and increments number of gems collected
+        // Removes gem from game scene and increments number of gems collected
         print("Collected")
-        gemsCollected = gemsCollected + 1
+        gemsPlusMinus = gemsPlusMinus + 1
         animateCollector(collector: collector)
         gem.removeFromParent()
     }
     
     private func gemOffScreen(gem: SKSpriteNode) {
-        //removes gems from game scene when they fly off screen
-        print("Lost Gem")
+        // Removes gems from game scene when they fly off screen
+        gemsPlusMinus -= 1
         gem.removeFromParent()
+        checkGameOver()
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -181,7 +184,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func setScoreLabel() {
         scoreLabel = SKLabelNode(fontNamed: "Menlo-Bold")
-        scoreLabel.text = "Gems: 0"
+        scoreLabel.text = "+/-: \(gemsPlusMinus)"
         scoreLabel.fontSize = 13
         scoreLabel.horizontalAlignmentMode = .right
         scoreLabel.position = CGPoint(x: size.width * (4/5), y: size.height - size.height/19)
@@ -197,19 +200,56 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addChild(timerLabel)
     }
     
-    private func decrementTimer() {
-        timerSeconds -= 1
-        if (timerSeconds <= 0) {
+    private func incrementTimer() {
+        timerSeconds += 1
+    }
+    
+    private func checkGameOver() {
+        if (gemsPlusMinus <= losingGemPlusMinus) {
             self.isPaused = true
             if view != nil {
                 let transition:SKTransition = SKTransition.fade(withDuration: 1)
-                let scene:SKScene = GameOverScreen(size: self.size)
+                let scene:SKScene = GameOverScreen(size: self.size) // TODO: Need a way to pass score to the GameOverScreen
                 self.view?.presentScene(scene, transition: transition)
             }
-            //gameOverAlert(title: "Game Over", message: "Score is \(gemsCollected)")
             removeAllActions()
         }
     }
+    
+    private func spawnGems() { // TODO: Possibly refactor so that gamSpawn Sequences are in a sequence instead of being called based on the timerSeconds value.
+        // Called every second, calls gem spawning sequences based on game timer
+        if timerSeconds % 10 == 0 {
+            gemSpawnSequence1()
+        }
+    }
+    
+    private func gemSpawnSequence1() {
+        // Gem spawning routine
+        run(SKAction.sequence([
+                SKAction.wait(forDuration: 1.0),
+                SKAction.run(addGem),
+                SKAction.wait(forDuration: 1.0),
+                SKAction.run(addGem),
+                SKAction.wait(forDuration: 1.0),
+                SKAction.run(addGem),
+                SKAction.wait(forDuration: 1.0),
+                SKAction.run(addGem),
+                SKAction.wait(forDuration: 1.0),
+                SKAction.run(addGem),
+                SKAction.wait(forDuration: 1.0),
+                SKAction.run(addGem),
+                SKAction.wait(forDuration: 1.0),
+                SKAction.run(addGem),
+                SKAction.wait(forDuration: 1.0),
+                SKAction.run(addGem),
+                SKAction.wait(forDuration: 1.0),
+                SKAction.run(addGem),
+                SKAction.wait(forDuration: 1.0),
+                SKAction.run(addGem)
+            ])
+        )
+    }
+    
     
     // TODO: The random methods are used in multiple classes. We should maybe put them in their own class or structure.
     // Helper methods to generate random numbers.
