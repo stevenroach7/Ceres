@@ -34,7 +34,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     var timerLabel: SKLabelNode!
-    var timerSeconds = 120 {
+    var timerSeconds = 10 {
         didSet {
             timerLabel.text = "Time: \(timerSeconds)"
         }
@@ -203,7 +203,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             self.isPaused = true
             if view != nil {
                 let transition:SKTransition = SKTransition.fade(withDuration: 1)
-                let scene:SKScene = GameScene(size: self.size)
+                let scene:SKScene = GameOverScreen(size: self.size)
                 self.view?.presentScene(scene, transition: transition)
             }
             //gameOverAlert(title: "Game Over", message: "Score is \(gemsCollected)")
@@ -273,9 +273,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         touching = true
     }
     
-    //I had to change some functions from private to get everything running, should make them private again later.
-    
-    func onBackButtonTouch() {
+    private func onBackButtonTouch() {
         
         var wasPaused: Bool
         if self.isPaused {
@@ -294,7 +292,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         backAlert(title: "WARNING", message: "You will lose your current progress", resumeAction: resumeAction)
     }
     
-    func onPauseButtonTouch() {
+    private func onPauseButtonTouch() {
         
         if self.isPaused {
             pauseButton.texture = SKTexture(imageNamed:"pause")
