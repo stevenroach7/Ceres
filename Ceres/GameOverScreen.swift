@@ -10,6 +10,9 @@ import Foundation
 import SpriteKit
 
 class GameOverScreen: SKScene {
+    /***
+     Initializes Nodes and Labels
+     */
     
     let gameLabel = "Game Over"
     let title = SKLabelNode(fontNamed: "GillSans-Bold")
@@ -76,7 +79,7 @@ class GameOverScreen: SKScene {
                     self.view?.presentScene(scene, transition: transition)
                 }
             }
-            
+            //transitions to main menu if main menu button is touched
             if node == menuButton {
                 if view != nil {
                     let transition:SKTransition = SKTransition.doorsCloseHorizontal(withDuration: 1)

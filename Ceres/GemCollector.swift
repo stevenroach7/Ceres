@@ -12,6 +12,7 @@ import GameplayKit
 class GemCollector: SKSpriteNode {
     
     func setGemCollectorProperties() {
+        // Sets initial properties of the gem collector
         setScale(0.2)
         name = "gemCollector"
         zPosition = 2

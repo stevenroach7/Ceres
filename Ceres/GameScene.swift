@@ -59,7 +59,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Called immediately after scene is presented.
         physicsWorld.contactDelegate = self
        
-        backgroundColor = SKColor.black // Set background color of scene.
+        backgroundColor = SKColor.black
         starfield = SKEmitterNode(fileNamed: "starShower")
         starfield.position = CGPoint(x: 0, y: size.height)
         starfield.zPosition = -10
@@ -67,11 +67,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addChild(starfield)
         
         backButton.setScale(3/4)
-        backButton.position = CGPoint(x: size.width/6, y: size.height - size.height/24) // TODO: Change how to calculate hieght, use constants
+        backButton.position = CGPoint(x: size.width/6, y: size.height - size.height/24) // TODO: Change how to calculate height, use constants
         addChild(backButton)
         
         pauseButton.setScale(0.175)
-        pauseButton.position = CGPoint(x: 9*size.width/10, y: size.height - size.height/24) // TODO: Change how to calculate hieght
+        pauseButton.position = CGPoint(x: 9*size.width/10, y: size.height - size.height/24) // TODO: Change how to calculate height
         addChild(pauseButton)
         
         setScoreLabel()
@@ -171,6 +171,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     private func makeWall(location: CGPoint, size: CGSize) {
+        // Creates boundaries in the game that deletes gems when they come into contact
         let shape = SKShapeNode(rectOf: size)
         shape.position = location
         shape.physicsBody = SKPhysicsBody(rectangleOf: size)
@@ -183,6 +184,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     private func setScoreLabel() {
+        // Tracks current game score
         scoreLabel = SKLabelNode(fontNamed: "Menlo-Bold")
         scoreLabel.text = "+/-: \(gemsPlusMinus)"
         scoreLabel.fontSize = 13
@@ -192,6 +194,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     private func setTimerLabel() {
+        // Tracks current game time
         timerLabel = SKLabelNode(fontNamed: "Menlo-Bold")
         timerLabel.text = "Time: \(timerSeconds)"
         timerLabel.fontSize = 13
@@ -205,6 +208,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     private func checkGameOver() {
+        // Calculates score to figure out when to end the game
         if (gemsPlusMinus <= losingGemPlusMinus) {
             self.isPaused = true
             if view != nil {
@@ -262,35 +266,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     private func addGem() {
-        // Creates a gem sprite node and adds it to a random position on the upper half of the screen.
         let gem = Gem(imageNamed: "gemShape1")
-        gem.setGemProperties()
+        gem.setGemProperties()  // Calls gem properties from Gem class
         gem.position = CGPoint(x: size.width / 2, y: size.height / 10)
         addChild(gem)
     }
     
     private func addStagePlanet() {
         let stagePlanet = StagePlanet(imageNamed: "planet")
-        stagePlanet.setStagePlanetProperties()
+        stagePlanet.setStagePlanetProperties()  // Calls stage properties from StagePlanet class
         stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.05)
         addChild(stagePlanet)
     }
     
     private func addGemCollector() {
         let gemCollector = GemCollector(imageNamed: "collectorInactive")
-        gemCollector.setGemCollectorProperties()
+        gemCollector.setGemCollectorProperties()  // Calls gem collector properties from GemCollector class
         gemCollector.position = CGPoint(x: size.width * 0.75, y: size.height * 0.075)
         addChild(gemCollector)
     }
     
     private func addGemSource() {
         let gemSource = GemSource(imageNamed: "hammerInactive")
-        gemSource.setGemSourceProperties()
+        gemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
         gemSource.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1 - 20)
         addChild(gemSource)
     }
     
     private func addAstronaut() {
+        // Creates a protagonist sprite
         astronaut.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1)
         astronaut.setScale(0.175)
         astronaut.name = "astronaut"
@@ -314,7 +318,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     private func onBackButtonTouch() {
-        
         var wasPaused: Bool
         if self.isPaused {
             wasPaused = true
@@ -322,9 +325,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             wasPaused = false
             self.isPaused = true
         }
-        
+        // Calls an alert to make sure touch was intentional
         let resumeAction = UIAlertAction(title: "Resume Game", style: UIAlertActionStyle.default)  { (action:UIAlertAction!) in
-            if !wasPaused { // Only play game if game wasn't paused when back button was touched
+            if !wasPaused {
+                // Only play game if game wasn't paused when back button was touched
                 self.pauseButton.texture = SKTexture(imageNamed:"pause")
                 self.isPaused = false
             }
@@ -333,7 +337,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     private func onPauseButtonTouch() {
-        
         if self.isPaused {
             pauseButton.texture = SKTexture(imageNamed:"pause")
             self.isPaused = false
@@ -344,7 +347,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // Method to handle touch events. Senses when user touches down.
+        // Method to handle touch events. Senses when user touches down (places finger on screen).
         
         // Choose first touch
         guard let touch = touches.first else {
@@ -354,6 +357,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         let touchLocation = touch.location(in: self)
         let touchedNode = atPoint(touchLocation) as? SKSpriteNode
         
+        // Determines what was touched, if anything
         if let name = touchedNode?.name {
             
             switch name {
@@ -367,6 +371,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // Method to handle touch events.  Senses when the user moves their touch (moves finger on screen).
         guard let touch = touches.first else {
             return
         }
@@ -386,6 +391,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         let touchLocation = touch.location(in: self)
         let touchedNode = atPoint(touchLocation)
         
+        // Determines what was touched, if anything
         switch touchedNode {
         case backButton:
             onBackButtonTouch()
@@ -396,6 +402,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     override func update(_ currentTime: CFTimeInterval) {
+        // Calculates velocity using physics engine
         if touching {
             let dt:CGFloat = 1.0/60.0 //determines drag and flick speed
             let distance = CGVector(dx: touchPoint.x - currSprite.position.x, dy: touchPoint.y - currSprite.position.y)

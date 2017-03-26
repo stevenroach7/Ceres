@@ -12,6 +12,7 @@ import GameplayKit
 class GemSource: SKSpriteNode {
     
     func setGemSourceProperties() {
+        // Sets initial properties of the gem source
         setScale(0.18)
         name = "gemSource"
         zPosition = 3

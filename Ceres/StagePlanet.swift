@@ -12,6 +12,7 @@ import GameplayKit
 class StagePlanet: SKSpriteNode {
     
     func setStagePlanetProperties() {
+        // Sets initial properties of the stage
         setScale(0.55)
         name = "stagePlanet"
         zPosition  = -1
@@ -27,7 +28,6 @@ class StagePlanet: SKSpriteNode {
     
     private func createPlanetPath() -> CGPath {
         // Creates a path that is the shape of the stage planet.
-        
         let offsetX = CGFloat(frame.size.width * anchorPoint.x)
         let offsetY = CGFloat(frame.size.height * anchorPoint.y)
         
