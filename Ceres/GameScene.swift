@@ -20,7 +20,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let gemCollectedSound = SKAction.playSoundFileNamed("hydraulicSound.wav", waitForCompletion: false)
     let gemCreatedSound   = SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false)
     
-    var backButton = SKSpriteNode(imageNamed: "back")
+    var backButton = SKSpriteNode(imageNamed: "back-1")
     var pauseButton = SKSpriteNode(imageNamed: "pause")
     let gemSource = SKSpriteNode(imageNamed: "hammerInactive")
     let astronaut = SKSpriteNode(imageNamed: "astronautActive")
@@ -66,8 +66,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         starfield.advanceSimulationTime(10)
         addChild(starfield)
         
-        backButton.setScale(3/4)
-        backButton.position = CGPoint(x: size.width/6, y: size.height - size.height/24) // TODO: Change how to calculate height, use constants
+        backButton.setScale(0.175)
+        backButton.position = CGPoint(x: size.width/10, y: size.height - size.height/24) // TODO: Change how to calculate height, use constants
         addChild(backButton)
         
         pauseButton.setScale(0.175)
@@ -199,7 +199,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         timerLabel.text = "Time: \(timerSeconds)"
         timerLabel.fontSize = 13
         timerLabel.horizontalAlignmentMode = .right
-        timerLabel.position = CGPoint(x: size.width * (23/40), y: size.height - size.height/19)
+        timerLabel.position = CGPoint(x: size.width * (2/5), y: size.height - size.height/19)
         addChild(timerLabel)
     }
     

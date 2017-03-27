@@ -17,14 +17,11 @@ class GameOverScreen: SKScene {
     let gameLabel = "Game Over"
     let title = SKLabelNode(fontNamed: "GillSans-Bold")
     
-    let playLabel = "Play Again"
-    let replay = SKLabelNode(fontNamed: "GillSans")
+    let scoreLabel = "Score: "
+    let score = SKLabelNode(fontNamed: "GillSans")
     
-    let menuLabel = "Back to Main Menu"
-    let menu = SKLabelNode(fontNamed: "GillSans")
-    
-    var playButton = SKSpriteNode(imageNamed: "play")
-    var menuButton = SKSpriteNode(imageNamed: "mainMenu")
+    var playButton = SKSpriteNode(imageNamed: "replay")
+    var menuButton = SKSpriteNode(imageNamed: "menu")
     var starfield:SKEmitterNode!
     
     override func didMove(to view: SKView) {
@@ -37,25 +34,20 @@ class GameOverScreen: SKScene {
         title.fontColor = SKColor.white
         title.position = CGPoint(x: size.width/2, y: size.height - size.height/6)
         addChild(title)
+
+        // Put high score on screen
+//        score.text = scoreLabel
+//        score.fontSize = 28
+//        score.fontColor = SKColor.white
+//        score.position = CGPoint(x: frame.midX, y: frame.midY + size.height/4)
+//        addChild(score)
         
-        replay.text = playLabel
-        replay.fontSize = 26
-        replay.fontColor = SKColor.white
-        replay.position = CGPoint(x: size.width/2, y: size.height/2 + size.height/8)
-        addChild(replay)
-        
-        playButton.setScale(3/5)
-        playButton.position = CGPoint(x: frame.midX, y: frame.midY)
+        playButton.setScale(1/2)
+        playButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height/5)
         addChild(playButton)
         
-        menu.text = menuLabel
-        menu.fontSize = 26
-        menu.fontColor = SKColor.white
-        menu.position = CGPoint(x: size.width/2, y: size.height/2 - size.height/4)
-        addChild(menu)
-        
-        menuButton.setScale(3/4)
-        menuButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height/3)
+        menuButton.setScale(3/5)
+        menuButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height*2/5)
         addChild(menuButton)
         
         starfield = SKEmitterNode(fileNamed: "starShower")
