@@ -35,7 +35,7 @@ class GameOverScreen: SKScene {
         title.position = CGPoint(x: size.width/2, y: size.height - size.height/6)
         addChild(title)
 
-        // Put high score on screen
+        // TODO: Make table of high scores
 //        score.text = scoreLabel
 //        score.fontSize = 28
 //        score.fontColor = SKColor.white
