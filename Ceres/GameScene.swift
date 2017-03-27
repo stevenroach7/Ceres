@@ -223,37 +223,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func spawnGems() { // TODO: Possibly refactor so that gamSpawn Sequences are in a sequence instead of being called based on the timerSeconds value.
         // Called every second, calls gem spawning sequences based on game timer
         if timerSeconds % 10 == 0 {
-            gemSpawnSequence1()
+            switch timerSeconds {
+            case 0:
+                gemSpawnSequence1()
+            case 10:
+                gemSpawnSequence2()
+            default:
+                gemSpawnSequence3()
+            }
         }
     }
     
     private func gemSpawnSequence1() {
         // Gem spawning routine
-        run(SKAction.sequence([
-                SKAction.wait(forDuration: 1.0),
-                SKAction.run(addGem),
-                SKAction.wait(forDuration: 1.0),
-                SKAction.run(addGem),
-                SKAction.wait(forDuration: 1.0),
-                SKAction.run(addGem),
-                SKAction.wait(forDuration: 1.0),
-                SKAction.run(addGem),
-                SKAction.wait(forDuration: 1.0),
-                SKAction.run(addGem),
-                SKAction.wait(forDuration: 1.0),
-                SKAction.run(addGem),
-                SKAction.wait(forDuration: 1.0),
-                SKAction.run(addGem),
-                SKAction.wait(forDuration: 1.0),
-                SKAction.run(addGem),
-                SKAction.wait(forDuration: 1.0),
-                SKAction.run(addGem),
-                SKAction.wait(forDuration: 1.0),
-                SKAction.run(addGem)
-            ])
-        )
+        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0), SKAction.run(addGem)]), count: 10))
     }
     
+    private func gemSpawnSequence2() {
+        // Gem spawning routine
+        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0),
+                                            SKAction.run(addGem),
+                                            SKAction.wait(forDuration: 0.25),
+                                            SKAction.run(addGem)
+                                            ]),
+                            count: 8))
+    }
+    
+    private func gemSpawnSequence3() {
+        // Gem spawning routine
+        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0),
+                                               SKAction.run(addGem),
+                                               SKAction.wait(forDuration: 0.25),
+                                               SKAction.run(addGem),
+                                               SKAction.wait(forDuration: 0.25),
+                                               SKAction.run(addGem)
+            ]),
+                            count: 7))
+    }
     
     // TODO: The random methods are used in multiple classes. We should maybe put them in their own class or structure.
     // Helper methods to generate random numbers.
@@ -268,7 +274,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func addGem() {
         let gem = Gem(imageNamed: "gemShape1")
         gem.setGemProperties()  // Calls gem properties from Gem class
-        gem.position = CGPoint(x: size.width / 2, y: size.height / 10)
+        let spawnLocation = CGPoint(x: size.width / 2, y: size.height / 10)
+        gem.position = spawnLocation
         addChild(gem)
     }
     
