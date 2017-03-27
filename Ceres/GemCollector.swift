@@ -15,7 +15,7 @@ class GemCollector: SKSpriteNode {
         // Sets initial properties of the gem collector
         setScale(0.2)
         name = "gemCollector"
-        zPosition = 2
+        zPosition = 5
         physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: size.width, height: size.height))
         physicsBody?.usesPreciseCollisionDetection = true
         physicsBody?.isDynamic = false

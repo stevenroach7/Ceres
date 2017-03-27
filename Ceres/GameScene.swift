@@ -19,11 +19,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     let gemCollectedSound = SKAction.playSoundFileNamed("hydraulicSound.wav", waitForCompletion: false)
     let gemCreatedSound   = SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false)
+    let zoomTimerSound     = SKAction.playSoundFileNamed("boop.wav", waitForCompletion: false)
+    let zipTimerSound    = SKAction.playSoundFileNamed("zwip.wav", waitForCompletion: false)
     
     var backButton = SKSpriteNode(imageNamed: "back-1")
     var pauseButton = SKSpriteNode(imageNamed: "pause")
-    let gemSource = SKSpriteNode(imageNamed: "hammerInactive")
-    let astronaut = SKSpriteNode(imageNamed: "astronautActive")
+    let leftGemSource  = SKSpriteNode(imageNamed: "hammerInactive")
+    let rightGemSource = SKSpriteNode(imageNamed: "hammerInactive")
+    let redAstronaut = SKSpriteNode(imageNamed: "redAstronaut")
+    let blueAstronaut = SKSpriteNode(imageNamed: "blueAstronaut")
     var starfield:SKEmitterNode!
     
     var scoreLabel: SKLabelNode!
@@ -189,7 +193,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         scoreLabel.text = "+/-: \(gemsPlusMinus)"
         scoreLabel.fontSize = 13
         scoreLabel.horizontalAlignmentMode = .right
-        scoreLabel.position = CGPoint(x: size.width * (4/5), y: size.height - size.height/19)
+        scoreLabel.position = CGPoint(x: size.width * 0.75, y: size.height - size.height/19)
         addChild(scoreLabel)
     }
     
@@ -199,12 +203,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         timerLabel.text = "Time: \(timerSeconds)"
         timerLabel.fontSize = 13
         timerLabel.horizontalAlignmentMode = .right
-        timerLabel.position = CGPoint(x: size.width * (2/5), y: size.height - size.height/19)
+        timerLabel.position = CGPoint(x: size.width * 0.5, y: size.height - size.height/19)
         addChild(timerLabel)
     }
     
     private func incrementTimer() {
         timerSeconds += 1
+        if (timerSeconds % 10 >= 7){
+            timerLabel.fontSize += 1
+            self.run(zoomTimerSound)
+        } else if (timerSeconds % 10 == 0 && timerSeconds > 0){
+            self.run(zipTimerSound)
+            timerLabel.fontSize = 13
+        }
     }
     
     private func checkGameOver() {
@@ -282,32 +293,50 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func addStagePlanet() {
         let stagePlanet = StagePlanet(imageNamed: "planet")
         stagePlanet.setStagePlanetProperties()  // Calls stage properties from StagePlanet class
-        stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.05)
+        stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.075)
         addChild(stagePlanet)
     }
     
     private func addGemCollector() {
         let gemCollector = GemCollector(imageNamed: "collectorInactive")
         gemCollector.setGemCollectorProperties()  // Calls gem collector properties from GemCollector class
-        gemCollector.position = CGPoint(x: size.width * 0.75, y: size.height * 0.075)
+        gemCollector.position = CGPoint(x: size.width * 0.8, y: size.height * 0.075)
         addChild(gemCollector)
     }
     
     private func addGemSource() {
-        let gemSource = GemSource(imageNamed: "hammerInactive")
-        gemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
-        gemSource.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1 - 20)
-        addChild(gemSource)
+        //adds 2 gem sources, one for each astronaut
+        let leftGemSource = GemSource(imageNamed: "hammerInactive")
+        leftGemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
+        leftGemSource.position = CGPoint(x: size.width * 0.1, y: size.height * 0.1 - 20)
+        leftGemSource.name = "leftGemSource"
+        addChild(leftGemSource)
+        
+        let rightGemSource = GemSource(imageNamed: "hammerInactive")
+        rightGemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
+        rightGemSource.position = CGPoint(x: size.width * 0.4, y: size.height * 0.1 - 20)
+        rightGemSource.name = "rightGemSource"
+        addChild(rightGemSource)
+        
+        
     }
     
     private func addAstronaut() {
-        // Creates a protagonist sprite
-        astronaut.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1)
-        astronaut.setScale(0.175)
-        astronaut.name = "astronaut"
-        astronaut.zPosition = 2
-        astronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
-        addChild(astronaut)
+        // Creates 2 astronauts on either side of the planet
+        redAstronaut.position = CGPoint(x: size.width * 0.1, y: size.height * 0.1)
+        redAstronaut.setScale(0.175)
+        redAstronaut.name = "redAstronaut"
+        redAstronaut.zPosition = 2
+        redAstronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
+        
+        blueAstronaut.position = CGPoint(x: size.width * 0.4, y: size.height * 0.1)
+        blueAstronaut.setScale(0.175)
+        blueAstronaut.name = "blueAstronaut"
+        blueAstronaut.zPosition = 2
+        blueAstronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
+        
+        addChild(redAstronaut)
+        addChild(blueAstronaut)
     }
     
     private func onGemSourceTouch(source: SKSpriteNode) {
@@ -368,7 +397,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         if let name = touchedNode?.name {
             
             switch name {
-            case "gemSource":
+            case "rightGemSource":
+                onGemSourceTouch(source: touchedNode!)
+            case "leftGemSource":
                 onGemSourceTouch(source: touchedNode!)
             case "gem":
                 onGemTouch(touchedNode: touchedNode!, touchLocation: touchLocation)

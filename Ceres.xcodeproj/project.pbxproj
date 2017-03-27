@@ -25,6 +25,8 @@
 		B07805FB1E5506C400073DD6 /* CeresTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07805FA1E5506C400073DD6 /* CeresTests.swift */; };
 		B07806061E5506C400073DD6 /* CeresUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07806051E5506C400073DD6 /* CeresUITests.swift */; };
 		B0B969AA1E56321B005C587D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B0B969A91E56321B005C587D /* .gitignore */; };
+		B212A1251E89DA3500DDEC64 /* zwip.wav in Resources */ = {isa = PBXBuildFile; fileRef = B212A1241E89DA3500DDEC64 /* zwip.wav */; };
+		B212A1271E89DAEC00DDEC64 /* boop.wav in Resources */ = {isa = PBXBuildFile; fileRef = B212A1261E89DAEC00DDEC64 /* boop.wav */; };
 		B2557EE41E8225800078C13F /* hydraulicSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = B2557EE31E8225800078C13F /* hydraulicSound.wav */; };
 		B2557EE61E8225B10078C13F /* hammerImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B2557EE51E8225B10078C13F /* hammerImages.atlas */; };
 		B28F8DD81E56663E005D803B /* starShower.sks in Resources */ = {isa = PBXBuildFile; fileRef = B28F8DD71E56663E005D803B /* starShower.sks */; };
@@ -75,6 +77,8 @@
 		B07806051E5506C400073DD6 /* CeresUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CeresUITests.swift; sourceTree = "<group>"; };
 		B07806071E5506C400073DD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B0B969A91E56321B005C587D /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		B212A1241E89DA3500DDEC64 /* zwip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = zwip.wav; sourceTree = "<group>"; };
+		B212A1261E89DAEC00DDEC64 /* boop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = boop.wav; sourceTree = "<group>"; };
 		B2557EE31E8225800078C13F /* hydraulicSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hydraulicSound.wav; sourceTree = "<group>"; };
 		B2557EE51E8225B10078C13F /* hammerImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = hammerImages.atlas; sourceTree = "<group>"; };
 		B28F8DD71E56663E005D803B /* starShower.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = starShower.sks; sourceTree = "<group>"; };
@@ -111,7 +115,9 @@
 		B0708D6E1E5507CE008A9950 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				B212A1261E89DAEC00DDEC64 /* boop.wav */,
 				B2A6A2581E726FD100F64EAF /* anvil.mp3 */,
+				B212A1241E89DA3500DDEC64 /* zwip.wav */,
 				B2557EE31E8225800078C13F /* hydraulicSound.wav */,
 				B0708D6F1E5507CE008A9950 /* cosmos.mp3 */,
 			);
@@ -294,6 +300,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B212A1271E89DAEC00DDEC64 /* boop.wav in Resources */,
 				B2A6A25A1E726FD100F64EAF /* anvil.mp3 in Resources */,
 				B29319B01E7F7C7700147924 /* collectorImages.atlas in Resources */,
 				B07805EB1E5506C300073DD6 /* Main.storyboard in Resources */,
@@ -302,6 +309,7 @@
 				B07805ED1E5506C300073DD6 /* Assets.xcassets in Resources */,
 				B07805F01E5506C300073DD6 /* LaunchScreen.storyboard in Resources */,
 				B2557EE61E8225B10078C13F /* hammerImages.atlas in Resources */,
+				B212A1251E89DA3500DDEC64 /* zwip.wav in Resources */,
 				B2557EE41E8225800078C13F /* hydraulicSound.wav in Resources */,
 				B2CDC03C1E8368DA00AA93DC /* hammerEffect.sks in Resources */,
 				B28F8DD81E56663E005D803B /* starShower.sks in Resources */,
