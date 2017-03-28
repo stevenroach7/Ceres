@@ -311,8 +311,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     private func onGemSourceTouch(source: SKSpriteNode) {
-        addGem()
-        animateHammer(source: source)
+        if self.isPaused == false {
+            addGem()
+            animateHammer(source: source)
+        }
     }
 
     var touchPoint: CGPoint = CGPoint();
