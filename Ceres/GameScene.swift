@@ -36,7 +36,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             scoreLabel.text = "+/-: \(gemsPlusMinus)"
         }
     }
-    let losingGemPlusMinus = -500 // Change this back to -5, needed more time to troubleshoot
+    let losingGemPlusMinus = -5 // Make this lower during testing
     
     var timerLabel: SKLabelNode!
     var timerSeconds = 0 {
@@ -237,9 +237,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             case 0:
                 gemSpawnSequence1()
             case 10:
-                gemSpawnSequence1()
+                gemSpawnSequence2()
             default:
-                gemSpawnSequence1()
+                gemSpawnSequence3()
             }
         }
     }
@@ -252,9 +252,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func gemSpawnSequence2() {
         // Gem spawning routine
         run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0),
-                                            SKAction.run(addGem),
+                                            SKAction.run(addGemLeft),
                                             SKAction.wait(forDuration: 0.25),
-                                            SKAction.run(addGem)
+                                            SKAction.run(addGemRight)
                                             ]),
                             count: 8))
     }
@@ -262,22 +262,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func gemSpawnSequence3() {
         // Gem spawning routine
         run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0),
-                                               SKAction.run(addGem),
+                                               SKAction.run(addGemLeft),
                                                SKAction.wait(forDuration: 0.25),
-                                               SKAction.run(addGem),
+                                               SKAction.run(addGemRight),
                                                SKAction.wait(forDuration: 0.25),
-                                               SKAction.run(addGem)
+                                               SKAction.run(addGemLeft),
+                                               SKAction.run(addGemRight)
+            
             ]),
                             count: 7))
     }
     
     // Helper methods to generate random numbers.
-    private static func randomGenerator() -> CGFloat {
+    private func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
     }
     
-    private static func randomInRange(min: CGFloat, max: CGFloat) -> CGFloat {
-        return randomGenerator() * (max - min) + min
+    private func random(min: CGFloat, max: CGFloat) -> CGFloat {
+        return random() * (max - min) + min
     }
     
     private func addGem() {
@@ -292,8 +294,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Produces a Gem from the left astronaut
         let gem = Gem(imageNamed: "gemShape1")
         gem.setGemProperties()  // Calls gem properties from Gem class
-//        let angle = randomInRange(min: CGFloat.pi * (3/8), max: CGFloat.pi * (1/2))
-        let angle = CGFloat.pi * 3/8
+        let angle = random(min: CGFloat.pi * (3/8), max: CGFloat.pi * (1/2))
         gem.setGemVelocity(velocity: 180, angle: angle)
         gem.position = CGPoint(x: size.width * 0.1, y: size.height * 0.1 - 5)
         addChild(gem)
@@ -303,8 +304,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Produces a Gem from the right astronaut
         let gem = Gem(imageNamed: "gemShape1")
         gem.setGemProperties()  // Calls gem properties from Gem class
-        //        let angle = randomInRange(min: CGFloat.pi * (3/8), max: CGFloat.pi * (1/2))
-        let angle = CGFloat.pi * 5/8
+        let angle = random(min: CGFloat.pi * (1/2), max: CGFloat.pi * (5/8))
         gem.setGemVelocity(velocity: 180, angle: angle)
         gem.position = CGPoint(x: size.width * 0.9, y: size.height * 0.1 - 5)
         addChild(gem)
