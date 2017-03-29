@@ -135,7 +135,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Removes gems from game scene when they fly off screen
         gemsPlusMinus -= 1
         gem.removeFromParent()
-        checkGameOver()
+        if checkGameOver() {
+            gameOverTransition()
+        }
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -207,17 +209,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         timerSeconds += 1
     }
     
-    private func checkGameOver() {
+    private func checkGameOver() -> Bool {
         // Calculates score to figure out when to end the game
-        if (gemsPlusMinus <= losingGemPlusMinus) {
-            self.isPaused = true
-            if view != nil {
-                let transition:SKTransition = SKTransition.fade(withDuration: 1)
-                let scene:SKScene = GameOverScreen(size: self.size) // TODO: Need a way to pass score to the GameOverScreen
-                self.view?.presentScene(scene, transition: transition)
-            }
-            removeAllActions()
+        return (gemsPlusMinus <= losingGemPlusMinus)
+    }
+    
+    private func gameOverTransition() {
+        self.isPaused = true
+        if view != nil {
+            let transition:SKTransition = SKTransition.fade(withDuration: 1)
+            let scene:SKScene = GameOverScreen(size: self.size) // TODO: Need a way to pass score to the GameOverScreen
+            self.view?.presentScene(scene, transition: transition)
         }
+        removeAllActions()
     }
     
     private func spawnGems() { // TODO: Possibly refactor so that gamSpawn Sequences are in a sequence instead of being called based on the timerSeconds value.
