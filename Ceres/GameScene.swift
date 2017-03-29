@@ -19,11 +19,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     let gemCollectedSound = SKAction.playSoundFileNamed("hydraulicSound.wav", waitForCompletion: false)
     let gemCreatedSound   = SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false)
+    let zoomTimerSound     = SKAction.playSoundFileNamed("boop.wav", waitForCompletion: false)
+    let zipTimerSound    = SKAction.playSoundFileNamed("zwip.wav", waitForCompletion: false)
     
     var backButton = SKSpriteNode(imageNamed: "back-1")
     var pauseButton = SKSpriteNode(imageNamed: "pause")
-    let gemSource = SKSpriteNode(imageNamed: "hammerInactive")
-    let astronaut = SKSpriteNode(imageNamed: "astronautActive")
+    let leftGemSource  = SKSpriteNode(imageNamed: "hammerInactive")
+    let rightGemSource = SKSpriteNode(imageNamed: "hammerInactive")
+    let redAstronaut = SKSpriteNode(imageNamed: "redAstronaut")
+    let blueAstronaut = SKSpriteNode(imageNamed: "blueAstronaut")
     var starfield:SKEmitterNode!
     
     var scoreLabel: SKLabelNode!
@@ -32,7 +36,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             scoreLabel.text = "+/-: \(gemsPlusMinus)"
         }
     }
-    let losingGemPlusMinus = -5
+    let losingGemPlusMinus = -5 // Make this lower during testing
     
     var timerLabel: SKLabelNode!
     var timerSeconds = 0 {
@@ -88,7 +92,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addStagePlanet()
         addGemCollector()
         addGemSource()
-        addAstronaut()
+        addAstronauts()
         
         makeWall(location: CGPoint(x: size.width/2, y: size.height+50), size: CGSize(width: size.width*1.5, height: 1))
         makeWall(location: CGPoint(x: -50, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
@@ -125,8 +129,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func gemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
         // Removes gem from game scene and increments number of gems collected
-        print("Collected")
-        gemsPlusMinus = gemsPlusMinus + 1
+        gemsPlusMinus += 1
         animateCollector(collector: collector)
         gem.removeFromParent()
     }
@@ -191,7 +194,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         scoreLabel.text = "+/-: \(gemsPlusMinus)"
         scoreLabel.fontSize = 13
         scoreLabel.horizontalAlignmentMode = .right
-        scoreLabel.position = CGPoint(x: size.width * (4/5), y: size.height - size.height/19)
+        scoreLabel.position = CGPoint(x: size.width * 0.75, y: size.height - size.height/19)
         addChild(scoreLabel)
     }
     
@@ -201,12 +204,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         timerLabel.text = "Time: \(timerSeconds)"
         timerLabel.fontSize = 13
         timerLabel.horizontalAlignmentMode = .right
-        timerLabel.position = CGPoint(x: size.width * (2/5), y: size.height - size.height/19)
+        timerLabel.position = CGPoint(x: size.width * 0.5, y: size.height - size.height/19)
         addChild(timerLabel)
     }
     
     private func incrementTimer() {
         timerSeconds += 1
+        if (timerSeconds % 10 >= 7){
+            timerLabel.fontSize += 1
+            self.run(zoomTimerSound)
+        } else if (timerSeconds % 10 == 0 && timerSeconds > 0){
+            self.run(zipTimerSound)
+            timerLabel.fontSize = 13
+        }
     }
     
     private func checkGameOver() -> Bool {
@@ -240,15 +250,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func gemSpawnSequence1() {
         // Gem spawning routine
-        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0), SKAction.run(addGem)]), count: 10))
+        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0), SKAction.run(addGemLeft), SKAction.wait(forDuration: 1.0), SKAction.run(addGemRight)]), count: 5))
     }
     
     private func gemSpawnSequence2() {
         // Gem spawning routine
         run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0),
-                                            SKAction.run(addGem),
+                                            SKAction.run(addGemLeft),
                                             SKAction.wait(forDuration: 0.25),
-                                            SKAction.run(addGem)
+                                            SKAction.run(addGemRight)
                                             ]),
                             count: 8))
     }
@@ -256,22 +266,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func gemSpawnSequence3() {
         // Gem spawning routine
         run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0),
-                                               SKAction.run(addGem),
+                                               SKAction.run(addGemLeft),
                                                SKAction.wait(forDuration: 0.25),
-                                               SKAction.run(addGem),
+                                               SKAction.run(addGemRight),
                                                SKAction.wait(forDuration: 0.25),
-                                               SKAction.run(addGem)
+                                               SKAction.run(addGemLeft),
+                                               SKAction.run(addGemRight)
+            
             ]),
                             count: 7))
     }
     
-    // TODO: The random methods are used in multiple classes. We should maybe put them in their own class or structure.
     // Helper methods to generate random numbers.
-    private static func random() -> CGFloat {
+    private func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
     }
     
-    public static func random(min: CGFloat, max: CGFloat) -> CGFloat {
+    private func random(min: CGFloat, max: CGFloat) -> CGFloat {
         return random() * (max - min) + min
     }
     
@@ -283,35 +294,71 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addChild(gem)
     }
     
+    private func addGemLeft() {
+        // Produces a Gem from the left astronaut
+        let gem = Gem(imageNamed: "gemShape1")
+        gem.setGemProperties()  // Calls gem properties from Gem class
+        let angle = random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (1/2))
+        gem.setGemVelocity(velocity: 180, angle: angle)
+        gem.position = CGPoint(x: size.width * 0.1, y: size.height * 0.1 - 5)
+        addChild(gem)
+    }
+    
+    private func addGemRight() {
+        // Produces a Gem from the right astronaut
+        let gem = Gem(imageNamed: "gemShape1")
+        gem.setGemProperties()  // Calls gem properties from Gem class
+        let angle = random(min: CGFloat.pi * (1/2), max: CGFloat.pi * (3/4))
+        gem.setGemVelocity(velocity: 180, angle: angle)
+        gem.position = CGPoint(x: size.width * 0.9, y: size.height * 0.1 - 5)
+        addChild(gem)
+    }
+    
     private func addStagePlanet() {
         let stagePlanet = StagePlanet(imageNamed: "planet")
         stagePlanet.setStagePlanetProperties()  // Calls stage properties from StagePlanet class
-        stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.05)
+        stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.075)
         addChild(stagePlanet)
     }
     
     private func addGemCollector() {
         let gemCollector = GemCollector(imageNamed: "collectorInactive")
         gemCollector.setGemCollectorProperties()  // Calls gem collector properties from GemCollector class
-        gemCollector.position = CGPoint(x: size.width * 0.75, y: size.height * 0.075)
+        gemCollector.position = CGPoint(x: size.width / 2, y: size.height * 0.075)
         addChild(gemCollector)
     }
     
     private func addGemSource() {
-        let gemSource = GemSource(imageNamed: "hammerInactive")
-        gemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
-        gemSource.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1 - 20)
-        addChild(gemSource)
+        // Adds 2 gem sources, one for each astronaut
+        let leftGemSource = GemSource(imageNamed: "hammerInactive")
+        leftGemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
+        leftGemSource.position = CGPoint(x: size.width * 0.1, y: size.height * 0.1 - 20)
+        leftGemSource.name = "leftGemSource"
+        addChild(leftGemSource)
+        
+        let rightGemSource = GemSource(imageNamed: "hammerInactive")
+        rightGemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
+        rightGemSource.position = CGPoint(x: size.width * 0.9, y: size.height * 0.1 - 20)
+        rightGemSource.name = "rightGemSource"
+        addChild(rightGemSource)
     }
     
-    private func addAstronaut() {
-        // Creates a protagonist sprite
-        astronaut.position = CGPoint(x: size.width * 0.25, y: size.height * 0.1)
-        astronaut.setScale(0.175)
-        astronaut.name = "astronaut"
-        astronaut.zPosition = 2
-        astronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
-        addChild(astronaut)
+    private func addAstronauts() {
+        // Creates 2 astronauts on either side of the planet
+        redAstronaut.position = CGPoint(x: size.width * 0.1, y: size.height * 0.1)
+        redAstronaut.setScale(0.175)
+        redAstronaut.name = "redAstronaut"
+        redAstronaut.zPosition = 2
+        redAstronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
+        
+        blueAstronaut.position = CGPoint(x: size.width * 0.9, y: size.height * 0.1)
+        blueAstronaut.setScale(0.175)
+        blueAstronaut.name = "blueAstronaut"
+        blueAstronaut.zPosition = 2
+        blueAstronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
+        
+        addChild(redAstronaut)
+        addChild(blueAstronaut)
     }
     
     private func onGemSourceTouch(source: SKSpriteNode) {
@@ -322,11 +369,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
 
     var touchPoint: CGPoint = CGPoint();
+    var currSpriteInitialDisplacement: CGVector = CGVector(); //The initial displacement from the touched Node and the touch location, used to avoid gittery motion in the update method
     var touching: Bool = false;
     
     func onGemTouch(touchedNode: SKNode, touchLocation: CGPoint) {
         currSprite = touchedNode //Set the current node touched
         touchPoint = touchLocation
+        currSpriteInitialDisplacement = CGVector(dx: touchPoint.x - currSprite.position.x, dy: touchPoint.y - currSprite.position.y)
         touching = true
     }
     
@@ -374,7 +423,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         if let name = touchedNode?.name {
             
             switch name {
-            case "gemSource":
+            case "rightGemSource":
+                onGemSourceTouch(source: touchedNode!)
+            case "leftGemSource":
                 onGemSourceTouch(source: touchedNode!)
             case "gem":
                 onGemTouch(touchedNode: touchedNode!, touchLocation: touchLocation)
@@ -418,9 +469,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Calculates velocity using physics engine
         if touching {
             let dt:CGFloat = 1.0/60.0 //determines drag and flick speed
-            let distance = CGVector(dx: touchPoint.x - currSprite.position.x, dy: touchPoint.y - currSprite.position.y)
+            let distance = CGVector(dx: touchPoint.x - currSprite.position.x - currSpriteInitialDisplacement.dx, dy: touchPoint.y - currSprite.position.y - currSpriteInitialDisplacement.dy)
             let velocity = CGVector(dx: distance.dx / dt, dy: distance.dy / dt)
             currSprite.physicsBody!.velocity = velocity
         }
     }
+    
 }
