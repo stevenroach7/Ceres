@@ -36,7 +36,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             scoreLabel.text = "+/-: \(gemsPlusMinus)"
         }
     }
-    let losingGemPlusMinus = -5
+    let losingGemPlusMinus = -500 //Change this back to -5, needed more time to troubleshoot
     
     var timerLabel: SKLabelNode!
     var timerSeconds = 0 {
@@ -129,7 +129,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func gemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
         // Removes gem from game scene and increments number of gems collected
-        print("Collected")
         gemsPlusMinus = gemsPlusMinus + 1
         animateCollector(collector: collector)
         gem.removeFromParent()
@@ -345,11 +344,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
 
     var touchPoint: CGPoint = CGPoint();
+    var currSpriteInitialDisplacement: CGVector = CGVector(); //The initial displacement from the touched Node and the touch location, used to avoid gittery motion in the update method
     var touching: Bool = false;
     
     func onGemTouch(touchedNode: SKNode, touchLocation: CGPoint) {
         currSprite = touchedNode //Set the current node touched
         touchPoint = touchLocation
+        currSpriteInitialDisplacement = CGVector(dx: touchPoint.x - currSprite.position.x, dy: touchPoint.y - currSprite.position.y)
         touching = true
     }
     
@@ -443,7 +444,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Calculates velocity using physics engine
         if touching {
             let dt:CGFloat = 1.0/60.0 //determines drag and flick speed
-            let distance = CGVector(dx: touchPoint.x - currSprite.position.x, dy: touchPoint.y - currSprite.position.y)
+            let distance = CGVector(dx: touchPoint.x - currSprite.position.x - currSpriteInitialDisplacement.dx, dy: touchPoint.y - currSprite.position.y - currSpriteInitialDisplacement.dy)
             let velocity = CGVector(dx: distance.dx / dt, dy: distance.dy / dt)
             currSprite.physicsBody!.velocity = velocity
         }
