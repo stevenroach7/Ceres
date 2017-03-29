@@ -362,12 +362,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addChild(blueAstronaut)
     }
     
-    private func onGemSourceTouch(source: SKSpriteNode) {
+    private func onLeftGemSourceTouch(source: SKSpriteNode) {
         if self.isPaused == false {
-            addGem()
+            addGemLeft()
             animateHammer(source: source)
         }
     }
+    
+    private func onRightGemSourceTouch(source: SKSpriteNode) {
+        if self.isPaused == false {
+            addGemRight()
+            animateHammer(source: source)
+        }
+    }
+
 
     var touchPoint: CGPoint = CGPoint();
     var currSpriteInitialDisplacement: CGVector = CGVector(); //The initial displacement from the touched Node and the touch location, used to avoid gittery motion in the update method
@@ -425,9 +433,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             
             switch name {
             case "rightGemSource":
-                onGemSourceTouch(source: touchedNode!)
+                onRightGemSourceTouch(source: touchedNode!)
             case "leftGemSource":
-                onGemSourceTouch(source: touchedNode!)
+                onLeftGemSourceTouch(source: touchedNode!)
             case "gem":
                 onGemTouch(touchedNode: touchedNode!, touchLocation: touchLocation)
             default: break
