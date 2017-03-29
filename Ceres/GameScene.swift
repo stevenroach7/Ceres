@@ -294,7 +294,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Produces a Gem from the left astronaut
         let gem = Gem(imageNamed: "gemShape1")
         gem.setGemProperties()  // Calls gem properties from Gem class
-        let angle = random(min: CGFloat.pi * (3/8), max: CGFloat.pi * (1/2))
+        let angle = random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (1/2))
         gem.setGemVelocity(velocity: 180, angle: angle)
         gem.position = CGPoint(x: size.width * 0.1, y: size.height * 0.1 - 5)
         addChild(gem)
@@ -304,7 +304,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Produces a Gem from the right astronaut
         let gem = Gem(imageNamed: "gemShape1")
         gem.setGemProperties()  // Calls gem properties from Gem class
-        let angle = random(min: CGFloat.pi * (1/2), max: CGFloat.pi * (5/8))
+        let angle = random(min: CGFloat.pi * (1/2), max: CGFloat.pi * (3/4))
         gem.setGemVelocity(velocity: 180, angle: angle)
         gem.position = CGPoint(x: size.width * 0.9, y: size.height * 0.1 - 5)
         addChild(gem)
