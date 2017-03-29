@@ -1,5 +1,5 @@
 //
-//  GameOverScreen.swift
+//  GameOverScene.swift
 //  Ceres
 //
 //  Created by Sean Cheng on 3/25/17.
@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class GameOverScreen: SKScene {
+class GameOverScene: SKScene {
     /***
      Initializes Nodes and Labels
      */

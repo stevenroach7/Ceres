@@ -19,7 +19,7 @@ extension Alerts where Self: SKScene {
         let okAction = UIAlertAction(title: "Quit Game", style: UIAlertActionStyle.destructive)  { (action:UIAlertAction!) in
             if self.view != nil {
                 let transition:SKTransition = SKTransition.fade(withDuration: 0.3)
-                let scene:SKScene = GameOverScreen(size: self.size)
+                let scene:SKScene = GameOverScene(size: self.size)
                 self.view?.presentScene(scene, transition: transition)
             }}
         

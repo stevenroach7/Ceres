@@ -228,7 +228,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         self.isPaused = true
         if view != nil {
             let transition:SKTransition = SKTransition.fade(withDuration: 1)
-            let scene = GameOverScreen(size: self.size) // TODO: Need a way to pass score to the GameOverScreen
+            let scene = GameOverScene(size: self.size) // TODO: Need a way to pass score to the GameOverScene
             scene.setScore(score: timerSeconds)
             self.view?.presentScene(scene, transition: transition)
         }
