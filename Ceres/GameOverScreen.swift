@@ -17,12 +17,19 @@ class GameOverScreen: SKScene {
     let gameLabel = "Game Over"
     let title = SKLabelNode(fontNamed: "GillSans-Bold")
     
-    let scoreLabel = "Score: "
-    let score = SKLabelNode(fontNamed: "GillSans")
+    
+    
+    var score = 0
+    let scoreLabel = SKLabelNode(fontNamed: "GillSans")
     
     var playButton = SKSpriteNode(imageNamed: "replay")
     var menuButton = SKSpriteNode(imageNamed: "menu")
     var starfield:SKEmitterNode!
+    
+    
+    public func setScore(score: Int) {
+        self.score = score
+    }
     
     override func didMove(to view: SKView) {
         /***
@@ -36,11 +43,11 @@ class GameOverScreen: SKScene {
         addChild(title)
 
         // TODO: Make table of high scores
-//        score.text = scoreLabel
-//        score.fontSize = 28
-//        score.fontColor = SKColor.white
-//        score.position = CGPoint(x: frame.midX, y: frame.midY + size.height/4)
-//        addChild(score)
+        scoreLabel.text = "Score: \(score)"
+        scoreLabel.fontSize = 28
+        scoreLabel.fontColor = SKColor.white
+        scoreLabel.position = CGPoint(x: frame.midX, y: frame.midY + size.height/4)
+        addChild(scoreLabel)
         
         playButton.setScale(1/2)
         playButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height/5)

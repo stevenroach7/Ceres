@@ -138,7 +138,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Removes gems from game scene when they fly off screen
         gemsPlusMinus -= 1
         gem.removeFromParent()
-        if checkGameOver() {
+        if isGameOver() {
             gameOverTransition()
         }
     }
@@ -219,7 +219,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         }
     }
     
-    private func checkGameOver() -> Bool {
+    private func isGameOver() -> Bool {
         // Calculates score to figure out when to end the game
         return (gemsPlusMinus <= losingGemPlusMinus)
     }
@@ -228,7 +228,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         self.isPaused = true
         if view != nil {
             let transition:SKTransition = SKTransition.fade(withDuration: 1)
-            let scene:SKScene = GameOverScreen(size: self.size) // TODO: Need a way to pass score to the GameOverScreen
+            let scene = GameOverScreen(size: self.size) // TODO: Need a way to pass score to the GameOverScreen
+            scene.setScore(score: timerSeconds)
             self.view?.presentScene(scene, transition: transition)
         }
         removeAllActions()
