@@ -36,7 +36,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             scoreLabel.text = "+/-: \(gemsPlusMinus)"
         }
     }
-    let losingGemPlusMinus = -500 //Change this back to -5, needed more time to troubleshoot
+    let losingGemPlusMinus = -500 // Change this back to -5, needed more time to troubleshoot
     
     var timerLabel: SKLabelNode!
     var timerSeconds = 0 {
@@ -92,7 +92,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addStagePlanet()
         addGemCollector()
         addGemSource()
-        addAstronaut()
+        addAstronauts()
         
         makeWall(location: CGPoint(x: size.width/2, y: size.height+50), size: CGSize(width: size.width*1.5, height: 1))
         makeWall(location: CGPoint(x: -50, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
@@ -129,7 +129,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func gemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
         // Removes gem from game scene and increments number of gems collected
-        gemsPlusMinus = gemsPlusMinus + 1
+        gemsPlusMinus += 1
         animateCollector(collector: collector)
         gem.removeFromParent()
     }
@@ -237,16 +237,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             case 0:
                 gemSpawnSequence1()
             case 10:
-                gemSpawnSequence2()
+                gemSpawnSequence1()
             default:
-                gemSpawnSequence3()
+                gemSpawnSequence1()
             }
         }
     }
     
     private func gemSpawnSequence1() {
         // Gem spawning routine
-        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0), SKAction.run(addGem)]), count: 10))
+        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0), SKAction.run(addGemLeft), SKAction.wait(forDuration: 1.0), SKAction.run(addGemRight)]), count: 5))
     }
     
     private func gemSpawnSequence2() {
@@ -271,14 +271,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                             count: 7))
     }
     
-    // TODO: The random methods are used in multiple classes. We should maybe put them in their own class or structure.
     // Helper methods to generate random numbers.
-    private static func random() -> CGFloat {
+    private static func randomGenerator() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
     }
     
-    public static func random(min: CGFloat, max: CGFloat) -> CGFloat {
-        return random() * (max - min) + min
+    private static func randomInRange(min: CGFloat, max: CGFloat) -> CGFloat {
+        return randomGenerator() * (max - min) + min
     }
     
     private func addGem() {
@@ -286,6 +285,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         gem.setGemProperties()  // Calls gem properties from Gem class
         let spawnLocation = CGPoint(x: size.width / 2, y: size.height / 10)
         gem.position = spawnLocation
+        addChild(gem)
+    }
+    
+    private func addGemLeft() {
+        // Produces a Gem from the left astronaut
+        let gem = Gem(imageNamed: "gemShape1")
+        gem.setGemProperties()  // Calls gem properties from Gem class
+//        let angle = randomInRange(min: CGFloat.pi * (3/8), max: CGFloat.pi * (1/2))
+        let angle = CGFloat.pi * 3/8
+        gem.setGemVelocity(velocity: 180, angle: angle)
+        gem.position = CGPoint(x: size.width * 0.1, y: size.height * 0.1 - 5)
+        addChild(gem)
+    }
+    
+    private func addGemRight() {
+        // Produces a Gem from the right astronaut
+        let gem = Gem(imageNamed: "gemShape1")
+        gem.setGemProperties()  // Calls gem properties from Gem class
+        //        let angle = randomInRange(min: CGFloat.pi * (3/8), max: CGFloat.pi * (1/2))
+        let angle = CGFloat.pi * 5/8
+        gem.setGemVelocity(velocity: 180, angle: angle)
+        gem.position = CGPoint(x: size.width * 0.9, y: size.height * 0.1 - 5)
         addChild(gem)
     }
     
@@ -299,12 +320,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func addGemCollector() {
         let gemCollector = GemCollector(imageNamed: "collectorInactive")
         gemCollector.setGemCollectorProperties()  // Calls gem collector properties from GemCollector class
-        gemCollector.position = CGPoint(x: size.width * 0.8, y: size.height * 0.075)
+        gemCollector.position = CGPoint(x: size.width / 2, y: size.height * 0.075)
         addChild(gemCollector)
     }
     
     private func addGemSource() {
-        //adds 2 gem sources, one for each astronaut
+        // Adds 2 gem sources, one for each astronaut
         let leftGemSource = GemSource(imageNamed: "hammerInactive")
         leftGemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
         leftGemSource.position = CGPoint(x: size.width * 0.1, y: size.height * 0.1 - 20)
@@ -313,14 +334,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         
         let rightGemSource = GemSource(imageNamed: "hammerInactive")
         rightGemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
-        rightGemSource.position = CGPoint(x: size.width * 0.4, y: size.height * 0.1 - 20)
+        rightGemSource.position = CGPoint(x: size.width * 0.9, y: size.height * 0.1 - 20)
         rightGemSource.name = "rightGemSource"
         addChild(rightGemSource)
-        
-        
     }
     
-    private func addAstronaut() {
+    private func addAstronauts() {
         // Creates 2 astronauts on either side of the planet
         redAstronaut.position = CGPoint(x: size.width * 0.1, y: size.height * 0.1)
         redAstronaut.setScale(0.175)
@@ -328,7 +347,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         redAstronaut.zPosition = 2
         redAstronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
         
-        blueAstronaut.position = CGPoint(x: size.width * 0.4, y: size.height * 0.1)
+        blueAstronaut.position = CGPoint(x: size.width * 0.9, y: size.height * 0.1)
         blueAstronaut.setScale(0.175)
         blueAstronaut.name = "blueAstronaut"
         blueAstronaut.zPosition = 2
@@ -449,4 +468,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             currSprite.physicsBody!.velocity = velocity
         }
     }
+    
 }
