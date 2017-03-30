@@ -18,14 +18,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var hammerFrames = [SKTexture]()
     
     let gemCollectedSound = SKAction.playSoundFileNamed("hydraulicSound.wav", waitForCompletion: false)
-    let gemCreatedSound   = SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false)
-    let zoomTimerSound     = SKAction.playSoundFileNamed("boop.wav", waitForCompletion: false)
-    let zipTimerSound    = SKAction.playSoundFileNamed("zwip.wav", waitForCompletion: false)
+    let gemCreatedSound = SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false)
+    let zoomTimerSound = SKAction.playSoundFileNamed("boop.wav", waitForCompletion: false)
+    let zipTimerSound = SKAction.playSoundFileNamed("zwip.wav", waitForCompletion: false)
     
     var backButton = SKSpriteNode(imageNamed: "back-1")
     var pauseButton = SKSpriteNode(imageNamed: "pause")
-    let leftGemSource  = SKSpriteNode(imageNamed: "hammerInactive")
-    let rightGemSource = SKSpriteNode(imageNamed: "hammerInactive")
+    let leftGemSource  = GemSource(imageNamed: "hammerInactive")
+    let rightGemSource = GemSource(imageNamed: "hammerInactive")
     let redAstronaut = SKSpriteNode(imageNamed: "redAstronaut")
     let blueAstronaut = SKSpriteNode(imageNamed: "blueAstronaut")
     var starfield:SKEmitterNode!
@@ -58,7 +58,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     var currSprite: SKNode! = nil
 
-    // TODO: Decompose this method
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
         physicsWorld.contactDelegate = self
@@ -80,14 +79,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         
         setScoreLabel()
         setTimerLabel()
-        
-        run(SKAction.repeatForever( // Serves as timer, Could potentially refactor to use group actions later.
-            SKAction.sequence([
-                SKAction.run(spawnGems),
-                SKAction.wait(forDuration: 1.0),
-                SKAction.run(incrementTimer)
-                ])
-        ))
         
         addStagePlanet()
         addGemCollector()
@@ -115,6 +106,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         //        let gravityFieldNode = SKFieldNode.radialGravityField()
         //        gravityFieldNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
         //        addChild(gravityFieldNode)
+        
+        run(SKAction.repeatForever(
+            SKAction.sequence([
+                SKAction.run(animateLeftHammer),
+                SKAction.wait(forDuration: 0.35),
+                SKAction.run(animateRightHammer),
+                SKAction.wait(forDuration: 0.35),
+                ])
+        ))
+        
+        run(SKAction.repeatForever( // Serves as timer, Could potentially refactor to use group actions later.
+            SKAction.sequence([
+                SKAction.run(spawnGems),
+                SKAction.wait(forDuration: 1.0),
+                SKAction.run(incrementTimer),
+                ])
+        ))
     }
     
     private func animateCollector(collector: SKSpriteNode) {
@@ -122,9 +130,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         collector.run(gemCollectedSound)
     }
     
-    private func animateHammer(source: SKSpriteNode) {
-        source.run(SKAction.repeat(SKAction.animate(with: hammerFrames, timePerFrame: 0.15), count: 1))
-        source.run(gemCreatedSound)
+    private func animateLeftHammer() { // Need a function without arguments to be called in the SKAction
+        leftGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
+    }
+    
+    private func animateRightHammer() { // Need a function without arguments to be called in the SKAction
+        rightGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
     }
     
     private func gemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
@@ -331,13 +342,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func addGemSource() {
         // Adds 2 gem sources, one for each astronaut
-        let leftGemSource = GemSource(imageNamed: "hammerInactive")
         leftGemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
         leftGemSource.position = CGPoint(x: size.width * 0.1, y: size.height * 0.1 - 20)
         leftGemSource.name = "leftGemSource"
         addChild(leftGemSource)
         
-        let rightGemSource = GemSource(imageNamed: "hammerInactive")
         rightGemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
         rightGemSource.position = CGPoint(x: size.width * 0.9, y: size.height * 0.1 - 20)
         rightGemSource.name = "rightGemSource"
@@ -362,20 +371,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addChild(blueAstronaut)
     }
     
-    private func onLeftGemSourceTouch(source: SKSpriteNode) {
+    private func onLeftGemSourceTouch() {
         if self.isPaused == false {
             addGemLeft()
-            animateHammer(source: source)
+            run(gemCreatedSound)
         }
     }
     
-    private func onRightGemSourceTouch(source: SKSpriteNode) {
+    private func onRightGemSourceTouch() {
         if self.isPaused == false {
             addGemRight()
-            animateHammer(source: source)
+            run(gemCreatedSound)
         }
     }
-
 
     var touchPoint: CGPoint = CGPoint();
     var currSpriteInitialDisplacement: CGVector = CGVector(); //The initial displacement from the touched Node and the touch location, used to avoid gittery motion in the update method
@@ -433,9 +441,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             
             switch name {
             case "rightGemSource":
-                onRightGemSourceTouch(source: touchedNode!)
+                onRightGemSourceTouch()
             case "leftGemSource":
-                onLeftGemSourceTouch(source: touchedNode!)
+                onLeftGemSourceTouch()
             case "gem":
                 onGemTouch(touchedNode: touchedNode!, touchLocation: touchLocation)
             default: break
