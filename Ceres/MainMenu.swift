@@ -15,10 +15,10 @@ class MenuScene: SKScene {
     */
     
     let game = "Expedition Ceres"
-    let title = SKLabelNode(fontNamed: "GillSans-Bold")
+    let title = SKLabelNode(fontNamed: "Optima-Bold")
     
     var playButton = SKSpriteNode(imageNamed: "play")
-    var instructionsButton = SKSpriteNode(imageNamed: "InstructionsLogo")
+    var instructionsButton = SKSpriteNode(imageNamed: "instructions")
     var ship = SKSpriteNode(imageNamed: "Spaceship")
     var starfield:SKEmitterNode!
     
@@ -37,7 +37,7 @@ class MenuScene: SKScene {
         playButton.position = CGPoint(x: frame.midX, y: frame.midY + size.height/12)
         addChild(playButton)
         
-        instructionsButton.setScale(3/4)
+        instructionsButton.setScale(0.5)
         instructionsButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height/8)
         addChild(instructionsButton)
         

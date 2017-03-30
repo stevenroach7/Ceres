@@ -22,13 +22,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let zoomTimerSound     = SKAction.playSoundFileNamed("boop.wav", waitForCompletion: false)
     let zipTimerSound    = SKAction.playSoundFileNamed("zwip.wav", waitForCompletion: false)
     
-    var backButton = SKSpriteNode(imageNamed: "back-1")
     var pauseButton = SKSpriteNode(imageNamed: "pause")
+    
     let leftGemSource  = SKSpriteNode(imageNamed: "hammerInactive")
     let rightGemSource = SKSpriteNode(imageNamed: "hammerInactive")
     let redAstronaut = SKSpriteNode(imageNamed: "redAstronaut")
     let blueAstronaut = SKSpriteNode(imageNamed: "blueAstronaut")
     var starfield:SKEmitterNode!
+    //var gemEffect:SKEmitterNode!
     
     var scoreLabel: SKLabelNode!
     var gemsPlusMinus = 0 {
@@ -67,16 +68,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         starfield = SKEmitterNode(fileNamed: "starShower")
         starfield.position = CGPoint(x: 0, y: size.height)
         starfield.zPosition = -10
-        starfield.advanceSimulationTime(10)
+        starfield.advanceSimulationTime(1)
         addChild(starfield)
         
-        backButton.setScale(0.175)
-        backButton.position = CGPoint(x: size.width/10, y: size.height - size.height/24) // TODO: Change how to calculate height, use constants
-        addChild(backButton)
+        
         
         pauseButton.setScale(0.175)
-        pauseButton.position = CGPoint(x: 9*size.width/10, y: size.height - size.height/24) // TODO: Change how to calculate height
+        pauseButton.position = CGPoint(x: size.width/12, y: size.height - size.height/24) // TODO: Change how to calculate height, use constants
         addChild(pauseButton)
+        
+        
         
         setScoreLabel()
         setTimerLabel()
@@ -130,16 +131,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func gemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
         // Removes gem from game scene and increments number of gems collected
         gemsPlusMinus += 1
+        recolorScore()
         animateCollector(collector: collector)
         gem.removeFromParent()
+        //gemEffect.removeFromParent()
     }
     
     private func gemOffScreen(gem: SKSpriteNode) {
         // Removes gems from game scene when they fly off screen
         gemsPlusMinus -= 1
+        recolorScore()
         gem.removeFromParent()
         if isGameOver() {
             gameOverTransition()
+        }
+    }
+    
+    private func recolorScore(){
+        if gemsPlusMinus < 0 {
+            scoreLabel.fontColor = SKColor.red
+        } else if gemsPlusMinus > 0{
+            scoreLabel.fontColor = SKColor.green
+        } else {
+            scoreLabel.fontColor = SKColor.white
         }
     }
     
@@ -192,9 +206,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Tracks current game score
         scoreLabel = SKLabelNode(fontNamed: "Menlo-Bold")
         scoreLabel.text = "+/-: \(gemsPlusMinus)"
-        scoreLabel.fontSize = 13
-        scoreLabel.horizontalAlignmentMode = .right
-        scoreLabel.position = CGPoint(x: size.width * 0.75, y: size.height - size.height/19)
+        scoreLabel.fontSize = 14
+        //scoreLabel.horizontalAlignmentMode = .right
+        scoreLabel.position = CGPoint(x: size.width * 0.8, y: size.height - size.height/20)
         addChild(scoreLabel)
     }
     
@@ -202,9 +216,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Tracks current game time
         timerLabel = SKLabelNode(fontNamed: "Menlo-Bold")
         timerLabel.text = "Time: \(timerSeconds)"
-        timerLabel.fontSize = 13
-        timerLabel.horizontalAlignmentMode = .right
-        timerLabel.position = CGPoint(x: size.width * 0.5, y: size.height - size.height/19)
+        timerLabel.fontSize = 14
+        //timerLabel.horizontalAlignmentMode = .right
+        timerLabel.position = CGPoint(x: size.width * 0.5, y: size.height - size.height/20)
         addChild(timerLabel)
     }
     
@@ -216,6 +230,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         } else if (timerSeconds % 10 == 0 && timerSeconds > 0){
             self.run(zipTimerSound)
             timerLabel.fontSize = 13
+            timerLabel.fontColor = SKColor.cyan
+        } else {
+            timerLabel.fontColor = SKColor.white
         }
     }
     
@@ -386,9 +403,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         touchPoint = touchLocation
         currSpriteInitialDisplacement = CGVector(dx: touchPoint.x - currSprite.position.x, dy: touchPoint.y - currSprite.position.y)
         touching = true
+        
+        
+        //gemEffect = SKEmitterNode(fileNamed: "gemMoveEffect")
+        //gemEffect.position = touchLocation;
+        //gemEffect.zPosition = 10
+        //addChild(gemEffect)
     }
     
-    private func onBackButtonTouch() {
+    private func onpauseButtonTouch() {
         var wasPaused: Bool
         if self.isPaused {
             wasPaused = true
@@ -400,22 +423,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         let resumeAction = UIAlertAction(title: "Resume Game", style: UIAlertActionStyle.default)  { (action:UIAlertAction!) in
             if !wasPaused {
                 // Only play game if game wasn't paused when back button was touched
-                self.pauseButton.texture = SKTexture(imageNamed:"pause")
                 self.isPaused = false
             }
         }
         backAlert(title: "WARNING", message: "You will lose your current progress", resumeAction: resumeAction)
     }
     
-    private func onPauseButtonTouch() {
-        if self.isPaused {
-            pauseButton.texture = SKTexture(imageNamed:"pause")
-            self.isPaused = false
-        } else {
-            pauseButton.texture = SKTexture(imageNamed:"play")
-            self.isPaused = true
-        }
-    }
     
     private func findNearestGem (touchLocal: CGPoint) -> (CGFloat, SKNode){
         //Method iterates over all gems and returns the closest one with the distance to said gem
@@ -489,10 +502,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         
         // Determines what was touched, if anything
         switch touchedNode {
-        case backButton:
-            onBackButtonTouch()
         case pauseButton:
-            onPauseButtonTouch()
+            onpauseButtonTouch()
         default: break
         }
     }
