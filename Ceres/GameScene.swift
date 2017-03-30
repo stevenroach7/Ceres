@@ -417,6 +417,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         }
     }
     
+    private func findNearestGem (touchLocal: CGPoint) -> (CGFloat, SKNode){
+        //Method iterates over all gems and returns the closest one with the distance to said gem
+        
+        var minDist: CGFloat = 44
+        var closestGem: SKSpriteNode = SKSpriteNode()
+        self.enumerateChildNodes(withName: "gem"){node,_ in
+            let xDist = node.position.x - touchLocal.x
+            let yDist = node.position.y - touchLocal.y
+            let dist = CGFloat(sqrt((xDist*xDist) + (yDist*yDist)))
+            if dist < minDist {
+                minDist = dist
+                closestGem = (node as? SKSpriteNode)!
+            }
+        }
+        return (minDist, closestGem)
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Method to handle touch events. Senses when user touches down (places finger on screen).
         
@@ -426,7 +443,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         }
         
         let touchLocation = touch.location(in: self)
-        let touchedNode = atPoint(touchLocation) as? SKSpriteNode
+        var touchedNode = atPoint(touchLocation) as? SKSpriteNode
+        
+        let (minDist, closestGem) = findNearestGem(touchLocal: touchLocation)
+        
+        if (minDist < 44){ //If the touch is within 44 px of gem, change touched node to gem
+            touchedNode = closestGem as? SKSpriteNode
+        }
         
         // Determines what was touched, if anything
         if let name = touchedNode?.name {
