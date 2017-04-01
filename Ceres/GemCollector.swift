@@ -13,7 +13,7 @@ class GemCollector: SKSpriteNode {
     
     func setGemCollectorProperties() {
         // Sets initial properties of the gem collector
-        setScale(0.2)
+        setScale(0.23)
         name = "gemCollector"
         zPosition = 5
         physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: size.width, height: size.height))

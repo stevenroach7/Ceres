@@ -71,13 +71,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         starfield.advanceSimulationTime(1)
         addChild(starfield)
         
-        
-        
         pauseButton.setScale(0.175)
         pauseButton.position = CGPoint(x: size.width/12, y: size.height - size.height/24) // TODO: Change how to calculate height, use constants
         addChild(pauseButton)
-        
-        
         
         setScoreLabel()
         setTimerLabel()
@@ -272,8 +268,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                 gemSpawnSequence1()
             case 10:
                 gemSpawnSequence2()
-            default:
+            case 20:
                 gemSpawnSequence3()
+            case 30:
+                gemSpawnSequence4()
+            case 40:
+                gemSpawnSequence4()
+            default:
+                gemSpawnSequenceHard()
             }
         }
     }
@@ -305,6 +307,53 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             
             ]),
                             count: 7))
+    }
+    
+    private func gemSpawnSequence4() {
+        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 2.47),
+                                               SKAction.run(addGemRight),
+                                               SKAction.wait(forDuration: 0.01),
+                                               SKAction.run(addGemRight),
+                                               SKAction.wait(forDuration: 0.01),
+                                               SKAction.run(addGemRight),
+                                               SKAction.wait(forDuration: 0.01),
+                                               SKAction.run(addGemRight),
+            
+            
+                                               SKAction.wait(forDuration: 2.47),
+                                               SKAction.run(addGemLeft),
+                                               SKAction.wait(forDuration: 0.01),
+                                               SKAction.run(addGemLeft),
+                                               SKAction.wait(forDuration: 0.01),
+                                               SKAction.run(addGemRight),
+                                               SKAction.wait(forDuration: 0.01),
+                                               SKAction.run(addGemLeft),
+                                               ]),
+                            count: 2))
+    }
+    
+    private func gemSpawnSequenceHard() {
+        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 0.74),
+                                            SKAction.wait(forDuration: 0.01),
+                                            SKAction.run(addGemRight),
+                                            SKAction.wait(forDuration: 0.01),
+                                            SKAction.run(addGemRight),
+                                            SKAction.run(addGemLeft),
+                                            SKAction.wait(forDuration: 0.01),
+                                            SKAction.run(addGemRight),
+                                            
+                                            SKAction.wait(forDuration: 0.2),
+                                            SKAction.wait(forDuration: 0.01),
+                                            SKAction.run(addGemLeft),
+                                            SKAction.wait(forDuration: 0.01),
+                                            SKAction.run(addGemLeft),
+                                            SKAction.run(addGemRight),
+                                            SKAction.wait(forDuration: 0.01),
+                                            SKAction.run(addGemLeft),
+            ]),
+                            count: 10))
+        
+        
     }
     
     // Helper methods to generate random numbers.
@@ -354,7 +403,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func addGemCollector() {
         let gemCollector = GemCollector(imageNamed: "collectorInactive")
         gemCollector.setGemCollectorProperties()  // Calls gem collector properties from GemCollector class
-        gemCollector.position = CGPoint(x: size.width / 2, y: size.height * 0.075)
+        gemCollector.position = CGPoint(x: size.width / 2, y: size.height * 0.085)
         addChild(gemCollector)
     }
     

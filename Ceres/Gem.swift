@@ -21,7 +21,7 @@ class Gem: SKSpriteNode {
         physicsBody = SKPhysicsBody(circleOfRadius: max(size.width / 2, size.height / 2)) // Creating a circular physics body around each of the gems. Maybe change this shape later.
         physicsBody?.usesPreciseCollisionDetection = true
         physicsBody?.allowsRotation = true
-        physicsBody?.restitution = 0.5
+        physicsBody?.restitution = 0.25
         physicsBody?.categoryBitMask = GameScene.PhysicsCategory.Gem;
         physicsBody?.contactTestBitMask = GameScene.PhysicsCategory.GemCollector;
         physicsBody?.collisionBitMask = GameScene.PhysicsCategory.Gem | GameScene.PhysicsCategory.GemSource | GameScene.PhysicsCategory.StagePlanet;
