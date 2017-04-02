@@ -379,7 +379,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         gem.setGemProperties()  // Calls gem properties from Gem class
         let angle = random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (1/2))
         gem.setGemVelocity(velocity: 180, angle: angle)
-        gem.position = CGPoint(x: size.width * 0.1, y: size.height * 0.1 - 5)
+        gem.position = CGPoint(x: size.width * 0.1, y: size.height * 0.15)
         addChild(gem)
     }
     
@@ -389,7 +389,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         gem.setGemProperties()  // Calls gem properties from Gem class
         let angle = random(min: CGFloat.pi * (1/2), max: CGFloat.pi * (3/4))
         gem.setGemVelocity(velocity: 180, angle: angle)
-        gem.position = CGPoint(x: size.width * 0.9, y: size.height * 0.1 - 5)
+        gem.position = CGPoint(x: size.width * 0.9, y: size.height * 0.15)
         addChild(gem)
     }
     
@@ -426,12 +426,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         redAstronaut.setScale(0.175)
         redAstronaut.name = "redAstronaut"
         redAstronaut.zPosition = 2
+        redAstronaut.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 0.1*(size.width), height: 0.13*(size.height)))
+        redAstronaut.physicsBody?.usesPreciseCollisionDetection = true
+        redAstronaut.physicsBody?.isDynamic = false
         redAstronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
         
         blueAstronaut.position = CGPoint(x: size.width * 0.9, y: size.height * 0.1)
         blueAstronaut.setScale(0.175)
         blueAstronaut.name = "blueAstronaut"
         blueAstronaut.zPosition = 2
+        blueAstronaut.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 0.1*(size.width), height: 0.13*(size.height)))
+        blueAstronaut.physicsBody?.usesPreciseCollisionDetection = true
+        blueAstronaut.physicsBody?.isDynamic = false //Change this to true to be amused
         blueAstronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
         
         addChild(redAstronaut)
