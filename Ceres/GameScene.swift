@@ -77,7 +77,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         pauseButton.position = CGPoint(x: size.width/12, y: size.height - size.height/24) // TODO: Change how to calculate height, use constants
         addChild(pauseButton)
         
-        setScoreLabel()
+        setScoreLabel(font: 30, position: CGPoint(x: size.width/2, y: size.height * 0.7))
         setTimerLabel()
         
         addStagePlanet()
@@ -204,13 +204,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         self.addChild(shape)
     }
     
-    private func setScoreLabel() {
+    private func setScoreLabel(font: CGFloat, position: CGPoint) {
         // Tracks current game score
         scoreLabel = SKLabelNode(fontNamed: "Menlo-Bold")
         scoreLabel.text = "+/-: \(gemsPlusMinus)"
-        scoreLabel.fontSize = 14
+        scoreLabel.fontSize = font
         //scoreLabel.horizontalAlignmentMode = .right
-        scoreLabel.position = CGPoint(x: size.width * 0.8, y: size.height - size.height/20)
+        scoreLabel.position = position
         addChild(scoreLabel)
     }
     
@@ -274,6 +274,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                 SKAction.run(incrementTimer),
                 ])
         ))
+        scoreLabel.removeFromParent()
+        setScoreLabel(font: 14, position: CGPoint(x: size.width * 0.8, y: size.height - size.height/20))
     }
     
     private func isGameOver() -> Bool {
