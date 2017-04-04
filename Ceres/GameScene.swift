@@ -23,6 +23,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let zipTimerSound = SKAction.playSoundFileNamed("zwip.wav", waitForCompletion: false)
     
     var pauseButton = SKSpriteNode(imageNamed: "pause")
+    
+    let swipedown = SKSpriteNode(imageNamed: "swipedown")
 
     let leftGemSource  = GemSource(imageNamed: "hammerInactive")
     let rightGemSource = GemSource(imageNamed: "hammerInactive")
@@ -38,7 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             scoreLabel.text = "+/-: \(gemsPlusMinus)"
         }
     }
-    let losingGemPlusMinus = -5 // Make this lower during testing
+    let losingGemPlusMinus = -1 // Make this lower during testing
     
     var timerLabel: SKLabelNode!
     var timerSeconds = 0 {
@@ -83,6 +85,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addGemSource()
         addAstronauts()
         
+        prepareTutorial()
+        
         makeWall(location: CGPoint(x: size.width/2, y: size.height+50), size: CGSize(width: size.width*1.5, height: 1))
         makeWall(location: CGPoint(x: -50, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
         makeWall(location: CGPoint(x: size.width+50, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
@@ -99,28 +103,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
         
-        // Adjust gravity of scene
-        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0.27) // Gravity on Ceres is 0.27 m/s²
-        //        let gravityFieldNode = SKFieldNode.radialGravityField()
-        //        gravityFieldNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        //        addChild(gravityFieldNode)
-        
-        run(SKAction.repeatForever(
-            SKAction.sequence([
-                SKAction.run(animateLeftHammer),
-                SKAction.wait(forDuration: 0.35),
-                SKAction.run(animateRightHammer),
-                SKAction.wait(forDuration: 0.35),
-                ])
-        ))
-        
-        run(SKAction.repeatForever( // Serves as timer, Could potentially refactor to use group actions later.
-            SKAction.sequence([
-                SKAction.run(spawnGems),
-                SKAction.wait(forDuration: 1.0),
-                SKAction.run(incrementTimer),
-                ])
-        ))
     }
     
     private func animateCollector(collector: SKSpriteNode) {
@@ -365,11 +347,50 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         return random() * (max - min) + min
     }
     
-    private func addGem() {
+    private func prepareTutorial() {
+        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0.01)
+        addTutorialGem()
+//        if (gemsPlusMinus == 1) {
+//            swipedown.removeFromParent()
+//            beginGameplay()
+//        }
+    }
+    
+    private func beginGameplay() {
+        // Adjust gravity of scene
+        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0.27) // Gravity on Ceres is 0.27 m/s²
+        //        let gravityFieldNode = SKFieldNode.radialGravityField()
+        //        gravityFieldNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        //        addChild(gravityFieldNode)
+        
+        run(SKAction.repeatForever(
+            SKAction.sequence([
+                SKAction.run(animateLeftHammer),
+                SKAction.wait(forDuration: 0.35),
+                SKAction.run(animateRightHammer),
+                SKAction.wait(forDuration: 0.35),
+                ])
+        ))
+        
+        run(SKAction.repeatForever( // Serves as timer, Could potentially refactor to use group actions later.
+            SKAction.sequence([
+                SKAction.run(spawnGems),
+                SKAction.wait(forDuration: 1.0),
+                SKAction.run(incrementTimer),
+                ])
+        ))
+    }
+    
+    private func addTutorialGem() {
         let gem = Gem(imageNamed: "gemShape1")
         gem.setGemProperties()  // Calls gem properties from Gem class
-        let spawnLocation = CGPoint(x: size.width / 2, y: size.height / 10)
+        let spawnLocation = CGPoint(x: size.width * 0.45, y: size.height / 2)
         gem.position = spawnLocation
+        
+        swipedown.position = CGPoint(x: size.width * 0.525, y: size.height * 0.33)
+        swipedown.setScale(0.3)
+        addChild(swipedown)
+        
         addChild(gem)
     }
     
