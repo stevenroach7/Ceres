@@ -378,8 +378,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                                             SKAction.run(addGemLeft),
             ]),
                             count: 10))
-        
-        
     }
     
     // Helper methods to generate random numbers.
@@ -535,7 +533,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         //addChild(gemEffect)
     }
     
-    private func onpauseButtonTouch() {
+    private func onPauseButtonTouch() {
         var wasPaused: Bool
         if self.isPaused {
             wasPaused = true
@@ -608,6 +606,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         guard let touch = touches.first else {
             return
         }
+        
         let touchLocation = touch.location(in: self)
         touchPoint = touchLocation
     }
@@ -627,7 +626,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Determines what was touched, if anything
         switch touchedNode {
         case pauseButton:
-            onpauseButtonTouch()
+            onPauseButtonTouch()
         default: break
         }
     }
