@@ -269,10 +269,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             case 10:
                 gemSpawnSequence2()
             case 20:
-                gemSpawnSequence3()
+                gemSpawnSequenceBasicDetonators()
             case 30:
-                gemSpawnSequence4()
+                gemSpawnSequence3()
             case 40:
+                gemSpawnSequence4()
+            case 50:
                 gemSpawnSequence4()
             default:
                 gemSpawnSequenceHard()
@@ -290,7 +292,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0),
                                             SKAction.run(addGemLeft),
                                             SKAction.wait(forDuration: 0.25),
-                                            SKAction.run(addGemRight)
+                                            SKAction.run(addGemRight),
                                             ]),
                             count: 8))
     }
@@ -319,7 +321,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                                                SKAction.wait(forDuration: 0.01),
                                                SKAction.run(addGemRight),
             
-            
                                                SKAction.wait(forDuration: 2.47),
                                                SKAction.run(addGemLeft),
                                                SKAction.wait(forDuration: 0.01),
@@ -328,6 +329,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                                                SKAction.run(addGemRight),
                                                SKAction.wait(forDuration: 0.01),
                                                SKAction.run(addGemLeft),
+                                               ]),
+                            count: 2))
+    }
+    
+    private func gemSpawnSequenceBasicDetonators() {
+        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 2.47),
+                                               SKAction.run(addGemRight),
+                                               SKAction.wait(forDuration: 0.01),
+                                               SKAction.run(addGemRight),
+                                               SKAction.wait(forDuration: 0.01),
+                                               SKAction.run(addGemRight),
+                                               SKAction.wait(forDuration: 0.01),
+                                               SKAction.run(addGemRight),
+                                               SKAction.run(detonateGemSequence),
+                                               
+                                               
+                                               SKAction.wait(forDuration: 2.47),
+                                               SKAction.run(addGemLeft),
+                                               SKAction.wait(forDuration: 0.01),
+                                               SKAction.run(addGemLeft),
+                                               SKAction.wait(forDuration: 0.01),
+                                               SKAction.run(addGemRight),
+                                               SKAction.wait(forDuration: 0.01),
+                                               SKAction.run(addGemRight),
+                                               SKAction.run(detonateGemSequence),
                                                ]),
                             count: 2))
     }
@@ -365,14 +391,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         return random() * (max - min) + min
     }
     
-    private func addGem() {
-        let gem = Gem(imageNamed: "gemShape1")
-        gem.setGemProperties()  // Calls gem properties from Gem class
-        let spawnLocation = CGPoint(x: size.width / 2, y: size.height / 10)
-        gem.position = spawnLocation
-        addChild(gem)
-    }
-    
     private func addGemLeft() {
         // Produces a Gem from the left astronaut
         let gem = Gem(imageNamed: "gemShape1")
@@ -391,6 +409,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         gem.setGemVelocity(velocity: 180, angle: angle)
         gem.position = CGPoint(x: size.width * 0.9, y: size.height * 0.15)
         addChild(gem)
+    }
+    
+    private func addDetonatorGem(detonatorGem: Gem) {
+        // Takes a gem and adds it to the scene in a manner specific to detonator gems
+        detonatorGem.setGemProperties()  // Sets gem properties from Gem class
+        detonatorGem.setScale(3)
+        let angle = random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (3/8))
+        detonatorGem.setGemVelocity(velocity: 100, angle: angle)
+        let spawnLocation = CGPoint(x: size.width * 0.1, y: size.height * 0.15)
+        detonatorGem.position = spawnLocation
+        addChild(detonatorGem)
+        // TODO: Add flashing animation.
+    }
+    
+    private func detonateGem(detonatorGem: Gem, gravityFieldNode: SKFieldNode) {
+        // Takes a detonator gem and a gravityFieldNode to add to the scene and simulates the gem exploding in the scene
+        let gemPosition = detonatorGem.position
+        detonatorGem.removeFromParent()
+        gravityFieldNode.name = "gravityFieldNode"
+        gravityFieldNode.strength = -30
+        gravityFieldNode.position = gemPosition
+        // TODO: Add explosion animation
+        addChild(gravityFieldNode)
+    }
+    
+    private func detonationCleanup(gravityFieldNode: SKFieldNode) {
+        // Takes a gravityFieldNode and removes it from the scene to end the gem explosion simulation
+        gravityFieldNode.removeFromParent()
+    }
+    
+    private func detonateGemSequence() {
+        // Adds a detonating gem to the scene and makes it explode
+        let detonatorGem = Gem(imageNamed: "rock-gem") // TODO: Change to different texture later.
+        let gravityFieldNode = SKFieldNode.radialGravityField()
+        
+        run(SKAction.sequence([
+            SKAction.run({self.addDetonatorGem(detonatorGem: detonatorGem)}),
+            SKAction.wait(forDuration: 2.0),
+            SKAction.run({self.detonateGem(detonatorGem: detonatorGem, gravityFieldNode: gravityFieldNode)}),
+            SKAction.wait(forDuration: 0.25),
+            SKAction.run({self.detonationCleanup(gravityFieldNode: gravityFieldNode)})
+            ]))
     }
     
     private func addStagePlanet() {
