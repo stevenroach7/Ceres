@@ -145,20 +145,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         //gemEffect.removeFromParent()
     }
     
+    private func detonatorGemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
+        // Removes gem from game scene and increments number of gems collected
+        gemsPlusMinus -= 5 // TODO: Adjust this value.
+        recolorScore()
+        animateCollector(collector: collector) // TODO: Add different animation
+        gem.removeFromParent()
+        //gemEffect.removeFromParent()
+        checkGameOver()
+    }
+    
     private func gemOffScreen(gem: SKSpriteNode) {
         // Removes gems from game scene when they fly off screen
         gemsPlusMinus -= 1
         recolorScore()
         gem.removeFromParent()
-        if isGameOver() {
-            gameOverTransition()
-        }
+        checkGameOver()
     }
     
     private func recolorScore(){
         if gemsPlusMinus < 0 {
             scoreLabel.fontColor = SKColor.red
-        } else if gemsPlusMinus > 0{
+        } else if gemsPlusMinus > 0 {
             scoreLabel.fontColor = SKColor.green
         } else {
             scoreLabel.fontColor = SKColor.white
@@ -244,9 +252,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         }
     }
     
-    private func isGameOver() -> Bool {
+    private func checkGameOver() {
         // Calculates score to figure out when to end the game
-        return (gemsPlusMinus <= losingGemPlusMinus)
+        if gemsPlusMinus <= losingGemPlusMinus {
+            gameOverTransition()
+        }
     }
     
     private func gameOverTransition() {
@@ -553,7 +563,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         currSpriteInitialDisplacement = CGVector(dx: touchPoint.x - currSprite.position.x, dy: touchPoint.y - currSprite.position.y)
         touching = true
         
-        
         //gemEffect = SKEmitterNode(fileNamed: "gemMoveEffect")
         //gemEffect.position = touchLocation;
         //gemEffect.zPosition = 10
@@ -612,7 +621,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         if (minDist < 44){ //If the touch is within 44 px of gem, change touched node to gem
             touchedNode = closestGem as? SKSpriteNode
         }
-        
+
         // Determines what was touched, if anything
         if let name = touchedNode?.name {
             
