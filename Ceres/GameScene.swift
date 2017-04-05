@@ -124,8 +124,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         recolorScore()
         animateCollector(collector: collector)
         gem.removeFromParent()
-        if timerSeconds == 0 && isTutorialOver() {
-            swipedown.removeFromParent()
+        if isTutorialOver() {
+            endTutorial()
             beginGameplay()
         }
         //gemEffect.removeFromParent()
@@ -239,7 +239,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     private func isTutorialOver() -> Bool {
-        return (gemsPlusMinus == 1)
+        return (gemsPlusMinus == 1 && timerSeconds==0)
     }
     
     private func prepareTutorial() {
@@ -250,6 +250,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         swipedown.setScale(0.3)
         addChild(swipedown)
     }
+    
+    private func endTutorial() {
+        swipedown.removeFromParent()
+        scoreLabel.removeFromParent()
+        setScoreLabel(font: 14, position: CGPoint(x: size.width * 0.8, y: size.height - size.height/20))
+    }
+    
     
     private func beginGameplay() {
         // Adjust gravity of scene
@@ -274,8 +281,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                 SKAction.run(incrementTimer),
                 ])
         ))
-        scoreLabel.removeFromParent()
-        setScoreLabel(font: 14, position: CGPoint(x: size.width * 0.8, y: size.height - size.height/20))
     }
     
     private func isGameOver() -> Bool {
