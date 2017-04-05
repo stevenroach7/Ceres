@@ -192,7 +192,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         if ((firstBody.categoryBitMask == PhysicsCategory.GemCollector) &&
             (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
             if let gem = secondBody.node as? SKSpriteNode, let collector = firstBody.node as? SKSpriteNode {
-                gemDidCollideWithCollector(gem: gem, collector: collector)
+                switch gem.name! {
+                case "gem":
+                    gemDidCollideWithCollector(gem: gem, collector: collector)
+                case "detonatorGem":
+                    detonatorGemDidCollideWithCollector(gem: gem, collector: collector)
+                default:
+                    break
+                }
             }
         }
 
@@ -422,6 +429,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func addDetonatorGem(detonatorGem: Gem) {
         // Takes a gem and adds it to the scene in a manner specific to detonator gems
         detonatorGem.setGemProperties()  // Sets gem properties from Gem class
+        detonatorGem.name = "detonatorGem"
         detonatorGem.color = SKColor.white
         let angle = random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (3/8))
         detonatorGem.setGemVelocity(velocity: 100, angle: angle)
@@ -631,6 +639,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             case "leftGemSource":
                 onLeftGemSourceTouch()
             case "gem":
+                onGemTouch(touchedNode: touchedNode!, touchLocation: touchLocation)
+            case "detonatorGem":
                 onGemTouch(touchedNode: touchedNode!, touchLocation: touchLocation)
             default: break
             }
