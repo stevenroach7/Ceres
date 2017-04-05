@@ -412,13 +412,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func addDetonatorGem(detonatorGem: Gem) {
         // Takes a gem and adds it to the scene in a manner specific to detonator gems
         detonatorGem.setGemProperties()  // Sets gem properties from Gem class
-        detonatorGem.setScale(3)
+        detonatorGem.color = SKColor.white
         let angle = random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (3/8))
         detonatorGem.setGemVelocity(velocity: 100, angle: angle)
         let spawnLocation = CGPoint(x: size.width * 0.1, y: size.height * 0.15)
         detonatorGem.position = spawnLocation
         addChild(detonatorGem)
-        // TODO: Add flashing animation.
+    }
+    
+    private func animateDetonatorGem(detonatorGem: Gem) {
+        
+        // TODO: Change this animation to change color of node rather than hide it. To this by changing texture of sprite as changing color to white doesn't blend correctly.
+        let hideAction = SKAction.hide()
+        let unhideAction = SKAction.unhide()
+        
+        var flashDuration = 0.1
+        var flashAnimation = SKAction.sequence([ // TODO: Refactor this to avoid code duplication
+            hideAction,
+            SKAction.wait(forDuration: flashDuration),
+            unhideAction,
+            SKAction.wait(forDuration: flashDuration)
+            ])
+        
+        func updateFlashAnimation() {
+            flashDuration *= 0.1
+            
+            flashAnimation = SKAction.sequence([
+                hideAction,
+                SKAction.wait(forDuration: flashDuration),
+                unhideAction,
+                SKAction.wait(forDuration: flashDuration)
+                ])
+        }
+        detonatorGem.run(SKAction.repeat(SKAction.sequence([flashAnimation, SKAction.run(updateFlashAnimation)]), count: 20))
     }
     
     private func detonateGem(detonatorGem: Gem, gravityFieldNode: SKFieldNode) {
@@ -439,11 +465,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func detonateGemSequence() {
         // Adds a detonating gem to the scene and makes it explode
-        let detonatorGem = Gem(imageNamed: "rock-gem") // TODO: Change to different texture later.
+        let detonatorGem = Gem(imageNamed: "rottenGem") // TODO: Change to different texture later.
         let gravityFieldNode = SKFieldNode.radialGravityField()
         
         run(SKAction.sequence([
             SKAction.run({self.addDetonatorGem(detonatorGem: detonatorGem)}),
+            SKAction.run({self.animateDetonatorGem(detonatorGem: detonatorGem)}),
             SKAction.wait(forDuration: 2.0),
             SKAction.run({self.detonateGem(detonatorGem: detonatorGem, gravityFieldNode: gravityFieldNode)}),
             SKAction.wait(forDuration: 0.25),
