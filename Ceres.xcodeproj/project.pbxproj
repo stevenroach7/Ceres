@@ -33,7 +33,7 @@
 		B29319B01E7F7C7700147924 /* collectorImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B29319AF1E7F7C7700147924 /* collectorImages.atlas */; };
 		B297B8FB1E8CC01E00E1D216 /* gemMoveEffect.sks in Resources */ = {isa = PBXBuildFile; fileRef = B297B8FA1E8CC01E00E1D216 /* gemMoveEffect.sks */; };
 		B2A6A25A1E726FD100F64EAF /* anvil.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B2A6A2581E726FD100F64EAF /* anvil.mp3 */; };
-		B2CDC03C1E8368DA00AA93DC /* hammerEffect.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2CDC03B1E8368DA00AA93DC /* hammerEffect.sks */; };
+		B2CDC03C1E8368DA00AA93DC /* gemExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2CDC03B1E8368DA00AA93DC /* gemExplosion.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,7 +86,7 @@
 		B29319AF1E7F7C7700147924 /* collectorImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = collectorImages.atlas; sourceTree = "<group>"; };
 		B297B8FA1E8CC01E00E1D216 /* gemMoveEffect.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = gemMoveEffect.sks; sourceTree = "<group>"; };
 		B2A6A2581E726FD100F64EAF /* anvil.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = anvil.mp3; sourceTree = "<group>"; };
-		B2CDC03B1E8368DA00AA93DC /* hammerEffect.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = hammerEffect.sks; sourceTree = "<group>"; };
+		B2CDC03B1E8368DA00AA93DC /* gemExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = gemExplosion.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,7 +156,7 @@
 				B07805E51E5506C300073DD6 /* GameScene.swift */,
 				B297B8FA1E8CC01E00E1D216 /* gemMoveEffect.sks */,
 				3C3BFDC81E871CC90059D6CE /* GameOverScene.swift */,
-				B2CDC03B1E8368DA00AA93DC /* hammerEffect.sks */,
+				B2CDC03B1E8368DA00AA93DC /* gemExplosion.sks */,
 				B28F8DD71E56663E005D803B /* starShower.sks */,
 				B07805E71E5506C300073DD6 /* GameViewController.swift */,
 				B07805E91E5506C300073DD6 /* Main.storyboard */,
@@ -314,7 +314,7 @@
 				B2557EE61E8225B10078C13F /* hammerImages.atlas in Resources */,
 				B212A1251E89DA3500DDEC64 /* zwip.wav in Resources */,
 				B2557EE41E8225800078C13F /* hydraulicSound.wav in Resources */,
-				B2CDC03C1E8368DA00AA93DC /* hammerEffect.sks in Resources */,
+				B2CDC03C1E8368DA00AA93DC /* gemExplosion.sks in Resources */,
 				B28F8DD81E56663E005D803B /* starShower.sks in Resources */,
 				B297B8FB1E8CC01E00E1D216 /* gemMoveEffect.sks in Resources */,
 			);
