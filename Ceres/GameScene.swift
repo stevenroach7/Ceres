@@ -440,15 +440,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func animateDetonatorGem(detonatorGem: Gem) {
         
-        // TODO: Change this animation to change color of node rather than hide it. To this by changing texture of sprite as changing color to white doesn't blend correctly.
-        let hideAction = SKAction.hide()
-        let unhideAction = SKAction.unhide()
+        let flashAction = SKAction.setTexture(SKTexture(imageNamed: "gemShape1"))
+        let unFlashAction = SKAction.setTexture(SKTexture(imageNamed: "rottenGem"))
         
         var flashDuration = 0.1
         var flashAnimation = SKAction.sequence([ // TODO: Refactor this to avoid code duplication
-            hideAction,
+            flashAction,
             SKAction.wait(forDuration: flashDuration),
-            unhideAction,
+            unFlashAction,
             SKAction.wait(forDuration: flashDuration)
             ])
         
@@ -456,9 +455,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             flashDuration *= 0.1
             
             flashAnimation = SKAction.sequence([
-                hideAction,
+                flashAction,
                 SKAction.wait(forDuration: flashDuration),
-                unhideAction,
+                unFlashAction,
                 SKAction.wait(forDuration: flashDuration)
                 ])
         }
@@ -467,23 +466,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func detonateGem(detonatorGem: Gem, gravityFieldNode: SKFieldNode) {
         // Takes a detonator gem and a gravityFieldNode to add to the scene and simulates the gem exploding in the scene
-        let gemPosition = detonatorGem.position
-        detonatorGem.removeFromParent()
-        gravityFieldNode.name = "gravityFieldNode"
-        gravityFieldNode.strength = -30
-        gravityFieldNode.position = gemPosition
-        // TODO: Add explosion animation
-        addChild(gravityFieldNode)
+        if detonatorGem.parent != nil { // Don't simulate explosion if gem has been removed
+            let gemPosition = detonatorGem.position
+            detonatorGem.removeFromParent()
+            gravityFieldNode.name = "gravityFieldNode"
+            gravityFieldNode.strength = -30
+            gravityFieldNode.position = gemPosition
+            // TODO: Add explosion animation
+            addChild(gravityFieldNode)
+        }
     }
     
     private func detonationCleanup(gravityFieldNode: SKFieldNode) {
         // Takes a gravityFieldNode and removes it from the scene to end the gem explosion simulation
-        gravityFieldNode.removeFromParent()
+        if gravityFieldNode.parent != nil {
+            gravityFieldNode.removeFromParent()
+        }
     }
     
     private func detonateGemSequence() {
         // Adds a detonating gem to the scene and makes it explode
-        let detonatorGem = Gem(imageNamed: "rottenGem") // TODO: Change to different texture later.
+        let detonatorGem = Gem(imageNamed: "rottenGem")
         let gravityFieldNode = SKFieldNode.radialGravityField()
         
         run(SKAction.sequence([
