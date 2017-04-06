@@ -249,6 +249,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         swipedown.position = CGPoint(x: size.width * 0.525, y: size.height * 0.33)
         swipedown.setScale(0.3)
         addChild(swipedown)
+        
+        let moveDown = SKAction.move(to: CGPoint(x: size.width * 0.525, y: size.height * 0.25), duration: 1.5)
+        let moveUp = SKAction.move(to: CGPoint(x: size.width * 0.525, y: size.height * 0.33), duration: 1.5)
+        let bounce = SKAction.sequence([moveUp,moveDown])
+        swipedown.run(SKAction.repeatForever(bounce))
     }
     
     private func endTutorial() {
@@ -256,7 +261,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
 
         let scaleDown = SKAction.scale(by: 14/30, duration: 4.0)
         let moveUp = SKAction.move(to: CGPoint(x: size.width * 0.8, y: size.height - size.height/20), duration: 4.0)
-        //let scaleAndMove = SKAction.sequence([scaleDown,moveUp])
         scoreLabel.run(scaleDown)
         scoreLabel.run(moveUp)
     }
