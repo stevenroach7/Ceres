@@ -253,8 +253,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func endTutorial() {
         swipedown.removeFromParent()
-        scoreLabel.removeFromParent()
-        setScoreLabel(font: 14, position: CGPoint(x: size.width * 0.8, y: size.height - size.height/20))
+
+        let scaleDown = SKAction.scale(by: 14/30, duration: 4.0)
+        let moveUp = SKAction.move(to: CGPoint(x: size.width * 0.8, y: size.height - size.height/20), duration: 4.0)
+        //let scaleAndMove = SKAction.sequence([scaleDown,moveUp])
+        scoreLabel.run(scaleDown)
+        scoreLabel.run(moveUp)
     }
     
     
