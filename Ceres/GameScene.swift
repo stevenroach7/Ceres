@@ -40,7 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             scoreLabel.text = "+/-: \(gemsPlusMinus)"
         }
     }
-    let losingGemPlusMinus = -1 // Make this lower during testing
+    let losingGemPlusMinus = -1 // Make this lower during testing Change back
     
     var timerLabel: SKLabelNode!
     var timerSeconds = 0 {
@@ -61,7 +61,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     var currSprite: SKNode! = nil
-
+    
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
         physicsWorld.contactDelegate = self
@@ -131,11 +131,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         //gemEffect.removeFromParent()
     }
     
+    private func shakeAction() -> SKAction {
+        //returns a shaking animation
+        //WARNING: If many detonatingGems are sent to collector in small amount of time, its position will shift
+        
+        var sequence = [SKAction]()
+        for i in (1...4).reversed() {
+            let moveRight = SKAction.moveBy(x: CGFloat(i*2), y: 0, duration: TimeInterval(0.05))
+            sequence.append(moveRight)
+            let moveLeft = SKAction.moveBy(x: CGFloat(-4*i), y: 0, duration: TimeInterval(0.1))
+            sequence.append(moveLeft)
+            let moveOriginal = SKAction.moveBy(x: CGFloat(i*2), y: 0, duration: (TimeInterval(0.05)))
+            sequence.append(moveOriginal)
+        }
+        let shake = SKAction.sequence(sequence)
+        return shake
+    }
+    
+    
     private func detonatorGemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
         // Removes gem from game scene and increments number of gems collected
         gemsPlusMinus -= 5 // TODO: Adjust this value.
         recolorScore()
+        
+        let shake = shakeAction()
         animateCollector(collector: collector) // TODO: Add different animation
+        collector.run(shake)
         gem.removeFromParent()
         //gemEffect.removeFromParent()
         checkGameOver()
@@ -584,6 +605,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func addGemCollector() {
         let gemCollector = GemCollector(imageNamed: "collectorInactive")
         gemCollector.setGemCollectorProperties()  // Calls gem collector properties from GemCollector class
+        
         gemCollector.position = CGPoint(x: size.width / 2, y: size.height * 0.085)
         addChild(gemCollector)
     }
