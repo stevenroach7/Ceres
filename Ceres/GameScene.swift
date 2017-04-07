@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import AudioToolbox.AudioServices
 
 class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
@@ -21,6 +22,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let gemCreatedSound = SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false)
     let zoomTimerSound = SKAction.playSoundFileNamed("boop.wav", waitForCompletion: false)
     let zipTimerSound = SKAction.playSoundFileNamed("zwip.wav", waitForCompletion: false)
+    let gemExplosionSound = SKAction.playSoundFileNamed("blast.mp3", waitForCompletion: false)
+    let collectorExplosionSound = SKAction.playSoundFileNamed("bomb.mp3", waitForCompletion: false)
     
     var pauseButton = SKSpriteNode(imageNamed: "pause")
     
@@ -158,6 +161,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         let shake = shakeAction()
         animateCollector(collector: collector) // TODO: Add different animation
         collector.run(shake)
+        self.run(collectorExplosionSound)
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         gem.removeFromParent()
         //gemEffect.removeFromParent()
         checkGameOver()
@@ -357,7 +362,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         if timerSeconds % 10 == 0 {
             switch timerSeconds {
             case 0:
-                gemSpawnSequence1()
+                gemSpawnSequenceBasicDetonators()
             case 10:
                 gemSpawnSequence2()
             case 20:
@@ -556,6 +561,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             let gemExplosion2 = SKEmitterNode(fileNamed: "gemExplosion")!
             gemExplosion2.position = gemPosition
             addChild(gemExplosion2)
+            
+            self.run(gemExplosionSound)
             
             gravityFieldNode.name = "gravityFieldNode"
             gravityFieldNode.strength = -30
