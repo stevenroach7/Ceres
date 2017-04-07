@@ -40,6 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             scoreLabel.text = "+/-: \(gemsPlusMinus)"
         }
     }
+    
     let losingGemPlusMinus = -1 // Make this lower during testing Change back
     
     var timerLabel: SKLabelNode!
@@ -274,10 +275,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         }
     }
     
-    
-    
-    
-    
     private func isTutorialOver() -> Bool {
         return (gemsPlusMinus == 1 && timerSeconds==0)
     }
@@ -305,8 +302,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
 
         scoreLabel.run(scaleDown)
         scoreLabel.run(moveUp)
+        
+        let expand = SKAction.scale(by: 3/2, duration: 1.0)
+        let shrink = SKAction.scale(by: 2/3, duration: 1.0)
+        let expandAndShrink = SKAction.sequence([expand,shrink])
+        timerLabel.run(expandAndShrink)
     }
-    
     
     private func beginGameplay() {
         // Adjust gravity of scene
@@ -332,11 +333,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                 ])
         ))
     }
-    
-
-    
-    
-    
     
     private func checkGameOver() {
         // Calculates score to figure out when to end the game
@@ -592,7 +588,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             SKAction.wait(forDuration: 0.25),
             SKAction.run({self.detonationCleanup(gravityFieldNode: gravityFieldNode, gemExplosion: gemExplosion)})
             ]))
-        
     }
     
     private func addStagePlanet() {
@@ -786,5 +781,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             currSprite.physicsBody!.velocity = velocity
         }
     }
-    
 }
