@@ -44,7 +44,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         }
     }
     
-    let losingGemPlusMinus = -1 // Make this lower during testing Change back
+    let losingGemPlusMinus = -1 // Make this lower during testing
     
     var timerLabel: SKLabelNode!
     var timerSeconds = 0 {
@@ -135,11 +135,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         //gemEffect.removeFromParent()
     }
     
-    private func shakeAction() -> SKAction {
+    //Variables necessary to reset shaken sprites back to original position
+    //TODO: if we refactor sprites to globals instead of being declared and initialized in functions this redundancy can be removed
+    var gemCollectorPosX: CGFloat! = nil
+    var scoreLabelPosX: CGFloat! = nil
+    
+    private func shakeAction(positionX : CGFloat) -> SKAction {
         //returns a shaking animation
         //WARNING: If many detonatingGems are sent to collector in small amount of time, its position will shift
         
+        //defining a shake sequence
         var sequence = [SKAction]()
+        
+        //Filling the sequence
         for i in (1...4).reversed() {
             let moveRight = SKAction.moveBy(x: CGFloat(i*2), y: 0, duration: TimeInterval(0.05))
             sequence.append(moveRight)
@@ -148,6 +156,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             let moveOriginal = SKAction.moveBy(x: CGFloat(i*2), y: 0, duration: (TimeInterval(0.05)))
             sequence.append(moveOriginal)
         }
+        sequence.append(SKAction.moveTo(x: positionX, duration: 0.05)) //Return to original x position
         let shake = SKAction.sequence(sequence)
         return shake
     }
@@ -155,14 +164,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func detonatorGemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
         // Removes gem from game scene and increments number of gems collected
+        
+        let shakeCollector = shakeAction(positionX: gemCollectorPosX)
+        animateCollector(collector: collector) // TODO: Add different animation
+        collector.run(shakeCollector)
+        
+        let shakeScore = shakeAction(positionX: scoreLabelPosX)
         gemsPlusMinus -= 5 // TODO: Adjust this value.
         recolorScore()
+        scoreLabel.run(shakeScore)
         
-        let shake = shakeAction()
-        animateCollector(collector: collector) // TODO: Add different animation
-        collector.run(shake)
         self.run(collectorExplosionSound)
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        
         gem.removeFromParent()
         //gemEffect.removeFromParent()
         checkGameOver()
@@ -302,9 +316,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         swipedown.removeFromParent()
 
         let scaleDown = SKAction.scale(by: 1/2, duration: 0.75)
-        let moveUp = SKAction.move(to: CGPoint(x: size.width * 0.8, y: size.height - size.height/20), duration: 0.75)
+        let finalScoreLabelPosition = CGPoint(x: size.width * 0.8, y: size.height - size.height/20)
+        let moveUp = SKAction.move(to: finalScoreLabelPosition, duration: 0.75)
         //let scaleAndMove = SKAction.sequence([scaleDown,moveUp])
-
+        
+        scoreLabelPosX = finalScoreLabelPosition.x
         scoreLabel.run(scaleDown)
         scoreLabel.run(moveUp)
         
@@ -362,7 +378,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         if timerSeconds % 10 == 0 {
             switch timerSeconds {
             case 0:
-                gemSpawnSequenceBasicDetonators()
+                gemSpawnSequence1()
             case 10:
                 gemSpawnSequence2()
             case 20:
@@ -609,6 +625,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         gemCollector.setGemCollectorProperties()  // Calls gem collector properties from GemCollector class
         
         gemCollector.position = CGPoint(x: size.width / 2, y: size.height * 0.085)
+        gemCollectorPosX = gemCollector.position.x
         addChild(gemCollector)
     }
     

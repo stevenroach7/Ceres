@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Ceres/GameScene.swift"
-            timestampString = "513221734.288069"
+            timestampString = "513367043.633632"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "423"
-            endingLineNumber = "423"
+            startingLineNumber = "439"
+            endingLineNumber = "439"
             landmarkName = "gemSpawnSequence4()"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Ceres/GameScene.swift"
-            timestampString = "513221734.288069"
+            timestampString = "513367043.633632"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "608"
-            endingLineNumber = "608"
+            startingLineNumber = "624"
+            endingLineNumber = "624"
             landmarkName = "addGemCollector()"
             landmarkType = "7">
          </BreakpointContent>
@@ -80,6 +80,22 @@
             startingLineNumber = "132"
             endingLineNumber = "132"
             landmarkName = "gemDidCollideWithCollector(gem:collector:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Ceres/GameScene.swift"
+            timestampString = "513367043.633632"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "detonatorGemDidCollideWithCollector(gem:collector:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
