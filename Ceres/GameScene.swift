@@ -142,7 +142,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func shakeAction(positionX : CGFloat) -> SKAction {
         //returns a shaking animation
-        //WARNING: If many detonatingGems are sent to collector in small amount of time, its position will shift
         
         //defining a shake sequence
         var sequence = [SKAction]()
@@ -184,8 +183,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func gemOffScreen(gem: SKSpriteNode) {
         // Removes gems from game scene when they fly off screen
-        gemsPlusMinus -= 1
-        recolorScore()
+        if (gem.name == "gem") { //don't want to decrement score when detonating gems go offscreen
+            gemsPlusMinus -= 1
+            recolorScore()
+        }
         gem.removeFromParent()
         checkGameOver()
     }
