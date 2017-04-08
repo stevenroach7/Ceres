@@ -721,13 +721,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         
         var minDist: CGFloat = 44
         var closestGem: SKSpriteNode = SKSpriteNode()
-        self.enumerateChildNodes(withName: "gem"){node,_ in
-            let xDist = node.position.x - touchLocal.x
-            let yDist = node.position.y - touchLocal.y
-            let dist = CGFloat(sqrt((xDist*xDist) + (yDist*yDist)))
-            if dist < minDist {
-                minDist = dist
-                closestGem = (node as? SKSpriteNode)!
+        self.enumerateChildNodes(withName: "*"){node,_ in
+            if node.name == "gem" || node.name == "detonatorGem" {
+                let xDist = node.position.x - touchLocal.x
+                let yDist = node.position.y - touchLocal.y
+                let dist = CGFloat(sqrt((xDist*xDist) + (yDist*yDist)))
+                if dist < minDist {
+                    minDist = dist
+                    closestGem = (node as? SKSpriteNode)!
+                }
             }
         }
         return (minDist, closestGem)
