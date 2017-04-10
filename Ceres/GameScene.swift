@@ -275,9 +275,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Tracks current game time
         timerLabel = SKLabelNode(fontNamed: "Menlo-Bold")
         timerLabel.text = "Time: \(timerSeconds)"
-        timerLabel.fontSize = 14
+        timerLabel.fontSize = 20
         //timerLabel.horizontalAlignmentMode = .right
-        timerLabel.position = CGPoint(x: size.width * 0.5, y: size.height - size.height/20)
+        timerLabel.position = CGPoint(x: size.width * 0.4, y: size.height - size.height/20)
         addChild(timerLabel)
     }
     
@@ -288,7 +288,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             self.run(zoomTimerSound)
         } else if (timerSeconds % 10 == 0 && timerSeconds > 0){
             self.run(zipTimerSound)
-            timerLabel.fontSize = 13
+            timerLabel.fontSize -= 3
             timerLabel.fontColor = SKColor.cyan
         } else {
             timerLabel.fontColor = SKColor.white
@@ -316,8 +316,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func endTutorial() {
         swipedown.removeFromParent()
 
-        let scaleDown = SKAction.scale(by: 1/2, duration: 0.75)
-        let finalScoreLabelPosition = CGPoint(x: size.width * 0.8, y: size.height - size.height/20)
+        let scaleDown = SKAction.scale(by: 2/3, duration: 0.75)
+        let finalScoreLabelPosition = CGPoint(x: size.width * 0.75, y: size.height - size.height/20)
         let moveUp = SKAction.move(to: finalScoreLabelPosition, duration: 0.75)
         //let scaleAndMove = SKAction.sequence([scaleDown,moveUp])
         
