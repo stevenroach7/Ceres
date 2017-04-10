@@ -548,8 +548,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         let flashAction = SKAction.setTexture(SKTexture(imageNamed: "mostlyWhiteRottenGem"))
         let unFlashAction = SKAction.setTexture(SKTexture(imageNamed: "rottenGem"))
         
-        var flashDuration = 0.1
-        var flashAnimation = SKAction.sequence([ // TODO: Refactor this to avoid code duplication
+        var flashDuration = 0.25
+        var flashAnimation = SKAction.sequence([ // TODO: Refactor this to avoid code duplication and make the speeding up work correctly.
             flashAction,
             SKAction.wait(forDuration: flashDuration),
             unFlashAction,
@@ -557,7 +557,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             ])
         
         func updateFlashAnimation() {
-            flashDuration *= 0.1
+            flashDuration *= 0.05
             
             flashAnimation = SKAction.sequence([
                 flashAction,
@@ -569,15 +569,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         detonatorGem.run(SKAction.repeat(SKAction.sequence([flashAnimation, SKAction.run(updateFlashAnimation)]), count: 20))
     }
     
-    private func detonateGem(detonatorGem: Gem, gravityFieldNode: SKFieldNode, gemExplosion: SKEmitterNode) {
+    private func detonateGem(detonatorGem: Gem, gravityFieldNode: SKFieldNode) {
         // Takes a detonator gem and a gravityFieldNode to add to the scene and simulates the gem exploding in the scene
         if detonatorGem.parent != nil { // Don't simulate explosion if gem has been removed
             let gemPosition = detonatorGem.position
             detonatorGem.removeFromParent()
             
-            let gemExplosion2 = SKEmitterNode(fileNamed: "gemExplosion")!
-            gemExplosion2.position = gemPosition
-            addChild(gemExplosion2)
+            let gemExplosion = SKEmitterNode(fileNamed: "gemExplosion")!
+            gemExplosion.position = gemPosition
+            addChild(gemExplosion)
             
             self.run(gemExplosionSound)
             
@@ -588,13 +588,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         }
     }
     
-    private func detonationCleanup(gravityFieldNode: SKFieldNode, gemExplosion: SKEmitterNode) {
-        // Takes a gravityFieldNode and removes it from the scene to end the gem explosion simulation
+    private func detonationCleanup(gravityFieldNode: SKFieldNode) {
+        // Takes a gravityFieldNode and removes it from the scene to end the gem explosion simulation.
         if gravityFieldNode.parent != nil {
             gravityFieldNode.removeFromParent()
-        }
-        if gemExplosion.parent != nil {
-            gemExplosion.removeFromParent()
         }
     }
     
@@ -602,15 +599,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Adds a detonating gem to the scene and makes it explode
         let detonatorGem = Gem(imageNamed: "rottenGem")
         let gravityFieldNode = SKFieldNode.radialGravityField()
-        let gemExplosion = SKEmitterNode(fileNamed: "gemExplosion")!
         
         run(SKAction.sequence([
             SKAction.run({self.addDetonatorGem(detonatorGem: detonatorGem)}),
             SKAction.run({self.animateDetonatorGem(detonatorGem: detonatorGem)}),
             SKAction.wait(forDuration: 2.0),
-            SKAction.run({self.detonateGem(detonatorGem: detonatorGem, gravityFieldNode: gravityFieldNode, gemExplosion: gemExplosion)}),
+            SKAction.run({self.detonateGem(detonatorGem: detonatorGem, gravityFieldNode: gravityFieldNode)}),
             SKAction.wait(forDuration: 0.25),
-            SKAction.run({self.detonationCleanup(gravityFieldNode: gravityFieldNode, gemExplosion: gemExplosion)})
+            SKAction.run({self.detonationCleanup(gravityFieldNode: gravityFieldNode)})
             ]))
     }
     
