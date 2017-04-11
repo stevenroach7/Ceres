@@ -303,19 +303,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func prepareTutorial() {
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0.01)
         addTutorialGem()
-        
-        swipedown.position = CGPoint(x: size.width * 0.525, y: size.height * 0.33)
+        makeTutorialHand()
+    }
+    
+    private func makeTutorialHand() {
+        swipedown.position = CGPoint(x: size.width * 0.525, y: size.height * 0.44)
         swipedown.setScale(0.3)
+        swipedown.zPosition=9
         addChild(swipedown)
         
-        let moveDown = SKAction.move(to: CGPoint(x: size.width * 0.525, y: size.height * 0.25), duration: 1.5)
-        let moveUp = SKAction.move(to: CGPoint(x: size.width * 0.525, y: size.height * 0.33), duration: 1.5)
-        let bounce = SKAction.sequence([moveUp,moveDown])
+        let moveDown = SKAction.move(to: CGPoint(x: size.width * 0.525, y: 0), duration: 0.5)
+        let hide = SKAction.hide()
+        let moveUp = SKAction.move(to: CGPoint(x: size.width * 0.525, y: size.height * 0.44), duration: 2.0)
+        let show = SKAction.unhide()
+        let wait = SKAction.wait(forDuration: 0.5)
+        let bounce = SKAction.sequence([moveDown,hide,moveUp,show,wait])
         swipedown.run(SKAction.repeatForever(bounce))
     }
     
     private func endTutorial() {
-        swipedown.removeFromParent()
 
         let scaleDown = SKAction.scale(by: 2/3, duration: 0.75)
         let finalScoreLabelPosition = CGPoint(x: size.width * 0.75, y: size.height - size.height/20)
@@ -690,6 +696,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         touchPoint = touchLocation
         currSpriteInitialDisplacement = CGVector(dx: touchPoint.x - currSprite.position.x, dy: touchPoint.y - currSprite.position.y)
         touching = true
+        
+        if timerSeconds == 0 {
+            swipedown.removeFromParent()
+        }
         
         //gemEffect = SKEmitterNode(fileNamed: "gemMoveEffect")
         //gemEffect.position = touchLocation;
