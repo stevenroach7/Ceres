@@ -16,23 +16,23 @@ extension Alerts where Self: SKScene {
 
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         
-        let okAction = UIAlertAction(title: "Quit Game", style: UIAlertActionStyle.destructive)  { (action:UIAlertAction!) in
+        let quitAction = UIAlertAction(title: "Quit Game", style: UIAlertActionStyle.destructive)  { (action:UIAlertAction!) in
             if self.view != nil {
                 let transition:SKTransition = SKTransition.fade(withDuration: 0.3)
                 let scene:SKScene = MenuScene(size: self.size)
                 self.view?.presentScene(scene, transition: transition)
             }}
         
-        let restartAction = UIAlertAction(title: "Restart Game", style: UIAlertActionStyle.destructive)  { (action:UIAlertAction!) in
+        let restartAction = UIAlertAction(title: "Restart Game", style: UIAlertActionStyle.default)  { (action:UIAlertAction!) in
             if self.view != nil {
                 //let transition:SKTransition = SKTransition.fade(withDuration: 0.3)
                 let scene:SKScene = GameScene(size: self.size)
                 self.view?.presentScene(scene)
             }}
         
-        alertController.addAction(restartAction)
-        alertController.addAction(okAction)
         alertController.addAction(resumeAction)
+        alertController.addAction(restartAction)
+        alertController.addAction(quitAction)
         
         self.view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
     }

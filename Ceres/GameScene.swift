@@ -708,7 +708,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                 self.isPaused = false
             }
         }
-        backAlert(title: "WARNING", message: "You will lose your current progress", resumeAction: resumeAction)
+        backAlert(title: "Game Paused", message: "", resumeAction: resumeAction)
     }
     
     
