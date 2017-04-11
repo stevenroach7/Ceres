@@ -12,9 +12,23 @@ import SpriteKit
 protocol Alerts { }
 extension Alerts where Self: SKScene {
     
-    func backAlert(title: String, message: String, resumeAction: UIAlertAction) {
+    func backAlert(title: String, message: String) {
 
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        var wasPaused: Bool
+        if self.isPaused {
+            wasPaused = true
+        } else {
+            wasPaused = false
+            self.isPaused = true
+        }
+        
+        let resumeAction = UIAlertAction(title: "Resume Game", style: UIAlertActionStyle.default)  { (action:UIAlertAction!) in
+            if !wasPaused {
+                self.isPaused = false
+            }
+        }
         
         let quitAction = UIAlertAction(title: "Quit Game", style: UIAlertActionStyle.destructive)  { (action:UIAlertAction!) in
             if self.view != nil {
@@ -25,7 +39,6 @@ extension Alerts where Self: SKScene {
         
         let restartAction = UIAlertAction(title: "Restart Game", style: UIAlertActionStyle.default)  { (action:UIAlertAction!) in
             if self.view != nil {
-                //let transition:SKTransition = SKTransition.fade(withDuration: 0.3)
                 let scene:SKScene = GameScene(size: self.size)
                 self.view?.presentScene(scene)
             }}

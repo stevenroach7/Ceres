@@ -78,6 +78,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addChild(starfield)
         
         pauseButton.setScale(0.175)
+        pauseButton.name = "pauseButton"
         pauseButton.position = CGPoint(x: size.width/12, y: size.height - size.height/24) // TODO: Change how to calculate height, use constants
         addChild(pauseButton)
         
@@ -319,7 +320,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         let scaleDown = SKAction.scale(by: 2/3, duration: 0.75)
         let finalScoreLabelPosition = CGPoint(x: size.width * 0.75, y: size.height - size.height/20)
         let moveUp = SKAction.move(to: finalScoreLabelPosition, duration: 0.75)
-        //let scaleAndMove = SKAction.sequence([scaleDown,moveUp])
         
         scoreLabelPosX = finalScoreLabelPosition.x
         scoreLabel.run(scaleDown)
@@ -367,7 +367,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         self.isPaused = true
         if view != nil {
             let transition:SKTransition = SKTransition.fade(withDuration: 1)
-            let scene = GameOverScene(size: self.size) // TODO: Need a way to pass score to the GameOverScene
+            let scene = GameOverScene(size: self.size)
             scene.setScore(score: timerSeconds)
             self.view?.presentScene(scene, transition: transition)
         }
@@ -677,6 +677,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         }
     }
 
+    private func onPauseButtonTouch() {
+        backAlert(title: "Game Paused", message: "")
+    }
+    
     var touchPoint: CGPoint = CGPoint();
     var currSpriteInitialDisplacement: CGVector = CGVector(); //The initial displacement from the touched Node and the touch location, used to avoid gittery motion in the update method
     var touching: Bool = false;
@@ -692,25 +696,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         //gemEffect.zPosition = 10
         //addChild(gemEffect)
     }
-    
-    private func onPauseButtonTouch() {
-        var wasPaused: Bool
-        if self.isPaused {
-            wasPaused = true
-        } else {
-            wasPaused = false
-            self.isPaused = true
-        }
-        // Calls an alert to make sure touch was intentional
-        let resumeAction = UIAlertAction(title: "Resume Game", style: UIAlertActionStyle.default)  { (action:UIAlertAction!) in
-            if !wasPaused {
-                // Only play game if game wasn't paused when back button was touched
-                self.isPaused = false
-            }
-        }
-        backAlert(title: "Game Paused", message: "", resumeAction: resumeAction)
-    }
-    
     
     private func findNearestGem (touchLocal: CGPoint) -> (CGFloat, SKNode){
         //Method iterates over all gems and returns the closest one with the distance to said gem
@@ -752,6 +737,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         if let name = touchedNode?.name {
             
             switch name {
+            case "pauseButton":
+                onPauseButtonTouch()
             case "rightGemSource":
                 onRightGemSourceTouch()
             case "leftGemSource":
@@ -775,25 +762,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         touchPoint = touchLocation
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // Method to handle touch events. Senses when user touches up (removes finger from screen).
-        touching = false
-        
-        // Choose first touch
-        guard let touch = touches.first else {
-            return
-        }
-        
-        let touchLocation = touch.location(in: self)
-        let touchedNode = atPoint(touchLocation)
-        
-        // Determines what was touched, if anything
-        switch touchedNode {
-        case pauseButton:
-            onPauseButtonTouch()
-        default: break
-        }
-    }
+//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        // Method to handle touch events. Senses when user touches up (removes finger from screen).
+//        touching = false
+//        
+//        // Choose first touch
+//        guard let touch = touches.first else {
+//            return
+//        }
+//        
+//        let touchLocation = touch.location(in: self)
+//        let touchedNode = atPoint(touchLocation)
+//        
+//    }
     
     override func update(_ currentTime: CFTimeInterval) {
         // Calculates velocity using physics engine
