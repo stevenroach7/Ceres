@@ -664,14 +664,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     private func onLeftGemSourceTouch() {
-        if self.isPaused == false {
+        if self.isPaused == false && timerSeconds != 0 {
             addGemLeft()
             run(gemCreatedSound)
         }
     }
     
     private func onRightGemSourceTouch() {
-        if self.isPaused == false {
+        if self.isPaused == false && timerSeconds != 0 {
             addGemRight()
             run(gemCreatedSound)
         }
