@@ -19,30 +19,21 @@ extension Alerts where Self: SKScene {
         let okAction = UIAlertAction(title: "Quit Game", style: UIAlertActionStyle.destructive)  { (action:UIAlertAction!) in
             if self.view != nil {
                 let transition:SKTransition = SKTransition.fade(withDuration: 0.3)
-                let scene:SKScene = GameOverScene(size: self.size)
+                let scene:SKScene = MenuScene(size: self.size)
                 self.view?.presentScene(scene, transition: transition)
             }}
         
+        let restartAction = UIAlertAction(title: "Restart Game", style: UIAlertActionStyle.destructive)  { (action:UIAlertAction!) in
+            if self.view != nil {
+                //let transition:SKTransition = SKTransition.fade(withDuration: 0.3)
+                let scene:SKScene = GameScene(size: self.size)
+                self.view?.presentScene(scene)
+            }}
+        
+        alertController.addAction(restartAction)
         alertController.addAction(okAction)
         alertController.addAction(resumeAction)
         
         self.view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
     }
-    
-    func gameOverAlert(title: String, message: String) {
-        
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        
-        let gameOverAction = UIAlertAction(title: "Back to Home", style: .default)  { (action:UIAlertAction!) in
-            if self.view != nil {
-                let transition:SKTransition = SKTransition.fade(withDuration: 0.3)
-                let scene:SKScene = MenuScene(size: self.size)
-                self.view?.presentScene(scene, transition: transition)
-            }}
-        
-        alertController.addAction(gameOverAction)
-        
-        self.view?.window?.rootViewController?.present(alertController, animated: true, completion: nil)
-    }
-    
 }
