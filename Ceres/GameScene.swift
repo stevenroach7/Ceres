@@ -110,7 +110,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         
     }
     
-    private func animateCollector(collector: SKSpriteNode) {
+    private func collectGemAnimation(collector: SKSpriteNode) {
         collector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
         collector.run(gemCollectedSound)
     }
@@ -127,7 +127,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Removes gem from game scene and increments number of gems collected
         gemsPlusMinus += 1
         recolorScore()
-        animateCollector(collector: collector)
+        collectGemAnimation(collector: collector)
         gem.removeFromParent()
         if isTutorialOver() {
             endTutorial()
@@ -166,16 +166,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Removes gem from game scene and increments number of gems collected
         
         let shakeCollector = shakeAction(positionX: gemCollectorPosX)
-        animateCollector(collector: collector) // TODO: Add different animation
-        collector.run(shakeCollector)
+        collectGemAnimation(collector: collector)
         
-        let shakeScore = shakeAction(positionX: scoreLabelPosX)
+        collector.run(shakeCollector)
         gemsPlusMinus -= 5
         recolorScore()
-        scoreLabel.run(shakeScore)
-        
         self.run(collectorExplosionSound)
-        
         penaltyAlert()
         
         gem.removeFromParent()
@@ -356,6 +352,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         deduction.fontSize = 32
         deduction.position = CGPoint(x: size.width * 0.5, y: size.height * 0.5)
         addChild(deduction)
+        
+        let shake = shakeAction(positionX: deduction.position.x)
+        deduction.run(shake)
         
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         deduction.run(SKAction.fadeOut(withDuration: 1.5))
