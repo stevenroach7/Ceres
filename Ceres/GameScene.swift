@@ -136,8 +136,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         //gemEffect.removeFromParent()
     }
     
-    //Variables necessary to reset shaken sprites back to original position
-    //TODO: if we refactor sprites to globals instead of being declared and initialized in functions this redundancy can be removed
+    // Variables necessary to reset shaken sprites back to original position
+    // TODO: if we refactor sprites to globals instead of being declared and initialized in functions this redundancy can be removed
     var gemCollectorPosX: CGFloat! = nil
     var scoreLabelPosX: CGFloat! = nil
     
@@ -170,7 +170,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         collector.run(shakeCollector)
         
         let shakeScore = shakeAction(positionX: scoreLabelPosX)
-        gemsPlusMinus -= 5 // TODO: Adjust this value.
+        gemsPlusMinus -= 5
         recolorScore()
         scoreLabel.run(shakeScore)
         
@@ -340,9 +340,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func beginGameplay() {
         // Adjust gravity of scene
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0.27) // Gravity on Ceres is 0.27 m/s²
-        //        let gravityFieldNode = SKFieldNode.radialGravityField()
-        //        gravityFieldNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        //        addChild(gravityFieldNode)
         
         run(SKAction.repeatForever(
             SKAction.sequence([
@@ -380,6 +377,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         removeAllActions()
     }
     
+    
     private func spawnGems() { // TODO: Possibly refactor so that gamSpawn Sequences are in a sequence instead of being called based on the timerSeconds value.
         // Called every second, calls gem spawning sequences based on game timer
         if timerSeconds % 10 == 0 {
@@ -410,10 +408,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func gemSpawnSequence2() {
         // Gem spawning routine
         run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0),
-                                            SKAction.run(addGemLeft),
-                                            SKAction.wait(forDuration: 0.25),
-                                            SKAction.run(addGemRight),
-                                            ]),
+                                               SKAction.run(addGemLeft),
+                                               SKAction.wait(forDuration: 0.25),
+                                               SKAction.run(addGemRight),
+                                               ]),
                             count: 8))
     }
     
@@ -423,11 +421,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                                                SKAction.run(addGemLeft),
                                                SKAction.wait(forDuration: 0.25),
                                                SKAction.run(addGemRight),
+                                               SKAction.run(detonateGemSequence),
                                                SKAction.wait(forDuration: 0.25),
                                                SKAction.run(addGemLeft),
-                                               SKAction.run(addGemRight)
-            
-            ]),
+                                               SKAction.run(addGemRight),
+                                               
+                                               ]),
                             count: 7))
     }
     
@@ -436,17 +435,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                                                SKAction.run(addGemRight),
                                                SKAction.wait(forDuration: 0.01),
                                                SKAction.run(addGemRight),
+                                               SKAction.run(detonateGemSequence),
                                                SKAction.wait(forDuration: 0.01),
                                                SKAction.run(addGemRight),
                                                SKAction.wait(forDuration: 0.01),
                                                SKAction.run(addGemRight),
-            
+                                               SKAction.run(detonateGemSequence),
+                                               
                                                SKAction.wait(forDuration: 2.47),
                                                SKAction.run(addGemLeft),
                                                SKAction.wait(forDuration: 0.01),
                                                SKAction.run(addGemLeft),
                                                SKAction.wait(forDuration: 0.01),
                                                SKAction.run(addGemRight),
+                                               SKAction.run(detonateGemSequence),
                                                SKAction.wait(forDuration: 0.01),
                                                SKAction.run(addGemLeft),
                                                ]),
@@ -480,23 +482,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func gemSpawnSequenceHard() {
         run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 0.74),
-                                            SKAction.wait(forDuration: 0.01),
-                                            SKAction.run(addGemRight),
-                                            SKAction.wait(forDuration: 0.01),
-                                            SKAction.run(addGemRight),
-                                            SKAction.run(addGemLeft),
-                                            SKAction.wait(forDuration: 0.01),
-                                            SKAction.run(addGemRight),
-                                            
-                                            SKAction.wait(forDuration: 0.2),
-                                            SKAction.wait(forDuration: 0.01),
-                                            SKAction.run(addGemLeft),
-                                            SKAction.wait(forDuration: 0.01),
-                                            SKAction.run(addGemLeft),
-                                            SKAction.run(addGemRight),
-                                            SKAction.wait(forDuration: 0.01),
-                                            SKAction.run(addGemLeft),
-            ]),
+                                               SKAction.wait(forDuration: 0.01),
+                                               SKAction.run(addGemRight),
+                                               SKAction.wait(forDuration: 0.01),
+                                               SKAction.run(addGemRight),
+                                               SKAction.run(addGemLeft),
+                                               SKAction.wait(forDuration: 0.01),
+                                               SKAction.run(addGemRight),
+                                               SKAction.run(detonateGemSequence),
+                                               
+                                               SKAction.wait(forDuration: 0.2),
+                                               SKAction.wait(forDuration: 0.01),
+                                               SKAction.run(addGemLeft),
+                                               SKAction.wait(forDuration: 0.01),
+                                               SKAction.run(addGemLeft),
+                                               SKAction.run(addGemRight),
+                                               SKAction.run(detonateGemSequence),
+                                               SKAction.wait(forDuration: 0.01),
+                                               SKAction.run(addGemLeft),
+                                               ]),
                             count: 10))
     }
     
@@ -508,7 +512,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func random(min: CGFloat, max: CGFloat) -> CGFloat {
         return random() * (max - min) + min
     }
-    
 
     private func addTutorialGem() {
         let gem = Gem(imageNamed: "gemShape1")
