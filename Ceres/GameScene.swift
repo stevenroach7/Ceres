@@ -169,9 +169,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         collectGemAnimation(collector: collector)
         
         collector.run(shakeCollector)
-        gemsPlusMinus -= 5
-        recolorScore()
         self.run(collectorExplosionSound)
+        
+        let shakeScore = shakeAction(positionX: scoreLabel.position.x)
+        scoreLabel.run(shakeScore)
+        recolorScore()
+        
+        gemsPlusMinus -= 5
+        
         penaltyAlert()
         
         gem.removeFromParent()
@@ -352,9 +357,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         deduction.fontSize = 32
         deduction.position = CGPoint(x: size.width * 0.5, y: size.height * 0.5)
         addChild(deduction)
-        
-        let shake = shakeAction(positionX: deduction.position.x)
-        deduction.run(shake)
         
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         deduction.run(SKAction.fadeOut(withDuration: 1.5))
