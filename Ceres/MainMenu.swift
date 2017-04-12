@@ -19,7 +19,7 @@ class MenuScene: SKScene {
     
     var playButton = SKSpriteNode(imageNamed: "play")
     var instructionsButton = SKSpriteNode(imageNamed: "instructions")
-    var ship = SKSpriteNode(imageNamed: "Spaceship")
+    var ship = SKSpriteNode(imageNamed: "stellaNovaShip")
     var starfield:SKEmitterNode!
     
     override func didMove(to view: SKView) {
@@ -33,7 +33,7 @@ class MenuScene: SKScene {
         title.position = CGPoint(x: size.width/2, y: size.height - size.height/6)
         addChild(title)
         
-        playButton.setScale(3/5)
+        playButton.setScale(0.6)
         playButton.position = CGPoint(x: frame.midX, y: frame.midY + size.height/12)
         addChild(playButton)
         
@@ -47,8 +47,8 @@ class MenuScene: SKScene {
         self.addChild(starfield)
         starfield.zPosition = -1
         
-        ship.setScale(1/4)
-        ship.position = CGPoint(x: size.width/2, y: size.height/2 - size.height/3)
+        ship.setScale(0.25)
+        ship.position = CGPoint(x: size.width/2, y: size.height/5)
         addChild(ship)
     }
     
