@@ -561,12 +561,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addChild(gem)
     }
     
+    // TODO: Refactor to make addGem one method that takes a parameter to change the spawning location
     private func addGemLeft() {
         // Produces a Gem from the left astronaut
         let gem = Gem(imageNamed: "gemShape1")
         gem.setGemProperties()  // Calls gem properties from Gem class
         let angle = random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (1/2))
-        gem.setGemVelocity(velocity: 180, angle: angle)
+        let velocity = random(min: 170, max: 190)
+        gem.setGemVelocity(velocity: velocity, angle: angle)
         gem.position = CGPoint(x: size.width * 0.1, y: size.height * 0.15)
         addChild(gem)
     }
@@ -576,18 +578,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         let gem = Gem(imageNamed: "gemShape1")
         gem.setGemProperties()  // Calls gem properties from Gem class
         let angle = random(min: CGFloat.pi * (1/2), max: CGFloat.pi * (3/4))
-        gem.setGemVelocity(velocity: 180, angle: angle)
+        let velocity = random(min: 170, max: 190)
+        gem.setGemVelocity(velocity: velocity, angle: angle)
         gem.position = CGPoint(x: size.width * 0.9, y: size.height * 0.15)
         addChild(gem)
     }
     
-    private func addDetonatorGem(detonatorGem: Gem) {
+    private func addDetonatorGem(detonatorGem: Gem) { // TODO: Refactor this to take a parameter for left and right.
         // Takes a gem and adds it to the scene in a manner specific to detonator gems
         detonatorGem.setGemProperties()  // Sets gem properties from Gem class
         detonatorGem.name = "detonatorGem"
         detonatorGem.color = SKColor.white
         let angle = random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (3/8))
-        detonatorGem.setGemVelocity(velocity: 100, angle: angle)
+        let velocity = random(min: 100, max: 120)
+        detonatorGem.setGemVelocity(velocity: velocity, angle: angle)
         let spawnLocation = CGPoint(x: size.width * 0.1, y: size.height * 0.15)
         detonatorGem.position = spawnLocation
         addChild(detonatorGem)
