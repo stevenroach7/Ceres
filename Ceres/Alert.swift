@@ -21,17 +21,18 @@ extension Alerts where Self: SKScene {
             wasPaused = true
         } else {
             wasPaused = false
-            self.isPaused = true
+            self.view?.isPaused = true
         }
         
         let resumeAction = UIAlertAction(title: "Resume Game", style: UIAlertActionStyle.default)  { (action:UIAlertAction!) in
             if !wasPaused {
-                self.isPaused = false
+                self.view?.isPaused = false
             }
         }
         
         let quitAction = UIAlertAction(title: "Quit Game", style: UIAlertActionStyle.destructive)  { (action:UIAlertAction!) in
             if self.view != nil {
+                self.view?.isPaused = false;
                 let transition:SKTransition = SKTransition.fade(withDuration: 0.3)
                 let scene:SKScene = MenuScene(size: self.size)
                 self.view?.presentScene(scene, transition: transition)
