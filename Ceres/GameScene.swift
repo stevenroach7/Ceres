@@ -297,7 +297,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     private func isTutorialOver() -> Bool {
-        return (gemsPlusMinus == 1 && timerSeconds==0)
+        return (gemsPlusMinus == 1 && timerSeconds == 0)
     }
     
     private func prepareTutorial() {
@@ -322,6 +322,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     private func endTutorial() {
+        swipedown.removeFromParent() // TODO: Move this elsewhere later if we want hand to be removed when user touches gem
 
         let scaleDown = SKAction.scale(by: 2/3, duration: 0.75)
         let finalScoreLabelPosition = CGPoint(x: size.width * 0.75, y: size.height - size.height/20)
@@ -690,28 +691,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         backAlert(title: "Game Paused", message: "")
     }
     
-    var touchPoint: CGPoint = CGPoint();
-    var currSpriteInitialDisplacement: CGVector = CGVector(); //The initial displacement from the touched Node and the touch location, used to avoid gittery motion in the update method
-    var touching: Bool = false;
-    
-    func onGemTouch(touchedNode: SKNode, touchLocation: CGPoint) {
-        currSprite = touchedNode //Set the current node touched
-        touchPoint = touchLocation
-        currSpriteInitialDisplacement = CGVector(dx: touchPoint.x - currSprite.position.x, dy: touchPoint.y - currSprite.position.y)
-        touching = true
-        
-        if timerSeconds == 0 {
-            swipedown.removeFromParent()
-        }
-        
-        //gemEffect = SKEmitterNode(fileNamed: "gemMoveEffect")
-        //gemEffect.position = touchLocation;
-        //gemEffect.zPosition = 10
-        //addChild(gemEffect)
-    }
-    
     private func findNearestGem (touchLocal: CGPoint) -> (CGFloat, SKNode){
-        //Method iterates over all gems and returns the closest one with the distance to said gem
+        // Method iterates over all gems and returns the closest one with the distance to said gem
         
         var minDist: CGFloat = 44
         var closestGem: SKSpriteNode = SKSpriteNode()
@@ -729,73 +710,66 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         return (minDist, closestGem)
     }
     
+    var touchesToGems:[UITouch: SKSpriteNode] = [:] // Dictionary to map currently selected user touches to the gems they are dragging
+    var selectedGems: Set<SKSpriteNode> = Set()
+    var nodeDisplacements:[SKSpriteNode: CGVector] = [:] // Dictionary to map currently selected nodes to their displacements from the user's finger
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Method to handle touch events. Senses when user touches down (places finger on screen).
-        
-        // Choose first touch
-        guard let touch = touches.first else {
-            return
-        }
-        
-        let touchLocation = touch.location(in: self)
-        var touchedNode = atPoint(touchLocation) as? SKSpriteNode
-        
-        let (minDist, closestGem) = findNearestGem(touchLocal: touchLocation)
-        
-        if (minDist < 44){ //If the touch is within 44 px of gem, change touched node to gem
-            touchedNode = closestGem as? SKSpriteNode
-        }
-
-        // Determines what was touched, if anything
-        if let name = touchedNode?.name {
+        for touch in touches {
+            let touchLocation = touch.location(in:self)
+            let touchedNode = self.atPoint(touchLocation) as? SKSpriteNode
+            // Handle touching nodes that are not gems
+            if let name = touchedNode?.name {
+                switch name {
+                case "rightGemSource":
+                    onRightGemSourceTouch()
+                case "leftGemSource":
+                    onLeftGemSourceTouch()
+                case "pauseButton":
+                    onPauseButtonTouch()
+                default: break
+                }
+            }
             
-            switch name {
-            case "pauseButton":
-                onPauseButtonTouch()
-            case "rightGemSource":
-                onRightGemSourceTouch()
-            case "leftGemSource":
-                onLeftGemSourceTouch()
-            case "gem":
-                onGemTouch(touchedNode: touchedNode!, touchLocation: touchLocation)
-            case "detonatorGem":
-                onGemTouch(touchedNode: touchedNode!, touchLocation: touchLocation)
-            default: break
+            // Check if gem is touched
+            let (minDist, closestGem) = findNearestGem(touchLocal: touchLocation)
+            
+            let touchedGem = (closestGem as? SKSpriteNode)!
+            if (minDist < 44){ //If the touch is within 44 px of gem, change touched node to gem
+                if !selectedGems.contains(touchedGem) {
+                    selectedGems.insert(touchedGem)
+                    touchesToGems[touch] = touchedGem
+                    nodeDisplacements[touchedGem] = CGVector(dx: touchLocation.x - touchedGem.position.x, dy: touchLocation.y - touchedGem.position.y)
+                }
             }
         }
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // Method to handle touch events.  Senses when the user moves their touch (moves finger on screen).
-        guard let touch = touches.first else {
-            return
-        }
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // Method to handle touch events. Senses when user touches up (removes finger from screen).
         
-        let touchLocation = touch.location(in: self)
-        touchPoint = touchLocation
+        for touch in touches {
+            // Update touch dictionaries and node
+            if let node = touchesToGems[touch] {
+                touchesToGems[touch] = nil
+                nodeDisplacements[node] = nil
+                selectedGems.remove(node)
+            }
+        }
     }
     
-//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        // Method to handle touch events. Senses when user touches up (removes finger from screen).
-//        touching = false
-//        
-//        // Choose first touch
-//        guard let touch = touches.first else {
-//            return
-//        }
-//        
-//        let touchLocation = touch.location(in: self)
-//        let touchedNode = atPoint(touchLocation)
-//        
-//    }
-    
     override func update(_ currentTime: CFTimeInterval) {
-        // Calculates velocity using physics engine
-        if touching {
-            let dt:CGFloat = 1.0/60.0 //determines drag and flick speed
-            let distance = CGVector(dx: touchPoint.x - currSprite.position.x - currSpriteInitialDisplacement.dx, dy: touchPoint.y - currSprite.position.y - currSpriteInitialDisplacement.dy)
-            let velocity = CGVector(dx: distance.dx / dt, dy: distance.dy / dt)
-            currSprite.physicsBody!.velocity = velocity
+        // Updates position of gems on the screen
+        
+        let dt:CGFloat = 1.0/60.0 //determines drag and flick speed
+        for (touch, node) in touchesToGems {
+            let touchLocation = touch.location(in:self)
+            if let displacement = nodeDisplacements[node] {
+                let distance = CGVector(dx: touchLocation.x - node.position.x - displacement.dx, dy: touchLocation.y - node.position.y - displacement.dy)
+                let velocity = CGVector(dx: distance.dx / dt, dy: distance.dy / dt)
+                node.physicsBody!.velocity = velocity
+            }
         }
     }
 }
