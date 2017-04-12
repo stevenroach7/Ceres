@@ -47,13 +47,14 @@ class InstructionsScene: SKScene {
         text = SKSpriteNode(texture: textTex)
         text.setScale(1)
         text.position = CGPoint(x: frame.midX, y: size.height/2)
+        text.zPosition = 1
         addChild(text)
         
         starfield = SKEmitterNode(fileNamed: "starShower")
         starfield.position = CGPoint(x: 0, y: size.height)
         starfield.advanceSimulationTime(10)
+        starfield.zPosition = -10
         self.addChild(starfield)
-        starfield.zPosition = -1
         
         collector = SKSpriteNode(texture: collectorTex)
         collector.setScale(1/4)
@@ -78,12 +79,9 @@ class InstructionsScene: SKScene {
         //scoreLabel.horizontalAlignmentMode = .right
         scoreLabel.position = CGPoint(x: size.width * 0.8, y: size.height - size.height/20)
         addChild(scoreLabel)
-        
-        
-        
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //looks for a touch
         if let touch = touches.first{
             let pos = touch.location(in: self)
