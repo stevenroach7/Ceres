@@ -27,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     var pauseButton = SKSpriteNode(imageNamed: "pause")
     
-    let swipedown = SKSpriteNode(imageNamed: "swipedown")
+    let flickHand = SKSpriteNode(imageNamed: "touch")
 
     let leftGemSource  = GemSource(imageNamed: "hammerInactive")
     let rightGemSource = GemSource(imageNamed: "hammerInactive")
@@ -175,7 +175,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         scoreLabel.run(shakeScore)
         
         self.run(collectorExplosionSound)
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        
+        penaltyAlert()
         
         gem.removeFromParent()
         //gemEffect.removeFromParent()
@@ -307,22 +308,62 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     private func makeTutorialHand() {
-        swipedown.position = CGPoint(x: size.width * 0.525, y: size.height * 0.44)
-        swipedown.setScale(0.3)
-        swipedown.zPosition=9
-        addChild(swipedown)
+        let touch = SKAction.setTexture(SKTexture(imageNamed: "touch"))
+        let drag  = SKAction.setTexture(SKTexture(imageNamed: "drag"))
+        let flick = SKAction.setTexture(SKTexture(imageNamed: "flick"))
         
-        let moveDown = SKAction.move(to: CGPoint(x: size.width * 0.525, y: 0), duration: 0.5)
-        let hide = SKAction.hide()
-        let moveUp = SKAction.move(to: CGPoint(x: size.width * 0.525, y: size.height * 0.44), duration: 2.0)
-        let show = SKAction.unhide()
-        let wait = SKAction.wait(forDuration: 0.5)
-        let bounce = SKAction.sequence([moveDown,hide,moveUp,show,wait])
-        swipedown.run(SKAction.repeatForever(bounce))
+        flickHand.position = CGPoint(x: size.width * 0.65, y: size.height * 0.45)
+        flickHand.setScale(0.3)
+        flickHand.zPosition=9
+        addChild(flickHand)
+        
+        let initiateTouch = SKAction.move(to: CGPoint(x: size.width * 0.525, y: size.height * 0.45), duration: 0.6)
+        let moveDownSlow = SKAction.move(to: CGPoint(x: size.width * 0.525, y: size.height * 0.4), duration: 0.75)
+        let moveDownFast = SKAction.move(to: CGPoint(x: size.width * 0.525, y: size.height * 0.15), duration: 0.5)
+        let release = SKAction.move(to: CGPoint(x: size.width * 0.55, y: size.height * 0.175), duration: 0.15)
+        let resetHand = SKAction.move(to: CGPoint(x: size.width * 0.65, y: size.height * 0.45), duration: 0.1)
+        
+        //let hide = SKAction.hide()
+        //let show = SKAction.unhide()
+        
+        let shortWait = SKAction.wait(forDuration: 0.2)
+        let longWait = SKAction.wait(forDuration: 1.25)
+        let fadeOut = SKAction.fadeOut(withDuration: 0.5)
+        let fadeIn  = SKAction.fadeIn(withDuration: 0.5)
+        
+        let tutorialAnimation = SKAction.sequence([
+            touch,
+            fadeIn,
+            initiateTouch,
+            drag,
+            moveDownSlow,
+            moveDownFast,
+            flick,
+            release,
+            shortWait,
+            fadeOut,
+            resetHand,
+            longWait,
+            //show,
+            ])
+        flickHand.run(SKAction.repeatForever(tutorialAnimation))
+    }
+    
+    private func penaltyAlert(){
+        let deduction = SKLabelNode(fontNamed: "Menlo-Bold")
+        deduction.text = "-5"
+        deduction.fontColor = SKColor.red
+        deduction.fontSize = 32
+        deduction.position = CGPoint(x: size.width * 0.5, y: size.height * 0.5)
+        addChild(deduction)
+        
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        deduction.run(SKAction.fadeOut(withDuration: 1.5))
+        
     }
     
     private func endTutorial() {
-        swipedown.removeFromParent() // TODO: Move this elsewhere later if we want hand to be removed when user touches gem
+        flickHand.removeFromParent() // TODO: Move this elsewhere later if we want hand to be removed when user touches gem
 
         let scaleDown = SKAction.scale(by: 2/3, duration: 0.75)
         let finalScoreLabelPosition = CGPoint(x: size.width * 0.75, y: size.height - size.height/20)
