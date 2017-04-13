@@ -354,12 +354,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         deduction.text = "-5"
         deduction.fontColor = SKColor.red
         deduction.fontSize = 32
-        deduction.position = CGPoint(x: size.width * 0.5, y: size.height * 0.5)
+        deduction.position = CGPoint(x: size.width * 0.5, y: size.height * 0.15)
+        let moveUp = SKAction.move(to: CGPoint(x: size.width * 0.5, y: size.height), duration: 2.5)
         addChild(deduction)
         
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-        deduction.run(SKAction.fadeOut(withDuration: 1.5))
-        
+        deduction.run(moveUp)
+        deduction.run(SKAction.fadeOut(withDuration: 2.5))
     }
     
     private func endTutorial() {

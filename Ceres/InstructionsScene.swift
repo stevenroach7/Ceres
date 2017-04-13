@@ -68,16 +68,16 @@ class InstructionsScene: SKScene {
         
         let timerLabel = SKLabelNode(fontNamed: "Menlo-Bold")
         timerLabel.text = "Time: 0"
-        timerLabel.fontSize = 14
+        timerLabel.fontSize = 20
         //timerLabel.horizontalAlignmentMode = .right
-        timerLabel.position = CGPoint(x: size.width * 0.5, y: size.height - size.height/20)
+        timerLabel.position = CGPoint(x: size.width * 0.4, y: size.height - size.height/20)
         addChild(timerLabel)
         
         let scoreLabel = SKLabelNode(fontNamed: "Menlo-Bold")
         scoreLabel.text = "+/-: 0"
-        scoreLabel.fontSize = 14
+        scoreLabel.fontSize = 20
         //scoreLabel.horizontalAlignmentMode = .right
-        scoreLabel.position = CGPoint(x: size.width * 0.8, y: size.height - size.height/20)
+        scoreLabel.position = CGPoint(x: size.width * 0.75, y: size.height - size.height/20)
         addChild(scoreLabel)
     }
     
