@@ -444,6 +444,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                 gemSpawnSequence4()
             case 50:
                 gemSpawnSequence4()
+            case 60:
+                gemSpawnSequence3()
             default:
                 gemSpawnSequenceHard()
             }
