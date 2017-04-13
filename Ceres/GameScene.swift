@@ -64,8 +64,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         static let StagePlanet: UInt32 = 0b101
     }
     
-    var currSprite: SKNode! = nil
-    
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
         physicsWorld.contactDelegate = self
@@ -87,7 +85,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         
         addStagePlanet()
         addGemCollector()
-        addGemSource()
+        addGemSources()
         addAstronauts()
         
         prepareTutorial()
@@ -107,7 +105,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         let backgroundMusic = SKAudioNode(fileNamed: "cosmos.mp3")
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
-        
     }
     
     private func collectGemAnimation(collector: SKSpriteNode) {
@@ -122,6 +119,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func animateRightHammer() { // Need a function without arguments to be called in the SKAction
         rightGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
     }
+    
+    
     
     private func gemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
         // Removes gem from game scene and increments number of gems collected
@@ -420,6 +419,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         removeAllActions()
     }
     
+    // Helper methods to generate random numbers.
+    private func random() -> CGFloat {
+        return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
+    }
+    
+    private func random(min: CGFloat, max: CGFloat) -> CGFloat {
+        return random() * (max - min) + min
+    }
     
     private func spawnGems() { // TODO: Possibly refactor so that gamSpawn Sequences are in a sequence instead of being called based on the timerSeconds value.
         // Called every second, calls gem spawning sequences based on game timer
@@ -546,15 +553,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                                                ]),
                             count: 10))
     }
-    
-    // Helper methods to generate random numbers.
-    private func random() -> CGFloat {
-        return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
-    }
-    
-    private func random(min: CGFloat, max: CGFloat) -> CGFloat {
-        return random() * (max - min) + min
-    }
 
     private func addTutorialGem() {
         let gem = Gem(imageNamed: "gemShape1")
@@ -671,13 +669,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func addGemCollector() {
         let gemCollector = GemCollector(imageNamed: "collectorInactive")
         gemCollector.setGemCollectorProperties()  // Calls gem collector properties from GemCollector class
-        
         gemCollector.position = CGPoint(x: size.width / 2, y: size.height * 0.085)
         gemCollectorPosX = gemCollector.position.x
         addChild(gemCollector)
     }
     
-    private func addGemSource() {
+    private func addGemSources() {
         // Adds 2 gem sources, one for each astronaut
         leftGemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
         leftGemSource.position = CGPoint(x: size.width * 0.1, y: size.height * 0.1 - 20)
@@ -707,7 +704,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         blueAstronaut.zPosition = 2
         blueAstronaut.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 0.1*(size.width), height: 0.13*(size.height)))
         blueAstronaut.physicsBody?.usesPreciseCollisionDetection = true
-        blueAstronaut.physicsBody?.isDynamic = false //Change this to true to be amused
+        blueAstronaut.physicsBody?.isDynamic = false // Change this to true to be amused
         blueAstronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
         
         addChild(redAstronaut)
@@ -715,32 +712,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     private func onLeftGemSourceTouch() {
-        if self.isPaused == false && timerSeconds != 0 {
+        if self.isPaused == false && timerSeconds != 0 { // Change second conditional to result of isTutorialRunning variable
             addGemLeft()
             run(gemCreatedSound)
         }
     }
     
     private func onRightGemSourceTouch() {
-        if self.isPaused == false && timerSeconds != 0 {
+        if self.isPaused == false && timerSeconds != 0 { // Change second conditional to result of isTutorialRunning variable
             addGemRight()
             run(gemCreatedSound)
         }
     }
 
     private func onPauseButtonTouch() {
-        backAlert(title: "Game Paused", message: "")
+        pauseAlert(title: "Game Paused", message: "")
     }
     
-    private func findNearestGem (touchLocal: CGPoint) -> (CGFloat, SKNode){
-        // Method iterates over all gems and returns the closest one with the distance to said gem
+    private func findNearestGem (touchLocation: CGPoint) -> (CGFloat, SKNode){
+        // Method iterates over all gems and returns the gem with the closest distance to the touchLocation
         
         var minDist: CGFloat = 44
         var closestGem: SKSpriteNode = SKSpriteNode()
         self.enumerateChildNodes(withName: "*"){node,_ in
             if node.name == "gem" || node.name == "detonatorGem" {
-                let xDist = node.position.x - touchLocal.x
-                let yDist = node.position.y - touchLocal.y
+                let xDist = node.position.x - touchLocation.x
+                let yDist = node.position.y - touchLocation.y
                 let dist = CGFloat(sqrt((xDist*xDist) + (yDist*yDist)))
                 if dist < minDist {
                     minDist = dist
@@ -774,8 +771,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             }
             
             // Check if gem is touched
-            let (minDist, closestGem) = findNearestGem(touchLocal: touchLocation)
-            
+            let (minDist, closestGem) = findNearestGem(touchLocation: touchLocation)
             let touchedGem = (closestGem as? SKSpriteNode)!
             if (minDist < 44){ //If the touch is within 44 px of gem, change touched node to gem
                 if !selectedGems.contains(touchedGem) {
@@ -789,7 +785,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Method to handle touch events. Senses when user touches up (removes finger from screen).
-        
         for touch in touches {
             // Update touch dictionaries and node
             if let node = touchesToGems[touch] {
@@ -802,11 +797,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     override func update(_ currentTime: CFTimeInterval) {
         // Updates position of gems on the screen
-        
         let dt:CGFloat = 1.0/60.0 //determines drag and flick speed
         for (touch, node) in touchesToGems {
-            let touchLocation = touch.location(in:self)
-            if let displacement = nodeDisplacements[node] {
+            if let displacement = nodeDisplacements[node] { // Get displacement of touched node.
+                let touchLocation = touch.location(in:self)
                 let distance = CGVector(dx: touchLocation.x - node.position.x - displacement.dx, dy: touchLocation.y - node.position.y - displacement.dy)
                 let velocity = CGVector(dx: distance.dx / dt, dy: distance.dy / dt)
                 node.physicsBody!.velocity = velocity

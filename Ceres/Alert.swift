@@ -12,7 +12,7 @@ import SpriteKit
 protocol Alerts { }
 extension Alerts where Self: SKScene {
     
-    func backAlert(title: String, message: String) {
+    func pauseAlert(title: String, message: String) {
 
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         
