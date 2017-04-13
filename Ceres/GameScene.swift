@@ -590,7 +590,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Takes a gem and adds it to the scene in a manner specific to detonator gems
         detonatorGem.setGemProperties()  // Sets gem properties from Gem class
         detonatorGem.name = "detonatorGem"
-        detonatorGem.color = SKColor.white
         let angle = random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (3/8))
         let velocity = random(min: 100, max: 120)
         detonatorGem.setGemVelocity(velocity: velocity, angle: angle)
@@ -599,32 +598,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addChild(detonatorGem)
     }
     
-    private func animateDetonatorGem(detonatorGem: Gem) {
-        
+    private func flashDetonatorGemAnimation(duration: Double) -> SKAction {
+        // Takes an animation duration and returns an animation to flash a detonator gem once
         let flashAction = SKAction.setTexture(SKTexture(imageNamed: "mostlyWhiteRottenGem"))
         let unFlashAction = SKAction.setTexture(SKTexture(imageNamed: "rottenGem"))
         
-        var flashDuration = 0.25
-        var flashAnimation = SKAction.sequence([ // TODO: Refactor this to avoid code duplication and make the speeding up work correctly.
+        let flashAnimation = SKAction.sequence([
             flashAction,
-            SKAction.wait(forDuration: flashDuration),
+            SKAction.wait(forDuration: duration / 2),
             unFlashAction,
-            SKAction.wait(forDuration: flashDuration)
+            SKAction.wait(forDuration: duration / 2)
             ])
-        
-        func updateFlashAnimation() {
-            flashDuration *= 0.05
-            
-            flashAnimation = SKAction.sequence([
-                flashAction,
-                SKAction.wait(forDuration: flashDuration),
-                unFlashAction,
-                SKAction.wait(forDuration: flashDuration)
-                ])
-        }
-        detonatorGem.run(SKAction.repeat(SKAction.sequence([flashAnimation, SKAction.run(updateFlashAnimation)]), count: 20))
+        return flashAnimation
     }
     
+    private func animateDetonatorGem(detonatorGem: Gem) {
+        // Takes a detonatorGem and runs a flashing animation on it
+        let flashDuration = 0.25
+        detonatorGem.run(SKAction.repeat(SKAction.sequence([
+            {self.flashDetonatorGemAnimation(duration: flashDuration)}(),
+            ]), count: 20))
+    }
+
     private func detonateGem(detonatorGem: Gem, gravityFieldNode: SKFieldNode) {
         // Takes a detonator gem and a gravityFieldNode to add to the scene and simulates the gem exploding in the scene
         if detonatorGem.parent != nil { // Don't simulate explosion if gem has been removed
