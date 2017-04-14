@@ -29,8 +29,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let collectorExplosionSound = SKAction.playSoundFileNamed("bomb.mp3", waitForCompletion: false)
     
     var pauseButton = SKSpriteNode(imageNamed: "pause")
-    
-//    let flickHand = SKSpriteNode(imageNamed: "touch")
 
     let leftGemSource  = GemSource(imageNamed: "hammerInactive")
     let rightGemSource = GemSource(imageNamed: "hammerInactive")
@@ -173,11 +171,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         
         let shakeScore = shakeAction(positionX: scoreLabel.position.x)
         scoreLabel.run(shakeScore)
-        recolorScore()
-        
-        gemsPlusMinus -= 5
-        
         penaltyAlert()
+        recolorScore()
+        gemsPlusMinus -= 5
         
         gem.removeFromParent()
         //gemEffect.removeFromParent()
