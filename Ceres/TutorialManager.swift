@@ -76,6 +76,16 @@ class TutorialManager {
         gameScene.addChild(gem)
     }
     
+    public func tutorialGemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
+        // Removes gem from game scene and increments number of gems collected
+        gameScene.gemsPlusMinus += 1
+        gameScene.recolorScore()
+        gameScene.collectGemAnimation(collector: collector)
+        gem.removeFromParent()
+        endTutorial()
+        gameScene.startGame()
+    }
+    
     public func endTutorial() {
         gameScene.tutorialMode = false
         

@@ -26,6 +26,7 @@
 		B07806061E5506C400073DD6 /* CeresUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07806051E5506C400073DD6 /* CeresUITests.swift */; };
 		B0B969AA1E56321B005C587D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B0B969A91E56321B005C587D /* .gitignore */; };
 		B0F54CC61EA07E8000ACD89B /* TutorialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F54CC51EA07E8000ACD89B /* TutorialManager.swift */; };
+		B0FA24C41EA154C600043D71 /* GameplayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0FA24C31EA154C600043D71 /* GameplayManager.swift */; };
 		B212A1251E89DA3500DDEC64 /* zwip.wav in Resources */ = {isa = PBXBuildFile; fileRef = B212A1241E89DA3500DDEC64 /* zwip.wav */; };
 		B212A1271E89DAEC00DDEC64 /* boop.wav in Resources */ = {isa = PBXBuildFile; fileRef = B212A1261E89DAEC00DDEC64 /* boop.wav */; };
 		B2557EE41E8225800078C13F /* hydraulicSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = B2557EE31E8225800078C13F /* hydraulicSound.wav */; };
@@ -82,6 +83,7 @@
 		B07806071E5506C400073DD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B0B969A91E56321B005C587D /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		B0F54CC51EA07E8000ACD89B /* TutorialManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialManager.swift; sourceTree = "<group>"; };
+		B0FA24C31EA154C600043D71 /* GameplayManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameplayManager.swift; sourceTree = "<group>"; };
 		B212A1241E89DA3500DDEC64 /* zwip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = zwip.wav; sourceTree = "<group>"; };
 		B212A1261E89DAEC00DDEC64 /* boop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = boop.wav; sourceTree = "<group>"; };
 		B2557EE31E8225800078C13F /* hydraulicSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hydraulicSound.wav; sourceTree = "<group>"; };
@@ -139,7 +141,6 @@
 			children = (
 				B0B969A91E56321B005C587D /* .gitignore */,
 				B07805DE1E5506C300073DD6 /* Ceres */,
-				B07805F91E5506C400073DD6 /* CeresTests */,
 				B07806041E5506C400073DD6 /* CeresUITests */,
 				B07805DD1E5506C300073DD6 /* Products */,
 			);
@@ -161,25 +162,27 @@
 				B02B072D1E6651A100FC8D11 /* Alert.swift */,
 				B0708D6E1E5507CE008A9950 /* Sounds */,
 				B07805DF1E5506C300073DD6 /* AppDelegate.swift */,
+				B07805E71E5506C300073DD6 /* GameViewController.swift */,
+				3CB7250B1E5B91B300B28AE5 /* MainMenu.swift */,
+				3CB7250F1E5BE16600B28AE5 /* InstructionsScene.swift */,
 				B07805E51E5506C300073DD6 /* GameScene.swift */,
-				B297B8FA1E8CC01E00E1D216 /* gemMoveEffect.sks */,
+				B0F54CC51EA07E8000ACD89B /* TutorialManager.swift */,
+				B0FA24C31EA154C600043D71 /* GameplayManager.swift */,
 				3C3BFDC81E871CC90059D6CE /* GameOverScene.swift */,
+				A91E7E2A1E5D1ACF009CA97F /* Gem.swift */,
+				3C67AD9C1E84310000C8B980 /* GemSource.swift */,
+				3C67AD981E8331E100C8B980 /* StagePlanet.swift */,
+				3C67AD9A1E835C3500C8B980 /* GemCollector.swift */,
+				B297B8FA1E8CC01E00E1D216 /* gemMoveEffect.sks */,
 				B2CDC03B1E8368DA00AA93DC /* gemExplosion.sks */,
 				B28F8DD71E56663E005D803B /* starShower.sks */,
-				B07805E71E5506C300073DD6 /* GameViewController.swift */,
 				B07805E91E5506C300073DD6 /* Main.storyboard */,
+				B07805EE1E5506C300073DD6 /* LaunchScreen.storyboard */,
+				B07805F11E5506C300073DD6 /* Info.plist */,
 				B29319AF1E7F7C7700147924 /* collectorImages.atlas */,
 				B07805EC1E5506C300073DD6 /* Assets.xcassets */,
 				B2557EE51E8225B10078C13F /* hammerImages.atlas */,
-				B07805EE1E5506C300073DD6 /* LaunchScreen.storyboard */,
-				B07805F11E5506C300073DD6 /* Info.plist */,
-				3CB7250B1E5B91B300B28AE5 /* MainMenu.swift */,
-				3CB7250F1E5BE16600B28AE5 /* InstructionsScene.swift */,
-				A91E7E2A1E5D1ACF009CA97F /* Gem.swift */,
-				3C67AD981E8331E100C8B980 /* StagePlanet.swift */,
-				3C67AD9A1E835C3500C8B980 /* GemCollector.swift */,
-				3C67AD9C1E84310000C8B980 /* GemSource.swift */,
-				B0F54CC51EA07E8000ACD89B /* TutorialManager.swift */,
+				B07805F91E5506C400073DD6 /* CeresTests */,
 			);
 			path = Ceres;
 			sourceTree = "<group>";
@@ -191,7 +194,7 @@
 				B07805FC1E5506C400073DD6 /* Info.plist */,
 			);
 			path = CeresTests;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		B07806041E5506C400073DD6 /* CeresUITests */ = {
 			isa = PBXGroup;
@@ -364,6 +367,7 @@
 				3C67AD9B1E835C3500C8B980 /* GemCollector.swift in Sources */,
 				A91E7E2B1E5D1ACF009CA97F /* Gem.swift in Sources */,
 				B02B072E1E6651A100FC8D11 /* Alert.swift in Sources */,
+				B0FA24C41EA154C600043D71 /* GameplayManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

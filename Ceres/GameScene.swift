@@ -8,31 +8,20 @@
 
 import SpriteKit
 import GameplayKit
-import AudioToolbox.AudioServices
 
 class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     var tutorialManager:TutorialManager?
-    var tutorialMode = false
+    var tutorialMode = false // Boolean to store whether game is in tutorialMode
     
-    var collectorAtlas = SKTextureAtlas()
-    var collectorFrames = [SKTexture]()
+    var gameplayManager:GameplayManager?
     
-    var hammerAtlas = SKTextureAtlas()
-    var hammerFrames = [SKTexture]()
-    
-    let gemCollectedSound = SKAction.playSoundFileNamed("hydraulicSound.wav", waitForCompletion: false)
-    let gemCreatedSound = SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false)
-    let zoomTimerSound = SKAction.playSoundFileNamed("boop.wav", waitForCompletion: false)
-    let zipTimerSound = SKAction.playSoundFileNamed("zwip.wav", waitForCompletion: false)
-    let gemExplosionSound = SKAction.playSoundFileNamed("blast.mp3", waitForCompletion: false)
-    let collectorExplosionSound = SKAction.playSoundFileNamed("bomb.mp3", waitForCompletion: false)
-    
-    var pauseButton = SKSpriteNode(imageNamed: "pause")
-
+    // Global nodes
+    let pauseButton = SKSpriteNode(imageNamed: "pause")
+    let gemCollector = GemCollector(imageNamed: "collectorInactive")
+    let stagePlanet = StagePlanet(imageNamed: "planet")
     let leftGemSource  = GemSource(imageNamed: "hammerInactive")
     let rightGemSource = GemSource(imageNamed: "hammerInactive")
-
     let redAstronaut = SKSpriteNode(imageNamed: "redAstronaut")
     let blueAstronaut = SKSpriteNode(imageNamed: "blueAstronaut")
     var starfield:SKEmitterNode!
@@ -44,14 +33,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         }
     }
     
-    let losingGemPlusMinus = -1 // Make this lower during testing
-    
     var timerLabel: SKLabelNode!
     var timerSeconds = 0 {
         didSet {
             timerLabel.text = "Time: \(timerSeconds)"
         }
     }
+    
+    // Variables necessary to reset shaken sprites back to original position
+    // TODO: if we refactor sprites to globals instead of being declared and initialized in functions this redundancy can be removed. TODO: Refactor to remove these globals
+    var gemCollectorPosX: CGFloat! = nil
+    var scoreLabelPosX: CGFloat! = nil
+    
+    // TODO: Possibly store animations frames and sounds in their own structure
+    var collectorAtlas = SKTextureAtlas()
+    var collectorFrames = [SKTexture]()
+    var hammerAtlas = SKTextureAtlas()
+    var hammerFrames = [SKTexture]()
+    
+    let gemCollectedSound = SKAction.playSoundFileNamed("hydraulicSound.wav", waitForCompletion: false)
+    let gemCreatedSound = SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false)
+    let zoomTimerSound = SKAction.playSoundFileNamed("boop.wav", waitForCompletion: false)
+    let zipTimerSound = SKAction.playSoundFileNamed("zwip.wav", waitForCompletion: false)
+    let gemExplosionSound = SKAction.playSoundFileNamed("blast.mp3", waitForCompletion: false)
+    let collectorExplosionSound = SKAction.playSoundFileNamed("bomb.mp3", waitForCompletion: false)
+    
+    // Data structures to deal with user touches
+    var touchesToGems:[UITouch: SKSpriteNode] = [:] // Dictionary to map currently selected user touches to the gems they are dragging
+    var selectedGems: Set<SKSpriteNode> = Set()
+    var nodeDisplacements:[SKSpriteNode: CGVector] = [:] // Dictionary to map currently selected nodes to their displacements from the user's finger
+
     
     // Determines collisions between different objects
     public struct PhysicsCategory {
@@ -63,6 +74,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         static let GemSource: UInt32 = 0b100
         static let StagePlanet: UInt32 = 0b101
     }
+    
     
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
@@ -77,7 +89,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         
         pauseButton.setScale(0.175)
         pauseButton.name = "pauseButton"
-        pauseButton.position = CGPoint(x: size.width/12, y: size.height - size.height/24) // TODO: Change how to calculate height, use constants
+        pauseButton.position = CGPoint(x: size.width/12, y: size.height - size.height/24)
         addChild(pauseButton)
         
         setScoreLabel(font: 30, position: CGPoint(x: size.width/2, y: size.height * 0.7))
@@ -88,14 +100,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addGemSources()
         addAstronauts()
         
-        makeWall(location: CGPoint(x: size.width/2, y: size.height+50), size: CGSize(width: size.width*1.5, height: 1))
+        makeWall(location: CGPoint(x: size.width/2, y: size.height+50), size: CGSize(width: size.width*1.5, height: 1)) // TODO: Use constants here
         makeWall(location: CGPoint(x: -50, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
         makeWall(location: CGPoint(x: size.width+50, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
         
+        // TODO: Refactor animation code into a function
         collectorAtlas = SKTextureAtlas(named: "collectorImages")
         collectorFrames.append(SKTexture(imageNamed: "collectorActive.png"))
         collectorFrames.append(SKTexture(imageNamed: "collectorInactive.png"))
-        
         hammerAtlas = SKTextureAtlas(named: "hammerImages")
         hammerFrames.append(SKTexture(imageNamed: "hammerActive.png"))
         hammerFrames.append(SKTexture(imageNamed: "hammerInactive.png"))
@@ -104,144 +116,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
         
+        gameplayManager = GameplayManager(gameScene: self)
         tutorialManager = TutorialManager(gameScene: self)
         tutorialManager?.startTutorialMode()
     }
     
-    private func collectGemAnimation(collector: SKSpriteNode) {
-        collector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
-        collector.run(gemCollectedSound)
+    public func startGame() {
+        gameplayManager?.beginGameplay()
     }
     
-    private func animateLeftHammer() { // Need a function without arguments to be called in the SKAction
-        leftGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
-    }
-    
-    private func animateRightHammer() { // Need a function without arguments to be called in the SKAction
-        rightGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
-    }
-    
-    private func gemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
-        // Removes gem from game scene and increments number of gems collected
-        gemsPlusMinus += 1
-        recolorScore()
-        collectGemAnimation(collector: collector)
-        gem.removeFromParent()
-        if tutorialMode {
-            tutorialManager?.endTutorial()
-            beginGameplay()
-        }
-    }
-    
-    // Variables necessary to reset shaken sprites back to original position
-    // TODO: if we refactor sprites to globals instead of being declared and initialized in functions this redundancy can be removed
-    var gemCollectorPosX: CGFloat! = nil
-    var scoreLabelPosX: CGFloat! = nil
-    
-    private func shakeAction(positionX : CGFloat) -> SKAction {
-        //returns a shaking animation
-        
-        //defining a shake sequence
-        var sequence = [SKAction]()
-        
-        //Filling the sequence
-        for i in (1...4).reversed() {
-            let moveRight = SKAction.moveBy(x: CGFloat(i*2), y: 0, duration: TimeInterval(0.05))
-            sequence.append(moveRight)
-            let moveLeft = SKAction.moveBy(x: CGFloat(-4*i), y: 0, duration: TimeInterval(0.1))
-            sequence.append(moveLeft)
-            let moveOriginal = SKAction.moveBy(x: CGFloat(i*2), y: 0, duration: (TimeInterval(0.05)))
-            sequence.append(moveOriginal)
-        }
-        sequence.append(SKAction.moveTo(x: positionX, duration: 0.05)) //Return to original x position
-        let shake = SKAction.sequence(sequence)
-        return shake
-    }
-    
-    
-    private func detonatorGemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
-        // Removes gem from game scene and increments number of gems collected
-        
-        let shakeCollector = shakeAction(positionX: gemCollectorPosX)
-        collectGemAnimation(collector: collector)
-        
-        collector.run(shakeCollector)
-        self.run(collectorExplosionSound)
-        
-        let shakeScore = shakeAction(positionX: scoreLabel.position.x)
-        scoreLabel.run(shakeScore)
-        penaltyAlert()
-        recolorScore()
-        gemsPlusMinus -= 5
-        
-        gem.removeFromParent()
-        checkGameOver()
-    }
-    
-    private func gemOffScreen(gem: SKSpriteNode) {
-        // Removes gems from game scene when they fly off screen
-        if (gem.name == "gem") { //don't want to decrement score when detonating gems go offscreen
-            gemsPlusMinus -= 1
-            recolorScore()
-        }
-        gem.removeFromParent()
-        checkGameOver()
-    }
-    
-    private func recolorScore(){
-        if gemsPlusMinus < 0 {
-            scoreLabel.fontColor = SKColor.red
-        } else if gemsPlusMinus > 0 {
-            scoreLabel.fontColor = SKColor.green
-        } else {
-            scoreLabel.fontColor = SKColor.white
-        }
-    }
-    
-    func didBegin(_ contact: SKPhysicsContact) {
-        //Called everytime two physics bodies collide
-        
-        var firstBody: SKPhysicsBody
-        var secondBody: SKPhysicsBody
-        
-        //categoryBitMasks are UInt32 values
-        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
-            firstBody = contact.bodyA
-            secondBody = contact.bodyB
-        } else {
-            firstBody = contact.bodyB
-            secondBody = contact.bodyA
-        }
-        
-        //If the two colliding bodies are a gem and gemCollector, remove the gem
-        if ((firstBody.categoryBitMask == PhysicsCategory.GemCollector) &&
-            (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
-            if let gem = secondBody.node as? SKSpriteNode, let collector = firstBody.node as? SKSpriteNode {
-                switch gem.name! {
-                case "gem":
-                    gemDidCollideWithCollector(gem: gem, collector: collector)
-                case "detonatorGem":
-                    detonatorGemDidCollideWithCollector(gem: gem, collector: collector)
-                default:
-                    break
-                }
-            }
-        }
-
-        //If the two colliding bodies are a gem and wall, remove the gem
-        if ((firstBody.categoryBitMask == PhysicsCategory.Wall) &&
-            (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
-            if let gem = secondBody.node as? SKSpriteNode {
-                if tutorialMode {
-                    gem.removeFromParent()
-                    tutorialManager?.addTutorialGem()
-                } else {
-                    gemOffScreen(gem: gem)
-                }
-            }
-        }
-    }
-    
+    // Functions that add nodes to scene
     private func makeWall(location: CGPoint, size: CGSize) {
         // Creates boundaries in the game that deletes gems when they come into contact
         let shape = SKShapeNode(rectOf: size)
@@ -274,319 +158,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         timerLabel.position = CGPoint(x: size.width * 0.4, y: size.height - size.height/20)
         addChild(timerLabel)
     }
-    
-    private func incrementTimer() {
-        timerSeconds += 1
-        if (timerSeconds % 10 >= 7){
-            timerLabel.fontSize += 1
-            self.run(zoomTimerSound)
-        } else if (timerSeconds % 10 == 0 && timerSeconds > 0){
-            self.run(zipTimerSound)
-            timerLabel.fontSize -= 3
-            timerLabel.fontColor = SKColor.cyan
-        } else {
-            timerLabel.fontColor = SKColor.white
-        }
-    }
-    
-    private func penaltyAlert(){
-        let deduction = SKLabelNode(fontNamed: "Menlo-Bold")
-        deduction.text = "-5"
-        deduction.fontColor = SKColor.red
-        deduction.fontSize = 32
-        deduction.position = CGPoint(x: size.width * 0.5, y: size.height * 0.15)
-        let moveUp = SKAction.move(to: CGPoint(x: size.width * 0.5, y: size.height), duration: 2.5)
-        addChild(deduction)
-        
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-        deduction.run(moveUp)
-        deduction.run(SKAction.fadeOut(withDuration: 2.5))
-    }
-    
-    private func beginGameplay() {
-        // Adjust gravity of scene
-        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0.27) // Gravity on Ceres is 0.27 m/s²
-        
-        run(SKAction.repeatForever(
-            SKAction.sequence([
-                SKAction.run(animateLeftHammer),
-                SKAction.wait(forDuration: 0.35),
-                SKAction.run(animateRightHammer),
-                SKAction.wait(forDuration: 0.35),
-                ])
-        ))
-        
-        run(SKAction.repeatForever( // Serves as timer, Could potentially refactor to use group actions later.
-            SKAction.sequence([
-                SKAction.run(spawnGems),
-                SKAction.wait(forDuration: 1.0),
-                SKAction.run(incrementTimer),
-                ])
-        ))
-    }
-    
-    private func checkGameOver() {
-        // Calculates score to figure out when to end the game
-        if gemsPlusMinus <= losingGemPlusMinus {
-            gameOverTransition()
-        }
-    }
-    
-    private func gameOverTransition() {
-        self.isPaused = true
-        if view != nil {
-            let transition:SKTransition = SKTransition.fade(withDuration: 1)
-            let scene = GameOverScene(size: self.size)
-            scene.setScore(score: timerSeconds)
-            self.view?.presentScene(scene, transition: transition)
-        }
-        removeAllActions()
-    }
-    
-    // Helper methods to generate random numbers.
-    private func random() -> CGFloat {
-        return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
-    }
-    
-    private func random(min: CGFloat, max: CGFloat) -> CGFloat {
-        return random() * (max - min) + min
-    }
-    
-    private func spawnGems() { // TODO: Possibly refactor so that gamSpawn Sequences are in a sequence instead of being called based on the timerSeconds value.
-        // Called every second, calls gem spawning sequences based on game timer
-        if timerSeconds % 10 == 0 {
-            switch timerSeconds {
-            case 0:
-                gemSpawnSequence1()
-            case 10:
-                gemSpawnSequence2()
-            case 20:
-                gemSpawnSequenceBasicDetonators()
-            case 30:
-                gemSpawnSequence3()
-            case 40:
-                gemSpawnSequence4()
-            case 50:
-                gemSpawnSequence4()
-            case 60:
-                gemSpawnSequence3()
-            default:
-                gemSpawnSequenceHard()
-            }
-        }
-    }
-    
-    private func gemSpawnSequence1() {
-        // Gem spawning routine
-        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0), SKAction.run(addGemLeft), SKAction.wait(forDuration: 1.0), SKAction.run(addGemRight)]), count: 5))
-    }
-    
-    private func gemSpawnSequence2() {
-        // Gem spawning routine
-        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0),
-                                               SKAction.run(addGemLeft),
-                                               SKAction.wait(forDuration: 0.25),
-                                               SKAction.run(addGemRight),
-                                               ]),
-                            count: 8))
-    }
-    
-    private func gemSpawnSequence3() {
-        // Gem spawning routine
-        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0),
-                                               SKAction.run(addGemLeft),
-                                               SKAction.wait(forDuration: 0.25),
-                                               SKAction.run(addGemRight),
-                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
-                                               SKAction.wait(forDuration: 0.25),
-                                               SKAction.run(addGemLeft),
-                                               SKAction.run(addGemRight),
-                                               
-                                               ]),
-                            count: 7))
-    }
-    
-    private func gemSpawnSequence4() {
-        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 2.47),
-                                               SKAction.run(addGemRight),
-                                               SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
-                                               SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
-                                               
-                                               SKAction.wait(forDuration: 2.47),
-                                               SKAction.run(addGemLeft),
-                                               SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemLeft),
-                                               SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
-                                               SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemLeft),
-                                               ]),
-                            count: 2))
-    }
-    
-    private func gemSpawnSequenceBasicDetonators() {
-        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 2.47),
-                                               SKAction.run(addGemRight),
-                                               SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
-                                               
-                                               
-                                               SKAction.wait(forDuration: 2.47),
-                                               SKAction.run(addGemLeft),
-                                               SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemLeft),
-                                               SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
-                                               ]),
-                            count: 2))
-    }
-    
-    private func gemSpawnSequenceHard() {
-        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 0.74),
-                                               SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.run(addGemLeft),
-                                               SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
-                                               
-                                               SKAction.wait(forDuration: 0.2),
-                                               SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemLeft),
-                                               SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemLeft),
-                                               SKAction.run(addGemRight),
-                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
-                                               SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemLeft),
-                                               ]),
-                            count: 10))
-    }
-    
-    // TODO: Refactor to make addGem one method that takes a parameter to change the spawning location
-    public func addGemLeft() {
-        // Produces a Gem from the left astronaut
-        let gem = Gem(imageNamed: "gemShape1")
-        gem.setGemProperties()  // Calls gem properties from Gem class
-        let angle = random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (1/2))
-        let velocity = random(min: 170, max: 190)
-        gem.setGemVelocity(velocity: velocity, angle: angle)
-        gem.position = CGPoint(x: size.width * 0.1, y: size.height * 0.15)
-        addChild(gem)
-    }
-    
-    private func addGemRight() {
-        // Produces a Gem from the right astronaut
-        let gem = Gem(imageNamed: "gemShape1")
-        gem.setGemProperties()  // Calls gem properties from Gem class
-        let angle = random(min: CGFloat.pi * (1/2), max: CGFloat.pi * (3/4))
-        let velocity = random(min: 170, max: 190)
-        gem.setGemVelocity(velocity: velocity, angle: angle)
-        gem.position = CGPoint(x: size.width * 0.9, y: size.height * 0.15)
-        addChild(gem)
-    }
-    
-    private func addDetonatorGem(detonatorGem: Gem) { // TODO: Refactor this to take a parameter for left and right.
-        // Takes a gem and adds it to the scene in a manner specific to detonator gems
-        detonatorGem.setGemProperties()  // Sets gem properties from Gem class
-        detonatorGem.name = "detonatorGem"
-        let angle = random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (3/8))
-        let velocity = random(min: 100, max: 120)
-        detonatorGem.setGemVelocity(velocity: velocity, angle: angle)
-        let spawnLocation = CGPoint(x: size.width * 0.1, y: size.height * 0.15)
-        detonatorGem.position = spawnLocation
-        addChild(detonatorGem)
-    }
-    
-    private func flashDetonatorGemAnimation(duration: Double) -> SKAction {
-        // Takes an animation duration and returns an animation to flash a detonator gem once
-        let flashAction = SKAction.setTexture(SKTexture(imageNamed: "mostlyWhiteRottenGem"))
-        let unFlashAction = SKAction.setTexture(SKTexture(imageNamed: "rottenGem"))
-        
-        let flashAnimation = SKAction.sequence([
-            flashAction,
-            SKAction.wait(forDuration: duration / 2),
-            unFlashAction,
-            SKAction.wait(forDuration: duration / 2)
-            ])
-        return flashAnimation
-    }
-    
-    private func animateDetonatorGem(detonatorGem: Gem) {
-        // Takes a detonatorGem and runs a flashing animation on it
-        let flashDuration = 0.25
-        detonatorGem.run(SKAction.repeat(SKAction.sequence([
-            {self.flashDetonatorGemAnimation(duration: flashDuration)}(),
-            ]), count: 20))
-    }
 
-    private func detonateGem(detonatorGem: Gem, gravityFieldNode: SKFieldNode) {
-        // Takes a detonator gem and a gravityFieldNode to add to the scene and simulates the gem exploding in the scene
-        if detonatorGem.parent != nil { // Don't simulate explosion if gem has been removed
-            let gemPosition = detonatorGem.position
-            detonatorGem.removeFromParent()
-            
-            let gemExplosion = SKEmitterNode(fileNamed: "gemExplosion")!
-            gemExplosion.position = gemPosition
-            addChild(gemExplosion)
-            
-            self.run(gemExplosionSound)
-            
-            gravityFieldNode.name = "gravityFieldNode"
-            gravityFieldNode.strength = -30
-            gravityFieldNode.position = gemPosition
-            addChild(gravityFieldNode)
-        }
-    }
-    
-    private func detonationCleanup(gravityFieldNode: SKFieldNode) {
-        // Takes a gravityFieldNode and removes it from the scene to end the gem explosion simulation.
-        if gravityFieldNode.parent != nil {
-            gravityFieldNode.removeFromParent()
-        }
-    }
-    
-    private func detonateGemSequence(timeToExplosion: Double) {
-        // Adds a detonating gem to the scene and makes it explode in timeToExplosion seconds.
-        let detonatorGem = Gem(imageNamed: "rottenGem")
-        let gravityFieldNode = SKFieldNode.radialGravityField()
-        
-        run(SKAction.sequence([
-            SKAction.run({self.addDetonatorGem(detonatorGem: detonatorGem)}),
-            SKAction.run({self.animateDetonatorGem(detonatorGem: detonatorGem)}),
-            SKAction.wait(forDuration: timeToExplosion),
-            SKAction.run({self.detonateGem(detonatorGem: detonatorGem, gravityFieldNode: gravityFieldNode)}),
-            SKAction.wait(forDuration: 0.25),
-            SKAction.run({self.detonationCleanup(gravityFieldNode: gravityFieldNode)})
-            ]))
-    }
-    
     private func addStagePlanet() {
-        let stagePlanet = StagePlanet(imageNamed: "planet")
         stagePlanet.setStagePlanetProperties()  // Calls stage properties from StagePlanet class
         stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.075)
         addChild(stagePlanet)
     }
     
     private func addGemCollector() {
-        let gemCollector = GemCollector(imageNamed: "collectorInactive")
         gemCollector.setGemCollectorProperties()  // Calls gem collector properties from GemCollector class
         gemCollector.position = CGPoint(x: size.width / 2, y: size.height * 0.085)
         gemCollectorPosX = gemCollector.position.x
@@ -630,17 +209,67 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addChild(blueAstronaut)
     }
     
-    private func onLeftGemSourceTouch() {
-        if self.isPaused == false && timerSeconds != 0 { // Change second conditional to result of isTutorialRunning variable
-            addGemLeft()
-            run(gemCreatedSound)
+    
+    // Functions used in gameplay and tutorial
+    public func collectGemAnimation(collector: SKSpriteNode) {
+        collector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
+        collector.run(gemCollectedSound)
+    }
+    
+    public func recolorScore(){
+        if gemsPlusMinus < 0 {
+            scoreLabel.fontColor = SKColor.red
+        } else if gemsPlusMinus > 0 {
+            scoreLabel.fontColor = SKColor.green
+        } else {
+            scoreLabel.fontColor = SKColor.white
         }
     }
     
-    private func onRightGemSourceTouch() {
-        if self.isPaused == false && timerSeconds != 0 { // Change second conditional to result of isTutorialRunning variable
-            addGemRight()
-            run(gemCreatedSound)
+    func didBegin(_ contact: SKPhysicsContact) {
+        // Called every time two physics bodies collide
+        
+        var firstBody: SKPhysicsBody
+        var secondBody: SKPhysicsBody
+        
+        // categoryBitMasks are UInt32 values
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+        } else {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        
+        // If the two colliding bodies are a gem and gemCollector, remove the gem
+        if ((firstBody.categoryBitMask == PhysicsCategory.GemCollector) && (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
+            if let gem = secondBody.node as? SKSpriteNode, let collector = firstBody.node as? SKSpriteNode {
+                switch gem.name! {
+                case "gem":
+                    if !tutorialMode { // Check for tutorialMode being false first because that is more common
+                        gameplayManager?.gemDidCollideWithCollector(gem: gem, collector: collector)
+                    } else {
+                        tutorialManager?.tutorialGemDidCollideWithCollector(gem: gem, collector: collector)
+                    }
+                case "detonatorGem":
+                    gameplayManager?.detonatorGemDidCollideWithCollector(gem: gem, collector: collector)
+                default:
+                    break
+                }
+            }
+        }
+
+        //If the two colliding bodies are a gem and wall, remove the gem
+        if ((firstBody.categoryBitMask == PhysicsCategory.Wall) &&
+            (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
+            if let gem = secondBody.node as? SKSpriteNode {
+                if !tutorialMode { // Check for tutorialMode being false first because that is more common
+                    gameplayManager?.gemOffScreen(gem: gem)
+                } else {
+                    gem.removeFromParent()
+                    tutorialManager?.addTutorialGem()
+                }
+            }
         }
     }
 
@@ -667,10 +296,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         return (minDist, closestGem)
     }
     
-    var touchesToGems:[UITouch: SKSpriteNode] = [:] // Dictionary to map currently selected user touches to the gems they are dragging
-    var selectedGems: Set<SKSpriteNode> = Set()
-    var nodeDisplacements:[SKSpriteNode: CGVector] = [:] // Dictionary to map currently selected nodes to their displacements from the user's finger
-    
+    // Functions to deal with user touches
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Method to handle touch events. Senses when user touches down (places finger on screen).
         for touch in touches {
@@ -680,9 +306,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             if let name = touchedNode?.name {
                 switch name {
                 case "rightGemSource":
-                    onRightGemSourceTouch()
+                    gameplayManager?.onRightGemSourceTouch()
                 case "leftGemSource":
-                    onLeftGemSourceTouch()
+                    gameplayManager?.onLeftGemSourceTouch()
                 case "pauseButton":
                     onPauseButtonTouch()
                 default: break
