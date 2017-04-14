@@ -474,7 +474,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                                                SKAction.run(addGemLeft),
                                                SKAction.wait(forDuration: 0.25),
                                                SKAction.run(addGemRight),
-                                               SKAction.run(detonateGemSequence),
+                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
                                                SKAction.wait(forDuration: 0.25),
                                                SKAction.run(addGemLeft),
                                                SKAction.run(addGemRight),
@@ -488,12 +488,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                                                SKAction.run(addGemRight),
                                                SKAction.wait(forDuration: 0.01),
                                                SKAction.run(addGemRight),
-                                               SKAction.run(detonateGemSequence),
+                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
                                                SKAction.wait(forDuration: 0.01),
                                                SKAction.run(addGemRight),
                                                SKAction.wait(forDuration: 0.01),
                                                SKAction.run(addGemRight),
-                                               SKAction.run(detonateGemSequence),
+                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
                                                
                                                SKAction.wait(forDuration: 2.47),
                                                SKAction.run(addGemLeft),
@@ -501,7 +501,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                                                SKAction.run(addGemLeft),
                                                SKAction.wait(forDuration: 0.01),
                                                SKAction.run(addGemRight),
-                                               SKAction.run(detonateGemSequence),
+                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
                                                SKAction.wait(forDuration: 0.01),
                                                SKAction.run(addGemLeft),
                                                ]),
@@ -517,7 +517,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                                                SKAction.run(addGemRight),
                                                SKAction.wait(forDuration: 0.01),
                                                SKAction.run(addGemRight),
-                                               SKAction.run(detonateGemSequence),
+                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
                                                
                                                
                                                SKAction.wait(forDuration: 2.47),
@@ -528,7 +528,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                                                SKAction.run(addGemRight),
                                                SKAction.wait(forDuration: 0.01),
                                                SKAction.run(addGemRight),
-                                               SKAction.run(detonateGemSequence),
+                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
                                                ]),
                             count: 2))
     }
@@ -542,7 +542,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                                                SKAction.run(addGemLeft),
                                                SKAction.wait(forDuration: 0.01),
                                                SKAction.run(addGemRight),
-                                               SKAction.run(detonateGemSequence),
+                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
                                                
                                                SKAction.wait(forDuration: 0.2),
                                                SKAction.wait(forDuration: 0.01),
@@ -550,7 +550,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                                                SKAction.wait(forDuration: 0.01),
                                                SKAction.run(addGemLeft),
                                                SKAction.run(addGemRight),
-                                               SKAction.run(detonateGemSequence),
+                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
                                                SKAction.wait(forDuration: 0.01),
                                                SKAction.run(addGemLeft),
                                                ]),
@@ -647,15 +647,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         }
     }
     
-    private func detonateGemSequence() {
-        // Adds a detonating gem to the scene and makes it explode
+    private func detonateGemSequence(timeToExplosion: Double) {
+        // Adds a detonating gem to the scene and makes it explode in timeToExplosion seconds.
         let detonatorGem = Gem(imageNamed: "rottenGem")
         let gravityFieldNode = SKFieldNode.radialGravityField()
         
         run(SKAction.sequence([
             SKAction.run({self.addDetonatorGem(detonatorGem: detonatorGem)}),
             SKAction.run({self.animateDetonatorGem(detonatorGem: detonatorGem)}),
-            SKAction.wait(forDuration: 2.0),
+            SKAction.wait(forDuration: timeToExplosion),
             SKAction.run({self.detonateGem(detonatorGem: detonatorGem, gravityFieldNode: gravityFieldNode)}),
             SKAction.wait(forDuration: 0.25),
             SKAction.run({self.detonationCleanup(gravityFieldNode: gravityFieldNode)})
