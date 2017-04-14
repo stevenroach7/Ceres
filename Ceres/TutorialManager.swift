@@ -72,7 +72,7 @@ class TutorialManager {
     public func addTutorialGem() {
         let gem = Gem(imageNamed: "gemShape1")
         gem.setGemProperties()  // Calls gem properties from Gem class
-        gem.position = CGPoint(x: gameScene.size.width * 0.45, y: gameScene.size.height / 2)
+        gem.position = CGPoint(x: gameScene.size.width * 0.5, y: gameScene.size.height / 2)
         gameScene.addChild(gem)
     }
     
