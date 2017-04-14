@@ -36,7 +36,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let redAstronaut = SKSpriteNode(imageNamed: "redAstronaut")
     let blueAstronaut = SKSpriteNode(imageNamed: "blueAstronaut")
     var starfield:SKEmitterNode!
-    //var gemEffect:SKEmitterNode!
     
     var scoreLabel: SKLabelNode!
     var gemsPlusMinus = 0 {
@@ -176,7 +175,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         gemsPlusMinus -= 5
         
         gem.removeFromParent()
-        //gemEffect.removeFromParent()
         checkGameOver()
     }
     
