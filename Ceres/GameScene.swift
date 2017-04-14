@@ -12,6 +12,9 @@ import AudioToolbox.AudioServices
 
 class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
+    var tutorialManager:TutorialManager?
+    var tutorialMode = false
+    
     var collectorAtlas = SKTextureAtlas()
     var collectorFrames = [SKTexture]()
     
@@ -27,7 +30,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     var pauseButton = SKSpriteNode(imageNamed: "pause")
     
-    let flickHand = SKSpriteNode(imageNamed: "touch")
+//    let flickHand = SKSpriteNode(imageNamed: "touch")
 
     let leftGemSource  = GemSource(imageNamed: "hammerInactive")
     let rightGemSource = GemSource(imageNamed: "hammerInactive")
@@ -88,8 +91,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addGemSources()
         addAstronauts()
         
-        prepareTutorial()
-        
         makeWall(location: CGPoint(x: size.width/2, y: size.height+50), size: CGSize(width: size.width*1.5, height: 1))
         makeWall(location: CGPoint(x: -50, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
         makeWall(location: CGPoint(x: size.width+50, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
@@ -105,6 +106,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         let backgroundMusic = SKAudioNode(fileNamed: "cosmos.mp3")
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
+        
+        tutorialManager = TutorialManager(gameScene: self)
+        tutorialManager?.startTutorialMode()
     }
     
     private func collectGemAnimation(collector: SKSpriteNode) {
@@ -120,19 +124,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         rightGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
     }
     
-    
-    
     private func gemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
         // Removes gem from game scene and increments number of gems collected
         gemsPlusMinus += 1
         recolorScore()
         collectGemAnimation(collector: collector)
         gem.removeFromParent()
-        if isTutorialOver() {
-            endTutorial()
+        if tutorialMode {
+            tutorialManager?.endTutorial()
             beginGameplay()
         }
-        //gemEffect.removeFromParent()
     }
     
     // Variables necessary to reset shaken sprites back to original position
@@ -193,13 +194,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         checkGameOver()
     }
     
-    private func tutorialGemOffScreen(gem:SKSpriteNode) {
-        if timerSeconds == 0 {
-            gemsPlusMinus += 1
-            addTutorialGem()
-        }
-    }
-    
     private func recolorScore(){
         if gemsPlusMinus < 0 {
             scoreLabel.fontColor = SKColor.red
@@ -244,8 +238,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         if ((firstBody.categoryBitMask == PhysicsCategory.Wall) &&
             (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
             if let gem = secondBody.node as? SKSpriteNode {
-                tutorialGemOffScreen(gem: gem)
-                gemOffScreen(gem: gem)
+                if tutorialMode {
+                    gem.removeFromParent()
+                    tutorialManager?.addTutorialGem()
+                } else {
+                    gemOffScreen(gem: gem)
+                }
             }
         }
     }
@@ -297,58 +295,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         }
     }
     
-    private func isTutorialOver() -> Bool {
-        return (gemsPlusMinus == 1 && timerSeconds == 0)
-    }
-    
-    private func prepareTutorial() {
-        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0.01)
-        addTutorialGem()
-        makeTutorialHand()
-    }
-    
-    private func makeTutorialHand() {
-        let touch = SKAction.setTexture(SKTexture(imageNamed: "touch"))
-        let drag  = SKAction.setTexture(SKTexture(imageNamed: "drag"))
-        let flick = SKAction.setTexture(SKTexture(imageNamed: "flick"))
-        
-        flickHand.position = CGPoint(x: size.width * 0.65, y: size.height * 0.45)
-        flickHand.setScale(0.3)
-        flickHand.zPosition=9
-        addChild(flickHand)
-        
-        let initiateTouch = SKAction.move(to: CGPoint(x: size.width * 0.525, y: size.height * 0.45), duration: 0.6)
-        let moveDownSlow = SKAction.move(to: CGPoint(x: size.width * 0.525, y: size.height * 0.4), duration: 0.75)
-        let moveDownFast = SKAction.move(to: CGPoint(x: size.width * 0.525, y: size.height * 0.15), duration: 0.5)
-        let release = SKAction.move(to: CGPoint(x: size.width * 0.55, y: size.height * 0.175), duration: 0.15)
-        let resetHand = SKAction.move(to: CGPoint(x: size.width * 0.65, y: size.height * 0.45), duration: 0.1)
-        
-        //let hide = SKAction.hide()
-        //let show = SKAction.unhide()
-        
-        let shortWait = SKAction.wait(forDuration: 0.2)
-        let longWait = SKAction.wait(forDuration: 1.25)
-        let fadeOut = SKAction.fadeOut(withDuration: 0.5)
-        let fadeIn  = SKAction.fadeIn(withDuration: 0.5)
-        
-        let tutorialAnimation = SKAction.sequence([
-            touch,
-            fadeIn,
-            initiateTouch,
-            drag,
-            moveDownSlow,
-            moveDownFast,
-            flick,
-            release,
-            shortWait,
-            fadeOut,
-            resetHand,
-            longWait,
-            //show,
-            ])
-        flickHand.run(SKAction.repeatForever(tutorialAnimation))
-    }
-    
     private func penaltyAlert(){
         let deduction = SKLabelNode(fontNamed: "Menlo-Bold")
         deduction.text = "-5"
@@ -361,23 +307,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         deduction.run(moveUp)
         deduction.run(SKAction.fadeOut(withDuration: 2.5))
-    }
-    
-    private func endTutorial() {
-        flickHand.removeFromParent() // TODO: Move this elsewhere later if we want hand to be removed when user touches gem
-
-        let scaleDown = SKAction.scale(by: 2/3, duration: 0.75)
-        let finalScoreLabelPosition = CGPoint(x: size.width * 0.75, y: size.height - size.height/20)
-        let moveUp = SKAction.move(to: finalScoreLabelPosition, duration: 0.75)
-        
-        scoreLabelPosX = finalScoreLabelPosition.x
-        scoreLabel.run(scaleDown)
-        scoreLabel.run(moveUp)
-        
-        let expand = SKAction.scale(by: 3/2, duration: 1.0)
-        let shrink = SKAction.scale(by: 2/3, duration: 1.0)
-        let expandAndShrink = SKAction.sequence([expand,shrink])
-        timerLabel.run(expandAndShrink)
     }
     
     private func beginGameplay() {
@@ -556,16 +485,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                                                ]),
                             count: 10))
     }
-
-    private func addTutorialGem() {
-        let gem = Gem(imageNamed: "gemShape1")
-        gem.setGemProperties()  // Calls gem properties from Gem class
-        gem.position = CGPoint(x: size.width * 0.45, y: size.height / 2)
-        addChild(gem)
-    }
     
     // TODO: Refactor to make addGem one method that takes a parameter to change the spawning location
-    private func addGemLeft() {
+    public func addGemLeft() {
         // Produces a Gem from the left astronaut
         let gem = Gem(imageNamed: "gemShape1")
         gem.setGemProperties()  // Calls gem properties from Gem class

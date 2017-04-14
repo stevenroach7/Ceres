@@ -25,6 +25,7 @@
 		B07805FB1E5506C400073DD6 /* CeresTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07805FA1E5506C400073DD6 /* CeresTests.swift */; };
 		B07806061E5506C400073DD6 /* CeresUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07806051E5506C400073DD6 /* CeresUITests.swift */; };
 		B0B969AA1E56321B005C587D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B0B969A91E56321B005C587D /* .gitignore */; };
+		B0F54CC61EA07E8000ACD89B /* TutorialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F54CC51EA07E8000ACD89B /* TutorialManager.swift */; };
 		B212A1251E89DA3500DDEC64 /* zwip.wav in Resources */ = {isa = PBXBuildFile; fileRef = B212A1241E89DA3500DDEC64 /* zwip.wav */; };
 		B212A1271E89DAEC00DDEC64 /* boop.wav in Resources */ = {isa = PBXBuildFile; fileRef = B212A1261E89DAEC00DDEC64 /* boop.wav */; };
 		B2557EE41E8225800078C13F /* hydraulicSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = B2557EE31E8225800078C13F /* hydraulicSound.wav */; };
@@ -80,6 +81,7 @@
 		B07806051E5506C400073DD6 /* CeresUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CeresUITests.swift; sourceTree = "<group>"; };
 		B07806071E5506C400073DD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B0B969A91E56321B005C587D /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		B0F54CC51EA07E8000ACD89B /* TutorialManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialManager.swift; sourceTree = "<group>"; };
 		B212A1241E89DA3500DDEC64 /* zwip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = zwip.wav; sourceTree = "<group>"; };
 		B212A1261E89DAEC00DDEC64 /* boop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = boop.wav; sourceTree = "<group>"; };
 		B2557EE31E8225800078C13F /* hydraulicSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hydraulicSound.wav; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				3C67AD981E8331E100C8B980 /* StagePlanet.swift */,
 				3C67AD9A1E835C3500C8B980 /* GemCollector.swift */,
 				3C67AD9C1E84310000C8B980 /* GemSource.swift */,
+				B0F54CC51EA07E8000ACD89B /* TutorialManager.swift */,
 			);
 			path = Ceres;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				B07805E01E5506C300073DD6 /* AppDelegate.swift in Sources */,
 				3CB7250C1E5B91B300B28AE5 /* MainMenu.swift in Sources */,
 				3C67AD991E8331E100C8B980 /* StagePlanet.swift in Sources */,
+				B0F54CC61EA07E8000ACD89B /* TutorialManager.swift in Sources */,
 				3CB725101E5BE16600B28AE5 /* InstructionsScene.swift in Sources */,
 				3C67AD9B1E835C3500C8B980 /* GemCollector.swift in Sources */,
 				A91E7E2B1E5D1ACF009CA97F /* Gem.swift in Sources */,
