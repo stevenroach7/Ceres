@@ -39,11 +39,11 @@ class TutorialManager {
         flickHand.zPosition = 9
         gameScene.addChild(flickHand)
         
-        let initiateTouch = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.525, y: gameScene.size.height * 0.45), duration: 0.6)
-        let moveDownSlow = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.525, y: gameScene.size.height * 0.4), duration: 0.75)
-        let moveDownFast = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.525, y: gameScene.size.height * 0.15), duration: 0.5)
-        let release = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.55, y: gameScene.size.height * 0.175), duration: 0.15)
-        let resetHand = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.65, y: gameScene.size.height * 0.45), duration: 0.1)
+        let initiateTouch = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.55, y: gameScene.size.height * 0.45), duration: 0.6)
+        let moveDownSlow = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.55, y: gameScene.size.height * 0.4), duration: 0.75)
+        let moveDownFast = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.55, y: gameScene.size.height * 0.15), duration: 0.5)
+        let release = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.575, y: gameScene.size.height * 0.175), duration: 0.15)
+        let resetHand = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.675, y: gameScene.size.height * 0.45), duration: 0.1)
         //let hide = SKAction.hide()
         //let show = SKAction.unhide()
         let shortWait = SKAction.wait(forDuration: 0.2)
@@ -72,7 +72,7 @@ class TutorialManager {
     public func addTutorialGem() {
         let gem = Gem(imageNamed: "gemShape1")
         gem.setGemProperties()  // Calls gem properties from Gem class
-        gem.position = CGPoint(x: gameScene.size.width * 0.45, y: gameScene.size.height / 2)
+        gem.position = CGPoint(x: gameScene.size.width * 0.5, y: gameScene.size.height / 2)
         gameScene.addChild(gem)
     }
     

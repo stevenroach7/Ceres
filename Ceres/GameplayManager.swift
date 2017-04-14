@@ -260,7 +260,7 @@ class GameplayManager {
         let angle = random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (1/2))
         let velocity = random(min: 170, max: 190)
         gem.setGemVelocity(velocity: velocity, angle: angle)
-        gem.position = CGPoint(x: gameScene.size.width * 0.1, y: gameScene.size.height * 0.15)
+        gem.position = CGPoint(x: gameScene.size.width * 0.15, y: gameScene.size.height * 0.15)
         gameScene.addChild(gem)
     }
     
@@ -271,7 +271,7 @@ class GameplayManager {
         let angle = random(min: CGFloat.pi * (1/2), max: CGFloat.pi * (3/4))
         let velocity = random(min: 170, max: 190)
         gem.setGemVelocity(velocity: velocity, angle: angle)
-        gem.position = CGPoint(x: gameScene.size.width * 0.9, y: gameScene.size.height * 0.15)
+        gem.position = CGPoint(x: gameScene.size.width * 0.85, y: gameScene.size.height * 0.15)
         gameScene.addChild(gem)
     }
     
@@ -282,7 +282,7 @@ class GameplayManager {
         let angle = random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (3/8))
         let velocity = random(min: 100, max: 120)
         detonatorGem.setGemVelocity(velocity: velocity, angle: angle)
-        let spawnLocation = CGPoint(x: gameScene.size.width * 0.1, y: gameScene.size.height * 0.15)
+        let spawnLocation = CGPoint(x: gameScene.size.width * 0.15, y: gameScene.size.height * 0.15)
         detonatorGem.position = spawnLocation
         gameScene.addChild(detonatorGem)
     }
