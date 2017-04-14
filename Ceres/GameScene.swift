@@ -488,7 +488,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         let angle = random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (1/2))
         let velocity = random(min: 170, max: 190)
         gem.setGemVelocity(velocity: velocity, angle: angle)
-        gem.position = CGPoint(x: size.width * 0.1, y: size.height * 0.15)
+        gem.position = CGPoint(x: size.width * 0.15, y: size.height * 0.15)
         addChild(gem)
     }
     
@@ -499,7 +499,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         let angle = random(min: CGFloat.pi * (1/2), max: CGFloat.pi * (3/4))
         let velocity = random(min: 170, max: 190)
         gem.setGemVelocity(velocity: velocity, angle: angle)
-        gem.position = CGPoint(x: size.width * 0.9, y: size.height * 0.15)
+        gem.position = CGPoint(x: size.width * 0.85, y: size.height * 0.15)
         addChild(gem)
     }
     
@@ -596,19 +596,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func addGemSources() {
         // Adds 2 gem sources, one for each astronaut
         leftGemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
-        leftGemSource.position = CGPoint(x: size.width * 0.1, y: size.height * 0.1 - 20)
+        leftGemSource.position = CGPoint(x: size.width * 0.15, y: size.height * 0.1 - 20)
         leftGemSource.name = "leftGemSource"
         addChild(leftGemSource)
         
         rightGemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
-        rightGemSource.position = CGPoint(x: size.width * 0.9, y: size.height * 0.1 - 20)
+        rightGemSource.position = CGPoint(x: size.width * 0.85, y: size.height * 0.1 - 20)
         rightGemSource.name = "rightGemSource"
         addChild(rightGemSource)
     }
     
     private func addAstronauts() {
         // Creates 2 astronauts on either side of the planet
-        redAstronaut.position = CGPoint(x: size.width * 0.1, y: size.height * 0.1)
+        redAstronaut.position = CGPoint(x: size.width * 0.15, y: size.height * 0.1)
         redAstronaut.setScale(0.175)
         redAstronaut.name = "redAstronaut"
         redAstronaut.zPosition = 2
@@ -617,7 +617,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         redAstronaut.physicsBody?.isDynamic = false
         redAstronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
         
-        blueAstronaut.position = CGPoint(x: size.width * 0.9, y: size.height * 0.1)
+        blueAstronaut.position = CGPoint(x: size.width * 0.85, y: size.height * 0.1)
         blueAstronaut.setScale(0.175)
         blueAstronaut.name = "blueAstronaut"
         blueAstronaut.zPosition = 2
