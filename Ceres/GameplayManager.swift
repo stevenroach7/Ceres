@@ -61,7 +61,7 @@ class GameplayManager {
         
         let shakeScore = shakeAction(positionX: gameScene.scoreLabel.position.x)
         gameScene.scoreLabel.run(shakeScore)
-        penaltyAlert()
+        minusFiveAlert()
         gameScene.recolorScore()
         gameScene.gemsPlusMinus -= 5
         
@@ -74,6 +74,7 @@ class GameplayManager {
         gameScene.gemsPlusMinus -= 1
         gameScene.recolorScore()
         gem.removeFromParent()
+        minusOneAlert()
         checkGameOver()
     }
     
@@ -350,18 +351,31 @@ class GameplayManager {
             ]))
     }
     
-    private func penaltyAlert(){
-        let deduction = SKLabelNode(fontNamed: "Menlo-Bold")
-        deduction.text = "-5"
-        deduction.fontColor = SKColor.red
-        deduction.fontSize = 32
-        deduction.position = CGPoint(x: gameScene.size.width * 0.5, y: gameScene.size.height * 0.15)
+    private func minusOneAlert() {
+        let minusOne = SKLabelNode(fontNamed: "Menlo-Bold")
+        minusOne.text = "-1"
+        minusOne.fontColor = SKColor.red
+        minusOne.fontSize = 30
+        minusOne.position = CGPoint(x: gameScene.size.width * 0.8, y: gameScene.size.height * 0.9)
+        let moveDown = SKAction.moveTo(y: gameScene.size.height * 0.7, duration: 1.0)
+        gameScene.addChild(minusOne)
+        
+        minusOne.run(moveDown)
+        minusOne.run(SKAction.fadeOut(withDuration: 1.0))
+    }
+    
+    private func minusFiveAlert(){
+        let minusFive = SKLabelNode(fontNamed: "Menlo-Bold")
+        minusFive.text = "-5"
+        minusFive.fontColor = SKColor.red
+        minusFive.fontSize = 32
+        minusFive.position = CGPoint(x: gameScene.size.width * 0.5, y: gameScene.size.height * 0.15)
         let moveUp = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.5, y: gameScene.size.height), duration: 2.5)
-        gameScene.addChild(deduction)
+        gameScene.addChild(minusFive)
         
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-        deduction.run(moveUp)
-        deduction.run(SKAction.fadeOut(withDuration: 2.5))
+        minusFive.run(moveUp)
+        minusFive.run(SKAction.fadeOut(withDuration: 2.5))
     }
 
     private func animateLeftHammer() { // Need a function without arguments to be called in the SKAction
