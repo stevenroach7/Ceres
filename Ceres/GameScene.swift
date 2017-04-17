@@ -264,7 +264,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
             if let gem = secondBody.node as? SKSpriteNode {
                 if !tutorialMode { // Check for tutorialMode being false first because that is more common
-                    gameplayManager?.gemOffScreen(gem: gem)
+                    if gem.name == "gem" { // Don't penalize detonator gems going of screen
+                        gameplayManager?.gemOffScreen(gem: gem)
+                    } else {
+                        gem.removeFromParent()
+                    }
                 } else {
                     gem.removeFromParent()
                     tutorialManager?.addTutorialGem()
