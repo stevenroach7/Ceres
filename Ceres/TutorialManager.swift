@@ -13,7 +13,7 @@ class TutorialManager {
     
     var gameScene:GameScene
     let flickHand = SKSpriteNode(imageNamed: "touch")
-    let collectorGlow = SKEmitterNode(fileNamed: "gemExplosion")!
+    let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
     
     
     init(gameScene: GameScene) {
