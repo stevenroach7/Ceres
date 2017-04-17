@@ -13,6 +13,8 @@ class TutorialManager {
     
     var gameScene:GameScene
     let flickHand = SKSpriteNode(imageNamed: "touch")
+    let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
+    
     
     init(gameScene: GameScene) {
         self.gameScene = gameScene
@@ -27,6 +29,8 @@ class TutorialManager {
         gameScene.physicsWorld.gravity = CGVector(dx: 0, dy: 0.01)
         addTutorialGem()
         makeTutorialHand()
+        collectorGlow.position = CGPoint(x: gameScene.size.width * 0.525, y: gameScene.size.height * 0.125)
+        gameScene.addChild(collectorGlow)
     }
     
     private func makeTutorialHand() {
@@ -41,8 +45,8 @@ class TutorialManager {
         
         let initiateTouch = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.55, y: gameScene.size.height * 0.45), duration: 0.6)
         let moveDownSlow = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.55, y: gameScene.size.height * 0.4), duration: 0.75)
-        let moveDownFast = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.55, y: gameScene.size.height * 0.15), duration: 0.5)
-        let release = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.575, y: gameScene.size.height * 0.175), duration: 0.15)
+        let moveDownFast = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.55, y: gameScene.size.height * 0.225), duration: 0.3)
+        let release = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.575, y: gameScene.size.height * 0.25), duration: 0.15)
         let resetHand = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.675, y: gameScene.size.height * 0.45), duration: 0.1)
         //let hide = SKAction.hide()
         //let show = SKAction.unhide()
@@ -50,6 +54,7 @@ class TutorialManager {
         let longWait = SKAction.wait(forDuration: 1.25)
         let fadeOut = SKAction.fadeOut(withDuration: 0.5)
         let fadeIn  = SKAction.fadeIn(withDuration: 0.5)
+        
         
         let tutorialAnimation = SKAction.sequence([
             touch,
@@ -64,10 +69,10 @@ class TutorialManager {
             fadeOut,
             resetHand,
             longWait,
-            //show,
             ])
         flickHand.run(SKAction.repeatForever(tutorialAnimation))
     }
+    
     
     public func addTutorialGem() {
         let gem = Gem(imageNamed: "gemShape1")
@@ -89,6 +94,7 @@ class TutorialManager {
     public func endTutorial() {
         gameScene.tutorialMode = false
         
+        collectorGlow.removeFromParent()
         flickHand.removeFromParent() // TODO: Move this elsewhere later if we want hand to be removed when user touches gem
         let scaleDown = SKAction.scale(by: 2/3, duration: 0.75)
         let finalScoreLabelPosition = CGPoint(x: gameScene.size.width * 0.75, y: gameScene.size.height - gameScene.size.height/20)

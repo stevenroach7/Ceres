@@ -18,7 +18,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     // Global nodes
     let pauseButton = SKSpriteNode(imageNamed: "pause")
-    let gemCollector = GemCollector(imageNamed: "collectorInactive")
+    let gemCollector = GemCollector(imageNamed: "collectorActive")
     let stagePlanet = StagePlanet(imageNamed: "planet")
     let leftGemSource  = GemSource(imageNamed: "hammerInactive")
     let rightGemSource = GemSource(imageNamed: "hammerInactive")

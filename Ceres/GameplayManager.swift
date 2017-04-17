@@ -48,6 +48,8 @@ class GameplayManager {
         gameScene.recolorScore()
         gameScene.collectGemAnimation(collector: collector)
         gem.removeFromParent()
+        
+        
     }
     
     public func detonatorGemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {

@@ -47,7 +47,7 @@ class MenuScene: SKScene {
         self.addChild(starfield)
         starfield.zPosition = -1
         
-        ship.setScale(0.25)
+        ship.setScale(0.5)
         ship.position = CGPoint(x: size.width/2, y: size.height/5)
         addChild(ship)
     }

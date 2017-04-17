@@ -33,7 +33,8 @@
 		B2557EE61E8225B10078C13F /* hammerImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B2557EE51E8225B10078C13F /* hammerImages.atlas */; };
 		B28F8DD81E56663E005D803B /* starShower.sks in Resources */ = {isa = PBXBuildFile; fileRef = B28F8DD71E56663E005D803B /* starShower.sks */; };
 		B29319B01E7F7C7700147924 /* collectorImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B29319AF1E7F7C7700147924 /* collectorImages.atlas */; };
-		B297B8FB1E8CC01E00E1D216 /* gemMoveEffect.sks in Resources */ = {isa = PBXBuildFile; fileRef = B297B8FA1E8CC01E00E1D216 /* gemMoveEffect.sks */; };
+		B299CA2B1EA4773F006C3AFC /* collectorGlow.sks in Resources */ = {isa = PBXBuildFile; fileRef = B299CA291EA4773F006C3AFC /* collectorGlow.sks */; };
+		B299CA2C1EA4773F006C3AFC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B299CA2A1EA4773F006C3AFC /* Assets.xcassets */; };
 		B2A6A25A1E726FD100F64EAF /* anvil.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B2A6A2581E726FD100F64EAF /* anvil.mp3 */; };
 		B2CDC03C1E8368DA00AA93DC /* gemExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2CDC03B1E8368DA00AA93DC /* gemExplosion.sks */; };
 		B2D7DB4E1E97FFFC00CB4EEE /* blast.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B2D7DB4C1E97FFFC00CB4EEE /* blast.mp3 */; };
@@ -90,7 +91,8 @@
 		B2557EE51E8225B10078C13F /* hammerImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = hammerImages.atlas; sourceTree = "<group>"; };
 		B28F8DD71E56663E005D803B /* starShower.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = starShower.sks; sourceTree = "<group>"; };
 		B29319AF1E7F7C7700147924 /* collectorImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = collectorImages.atlas; sourceTree = "<group>"; };
-		B297B8FA1E8CC01E00E1D216 /* gemMoveEffect.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = gemMoveEffect.sks; sourceTree = "<group>"; };
+		B299CA291EA4773F006C3AFC /* collectorGlow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = collectorGlow.sks; path = ../collectorGlow.sks; sourceTree = "<group>"; };
+		B299CA2A1EA4773F006C3AFC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B2A6A2581E726FD100F64EAF /* anvil.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = anvil.mp3; sourceTree = "<group>"; };
 		B2CDC03B1E8368DA00AA93DC /* gemExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = gemExplosion.sks; sourceTree = "<group>"; };
 		B2D7DB4C1E97FFFC00CB4EEE /* blast.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = blast.mp3; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 		B07805D31E5506C300073DD6 = {
 			isa = PBXGroup;
 			children = (
+				B299CA2A1EA4773F006C3AFC /* Assets.xcassets */,
 				B0B969A91E56321B005C587D /* .gitignore */,
 				B07805DE1E5506C300073DD6 /* Ceres */,
 				B07806041E5506C400073DD6 /* CeresUITests */,
@@ -173,9 +176,9 @@
 				3C67AD9C1E84310000C8B980 /* GemSource.swift */,
 				3C67AD981E8331E100C8B980 /* StagePlanet.swift */,
 				3C67AD9A1E835C3500C8B980 /* GemCollector.swift */,
-				B297B8FA1E8CC01E00E1D216 /* gemMoveEffect.sks */,
 				B2CDC03B1E8368DA00AA93DC /* gemExplosion.sks */,
 				B28F8DD71E56663E005D803B /* starShower.sks */,
+				B299CA291EA4773F006C3AFC /* collectorGlow.sks */,
 				B07805E91E5506C300073DD6 /* Main.storyboard */,
 				B07805EE1E5506C300073DD6 /* LaunchScreen.storyboard */,
 				B07805F11E5506C300073DD6 /* Info.plist */,
@@ -315,11 +318,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B299CA2B1EA4773F006C3AFC /* collectorGlow.sks in Resources */,
 				B212A1271E89DAEC00DDEC64 /* boop.wav in Resources */,
 				B2A6A25A1E726FD100F64EAF /* anvil.mp3 in Resources */,
 				B29319B01E7F7C7700147924 /* collectorImages.atlas in Resources */,
 				B07805EB1E5506C300073DD6 /* Main.storyboard in Resources */,
 				B0B969AA1E56321B005C587D /* .gitignore in Resources */,
+				B299CA2C1EA4773F006C3AFC /* Assets.xcassets in Resources */,
 				B0708D701E5507CE008A9950 /* cosmos.mp3 in Resources */,
 				B2D7DB4F1E97FFFC00CB4EEE /* bomb.mp3 in Resources */,
 				B07805ED1E5506C300073DD6 /* Assets.xcassets in Resources */,
@@ -330,7 +335,6 @@
 				B2D7DB4E1E97FFFC00CB4EEE /* blast.mp3 in Resources */,
 				B2CDC03C1E8368DA00AA93DC /* gemExplosion.sks in Resources */,
 				B28F8DD81E56663E005D803B /* starShower.sks in Resources */,
-				B297B8FB1E8CC01E00E1D216 /* gemMoveEffect.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
