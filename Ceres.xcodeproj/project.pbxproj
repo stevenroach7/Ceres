@@ -21,7 +21,6 @@
 		B07805E81E5506C300073DD6 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07805E71E5506C300073DD6 /* GameViewController.swift */; };
 		B07805EB1E5506C300073DD6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B07805E91E5506C300073DD6 /* Main.storyboard */; };
 		B07805ED1E5506C300073DD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B07805EC1E5506C300073DD6 /* Assets.xcassets */; };
-		B07805F01E5506C300073DD6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B07805EE1E5506C300073DD6 /* LaunchScreen.storyboard */; };
 		B07805FB1E5506C400073DD6 /* CeresTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07805FA1E5506C400073DD6 /* CeresTests.swift */; };
 		B07806061E5506C400073DD6 /* CeresUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07806051E5506C400073DD6 /* CeresUITests.swift */; };
 		B0B969AA1E56321B005C587D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B0B969A91E56321B005C587D /* .gitignore */; };
@@ -31,10 +30,9 @@
 		B212A1271E89DAEC00DDEC64 /* boop.wav in Resources */ = {isa = PBXBuildFile; fileRef = B212A1261E89DAEC00DDEC64 /* boop.wav */; };
 		B2557EE41E8225800078C13F /* hydraulicSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = B2557EE31E8225800078C13F /* hydraulicSound.wav */; };
 		B2557EE61E8225B10078C13F /* hammerImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B2557EE51E8225B10078C13F /* hammerImages.atlas */; };
+		B26BB8DC1EA52F8900D39079 /* collectorGlow.sks in Resources */ = {isa = PBXBuildFile; fileRef = B26BB8DB1EA52F8900D39079 /* collectorGlow.sks */; };
 		B28F8DD81E56663E005D803B /* starShower.sks in Resources */ = {isa = PBXBuildFile; fileRef = B28F8DD71E56663E005D803B /* starShower.sks */; };
 		B29319B01E7F7C7700147924 /* collectorImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B29319AF1E7F7C7700147924 /* collectorImages.atlas */; };
-		B299CA2B1EA4773F006C3AFC /* collectorGlow.sks in Resources */ = {isa = PBXBuildFile; fileRef = B299CA291EA4773F006C3AFC /* collectorGlow.sks */; };
-		B299CA2C1EA4773F006C3AFC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B299CA2A1EA4773F006C3AFC /* Assets.xcassets */; };
 		B2A6A25A1E726FD100F64EAF /* anvil.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B2A6A2581E726FD100F64EAF /* anvil.mp3 */; };
 		B2CDC03C1E8368DA00AA93DC /* gemExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2CDC03B1E8368DA00AA93DC /* gemExplosion.sks */; };
 		B2D7DB4E1E97FFFC00CB4EEE /* blast.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B2D7DB4C1E97FFFC00CB4EEE /* blast.mp3 */; };
@@ -74,7 +72,6 @@
 		B07805E71E5506C300073DD6 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		B07805EA1E5506C300073DD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B07805EC1E5506C300073DD6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B07805EF1E5506C300073DD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B07805F11E5506C300073DD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B07805F61E5506C400073DD6 /* CeresTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CeresTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B07805FA1E5506C400073DD6 /* CeresTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CeresTests.swift; sourceTree = "<group>"; };
@@ -89,10 +86,9 @@
 		B212A1261E89DAEC00DDEC64 /* boop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = boop.wav; sourceTree = "<group>"; };
 		B2557EE31E8225800078C13F /* hydraulicSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hydraulicSound.wav; sourceTree = "<group>"; };
 		B2557EE51E8225B10078C13F /* hammerImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = hammerImages.atlas; sourceTree = "<group>"; };
+		B26BB8DB1EA52F8900D39079 /* collectorGlow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = collectorGlow.sks; sourceTree = "<group>"; };
 		B28F8DD71E56663E005D803B /* starShower.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = starShower.sks; sourceTree = "<group>"; };
 		B29319AF1E7F7C7700147924 /* collectorImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = collectorImages.atlas; sourceTree = "<group>"; };
-		B299CA291EA4773F006C3AFC /* collectorGlow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = collectorGlow.sks; path = ../collectorGlow.sks; sourceTree = "<group>"; };
-		B299CA2A1EA4773F006C3AFC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B2A6A2581E726FD100F64EAF /* anvil.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = anvil.mp3; sourceTree = "<group>"; };
 		B2CDC03B1E8368DA00AA93DC /* gemExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = gemExplosion.sks; sourceTree = "<group>"; };
 		B2D7DB4C1E97FFFC00CB4EEE /* blast.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = blast.mp3; sourceTree = "<group>"; };
@@ -141,7 +137,6 @@
 		B07805D31E5506C300073DD6 = {
 			isa = PBXGroup;
 			children = (
-				B299CA2A1EA4773F006C3AFC /* Assets.xcassets */,
 				B0B969A91E56321B005C587D /* .gitignore */,
 				B07805DE1E5506C300073DD6 /* Ceres */,
 				B07806041E5506C400073DD6 /* CeresUITests */,
@@ -172,15 +167,14 @@
 				B0F54CC51EA07E8000ACD89B /* TutorialManager.swift */,
 				B0FA24C31EA154C600043D71 /* GameplayManager.swift */,
 				3C3BFDC81E871CC90059D6CE /* GameOverScene.swift */,
+				B26BB8DB1EA52F8900D39079 /* collectorGlow.sks */,
 				A91E7E2A1E5D1ACF009CA97F /* Gem.swift */,
 				3C67AD9C1E84310000C8B980 /* GemSource.swift */,
 				3C67AD981E8331E100C8B980 /* StagePlanet.swift */,
 				3C67AD9A1E835C3500C8B980 /* GemCollector.swift */,
 				B2CDC03B1E8368DA00AA93DC /* gemExplosion.sks */,
 				B28F8DD71E56663E005D803B /* starShower.sks */,
-				B299CA291EA4773F006C3AFC /* collectorGlow.sks */,
 				B07805E91E5506C300073DD6 /* Main.storyboard */,
-				B07805EE1E5506C300073DD6 /* LaunchScreen.storyboard */,
 				B07805F11E5506C300073DD6 /* Info.plist */,
 				B29319AF1E7F7C7700147924 /* collectorImages.atlas */,
 				B07805EC1E5506C300073DD6 /* Assets.xcassets */,
@@ -318,17 +312,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B299CA2B1EA4773F006C3AFC /* collectorGlow.sks in Resources */,
 				B212A1271E89DAEC00DDEC64 /* boop.wav in Resources */,
 				B2A6A25A1E726FD100F64EAF /* anvil.mp3 in Resources */,
 				B29319B01E7F7C7700147924 /* collectorImages.atlas in Resources */,
 				B07805EB1E5506C300073DD6 /* Main.storyboard in Resources */,
 				B0B969AA1E56321B005C587D /* .gitignore in Resources */,
-				B299CA2C1EA4773F006C3AFC /* Assets.xcassets in Resources */,
 				B0708D701E5507CE008A9950 /* cosmos.mp3 in Resources */,
+				B26BB8DC1EA52F8900D39079 /* collectorGlow.sks in Resources */,
 				B2D7DB4F1E97FFFC00CB4EEE /* bomb.mp3 in Resources */,
 				B07805ED1E5506C300073DD6 /* Assets.xcassets in Resources */,
-				B07805F01E5506C300073DD6 /* LaunchScreen.storyboard in Resources */,
 				B2557EE61E8225B10078C13F /* hammerImages.atlas in Resources */,
 				B212A1251E89DA3500DDEC64 /* zwip.wav in Resources */,
 				B2557EE41E8225800078C13F /* hydraulicSound.wav in Resources */,
@@ -413,14 +405,6 @@
 				B07805EA1E5506C300073DD6 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		B07805EE1E5506C300073DD6 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B07805EF1E5506C300073DD6 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
