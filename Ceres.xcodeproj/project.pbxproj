@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C0603971EA7C9B80000BEAB /* atronautActive.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C0603961EA7C9B80000BEAB /* atronautActive.png */; };
-		3C0603991EA7C9CA0000BEAB /* hammerActive.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C0603981EA7C9CA0000BEAB /* hammerActive.png */; };
-		3C06039B1EA7C9D30000BEAB /* hammerInactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C06039A1EA7C9D30000BEAB /* hammerInactive.png */; };
 		3C3BFDC91E871CC90059D6CE /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3BFDC81E871CC90059D6CE /* GameOverScene.swift */; };
 		3C67AD991E8331E100C8B980 /* StagePlanet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AD981E8331E100C8B980 /* StagePlanet.swift */; };
 		3C67AD9B1E835C3500C8B980 /* GemCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AD9A1E835C3500C8B980 /* GemCollector.swift */; };
@@ -60,9 +57,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3C0603961EA7C9B80000BEAB /* atronautActive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atronautActive.png; sourceTree = "<group>"; };
-		3C0603981EA7C9CA0000BEAB /* hammerActive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hammerActive.png; sourceTree = "<group>"; };
-		3C06039A1EA7C9D30000BEAB /* hammerInactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hammerInactive.png; sourceTree = "<group>"; };
 		3C3BFDC81E871CC90059D6CE /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		3C67AD981E8331E100C8B980 /* StagePlanet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StagePlanet.swift; sourceTree = "<group>"; };
 		3C67AD9A1E835C3500C8B980 /* GemCollector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GemCollector.swift; sourceTree = "<group>"; };
@@ -163,13 +157,10 @@
 		B07805DE1E5506C300073DD6 /* Ceres */ = {
 			isa = PBXGroup;
 			children = (
-				3C06039A1EA7C9D30000BEAB /* hammerInactive.png */,
-				3C0603981EA7C9CA0000BEAB /* hammerActive.png */,
-				3C0603961EA7C9B80000BEAB /* atronautActive.png */,
-				B02B072D1E6651A100FC8D11 /* Alert.swift */,
 				B0708D6E1E5507CE008A9950 /* Sounds */,
 				B07805DF1E5506C300073DD6 /* AppDelegate.swift */,
 				B07805E71E5506C300073DD6 /* GameViewController.swift */,
+				B02B072D1E6651A100FC8D11 /* Alert.swift */,
 				3CB7250B1E5B91B300B28AE5 /* MainMenu.swift */,
 				3CB7250F1E5BE16600B28AE5 /* InstructionsScene.swift */,
 				B07805E51E5506C300073DD6 /* GameScene.swift */,
@@ -330,15 +321,12 @@
 				B26BB8DC1EA52F8900D39079 /* collectorGlow.sks in Resources */,
 				B2D7DB4F1E97FFFC00CB4EEE /* bomb.mp3 in Resources */,
 				B07805ED1E5506C300073DD6 /* Assets.xcassets in Resources */,
-				3C0603991EA7C9CA0000BEAB /* hammerActive.png in Resources */,
 				B2557EE61E8225B10078C13F /* hammerImages.atlas in Resources */,
 				B212A1251E89DA3500DDEC64 /* zwip.wav in Resources */,
 				B2557EE41E8225800078C13F /* hydraulicSound.wav in Resources */,
 				B2D7DB4E1E97FFFC00CB4EEE /* blast.mp3 in Resources */,
-				3C06039B1EA7C9D30000BEAB /* hammerInactive.png in Resources */,
 				B2CDC03C1E8368DA00AA93DC /* gemExplosion.sks in Resources */,
 				B28F8DD81E56663E005D803B /* starShower.sks in Resources */,
-				3C0603971EA7C9B80000BEAB /* atronautActive.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
