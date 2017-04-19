@@ -63,7 +63,7 @@ class GameplayManager {
         
         let shakeScore = shakeAction(positionX: gameScene.scoreLabel.position.x)
         gameScene.scoreLabel.run(shakeScore)
-        minusFiveAlert()
+        minusAlert(text: "-5")
         gameScene.recolorScore()
         gameScene.gemsPlusMinus -= 5
         
@@ -76,7 +76,7 @@ class GameplayManager {
         gameScene.gemsPlusMinus -= 1
         gameScene.recolorScore()
         gem.removeFromParent()
-        minusOneAlert()
+        minusAlert(text: "-1")
         checkGameOver()
     }
     
@@ -353,31 +353,21 @@ class GameplayManager {
             ]))
     }
     
-    private func minusOneAlert() {
-        let minusOne = SKLabelNode(fontNamed: "Menlo-Bold")
-        minusOne.text = "-1"
-        minusOne.fontColor = SKColor.red
-        minusOne.fontSize = 30
-        minusOne.position = CGPoint(x: gameScene.size.width * 0.8, y: gameScene.size.height * 0.9)
-        let moveDown = SKAction.moveTo(y: gameScene.size.height * 0.7, duration: 1.0)
-        gameScene.addChild(minusOne)
+    private func minusAlert(text: String) {
+        let minus = SKLabelNode(fontNamed: "Menlo-Bold")
+        minus.text = text
+        minus.fontColor = SKColor.red
+        minus.fontSize = 30
+        minus.position = CGPoint(x: gameScene.size.width * 0.8, y: gameScene.size.height * 0.9)
+        gameScene.addChild(minus)
         
-        minusOne.run(moveDown)
-        minusOne.run(SKAction.fadeOut(withDuration: 1.0))
-    }
-    
-    private func minusFiveAlert(){
-        let minusFive = SKLabelNode(fontNamed: "Menlo-Bold")
-        minusFive.text = "-5"
-        minusFive.fontColor = SKColor.red
-        minusFive.fontSize = 32
-        minusFive.position = CGPoint(x: gameScene.size.width * 0.5, y: gameScene.size.height * 0.15)
-        let moveUp = SKAction.move(to: CGPoint(x: gameScene.size.width * 0.5, y: gameScene.size.height), duration: 2.5)
-        gameScene.addChild(minusFive)
+        let moveDown = SKAction.moveTo(y: gameScene.size.height * 0.7, duration: 0.6)
+        minus.run(moveDown)
+        minus.run(SKAction.fadeOut(withDuration: 1.0))
         
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-        minusFive.run(moveUp)
-        minusFive.run(SKAction.fadeOut(withDuration: 2.5))
+        if text == "-5" {
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        }
     }
 
     private func animateLeftHammer() { // Need a function without arguments to be called in the SKAction
