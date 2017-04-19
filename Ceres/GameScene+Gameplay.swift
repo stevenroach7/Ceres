@@ -48,7 +48,7 @@ extension GameScene { // Gameplay
     public func detonatorGemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
         // Removes gem from game scene and increments number of gems collected
         
-        let shakeCollector = shakeAction(positionX: gemCollectorPosX)
+        let shakeCollector = shakeAction(positionX: gemCollector.position.x)
         collectGemAnimation(collector: collector)
         
         collector.run(shakeCollector)

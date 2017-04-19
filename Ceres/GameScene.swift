@@ -43,10 +43,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         }
     }
     
-    // Variables necessary to reset shaken sprites back to original position
-    // TODO: if we refactor sprites to globals instead of being declared and initialized in functions this redundancy can be removed. TODO: Refactor to remove these globals
-    var gemCollectorPosX: CGFloat! = nil
-    var scoreLabelPosX: CGFloat! = nil
     
     // TODO: Possibly store animations frames and sounds in their own structure
     var collectorAtlas = SKTextureAtlas()
@@ -170,7 +166,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func addGemCollector() {
         gemCollector.setGemCollectorProperties()  // Calls gem collector properties from GemCollector class
         gemCollector.position = CGPoint(x: size.width / 2, y: size.height * 0.085)
-        gemCollectorPosX = gemCollector.position.x
         addChild(gemCollector)
     }
     

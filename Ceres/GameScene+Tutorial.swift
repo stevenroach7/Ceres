@@ -92,7 +92,6 @@ extension GameScene { // Tutorial
         let finalScoreLabelPosition = CGPoint(x: size.width * 0.75, y: size.height - size.height/20)
         let moveUp = SKAction.move(to: finalScoreLabelPosition, duration: 0.75)
         
-        scoreLabelPosX = finalScoreLabelPosition.x
         scoreLabel.run(scaleDown)
         scoreLabel.run(moveUp)
         
