@@ -11,10 +11,7 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
-    var tutorialManager:TutorialManager?
     var tutorialMode = false // Boolean to store whether game is in tutorialMode
-    
-    var gameplayManager:GameplayManager?
     
     // Global nodes
     let pauseButton = SKSpriteNode(imageNamed: "pause")
@@ -25,6 +22,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let redAstronaut = SKSpriteNode(imageNamed: "redAstronaut")
     let blueAstronaut = SKSpriteNode(imageNamed: "blueAstronaut")
     var starfield:SKEmitterNode!
+    
+    // Tutorial assets
+    let flickHand = SKSpriteNode(imageNamed: "touch")
+    let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
+    
+    let losingGemPlusMinus = -1 // Make this lower during testing
     
     var scoreLabel: SKLabelNode!
     var gemsPlusMinus = 0 {
@@ -116,14 +119,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
         
-        gameplayManager = GameplayManager(gameScene: self)
-        tutorialManager = TutorialManager(gameScene: self)
-        tutorialManager?.startTutorialMode()
+        startTutorialMode()
     }
     
     public func startGame() {
-        gameplayManager?.beginGameplay()
+        beginGameplay()
     }
+    
     
     // Functions that add nodes to scene
     private func makeWall(location: CGPoint, size: CGSize) {
@@ -247,12 +249,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
                 switch gem.name! {
                 case "gem":
                     if !tutorialMode { // Check for tutorialMode being false first because that is more common
-                        gameplayManager?.gemDidCollideWithCollector(gem: gem, collector: collector)
+                        gemDidCollideWithCollector(gem: gem, collector: collector)
                     } else {
-                        tutorialManager?.tutorialGemDidCollideWithCollector(gem: gem, collector: collector)
+                        tutorialGemDidCollideWithCollector(gem: gem, collector: collector)
                     }
                 case "detonatorGem":
-                    gameplayManager?.detonatorGemDidCollideWithCollector(gem: gem, collector: collector)
+                    detonatorGemDidCollideWithCollector(gem: gem, collector: collector)
                 default:
                     break
                 }
@@ -265,13 +267,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             if let gem = secondBody.node as? SKSpriteNode {
                 if !tutorialMode { // Check for tutorialMode being false first because that is more common
                     if gem.name == "gem" { // Don't penalize detonator gems going of screen
-                        gameplayManager?.gemOffScreen(gem: gem)
+                        gemOffScreen(gem: gem)
                     } else {
                         gem.removeFromParent()
                     }
                 } else {
                     gem.removeFromParent()
-                    tutorialManager?.addTutorialGem()
+                    addTutorialGem()
                 }
             }
         }
@@ -310,9 +312,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             if let name = touchedNode?.name {
                 switch name {
                 case "rightGemSource":
-                    gameplayManager?.onRightGemSourceTouch()
+                    onRightGemSourceTouch()
                 case "leftGemSource":
-                    gameplayManager?.onLeftGemSourceTouch()
+                    onLeftGemSourceTouch()
                 case "pauseButton":
                     onPauseButtonTouch()
                 default: break
