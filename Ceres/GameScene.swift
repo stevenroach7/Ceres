@@ -118,10 +118,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         startTutorialMode()
     }
     
-    public func startGame() {
-        beginGameplay()
-    }
-    
     
     // Functions that add nodes to scene
     private func makeWall(location: CGPoint, size: CGSize) {
