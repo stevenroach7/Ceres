@@ -75,14 +75,14 @@ extension GameScene { // Gameplay
     
     public func onLeftGemSourceTouch() {
         if !isPaused && !tutorialMode {
-            addGemLeft()
+            addRegularGem(location: .left)
             run(gemCreatedSound)
         }
     }
     
     public func onRightGemSourceTouch() {
         if !isPaused && !tutorialMode {
-            addGemRight()
+            addRegularGem(location: .right)
             run(gemCreatedSound)
         }
     }
@@ -120,6 +120,11 @@ extension GameScene { // Gameplay
     }
     
     
+    enum GemSpawnLocation {
+        case left
+        case right
+    }
+    
     private func spawnGems() { // TODO: Possibly refactor so that gamSpawn Sequences are in a sequence instead of being called based on the timerSeconds value.
         // Called every second, calls gem spawning sequences based on game timer
         if timerSeconds % 10 == 0 {
@@ -139,22 +144,26 @@ extension GameScene { // Gameplay
             case 60:
                 gemSpawnSequence3()
             default:
-                gemSpawnSequenceHard()
+                gemSpawnSequence1()
             }
         }
     }
     
     private func gemSpawnSequence1() {
         // Gem spawning routine
-        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0), SKAction.run(addGemLeft), SKAction.wait(forDuration: 1.0), SKAction.run(addGemRight)]), count: 5))
+        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0),
+                                               SKAction.run({self.addRegularGem(location: .left)}),
+                                               SKAction.wait(forDuration: 1.0),
+                                               SKAction.run({self.addRegularGem(location: .right)})]),
+                            count: 5))
     }
     
     private func gemSpawnSequence2() {
         // Gem spawning routine
         run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0),
-                                               SKAction.run(addGemLeft),
+                                               SKAction.run({self.addRegularGem(location: .left)}),
                                                SKAction.wait(forDuration: 0.25),
-                                               SKAction.run(addGemRight),
+                                               SKAction.run({self.addRegularGem(location: .right)}),
                                                ]),
                             count: 8))
     }
@@ -162,13 +171,13 @@ extension GameScene { // Gameplay
     private func gemSpawnSequence3() {
         // Gem spawning routine
         run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0),
-                                               SKAction.run(addGemLeft),
+                                               SKAction.run({self.addRegularGem(location: .left)}),
                                                SKAction.wait(forDuration: 0.25),
-                                               SKAction.run(addGemRight),
-                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
+                                               SKAction.run({self.addRegularGem(location: .right)}),
+                                               SKAction.run({self.addDetonatorGem(location: .left)}),
                                                SKAction.wait(forDuration: 0.25),
-                                               SKAction.run(addGemLeft),
-                                               SKAction.run(addGemRight),
+                                               SKAction.run({self.addRegularGem(location: .left)}),
+                                               SKAction.run({self.addRegularGem(location: .right)}),
                                                
                                                ]),
                             count: 7))
@@ -176,50 +185,50 @@ extension GameScene { // Gameplay
     
     private func gemSpawnSequence4() {
         run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 2.47),
-                                               SKAction.run(addGemRight),
+                                               SKAction.run({self.addRegularGem(location: .right)}),
                                                SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
+                                               SKAction.run({self.addRegularGem(location: .right)}),
+                                               SKAction.run({self.addDetonatorGem(location: .left)}),
                                                SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
+                                               SKAction.run({self.addRegularGem(location: .right)}),
                                                SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
+                                               SKAction.run({self.addRegularGem(location: .right)}),
+                                               SKAction.run({self.addDetonatorGem(location: .left)}),
                                                
                                                SKAction.wait(forDuration: 2.47),
-                                               SKAction.run(addGemLeft),
+                                               SKAction.run({self.addRegularGem(location: .left)}),
                                                SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemLeft),
+                                               SKAction.run({self.addRegularGem(location: .left)}),
                                                SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
+                                               SKAction.run({self.addRegularGem(location: .right)}),
+                                               SKAction.run({self.addDetonatorGem(location: .left)}),
                                                SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemLeft),
+                                               SKAction.run({self.addRegularGem(location: .left)}),
                                                ]),
                             count: 2))
     }
     
     private func gemSpawnSequenceBasicDetonators() {
         run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 2.47),
-                                               SKAction.run(addGemRight),
+                                               SKAction.run({self.addRegularGem(location: .right)}),
                                                SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
+                                               SKAction.run({self.addRegularGem(location: .right)}),
                                                SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
+                                               SKAction.run({self.addRegularGem(location: .right)}),
                                                SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
+                                               SKAction.run({self.addRegularGem(location: .right)}),
+                                               SKAction.run({self.addDetonatorGem(location: .left)}),
                                                
                                                
                                                SKAction.wait(forDuration: 2.47),
-                                               SKAction.run(addGemLeft),
+                                               SKAction.run({self.addRegularGem(location: .left)}),
                                                SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemLeft),
+                                               SKAction.run({self.addRegularGem(location: .left)}),
                                                SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
+                                               SKAction.run({self.addRegularGem(location: .right)}),
                                                SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
+                                               SKAction.run({self.addRegularGem(location: .right)}),
+                                               SKAction.run({self.addDetonatorGem(location: .left)}),
                                                ]),
                             count: 2))
     }
@@ -227,60 +236,65 @@ extension GameScene { // Gameplay
     private func gemSpawnSequenceHard() {
         run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 0.74),
                                                SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
+                                               SKAction.run({self.addRegularGem(location: .right)}),
                                                SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.run(addGemLeft),
+                                               SKAction.run({self.addRegularGem(location: .right)}),
+                                               SKAction.run({self.addRegularGem(location: .left)}),
                                                SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemRight),
-                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
+                                               SKAction.run({self.addRegularGem(location: .right)}),
+                                               SKAction.run({self.addDetonatorGem(location: .left)}),
                                                
                                                SKAction.wait(forDuration: 0.2),
                                                SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemLeft),
+                                               SKAction.run({self.addRegularGem(location: .left)}),
                                                SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemLeft),
-                                               SKAction.run(addGemRight),
-                                               SKAction.run({self.detonateGemSequence(timeToExplosion: 2.0)}),
+                                               SKAction.run({self.addRegularGem(location: .left)}),
+                                               SKAction.run({self.addRegularGem(location: .right)}),
+                                               SKAction.run({self.addDetonatorGem(location: .left)}),
                                                SKAction.wait(forDuration: 0.01),
-                                               SKAction.run(addGemLeft),
+                                               SKAction.run({self.addRegularGem(location: .left)}),
                                                ]),
                             count: 10))
     }
     
-    // TODO: Refactor to make addGem one method that takes a parameter to change the spawning location
-    private func addGemLeft() {
+    
+    private func addGem(gem: Gem, location: GemSpawnLocation, velocity: CGFloat) {
         // Produces a Gem from the left astronaut
-        let gem = Gem(imageNamed: "gemShape1")
         gem.setGemProperties()  // Calls gem properties from Gem class
-        let angle = random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (1/2))
-        let velocity = random(min: 170, max: 190)
+        let position: CGPoint, angle: CGFloat
+        switch location {
+        case .left:
+            position = CGPoint(x: size.width * 0.15, y: size.height * 0.15)
+            angle = random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (1/2))
+        case .right:
+            position = CGPoint(x: size.width * 0.85, y: size.height * 0.15)
+            angle = random(min: CGFloat.pi * (1/2), max: CGFloat.pi * (3/4))
+        }
+        gem.position = position
         gem.setGemVelocity(velocity: velocity, angle: angle)
-        gem.position = CGPoint(x: size.width * 0.15, y: size.height * 0.15)
         addChild(gem)
     }
     
-    private func addGemRight() {
-        // Produces a Gem from the right astronaut
+    private func addRegularGem(location: GemSpawnLocation, velocity: CGFloat = 180) {
         let gem = Gem(imageNamed: "gemShape1")
-        gem.setGemProperties()  // Calls gem properties from Gem class
-        let angle = random(min: CGFloat.pi * (1/2), max: CGFloat.pi * (3/4))
-        let velocity = random(min: 170, max: 190)
-        gem.setGemVelocity(velocity: velocity, angle: angle)
-        gem.position = CGPoint(x: size.width * 0.85, y: size.height * 0.15)
-        addChild(gem)
+        gem.name = "gem"
+        addGem(gem: gem, location: location, velocity: velocity)
     }
     
-    private func addDetonatorGem(detonatorGem: Gem) { // TODO: Refactor this to take a parameter for left and right.
-        // Takes a gem and adds it to the scene in a manner specific to detonator gems
-        detonatorGem.setGemProperties()  // Sets gem properties from Gem class
+    private func addDetonatorGem(location: GemSpawnLocation, timeToExplosion: Double = 2.0, velocity: CGFloat = 110) {
+        // Adds a detonating gem to the scene and makes it explode in timeToExplosion seconds.
+        let detonatorGem = Gem(imageNamed: "rottenGem")
         detonatorGem.name = "detonatorGem"
-        let angle = random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (3/8))
-        let velocity = random(min: 100, max: 120)
-        detonatorGem.setGemVelocity(velocity: velocity, angle: angle)
-        let spawnLocation = CGPoint(x: size.width * 0.15, y: size.height * 0.15)
-        detonatorGem.position = spawnLocation
-        addChild(detonatorGem)
+        let gravityFieldNode = SKFieldNode.radialGravityField()
+        
+        run(SKAction.sequence([
+            SKAction.run({self.addGem(gem: detonatorGem, location: location, velocity: velocity)}),
+            SKAction.run({self.animateDetonatorGem(detonatorGem: detonatorGem)}),
+            SKAction.wait(forDuration: timeToExplosion),
+            SKAction.run({self.detonateGem(detonatorGem: detonatorGem, gravityFieldNode: gravityFieldNode)}),
+            SKAction.wait(forDuration: 0.25),
+            SKAction.run({self.detonationCleanup(gravityFieldNode: gravityFieldNode)})
+            ]))
     }
     
     private func flashDetonatorGemAnimation(duration: Double) -> SKAction {
@@ -331,20 +345,6 @@ extension GameScene { // Gameplay
         }
     }
     
-    private func detonateGemSequence(timeToExplosion: Double) {
-        // Adds a detonating gem to the scene and makes it explode in timeToExplosion seconds.
-        let detonatorGem = Gem(imageNamed: "rottenGem")
-        let gravityFieldNode = SKFieldNode.radialGravityField()
-        
-        run(SKAction.sequence([
-            SKAction.run({self.addDetonatorGem(detonatorGem: detonatorGem)}),
-            SKAction.run({self.animateDetonatorGem(detonatorGem: detonatorGem)}),
-            SKAction.wait(forDuration: timeToExplosion),
-            SKAction.run({self.detonateGem(detonatorGem: detonatorGem, gravityFieldNode: gravityFieldNode)}),
-            SKAction.wait(forDuration: 0.25),
-            SKAction.run({self.detonationCleanup(gravityFieldNode: gravityFieldNode)})
-            ]))
-    }
     
 
     private func minusAlert(text: String) {
