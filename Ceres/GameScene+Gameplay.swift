@@ -121,15 +121,15 @@ extension GameScene { // Gameplay
     
     
     enum GemSpawnLocation {
+        // Enum holds the locations where gems may spawn
         case left
         case right
     }
     
-
-    enum SpawnAction { // Enum is recursive as a sequence contains a list of Spawn Actions so it must be marked as indirect
-        
-//        indirect case sequence(actions: [SpawnAction])
-//        indirect case repeated(times: Int, action: SpawnAction)
+    enum SpawnAction {
+        // Enum holds the actions used to build gem sequences
+        indirect case sequence(actions: [SpawnAction]) // Recursively defined so mark as indirect
+        indirect case repeated(times: Int, action: SpawnAction)
         case wait(time: TimeInterval)
         case spawnGemLeft
         case spawnGemRight
@@ -137,15 +137,13 @@ extension GameScene { // Gameplay
         case spawnDetonatorRight
     }
     
-    
-    func createSKAction(spawnSequence: SpawnAction) -> SKAction {
-        
-        switch(spawnSequence) {
-            
-//        case .sequence(let actions):
-//            return SKAction.sequence(actions)
-//        case .repeated(let times, let action):
-//            return SKAction.repeat(action, count: times)
+    private func createSKAction(spawnAction: SpawnAction) -> SKAction {
+        // Takes a SpawnAction for a gem spawning sequence and returns an SKAction to produce that sequence.
+        switch(spawnAction) {
+        case .sequence(let actions):
+            return SKAction.sequence(actions.map(createSKAction))
+        case .repeated(let times, let action):
+            return SKAction.repeat(createSKAction(spawnAction: action), count: times)
         case .wait(let time):
             return SKAction.wait(forDuration: time)
         case .spawnGemLeft:
@@ -159,147 +157,131 @@ extension GameScene { // Gameplay
         }
     }
     
-    
-    func testSequence() -> SKAction {
-         let spawnSequence2: SpawnAction = .spawnGemLeft
-        return createSKAction(spawnSequence: spawnSequence2)
-    }
-
-    
-    
-    
-    private func spawnGems() { // TODO: Possibly refactor so that gamSpawn Sequences are in a sequence instead of being called based on the timerSeconds value.
+    private func spawnGems() {
         // Called every second, calls gem spawning sequences based on game timer
         if timerSeconds % 10 == 0 {
             switch timerSeconds {
             case 0:
-                run(testSequence())
-//                gemSpawnSequence1()
-//            case 10:
-//                gemSpawnSequence2()
-//            case 20:
-//                gemSpawnSequenceBasicDetonators()
-//            case 30:
-//                gemSpawnSequence3()
-//            case 40:
-//                gemSpawnSequence4()
-//            case 50:
-//                gemSpawnSequence4()
-//            case 60:
-//                gemSpawnSequence3()
+                run(getGemSpawnSequence1())
+            case 10:
+                run(getGemSpawnSequence2())
+            case 20:
+                run(getGemSpawnSequenceBasicDetonators())
+            case 30:
+                run(getGemSpawnSequence3())
+            case 40:
+                run(getGemSpawnSequence4())
+            case 50:
+                run(getGemSpawnSequence4())
+            case 60:
+                run(getGemSpawnSequence3())
             default:
-                run(testSequence())
+                run(getGemSpawnSequenceHard())
             }
         }
     }
     
-//    private func gemSpawnSequence1() {
-//        // Gem spawning routine
-//        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0),
-//                                               SKAction.run({self.addRegularGem(location: .left)}),
-//                                               SKAction.wait(forDuration: 1.0),
-//                                               SKAction.run({self.addRegularGem(location: .right)})]),
-//                            count: 5))
-//    }
-//    
-//    private func gemSpawnSequence2() {
-//        // Gem spawning routine
-//        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0),
-//                                               SKAction.run({self.addRegularGem(location: .left)}),
-//                                               SKAction.wait(forDuration: 0.25),
-//                                               SKAction.run({self.addRegularGem(location: .right)}),
-//                                               ]),
-//                            count: 8))
-//    }
-//    
-//    private func gemSpawnSequence3() {
-//        // Gem spawning routine
-//        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 1.0),
-//                                               SKAction.run({self.addRegularGem(location: .left)}),
-//                                               SKAction.wait(forDuration: 0.25),
-//                                               SKAction.run({self.addRegularGem(location: .right)}),
-//                                               SKAction.run({self.addDetonatorGem(location: .left)}),
-//                                               SKAction.wait(forDuration: 0.25),
-//                                               SKAction.run({self.addRegularGem(location: .left)}),
-//                                               SKAction.run({self.addRegularGem(location: .right)}),
-//                                               
-//                                               ]),
-//                            count: 7))
-//    }
-//    
-//    private func gemSpawnSequence4() {
-//        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 2.47),
-//                                               SKAction.run({self.addRegularGem(location: .right)}),
-//                                               SKAction.wait(forDuration: 0.01),
-//                                               SKAction.run({self.addRegularGem(location: .right)}),
-//                                               SKAction.run({self.addDetonatorGem(location: .left)}),
-//                                               SKAction.wait(forDuration: 0.01),
-//                                               SKAction.run({self.addRegularGem(location: .right)}),
-//                                               SKAction.wait(forDuration: 0.01),
-//                                               SKAction.run({self.addRegularGem(location: .right)}),
-//                                               SKAction.run({self.addDetonatorGem(location: .left)}),
-//                                               
-//                                               SKAction.wait(forDuration: 2.47),
-//                                               SKAction.run({self.addRegularGem(location: .left)}),
-//                                               SKAction.wait(forDuration: 0.01),
-//                                               SKAction.run({self.addRegularGem(location: .left)}),
-//                                               SKAction.wait(forDuration: 0.01),
-//                                               SKAction.run({self.addRegularGem(location: .right)}),
-//                                               SKAction.run({self.addDetonatorGem(location: .left)}),
-//                                               SKAction.wait(forDuration: 0.01),
-//                                               SKAction.run({self.addRegularGem(location: .left)}),
-//                                               ]),
-//                            count: 2))
-//    }
-//    
-//    private func gemSpawnSequenceBasicDetonators() {
-//        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 2.47),
-//                                               SKAction.run({self.addRegularGem(location: .right)}),
-//                                               SKAction.wait(forDuration: 0.01),
-//                                               SKAction.run({self.addRegularGem(location: .right)}),
-//                                               SKAction.wait(forDuration: 0.01),
-//                                               SKAction.run({self.addRegularGem(location: .right)}),
-//                                               SKAction.wait(forDuration: 0.01),
-//                                               SKAction.run({self.addRegularGem(location: .right)}),
-//                                               SKAction.run({self.addDetonatorGem(location: .left)}),
-//                                               
-//                                               
-//                                               SKAction.wait(forDuration: 2.47),
-//                                               SKAction.run({self.addRegularGem(location: .left)}),
-//                                               SKAction.wait(forDuration: 0.01),
-//                                               SKAction.run({self.addRegularGem(location: .left)}),
-//                                               SKAction.wait(forDuration: 0.01),
-//                                               SKAction.run({self.addRegularGem(location: .right)}),
-//                                               SKAction.wait(forDuration: 0.01),
-//                                               SKAction.run({self.addRegularGem(location: .right)}),
-//                                               SKAction.run({self.addDetonatorGem(location: .left)}),
-//                                               ]),
-//                            count: 2))
-//    }
-//    
-//    private func gemSpawnSequenceHard() {
-//        run(SKAction.repeat(SKAction.sequence([SKAction.wait(forDuration: 0.74),
-//                                               SKAction.wait(forDuration: 0.01),
-//                                               SKAction.run({self.addRegularGem(location: .right)}),
-//                                               SKAction.wait(forDuration: 0.01),
-//                                               SKAction.run({self.addRegularGem(location: .right)}),
-//                                               SKAction.run({self.addRegularGem(location: .left)}),
-//                                               SKAction.wait(forDuration: 0.01),
-//                                               SKAction.run({self.addRegularGem(location: .right)}),
-//                                               SKAction.run({self.addDetonatorGem(location: .left)}),
-//                                               
-//                                               SKAction.wait(forDuration: 0.2),
-//                                               SKAction.wait(forDuration: 0.01),
-//                                               SKAction.run({self.addRegularGem(location: .left)}),
-//                                               SKAction.wait(forDuration: 0.01),
-//                                               SKAction.run({self.addRegularGem(location: .left)}),
-//                                               SKAction.run({self.addRegularGem(location: .right)}),
-//                                               SKAction.run({self.addDetonatorGem(location: .left)}),
-//                                               SKAction.wait(forDuration: 0.01),
-//                                               SKAction.run({self.addRegularGem(location: .left)}),
-//                                               ]),
-//                            count: 10))
-//    }
+    private func getGemSpawnSequence1() -> SKAction {
+        // Gem spawning routine
+        let spawnSequence1: SpawnAction =
+            .repeated(times: 5,
+                      action: .sequence(actions: [.wait(time: 1), .spawnGemLeft, .wait(time: 1), .spawnGemRight]))
+        
+        return createSKAction(spawnAction: spawnSequence1)
+    }
+    
+    private func getGemSpawnSequence2() -> SKAction {
+        // Gem spawning routine
+        let spawnSequence2: SpawnAction =
+            .repeated(times: 8,
+                      action: .sequence(actions: [.wait(time: 1), .spawnGemLeft, .wait(time: 0.25), .spawnGemRight]))
+        return createSKAction(spawnAction: spawnSequence2)
+    }
+    
+    private func getGemSpawnSequence3() -> SKAction {
+        // Gem spawning routine
+        let spawnSequence3: SpawnAction =
+            .repeated(times: 7, action:
+                .sequence(actions: [.wait(time: 1),
+                                    .spawnGemLeft,
+                                    .wait(time: 0.25),
+                                    .spawnGemLeft, .spawnDetonatorLeft,
+                                    .wait(time: 0.25),
+                                    .spawnGemLeft, .spawnGemRight]))
+        return createSKAction(spawnAction: spawnSequence3)
+    }
+    
+    private func getGemSpawnSequence4() -> SKAction {
+        let spawnSequence4: SpawnAction =
+            .repeated(times: 2, action:
+                .sequence(actions: [.wait(time: 2.47),
+                                    .spawnGemRight,
+                                    .wait(time: 0.01),
+                                    .spawnGemRight, .spawnDetonatorLeft,
+                                    .wait(time: 0.01),
+                                    .spawnGemRight,
+                                    .wait(time: 0.01),
+                                    .spawnGemRight, .spawnDetonatorLeft,
+                                    
+                                    .wait(time: 2.47),
+                                    .spawnGemLeft,
+                                    .wait(time: 0.01),
+                                    .spawnGemLeft,
+                                    .wait(time: 0.01),
+                                    .spawnGemRight, .spawnDetonatorLeft,
+                                    .wait(time: 0.01),
+                                    .spawnGemLeft,
+                                    ]))
+        
+        return createSKAction(spawnAction: spawnSequence4)
+    }
+    
+    private func getGemSpawnSequenceBasicDetonators() -> SKAction {
+        
+        let spawnSequenceBasicDetonators: SpawnAction =
+            .repeated(times: 2, action:
+                .sequence(actions: [.wait(time: 2.47),
+                                    .spawnGemRight,
+                                    .wait(time: 0.01),
+                                    .spawnGemRight,
+                                    .wait(time: 0.01),
+                                    .spawnGemRight,
+                                    .wait(time: 0.01),
+                                    .spawnGemRight, .spawnDetonatorLeft,
+                                    
+                                    .wait(time: 2.47),
+                                    .spawnGemLeft,
+                                    .wait(time: 0.01),
+                                    .spawnGemLeft,
+                                    .wait(time: 0.01),
+                                    .spawnGemRight,
+                                    .wait(time: 0.01),
+                                    .spawnGemRight, .spawnDetonatorRight
+                                    ]))
+        
+        return createSKAction(spawnAction: spawnSequenceBasicDetonators)
+    }
+    
+    private func getGemSpawnSequenceHard() -> SKAction {
+        let spawnSequenceHard: SpawnAction =
+            .repeated(times: 10, action:
+                .sequence(actions: [.wait(time: 0.75),
+                                    .spawnGemRight,
+                                    .wait(time: 0.01),
+                                    .spawnGemRight, .spawnGemLeft,
+                                    .wait(time: 0.01),
+                                    .spawnGemRight, .spawnDetonatorLeft,
+                                    
+                                    .wait(time: 0.21),
+                                    .spawnGemLeft,
+                                    .wait(time: 0.01),
+                                    .spawnGemLeft, .spawnGemRight, .spawnDetonatorLeft,
+                                    .wait(time: 0.01),
+                                    .spawnGemLeft,
+                    ]))
+        
+        return createSKAction(spawnAction: spawnSequenceHard)
+    }
     
     
     private func addGem(gem: Gem, location: GemSpawnLocation, velocity: CGFloat) {
