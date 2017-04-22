@@ -87,16 +87,6 @@ extension GameScene { // Gameplay
     
     private func incrementTimer() {
         timerSeconds += 1
-        if (timerSeconds % 10 >= 7){
-            timerLabel.fontSize += 1
-            run(zoomTimerSound)
-        } else if (timerSeconds % 10 == 0 && timerSeconds > 0){
-            run(zipTimerSound)
-            timerLabel.fontSize -= 3
-            timerLabel.fontColor = SKColor.cyan
-        } else {
-            timerLabel.fontColor = SKColor.white
-        }
     }
     
     private func checkGameOver() {
