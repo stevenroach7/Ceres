@@ -43,6 +43,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         }
     }
     
+    var spawnSequenceManager: SpawnSequenceManager = SpawnSequenceManager()
+    
     
     // TODO: Possibly store animations frames and sounds in their own structure
     var collectorAtlas = SKTextureAtlas()
