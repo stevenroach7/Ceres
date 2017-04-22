@@ -54,7 +54,8 @@ extension GameScene { // Gameplay
         
         let shakeScore = shakeAction(positionX: scoreLabel.position.x)
         scoreLabel.run(shakeScore)
-        minusAlert(text: "-5")
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        minusAlert(text: "-5", fsize: 40, color: SKColor.red)
         recolorScore()
         gemsPlusMinus -= 5
 
@@ -67,7 +68,7 @@ extension GameScene { // Gameplay
         gemsPlusMinus -= 1
         recolorScore()
         gem.removeFromParent()
-        minusAlert(text: "-1")
+        minusAlert(text: "-1", fsize: 30, color: SKColor.red)
         checkGameOver()
     }
     
@@ -107,21 +108,17 @@ extension GameScene { // Gameplay
         removeAllActions()
     }
     
-    private func minusAlert(text: String) {
+    private func minusAlert(text: String, fsize: CGFloat, color: SKColor) {
         let minus = SKLabelNode(fontNamed: "Menlo-Bold")
         minus.text = text
-        minus.fontColor = SKColor.red
-        minus.fontSize = 30
+        minus.fontColor = color
+        minus.fontSize = fsize
         minus.position = CGPoint(x: size.width * 0.8, y: size.height * 0.9)
         addChild(minus)
         
         let moveDown = SKAction.moveTo(y: size.height * 0.7, duration: 0.6)
         minus.run(moveDown)
         minus.run(SKAction.fadeOut(withDuration: 1.0))
-        
-        if text == "-5" {
-            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-        }
     }
 
     private func animateLeftHammer() { // Need a function without arguments to be called in the SKAction
