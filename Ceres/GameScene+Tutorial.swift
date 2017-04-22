@@ -68,6 +68,7 @@ extension GameScene { // Tutorial
     
     public func addTutorialGem() {
         let gem = Gem(imageNamed: "gemShape1")
+        gem.name = "gem"
         gem.setGemProperties()  // Calls gem properties from Gem class
         gem.position = CGPoint(x: size.width * 0.5, y: size.height / 2)
         addChild(gem)
