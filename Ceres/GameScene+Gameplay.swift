@@ -55,7 +55,7 @@ extension GameScene { // Gameplay
         let shakeScore = shakeAction(positionX: scoreLabel.position.x)
         scoreLabel.run(shakeScore)
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-        minusAlert(text: "-5", fsize: 40, color: SKColor.red)
+        minusAlert(text: "-5", fontSize: 40)
         recolorScore()
         gemsPlusMinus -= 5
 
@@ -68,7 +68,7 @@ extension GameScene { // Gameplay
         gemsPlusMinus -= 1
         recolorScore()
         gem.removeFromParent()
-        minusAlert(text: "-1", fsize: 30, color: SKColor.red)
+        minusAlert(text: "-1", fontSize: 30)
         checkGameOver()
     }
     
@@ -108,11 +108,11 @@ extension GameScene { // Gameplay
         removeAllActions()
     }
     
-    private func minusAlert(text: String, fsize: CGFloat, color: SKColor) {
+    private func minusAlert(text: String, fontSize: CGFloat) {
         let minus = SKLabelNode(fontNamed: "Menlo-Bold")
         minus.text = text
-        minus.fontColor = color
-        minus.fontSize = fsize
+        minus.fontColor = SKColor.red
+        minus.fontSize = fontSize
         minus.position = CGPoint(x: size.width * 0.8, y: size.height * 0.9)
         addChild(minus)
         
