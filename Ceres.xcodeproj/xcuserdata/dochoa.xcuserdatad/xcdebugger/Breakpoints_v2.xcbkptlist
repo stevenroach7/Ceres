@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Ceres/GameScene.swift"
-            timestampString = "514331509.562503"
+            timestampString = "514579271.343965"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "437"
-            endingLineNumber = "437">
+            startingLineNumber = "439"
+            endingLineNumber = "439">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -56,11 +56,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Ceres/GameScene.swift"
-            timestampString = "514331509.562503"
+            timestampString = "514579271.343965"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "622"
-            endingLineNumber = "622">
+            startingLineNumber = "624"
+            endingLineNumber = "624">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

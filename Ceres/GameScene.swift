@@ -274,7 +274,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         }
     }
 
-    private func onPauseButtonTouch() {
+    func onPauseButtonTouch() { 
         pauseAlert(title: "Game Paused", message: "")
     }
     
