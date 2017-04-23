@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 
 
-class SpawnSequenceManager {
+class SpawnSequenceManager { 
     
     private let spawnSequence1: GameScene.SpawnAction =
         .repeated(times: 5,
@@ -90,31 +90,26 @@ class SpawnSequenceManager {
     
     public func getSpawnSequence1() -> GameScene.SpawnAction {
         // Gem spawning routine
-        print(getSpawnActionDuration(spawnAction: spawnSequence1))
         return spawnSequence1
     }
     
     public func getSpawnSequence2() -> GameScene.SpawnAction {
         // Gem spawning routine
-        print(getSpawnActionDuration(spawnAction: spawnSequence2))
         return spawnSequence2
     }
     
     public func getSpawnSequence3() -> GameScene.SpawnAction {
         // Gem spawning routine
-         print(getSpawnActionDuration(spawnAction: spawnSequence3))
         return spawnSequence3
     }
     
     public func getSpawnSequence4() -> GameScene.SpawnAction {
         // Gem spawning routine
-         print(getSpawnActionDuration(spawnAction: spawnSequence4))
         return spawnSequence4
     }
     
     public func getSpawnSequenceBasicDetonators() -> GameScene.SpawnAction {
         // Gem spawning routine
-        print(getSpawnActionDuration(spawnAction: spawnSequenceBasicDetonators))
         return spawnSequenceBasicDetonators
     }
     

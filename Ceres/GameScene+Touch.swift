@@ -10,12 +10,12 @@ import Foundation
 import SpriteKit
 
 
-extension GameScene { //Touching logic
+extension GameScene { // Touching logic
     
     private func findNearestGem (touchLocation: CGPoint) -> (CGFloat, SKNode){
         // Method iterates over all gems and returns the gem with the closest distance to the touchLocation
         
-        var minDist: CGFloat = 44 //recommended iOS touch radius
+        var minDist: CGFloat = 44 // recommended iOS touch radius
         var closestGem: SKSpriteNode = SKSpriteNode()
         self.enumerateChildNodes(withName: "*"){node,_ in
             if node.name == "gem" || node.name == "detonatorGem" {

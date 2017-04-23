@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 
 
-extension GameScene { //Collision logic
+extension GameScene { // Collision logic
 
     func didBegin(_ contact: SKPhysicsContact) {
         // Called every time two physics bodies collide
@@ -45,7 +45,7 @@ extension GameScene { //Collision logic
             }
         }
         
-        //If the two colliding bodies are a gem and wall, remove the gem
+        // If the two colliding bodies are a gem and wall, remove the gem
         if ((firstBody.categoryBitMask == PhysicsCategory.Wall) &&
             (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
             if let gem = secondBody.node as? SKSpriteNode {
