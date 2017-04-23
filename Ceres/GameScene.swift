@@ -65,8 +65,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var selectedGems: Set<SKSpriteNode> = Set()
     var nodeDisplacements:[SKSpriteNode: CGVector] = [:] // Dictionary to map currently selected nodes to their displacements from the user's finger
 
-    // COLLISION EXTENSION
-    
+    // Perhaps better suited for collision extension but this struct is also referenced in functions like makeWall, keeping it here increased visibility and thus understanding of the code.
     // Determines collisions between different objects
     public struct PhysicsCategory {
         static let None      : UInt32 = 0
@@ -220,59 +219,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             scoreLabel.fontColor = SKColor.green
         } else {
             scoreLabel.fontColor = SKColor.white
-        }
-    }
-    
-    
-    // COLLISION EXTENSION
-    func didBegin(_ contact: SKPhysicsContact) {
-        // Called every time two physics bodies collide
-        
-        var firstBody: SKPhysicsBody
-        var secondBody: SKPhysicsBody
-        
-        // categoryBitMasks are UInt32 values
-        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
-            firstBody = contact.bodyA
-            secondBody = contact.bodyB
-        } else {
-            firstBody = contact.bodyB
-            secondBody = contact.bodyA
-        }
-        
-        // If the two colliding bodies are a gem and gemCollector, remove the gem
-        if ((firstBody.categoryBitMask == PhysicsCategory.GemCollector) && (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
-            if let gem = secondBody.node as? SKSpriteNode, let collector = firstBody.node as? SKSpriteNode {
-                switch gem.name! {
-                case "gem":
-                    if !tutorialMode { // Check for tutorialMode being false first because that is more common
-                        gemDidCollideWithCollector(gem: gem, collector: collector)
-                    } else {
-                        tutorialGemDidCollideWithCollector(gem: gem, collector: collector)
-                    }
-                case "detonatorGem":
-                    detonatorGemDidCollideWithCollector(gem: gem, collector: collector)
-                default:
-                    break
-                }
-            }
-        }
-
-        //If the two colliding bodies are a gem and wall, remove the gem
-        if ((firstBody.categoryBitMask == PhysicsCategory.Wall) &&
-            (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
-            if let gem = secondBody.node as? SKSpriteNode {
-                if !tutorialMode { // Check for tutorialMode being false first because that is more common
-                    if gem.name == "gem" { // Don't penalize detonator gems going of screen
-                        gemOffScreen(gem: gem)
-                    } else {
-                        gem.removeFromParent()
-                    }
-                } else {
-                    gem.removeFromParent()
-                    addTutorialGem()
-                }
-            }
         }
     }
 

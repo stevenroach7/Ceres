@@ -10,9 +10,8 @@ import Foundation
 import SpriteKit
 
 
-extension GameScene { //Touching Logic
+extension GameScene { //Touching logic
     
-    // TOUCH EXTENSION
     private func findNearestGem (touchLocation: CGPoint) -> (CGFloat, SKNode){
         // Method iterates over all gems and returns the gem with the closest distance to the touchLocation
         
@@ -32,7 +31,6 @@ extension GameScene { //Touching Logic
         return (minDist, closestGem)
     }
 
-    // TOUCH EXTENSION
     // Functions to deal with user touches
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Method to handle touch events. Senses when user touches down (places finger on screen).
