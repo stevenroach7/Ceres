@@ -12,7 +12,6 @@ import SpriteKit
 
 class SpawnSequenceManager {
     
-    
     private let spawnSequence1: GameScene.SpawnAction =
         .repeated(times: 5,
                   action: .sequence(actions: [.wait(time: 1), .spawnGemLeft, .wait(time: 1), .spawnGemRight]))
@@ -87,37 +86,60 @@ class SpawnSequenceManager {
                                 .spawnGemLeft, .spawnGemRight, .spawnDetonatorLeft,
                                 .wait(time: 0.01),
                                 .spawnGemLeft,
-            
                                 ]))
     
     public func getSpawnSequence1() -> GameScene.SpawnAction {
         // Gem spawning routine
+        print(getSpawnActionDuration(spawnAction: spawnSequence1))
         return spawnSequence1
     }
     
     public func getSpawnSequence2() -> GameScene.SpawnAction {
         // Gem spawning routine
+        print(getSpawnActionDuration(spawnAction: spawnSequence2))
         return spawnSequence2
     }
     
     public func getSpawnSequence3() -> GameScene.SpawnAction {
         // Gem spawning routine
+         print(getSpawnActionDuration(spawnAction: spawnSequence3))
         return spawnSequence3
     }
     
     public func getSpawnSequence4() -> GameScene.SpawnAction {
         // Gem spawning routine
+         print(getSpawnActionDuration(spawnAction: spawnSequence4))
         return spawnSequence4
     }
     
     public func getSpawnSequenceBasicDetonators() -> GameScene.SpawnAction {
         // Gem spawning routine
+        print(getSpawnActionDuration(spawnAction: spawnSequenceBasicDetonators))
         return spawnSequenceBasicDetonators
     }
     
     public func getSpawnSequenceHard() -> GameScene.SpawnAction {
         // Gem spawning routine
         return spawnSequenceHard
+    }
+    
+    
+    private func getSpawnActionDuration(spawnAction: GameScene.SpawnAction) -> Double {
+        // Takes a spawnAction and returns its duration in seconds
+        switch(spawnAction) {
+        case .sequence(let actions):
+            var duration:Double = 0.0
+            for action in actions {
+                duration += getSpawnActionDuration(spawnAction: action)
+            }
+            return duration
+        case .repeated(let times, let action):
+            return Double(times) * getSpawnActionDuration(spawnAction: action)
+        case .wait(let time):
+            return time
+        default:
+            return 0
+        }
     }
     
 }
