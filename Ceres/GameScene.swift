@@ -17,8 +17,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let pauseButton = SKSpriteNode(imageNamed: "pause")
     let gemCollector = GemCollector(imageNamed: "collectorActive")
     let stagePlanet = StagePlanet(imageNamed: "planet")
-    let leftGemSource  = GemSource(imageNamed: "hammerInactive")
-    let rightGemSource = GemSource(imageNamed: "hammerInactive")
+    let leftGemSource  = GemSource(imageNamed: "hammerInactiveGlow")
+    let rightGemSource = GemSource(imageNamed: "hammerInactiveGlow")
     let redAstronaut = SKSpriteNode(imageNamed: "redAstronaut")
     let blueAstronaut = SKSpriteNode(imageNamed: "blueAstronaut")
     var starfield:SKEmitterNode!
