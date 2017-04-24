@@ -17,15 +17,6 @@ extension GameScene { // Gameplay
         // Adjust gravity of scene
         physicsWorld.gravity = CGVector(dx: 0, dy: 0.27) // Gravity on Ceres is 0.27 m/s²
         
-        run(SKAction.repeatForever(
-            SKAction.sequence([
-                SKAction.run(animateLeftHammer),
-                SKAction.wait(forDuration: 0.35),
-                SKAction.run(animateRightHammer),
-                SKAction.wait(forDuration: 0.35),
-                ])
-        ))
-        
         run(SKAction.repeatForever( // Serves as timer, Could potentially refactor to use group actions later.
             SKAction.sequence([
                 SKAction.run(spawnGems),
@@ -74,6 +65,7 @@ extension GameScene { // Gameplay
     
     public func onLeftGemSourceTouch() {
         if !isPaused && !tutorialMode {
+            animateLeftHammer()
             addRegularGem(location: .left)
             run(gemCreatedSound)
         }
@@ -81,6 +73,7 @@ extension GameScene { // Gameplay
     
     public func onRightGemSourceTouch() {
         if !isPaused && !tutorialMode {
+            animateRightHammer()
             addRegularGem(location: .right)
             run(gemCreatedSound)
         }
@@ -121,12 +114,12 @@ extension GameScene { // Gameplay
         minus.run(SKAction.fadeOut(withDuration: 1.0))
     }
 
-    private func animateLeftHammer() { // Need a function without arguments to be called in the SKAction
-        leftGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
+    public func animateLeftHammer() { // Need a function without arguments to be called in the SKAction
+        leftGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.25)) // Animation consists of 2 frames.
     }
     
-    private func animateRightHammer() { // Need a function without arguments to be called in the SKAction
-        rightGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
+    public func animateRightHammer() { // Need a function without arguments to be called in the SKAction
+        rightGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.25)) // Animation consists of 2 frames.
     }
     
     private func shakeAction(positionX : CGFloat) -> SKAction {
