@@ -118,7 +118,6 @@ class SpawnSequenceManager {
         return spawnSequenceHard
     }
     
-    
     private func getSpawnActionDuration(spawnAction: GameScene.SpawnAction) -> Double {
         // Takes a spawnAction and returns its duration in seconds
         switch(spawnAction) {

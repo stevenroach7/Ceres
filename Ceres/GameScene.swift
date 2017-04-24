@@ -65,7 +65,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var selectedGems: Set<SKSpriteNode> = Set()
     var nodeDisplacements:[SKSpriteNode: CGVector] = [:] // Dictionary to map currently selected nodes to their displacements from the user's finger
 
-    // Perhaps better suited for collision extension but this struct is also referenced in functions like makeWall, keeping it here increased visibility and thus understanding of the code.
+    
     // Determines collisions between different objects
     public struct PhysicsCategory {
         static let None      : UInt32 = 0
