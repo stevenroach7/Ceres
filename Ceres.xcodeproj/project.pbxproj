@@ -36,6 +36,7 @@
 		B2557EE41E8225800078C13F /* hydraulicSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = B2557EE31E8225800078C13F /* hydraulicSound.wav */; };
 		B2557EE61E8225B10078C13F /* hammerImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B2557EE51E8225B10078C13F /* hammerImages.atlas */; };
 		B26BB8DC1EA52F8900D39079 /* collectorGlow.sks in Resources */ = {isa = PBXBuildFile; fileRef = B26BB8DB1EA52F8900D39079 /* collectorGlow.sks */; };
+		B28798B61EADA1620058D08B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B28798B41EADA1620058D08B /* LaunchScreen.storyboard */; };
 		B28F8DD81E56663E005D803B /* starShower.sks in Resources */ = {isa = PBXBuildFile; fileRef = B28F8DD71E56663E005D803B /* starShower.sks */; };
 		B29319B01E7F7C7700147924 /* collectorImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B29319AF1E7F7C7700147924 /* collectorImages.atlas */; };
 		B2A6A25A1E726FD100F64EAF /* anvil.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B2A6A2581E726FD100F64EAF /* anvil.mp3 */; };
@@ -97,6 +98,7 @@
 		B2557EE31E8225800078C13F /* hydraulicSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hydraulicSound.wav; sourceTree = "<group>"; };
 		B2557EE51E8225B10078C13F /* hammerImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = hammerImages.atlas; sourceTree = "<group>"; };
 		B26BB8DB1EA52F8900D39079 /* collectorGlow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = collectorGlow.sks; sourceTree = "<group>"; };
+		B28798B51EADA1620058D08B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B28F8DD71E56663E005D803B /* starShower.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = starShower.sks; sourceTree = "<group>"; };
 		B29319AF1E7F7C7700147924 /* collectorImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = collectorImages.atlas; sourceTree = "<group>"; };
 		B2A6A2581E726FD100F64EAF /* anvil.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = anvil.mp3; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				B05DBA601EA7EEDA005560DF /* Assets */,
 				B07805F91E5506C400073DD6 /* CeresTests */,
 				B07805E91E5506C300073DD6 /* Main.storyboard */,
+				B28798B41EADA1620058D08B /* LaunchScreen.storyboard */,
 				B07805F11E5506C300073DD6 /* Info.plist */,
 			);
 			path = Ceres;
@@ -400,6 +403,7 @@
 				B26BB8DC1EA52F8900D39079 /* collectorGlow.sks in Resources */,
 				B2D7DB4F1E97FFFC00CB4EEE /* bomb.mp3 in Resources */,
 				B07805ED1E5506C300073DD6 /* Assets.xcassets in Resources */,
+				B28798B61EADA1620058D08B /* LaunchScreen.storyboard in Resources */,
 				B2557EE61E8225B10078C13F /* hammerImages.atlas in Resources */,
 				B212A1251E89DA3500DDEC64 /* zwip.wav in Resources */,
 				B2557EE41E8225800078C13F /* hydraulicSound.wav in Resources */,
@@ -489,6 +493,14 @@
 				B07805EA1E5506C300073DD6 /* Base */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B28798B41EADA1620058D08B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B28798B51EADA1620058D08B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
