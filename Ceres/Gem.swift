@@ -16,7 +16,7 @@ class Gem: SKSpriteNode {
         setScale(0.23)
         isUserInteractionEnabled = false
         zPosition = 8
-        physicsBody = SKPhysicsBody(circleOfRadius: max(size.width / 2, size.height / 2)) // Creating a circular physics body around each of the gems. Maybe change this shape later.
+        physicsBody = SKPhysicsBody(circleOfRadius: (size.height / 2) - 1) // Makes physics body circle slightly smaller than gem shape.
         physicsBody?.usesPreciseCollisionDetection = true
         physicsBody?.allowsRotation = true
         physicsBody?.restitution = 0.25
