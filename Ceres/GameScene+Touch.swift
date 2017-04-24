@@ -46,18 +46,16 @@ extension GameScene { // Touching logic
                     onLeftGemSourceTouch()
                 case "pauseButton":
                     onPauseButtonTouch()
-                default: break
-                }
-            }
-            
-            // Check if gem is touched
-            let (minDist, closestGem) = findNearestGem(touchLocation: touchLocation)
-            let touchedGem = (closestGem as? SKSpriteNode)!
-            if (minDist < 44){ //If the touch is within 44 px of gem, change touched node to gem
-                if !selectedGems.contains(touchedGem) {
-                    selectedGems.insert(touchedGem)
-                    touchesToGems[touch] = touchedGem
-                    nodeDisplacements[touchedGem] = CGVector(dx: touchLocation.x - touchedGem.position.x, dy: touchLocation.y - touchedGem.position.y)
+                default: // Check if gem is touched
+                    let (minDist, closestGem) = findNearestGem(touchLocation: touchLocation)
+                    let touchedGem = (closestGem as? SKSpriteNode)!
+                    if (minDist < 44){ //If the touch is within 44 px of gem, change touched node to gem
+                        if !selectedGems.contains(touchedGem) {
+                            selectedGems.insert(touchedGem)
+                            touchesToGems[touch] = touchedGem
+                            nodeDisplacements[touchedGem] = CGVector(dx: touchLocation.x - touchedGem.position.x, dy: touchLocation.y - touchedGem.position.y)
+                        }
+                    }
                 }
             }
         }
