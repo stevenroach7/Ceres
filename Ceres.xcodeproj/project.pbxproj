@@ -139,7 +139,6 @@
 				3C67AD9C1E84310000C8B980 /* GemSource.swift */,
 				3C67AD981E8331E100C8B980 /* StagePlanet.swift */,
 				3C67AD9A1E835C3500C8B980 /* GemCollector.swift */,
-				B28F8DD71E56663E005D803B /* starShower.sks */,
 			);
 			name = GameClasses;
 			sourceTree = "<group>";
@@ -147,6 +146,7 @@
 		B05DBA5B1EA7EC15005560DF /* ParticleEffects */ = {
 			isa = PBXGroup;
 			children = (
+				B28F8DD71E56663E005D803B /* starShower.sks */,
 				B26BB8DB1EA52F8900D39079 /* collectorGlow.sks */,
 				B2CDC03B1E8368DA00AA93DC /* gemExplosion.sks */,
 			);
@@ -197,6 +197,7 @@
 		B05DBA611EA7EF1A005560DF /* Visuals */ = {
 			isa = PBXGroup;
 			children = (
+				B05DBA5B1EA7EC15005560DF /* ParticleEffects */,
 				B07805EC1E5506C300073DD6 /* Assets.xcassets */,
 				B29319AF1E7F7C7700147924 /* collectorImages.atlas */,
 				B2557EE51E8225B10078C13F /* hammerImages.atlas */,
@@ -248,7 +249,6 @@
 				B0F2D1621EABD59C0040F6DE /* Managers */,
 				B05DBA5A1EA7EBA5005560DF /* GameClasses */,
 				B05DBA5E1EA7EE21005560DF /* UtilityClasses */,
-				B05DBA5B1EA7EC15005560DF /* ParticleEffects */,
 				B05DBA601EA7EEDA005560DF /* Assets */,
 				B07805F91E5506C400073DD6 /* CeresTests */,
 				B07805E91E5506C300073DD6 /* Main.storyboard */,
