@@ -18,7 +18,7 @@ extension GameScene { // Tutorial
     }
     
     private func prepareTutorial() {
-        physicsWorld.gravity = CGVector(dx: 0, dy: 0.01)
+        physicsWorld.gravity = CGVector(dx: 0, dy: 0.0)
         addTutorialGem()
         makeTutorialHand()
         collectorGlow.position = CGPoint(x: size.width * 0.525, y: size.height * 0.125)
