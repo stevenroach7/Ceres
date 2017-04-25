@@ -360,13 +360,13 @@ class SpawnSequenceManager {
         if time <= 0 {
             return basicSequences[Utility.random(min: 0, max: basicSequences.count - 1)]
         } else if time <= 20 {
-            return easySequences[Utility.random(min: 0, max: basicSequences.count - 1)]
+            return easySequences[Utility.random(min: 0, max: easySequences.count - 1)]
         } else if time <= 40 {
-            return mediumSequences[Utility.random(min: 0, max: basicSequences.count - 1)]
+            return mediumSequences[Utility.random(min: 0, max: mediumSequences.count - 1)]
         } else if time <= 70 {
-            return hardSequences[Utility.random(min: 0, max: basicSequences.count - 1)]
+            return hardSequences[Utility.random(min: 0, max: hardSequences.count - 1)]
         } else if time <= 120 {
-            return hardSequences[Utility.random(min: 0, max: basicSequences.count - 1)] // TODO: Change to veryHard when sequences are created.
+            return hardSequences[Utility.random(min: 0, max: hardSequences.count - 1)] // TODO: Change to veryHard when sequences are created.
         }
         return spawnSequenceHard
     }
