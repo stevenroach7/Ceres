@@ -21,8 +21,17 @@ extension GameScene { // Tutorial
         physicsWorld.gravity = CGVector(dx: 0, dy: 0.0)
         addTutorialGem()
         makeTutorialHand()
+        setScoreLabel(font: 30, position: CGPoint(x: size.width/2, y: size.height * 0.7))
         collectorGlow.position = CGPoint(x: size.width * 0.525, y: size.height * 0.125)
         addChild(collectorGlow)
+    }
+    
+    public func addTutorialGem() {
+        let gem = Gem(imageNamed: "gemShape1")
+        gem.name = "gem"
+        gem.setGemProperties()  // Calls gem properties from Gem class
+        gem.position = CGPoint(x: size.width * 0.5, y: size.height / 2)
+        addChild(gem)
     }
     
     private func makeTutorialHand() {
@@ -63,13 +72,15 @@ extension GameScene { // Tutorial
         flickHand.run(SKAction.repeatForever(tutorialAnimation))
     }
     
-    
-    public func addTutorialGem() {
-        let gem = Gem(imageNamed: "gemShape1")
-        gem.name = "gem"
-        gem.setGemProperties()  // Calls gem properties from Gem class
-        gem.position = CGPoint(x: size.width * 0.5, y: size.height / 2)
-        addChild(gem)
+    private func setScoreLabel(font: CGFloat, position: CGPoint) {
+        // Tracks current game score
+        
+        scoreLabel = SKLabelNode(fontNamed: "Menlo-Bold")
+        scoreLabel.text = "+/-: \(gemsPlusMinus)"
+        scoreLabel.fontSize = font
+        //scoreLabel.horizontalAlignmentMode = .right
+        scoreLabel.position = position
+        addChild(scoreLabel)
     }
     
     public func tutorialGemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
@@ -89,7 +100,7 @@ extension GameScene { // Tutorial
         collectorGlow.removeFromParent()
         flickHand.removeFromParent() // TODO: Move this elsewhere later if we want hand to be removed when user touches gem
         let scaleDown = SKAction.scale(by: 2/3, duration: 0.75)
-        let finalScoreLabelPosition = CGPoint(x: size.width * 0.75, y: size.height - size.height/20)
+        let finalScoreLabelPosition = CGPoint(x: size.width * 0.8, y: size.height - size.height/20)
         let moveUp = SKAction.move(to: finalScoreLabelPosition, duration: 0.75)
         
         scoreLabel.run(scaleDown)
