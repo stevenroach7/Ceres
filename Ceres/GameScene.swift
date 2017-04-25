@@ -46,6 +46,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     
     var spawnSequenceManager: SpawnSequenceManager = SpawnSequenceManager()
+    var audioManager: AudioManager = AudioManager()
     
     
     // TODO: Possibly store animations frames and sounds in their own structure
@@ -53,13 +54,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var collectorFrames = [SKTexture]()
     var hammerAtlas = SKTextureAtlas()
     var hammerFrames = [SKTexture]()
-    
-    let gemCollectedSound = SKAction.playSoundFileNamed("hydraulicSound.wav", waitForCompletion: false)
-    let gemCreatedSound = SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false)
-    let zoomTimerSound = SKAction.playSoundFileNamed("boop.wav", waitForCompletion: false)
-    let zipTimerSound = SKAction.playSoundFileNamed("zwip.wav", waitForCompletion: false)
-    let gemExplosionSound = SKAction.playSoundFileNamed("blast.mp3", waitForCompletion: false)
-    let collectorExplosionSound = SKAction.playSoundFileNamed("bomb.mp3", waitForCompletion: false)
     
     
     // Data structures to deal with user touches
@@ -215,7 +209,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     public func collectGemAnimation(collector: SKSpriteNode) {
         collector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
-        collector.run(gemCollectedSound)
+        collector.run(audioManager.gemCollectedSound)
     }
     
     public func recolorScore(){
