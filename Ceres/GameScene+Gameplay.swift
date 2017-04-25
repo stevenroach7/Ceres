@@ -58,8 +58,8 @@ extension GameScene { // Gameplay
         scoreLabel.run(shakeScore)
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         minusAlert(text: "-5", fontSize: 40)
-        recolorScore()
         gemsPlusMinus -= 5
+        recolorScore()
 
         gem.removeFromParent()
         checkGameOver()
