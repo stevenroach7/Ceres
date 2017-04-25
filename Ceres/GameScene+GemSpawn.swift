@@ -27,6 +27,24 @@ extension GameScene { // GemSpawn
         case spawnGemRight
         case spawnDetonatorLeft
         case spawnDetonatorRight
+        
+        public func getSpawnActionDuration() -> Double {
+            // Returns the duration in seconds of the spawnAction the function is called on
+            switch(self) {
+            case .sequence(let actions):
+                var duration:Double = 0.0
+                for action in actions {
+                    duration += action.getSpawnActionDuration()
+                }
+                return duration
+            case .repeated(let times, let action):
+                return Double(times) * action.getSpawnActionDuration()
+            case .wait(let time):
+                return time
+            default:
+                return 0
+            }
+        }
     }
     
     private func createSKAction(spawnAction: SpawnAction) -> SKAction {
@@ -50,30 +68,17 @@ extension GameScene { // GemSpawn
     }
     
     public func spawnGems() {
-        // Called every second, calls gem spawning sequences based on game timer
-        if timerSeconds % 10 == 0 {
-            switch timerSeconds {
-            case 0:
-                run(createSKAction(spawnAction: spawnSequenceManager.getSpawnSequence1()))
-            case 10:
-                run(createSKAction(spawnAction: spawnSequenceManager.getSpawnSequence2()))
-            case 20:
-                run(createSKAction(spawnAction: spawnSequenceManager.getSpawnSequenceBasicDetonators()))
-            case 30:
-                run(createSKAction(spawnAction: spawnSequenceManager.getSpawnSequence3()))
-            case 40:
-                run(createSKAction(spawnAction: spawnSequenceManager.getSpawnSequence4()))
-            case 50:
-                run(createSKAction(spawnAction: spawnSequenceManager.getSpawnSequence4()))
-            case 60:
-                run(createSKAction(spawnAction: spawnSequenceManager.getSpawnSequence3()))
-            default:
-                run(createSKAction(spawnAction: spawnSequenceManager.getSpawnSequenceHard()))
-            }
+        // Calls gem spawning sequences based on game timer
+        if Double(timerSeconds) >= timeToBeginNextSequence { // Check if previous sequence has ended
+            let nextSpawnAction  = spawnSequenceManager.getSpawnSequence(time: timerSeconds)
+            
+            // Update timeToBeginNextSequence to when the sequence about to be started ends
+            timeToBeginNextSequence = Double(timerSeconds) + nextSpawnAction.getSpawnActionDuration()
+            
+            run(createSKAction(spawnAction: nextSpawnAction))
         }
     }
 
-    
     
     private func addGem(gem: Gem, location: GemSpawnLocation, velocity: CGFloat) {
         // Produces a Gem from the left astronaut

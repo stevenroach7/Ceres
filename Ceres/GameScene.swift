@@ -42,6 +42,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             timerLabel.text = "Time: \(timerSeconds)"
         }
     }
+    var timeToBeginNextSequence:Double = 0.0 // Initialize to 0.0 so sequence will start when gameplay begins
+    
     
     var spawnSequenceManager: SpawnSequenceManager = SpawnSequenceManager()
     
