@@ -13,6 +13,7 @@ class StagePlanet: SKSpriteNode {
     
     func setStagePlanetProperties() {
         // Sets initial properties of the stage
+        
         setScale(0.55)
         name = "stagePlanet"
         zPosition  = -1

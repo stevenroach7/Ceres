@@ -82,6 +82,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
+        
         physicsWorld.contactDelegate = self
        
         backgroundColor = SKColor.black
@@ -127,6 +128,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     // Functions that add nodes to scene
     private func makeWall(location: CGPoint, size: CGSize) {
         // Creates boundaries in the game that deletes gems when they come into contact
+        
         let shape = SKShapeNode(rectOf: size)
         shape.position = location
         shape.physicsBody = SKPhysicsBody(rectangleOf: size)
@@ -140,6 +142,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func setScoreLabel(font: CGFloat, position: CGPoint) {
         // Tracks current game score
+        
         scoreLabel = SKLabelNode(fontNamed: "Menlo-Bold")
         scoreLabel.text = "+/-: \(gemsPlusMinus)"
         scoreLabel.fontSize = font
@@ -150,6 +153,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func setTimerLabel() {
         // Tracks current game time
+        
         timerLabel = SKLabelNode(fontNamed: "Menlo-Bold")
         timerLabel.text = "Time: \(timerSeconds)"
         timerLabel.fontSize = 20
@@ -172,6 +176,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func addGemSources() {
         // Adds 2 gem sources, one for each astronaut
+        
         leftGemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
         leftGemSource.position = CGPoint(x: size.width * 0.15, y: size.height * 0.1 - 20)
         leftGemSource.name = "leftGemSource"
@@ -185,6 +190,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func addAstronauts() {
         // Creates 2 astronauts on either side of the planet
+        
         redAstronaut.position = CGPoint(x: size.width * 0.15, y: size.height * 0.1)
         redAstronaut.setScale(0.175)
         redAstronaut.name = "redAstronaut"
@@ -207,8 +213,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addChild(blueAstronaut)
     }
     
-    
-    // Functions used in gameplay and tutorial
     public func collectGemAnimation(collector: SKSpriteNode) {
         collector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
         collector.run(gemCollectedSound)

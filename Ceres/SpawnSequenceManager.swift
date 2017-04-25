@@ -100,11 +100,11 @@ class SpawnSequenceManager {
             return spawnSequenceBasicDetonators
         } else if time <= 30 {
             return spawnSequence3
-        } else if Double(time) <= 41 {
+        } else if time <= 41 {
             return spawnSequence4
         } else if time <= 51 {
             return spawnSequence4
-        } else if Double(time) <= 62 {
+        } else if time <= 62 {
             return spawnSequence3
         }
         return spawnSequenceHard

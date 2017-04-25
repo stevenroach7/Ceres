@@ -31,9 +31,9 @@ extension GameScene { // Touching logic
         return (minDist, closestGem)
     }
 
-    // Functions to deal with user touches
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // Method to handle touch events. Senses when user touches down (places finger on screen).
+        // Method to handle touch events. Senses when user touches down (places finger on screen)
+        
         for touch in touches {
             let touchLocation = touch.location(in:self)
             let touchedNode = self.atPoint(touchLocation) as? SKSpriteNode
@@ -63,6 +63,7 @@ extension GameScene { // Touching logic
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Method to handle touch events. Senses when user touches up (removes finger from screen).
+        
         for touch in touches {
             // Update touch dictionaries and node
             if let node = touchesToGems[touch] {
@@ -75,6 +76,7 @@ extension GameScene { // Touching logic
     
     override func update(_ currentTime: CFTimeInterval) {
         // Updates position of gems on the screen
+        
         let dt:CGFloat = 1.0/60.0 //determines drag and flick speed
         for (touch, node) in touchesToGems {
             if let displacement = nodeDisplacements[node] { // Get displacement of touched node.

@@ -14,12 +14,14 @@ extension GameScene { // GemSpawn
     
     enum GemSpawnLocation {
         // Enum holds the locations where gems may spawn
+        
         case left
         case right
     }
     
     enum SpawnAction {
         // Enum holds the actions used to build gem sequences
+        
         indirect case sequence(actions: [SpawnAction]) // Recursively defined so mark as indirect
         indirect case repeated(times: Int, action: SpawnAction)
         case wait(time: TimeInterval)
@@ -30,6 +32,7 @@ extension GameScene { // GemSpawn
         
         public func getSpawnActionDuration() -> Double {
             // Returns the duration in seconds of the spawnAction the function is called on
+            
             switch(self) {
             case .sequence(let actions):
                 var duration:Double = 0.0
@@ -49,6 +52,7 @@ extension GameScene { // GemSpawn
     
     private func createSKAction(spawnAction: SpawnAction) -> SKAction {
         // returns an SKAction to produce that sequence.
+        
         switch(spawnAction) {
         case .sequence(let actions):
             return SKAction.sequence(actions.map(createSKAction))
@@ -69,12 +73,10 @@ extension GameScene { // GemSpawn
     
     public func spawnGems() {
         // Calls gem spawning sequences based on game timer
+        
         if Double(timerSeconds) >= timeToBeginNextSequence { // Check if previous sequence has ended
             let nextSpawnAction  = spawnSequenceManager.getSpawnSequence(time: timerSeconds)
-            
-            // Update timeToBeginNextSequence to when the sequence about to be started ends
             timeToBeginNextSequence = Double(timerSeconds) + nextSpawnAction.getSpawnActionDuration()
-            
             run(createSKAction(spawnAction: nextSpawnAction))
         }
     }
@@ -82,6 +84,7 @@ extension GameScene { // GemSpawn
     
     private func addGem(gem: Gem, location: GemSpawnLocation, velocity: CGFloat) {
         // Produces a Gem from the left astronaut
+        
         gem.setGemProperties()  // Calls gem properties from Gem class
         let position: CGPoint, angle: CGFloat
         switch location {
@@ -107,6 +110,7 @@ extension GameScene { // GemSpawn
     
     public func addDetonatorGem(location: GemSpawnLocation, timeToExplosion: Double = 2.0, velocity: CGFloat = 110) {
         // Adds a detonating gem to the scene and makes it explode in timeToExplosion seconds.
+        
         let detonatorGem = Gem(imageNamed: "rottenGem")
         detonatorGem.name = "detonatorGem"
         let gravityFieldNode = SKFieldNode.radialGravityField()
@@ -123,6 +127,7 @@ extension GameScene { // GemSpawn
     
     private func flashDetonatorGemAnimation(duration: Double) -> SKAction {
         // Takes an animation duration and returns an animation to flash a detonator gem once
+        
         let flashAction = SKAction.setTexture(SKTexture(imageNamed: "mostlyWhiteRottenGem"))
         let unFlashAction = SKAction.setTexture(SKTexture(imageNamed: "rottenGem"))
         
@@ -137,6 +142,7 @@ extension GameScene { // GemSpawn
     
     private func animateDetonatorGem(detonatorGem: Gem) {
         // Takes a detonatorGem and runs a flashing animation on it
+        
         let flashDuration = 0.25
         detonatorGem.run(SKAction.repeat(SKAction.sequence([
             {self.flashDetonatorGemAnimation(duration: flashDuration)}(),
@@ -145,6 +151,7 @@ extension GameScene { // GemSpawn
     
     private func detonateGem(detonatorGem: Gem, gravityFieldNode: SKFieldNode) {
         // Takes a detonator gem and a gravityFieldNode to add to the scene and simulates the gem exploding in the scene
+        
         if detonatorGem.parent != nil { // Don't simulate explosion if gem has been removed
             let gemPosition = detonatorGem.position
             detonatorGem.removeFromParent()
@@ -163,6 +170,7 @@ extension GameScene { // GemSpawn
     
     private func detonationCleanup(gravityFieldNode: SKFieldNode) {
         // Takes a gravityFieldNode and removes it from the scene to end the gem explosion simulation.
+        
         if gravityFieldNode.parent != nil {
             gravityFieldNode.removeFromParent()
         }

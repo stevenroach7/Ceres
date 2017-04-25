@@ -15,6 +15,7 @@ extension GameScene { // Gameplay
     
     public func beginGameplay() {
         // Adjust gravity of scene
+        
         physicsWorld.gravity = CGVector(dx: 0, dy: 0.27) // Gravity on Ceres is 0.27 m/s²
         
         run(SKAction.repeatForever( // Serves as timer, Could potentially refactor to use group actions later.
@@ -28,6 +29,7 @@ extension GameScene { // Gameplay
     
     public func gemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
         // Removes gem from game scene and increments number of gems collected
+        
         gemsPlusMinus += 1
         recolorScore()
         collectGemAnimation(collector: collector)
@@ -56,6 +58,7 @@ extension GameScene { // Gameplay
     
     public func gemOffScreen(gem: SKSpriteNode) {
         // Removes gems from game scene when they fly off screen
+        
         gemsPlusMinus -= 1
         recolorScore()
         gem.removeFromParent()
@@ -85,6 +88,7 @@ extension GameScene { // Gameplay
     
     private func checkGameOver() {
         // Calculates score to figure out when to end the game
+        
         if gemsPlusMinus <= losingGemPlusMinus {
             gameOverTransition()
         }
@@ -114,11 +118,12 @@ extension GameScene { // Gameplay
         minus.run(SKAction.fadeOut(withDuration: 1.0))
     }
 
-    public func animateLeftHammer() { // Need a function without arguments to be called in the SKAction
+    // TODO: Refactor into one method that uses an enum
+    public func animateLeftHammer() {
         leftGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.25)) // Animation consists of 2 frames.
     }
     
-    public func animateRightHammer() { // Need a function without arguments to be called in the SKAction
+    public func animateRightHammer() {
         rightGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.25)) // Animation consists of 2 frames.
     }
     

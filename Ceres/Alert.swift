@@ -16,6 +16,7 @@ extension Alerts where Self: SKScene {
 
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         
+        // Handles pausing the view/scene
         var wasPaused: Bool
         if self.isPaused {
             wasPaused = true
@@ -24,6 +25,7 @@ extension Alerts where Self: SKScene {
             self.view?.isPaused = true
         }
         
+        // Defining the different actions a user can take from the pause alert
         let resumeAction = UIAlertAction(title: "Resume Game", style: UIAlertActionStyle.default)  { (action:UIAlertAction!) in
             if !wasPaused {
                 self.view?.isPaused = false

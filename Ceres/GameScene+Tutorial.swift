@@ -40,8 +40,6 @@ extension GameScene { // Tutorial
         let moveDownFast = SKAction.move(to: CGPoint(x: size.width * 0.55, y: size.height * 0.225), duration: 0.3)
         let release = SKAction.move(to: CGPoint(x: size.width * 0.575, y: size.height * 0.25), duration: 0.15)
         let resetHand = SKAction.move(to: CGPoint(x: size.width * 0.675, y: size.height * 0.45), duration: 0.1)
-        //let hide = SKAction.hide()
-        //let show = SKAction.unhide()
         let shortWait = SKAction.wait(forDuration: 0.2)
         let longWait = SKAction.wait(forDuration: 1.25)
         let fadeOut = SKAction.fadeOut(withDuration: 0.5)
@@ -76,6 +74,7 @@ extension GameScene { // Tutorial
     
     public func tutorialGemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
         // Removes gem from game scene and increments number of gems collected
+        
         gemsPlusMinus += 1
         recolorScore()
         collectGemAnimation(collector: collector)

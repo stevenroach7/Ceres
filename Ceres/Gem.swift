@@ -13,6 +13,7 @@ class Gem: SKSpriteNode {
     
     func setGemProperties() {
         // Initializes initial properties a gem should have.
+        
         setScale(0.23)
         isUserInteractionEnabled = false
         zPosition = 8
@@ -28,11 +29,13 @@ class Gem: SKSpriteNode {
     
     public func setGemVelocity(velocity: CGFloat, angle: CGFloat) {
         // Sets the Velocity Magnitude and angle of gem
+        
         physicsBody?.velocity = createProjectileVector(velocity: velocity, angle: angle)
     }
     
     private func createProjectileVector(velocity: CGFloat, angle: CGFloat) -> CGVector {
         // Takes a velocity and an angle in radians and returns a vector with the inputted angle and velocity.
+        
         let dx = cos(angle) * velocity
         let dy = sin(angle) * velocity
         return CGVector(dx: dx, dy: dy)
