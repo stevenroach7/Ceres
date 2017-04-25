@@ -17,8 +17,8 @@ class SettingsScene: SKScene {
     var backButton = SKSpriteNode()
     let backButtonTex = SKTexture(imageNamed: "back")
     
-    let switchText = "On"
-    let switchNode = SKLabelNode(fontNamed: "Optima-Bold")
+    let switchText = "Music"
+    let switchLabel = SKLabelNode(fontNamed: "Optima-Bold")
     
     var starfield:SKEmitterNode!
     
@@ -30,11 +30,7 @@ class SettingsScene: SKScene {
         soundSwitch.addTarget(self, action: #selector(switchValueDidChange(sender:)), for: .valueChanged)
         self.view!.addSubview(soundSwitch)
         
-//        if soundSwitch.isOn == true {
-//            showSwitchText()
-//        } else if soundSwitch.isOn == false {
-//            switchNode.removeFromParent()
-//        }
+        showSwitchLabel()
         
         titleNode.text = title
         titleNode.fontSize = 32
@@ -54,12 +50,12 @@ class SettingsScene: SKScene {
         starfield.zPosition = -1
     }
     
-    func showSwitchText() {
-        switchNode.text = switchText
-        switchNode.fontSize = 25
-        switchNode.fontColor = SKColor.white
-        switchNode.position = CGPoint(x: size.width/2 + size.width/5, y: size.height/2 - size.height/22)
-        addChild(switchNode)
+    func showSwitchLabel() {
+        switchLabel.text = switchText
+        switchLabel.fontSize = 25
+        switchLabel.fontColor = SKColor.white
+        switchLabel.position = CGPoint(x: size.width/2 - size.width/5, y: size.height/2 - size.height/22)
+        addChild(switchLabel)
     }
     
     func switchValueDidChange(sender:UISwitch!) {
