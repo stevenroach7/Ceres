@@ -80,7 +80,6 @@ extension GameScene { // GemSpawn
             run(createSKAction(spawnAction: nextSpawnAction))
         }
     }
-
     
     private func addGem(gem: Gem, location: GemSpawnLocation, velocity: CGFloat) {
         // Produces a Gem from the left astronaut
@@ -91,11 +90,9 @@ extension GameScene { // GemSpawn
         case .left:
             position = CGPoint(x: size.width * 0.15, y: size.height * 0.15)
             angle = Utility.random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (1/2))
-            animateLeftHammer()
         case .right:
             position = CGPoint(x: size.width * 0.85, y: size.height * 0.15)
             angle = Utility.random(min: CGFloat.pi * (1/2), max: CGFloat.pi * (3/4))
-            animateRightHammer()
         }
         gem.position = position
         gem.setGemVelocity(velocity: velocity, angle: angle)
@@ -175,5 +172,4 @@ extension GameScene { // GemSpawn
             gravityFieldNode.removeFromParent()
         }
     }
-  
 }
