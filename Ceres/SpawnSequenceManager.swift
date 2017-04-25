@@ -99,6 +99,7 @@ class SpawnSequenceManager {
     let hardSequences:[GameScene.SpawnAction]
 //    let veryHardSequences:[GameScene.SpawnAction]
 //    let impossibleSequences:[GameScene.SpawnAction]
+    let tempSequences:[GameScene.SpawnAction]
     
     
     
@@ -139,92 +140,84 @@ class SpawnSequenceManager {
     
     
     private let mediumSequence0: GameScene.SpawnAction =
-        .repeated(times: 5, action:
-            .sequence(actions: [.wait(time: 1),
+        .repeated(times: 4, action:
+            .sequence(actions: [.wait(time: 0.9),
                                 .spawnGemLeft,
-                                .wait(time: 0.5),
-                                .spawnGemLeft, .spawnDetonatorRight,
-                                .wait(time: 0.5),
+                                .wait(time: 0.4),
+                                .spawnDetonatorRight,
+                                .wait(time: 0.9),
                                 .spawnGemLeft, .spawnGemRight]))
     
     private let mediumSequence1: GameScene.SpawnAction =
-        .repeated(times: 3, action:
-            .sequence(actions: [.wait(time: 1.5),
-                                .spawnGemRight, .spawnGemRight, .spawnGemLeft, .spawnGemLeft, .spawnDetonatorLeft,
+        .repeated(times: 2, action:
+            .sequence(actions: [.wait(time: 2),
+                                .spawnGemRight, .spawnGemRight, .spawnGemLeft, .spawnDetonatorLeft,
                                 
-                                .wait(time: 1.5),
-                                .spawnGemLeft, .spawnGemLeft, .spawnGemRight, .spawnGemRight, .spawnDetonatorRight
+                                .wait(time: 2),
+                                .spawnGemLeft, .spawnGemLeft, .spawnGemRight, .spawnDetonatorRight
                 ]))
     
     private let mediumSequence2: GameScene.SpawnAction =
         .repeated(times: 2, action:
             .sequence(actions: [.wait(time: 1),
-                            .spawnGemLeft, .spawnDetonatorRight,
+                            .spawnGemLeft, .spawnGemRight,
                             
-                            .wait(time: 0.75),
-                            .spawnGemRight, .spawnGemLeft,
-                            
-                            .wait(time: 0.4),
-                            .spawnGemRight, .spawnGemLeft,
+                            .wait(time: 0.8),
+                            .spawnGemRight, .spawnDetonatorLeft,
                             
                             .wait(time: 0.5),
-                            .spawnGemLeft, .spawnGemRight, .spawnGemLeft, .spawnGemRight
+                            .spawnGemLeft,
+                            
+                            .wait(time: 1),
+                            .spawnGemLeft, .spawnGemRight, .spawnGemLeft
                 ]))
     
     
     private let mediumSequence3: GameScene.SpawnAction =
         .repeated(times: 3, action:
-            .sequence(actions: [.wait(time: 1),
+            .sequence(actions: [.wait(time: 1.0),
                             .spawnGemLeft,
-                            .wait(time: 0.15),
-                            .spawnGemRight,
-                            .wait(time: 0.15),
-                            .spawnGemLeft,
-                            .wait(time: 0.15),
-                            .spawnGemRight,
-                            .wait(time: 0.5),
-                            .spawnGemLeft, .spawnGemRight, .spawnDetonatorLeft, .spawnDetonatorRight,
-                            .wait(time: 0.25),
+                            .wait(time: 0.60),
+                            .spawnGemRight, .spawnDetonatorLeft,
+                            .wait(time: 0.60),
+                            .spawnGemLeft, .spawnDetonatorRight,
+                            .wait(time: 0.50),
+                            .spawnGemLeft, .spawnGemRight,
+                            .wait(time: 0.35),
                             .spawnGemLeft, .spawnGemRight
                 ]))
     
     private let mediumSequence4: GameScene.SpawnAction =
-        .repeated(times: 4, action:
-            .sequence(actions: [.wait(time: 0.40),
+        .repeated(times: 3, action:
+            .sequence(actions: [.wait(time: 0.75),
                             .spawnDetonatorRight,
-                            .wait(time: 0.40),
+                            .wait(time: 0.75),
                             .spawnGemLeft, .spawnGemLeft,
-                            .wait(time: 0.40),
-                            .spawnGemLeft, .spawnGemRight,
-                            .wait(time: 0.40),
-                            .spawnDetonatorLeft
+                            .wait(time: 0.75),
+                            .spawnGemLeft, .spawnGemRight
             ]))
     
     private let mediumSequence5: GameScene.SpawnAction =
-        .repeated(times: 4, action:
+        .repeated(times: 3, action:
             .sequence(actions: [.wait(time: 0.6),
                             .spawnGemLeft, .spawnGemRight,
-                            .wait(time: 0.4),
-                            .spawnGemRight,
-                            .wait(time: 0.2),
-                            .spawnGemLeft,
-                            .wait(time: 0.2),
+                            .wait(time: 0.35),
                             .spawnDetonatorRight,
-                            .wait(time: 0.2),
+                            .wait(time: 0.35),
                             .spawnGemLeft,
-                            .wait(time: 0.4),
+                            .wait(time: 0.50),
                             .spawnGemLeft, .spawnGemRight
             ]))
     
     private let mediumSequence6: GameScene.SpawnAction =
-        .repeated(times: 5, action:
-            .sequence(actions: [.wait(time: 0.5),
+        .repeated(times: 3, action:
+            .sequence(actions: [.wait(time: 0.55),
                                 .spawnGemLeft, .spawnGemRight,
-                                .wait(time: 0.5),
+                                .wait(time: 0.55),
                                 .spawnGemLeft,
-                                .wait(time: 0.2),
+                                .wait(time: 0.55),
                                 .spawnGemRight,
-                                .wait(time: 0.2),
+                                .wait(time: 0.55),
                                 .spawnGemLeft, .spawnGemRight, .spawnDetonatorLeft
             ]))
     
@@ -232,12 +225,12 @@ class SpawnSequenceManager {
         .repeated(times: 3, action:
             .sequence(actions: [.wait(time: 1),
                                 .spawnGemLeft, .spawnGemRight,
-                                .wait(time: 0.7),
-                                .spawnGemRight, .spawnGemLeft,
-                                .wait(time: 0.40),
+                                .wait(time: 0.8),
+                                .spawnGemLeft,
+                                .wait(time: 0.60),
                                 .spawnDetonatorLeft, .spawnGemRight,
-                                .wait(time: 0.20),
-                                .spawnGemRight, .spawnGemLeft
+                                .wait(time: 0.40),
+                                .spawnGemRight
             ]))
 
 
@@ -245,22 +238,22 @@ class SpawnSequenceManager {
     
     private let hardSequence0: GameScene.SpawnAction =
         .repeated(times: 4, action:
-            .sequence(actions: [.wait(time: 1.5),
-                                .spawnGemRight,
-                                .wait(time: 0.08),
+            .sequence(actions: [.wait(time: 1.0),
+                                .spawnGemRight, .spawnDetonatorLeft,
+                                .wait(time: 0.4),
                                 .spawnGemLeft, .spawnGemRight,
-                                .wait(time: 0.1),
-                                .spawnDetonatorLeft, .spawnGemRight,
                                 .wait(time: 0.3),
-                                .spawnGemLeft, .spawnDetonatorRight,
+                                .spawnDetonatorLeft, .spawnGemRight, .spawnDetonatorRight,
+                                .wait(time: 0.3),
+                                .spawnGemLeft, .spawnDetonatorRight
                                 ]))
     
     private let hardSequence1: GameScene.SpawnAction =
-        .repeated(times: 4, action:
-            .sequence(actions: [.wait(time: 0.5),
+        .repeated(times: 6, action:
+            .sequence(actions: [.wait(time: 0.4),
                                 .spawnDetonatorLeft,
-                                .wait(time: 0.3),
-                                .spawnDetonatorRight, .spawnGemLeft,
+                                .wait(time: 0.2),
+                                .spawnDetonatorRight, .spawnGemLeft, .spawnDetonatorLeft,
                                 .wait(time: 0.5),
                                 .spawnDetonatorLeft, .spawnDetonatorRight,
                                 .wait(time: 0.3),
@@ -269,14 +262,35 @@ class SpawnSequenceManager {
     
     private let hardSequence2: GameScene.SpawnAction =
         .repeated(times: 4, action:
-            .sequence(actions: [.repeated(times: 2, action:
-                                    .sequence(actions: [.wait(time: 0.2), .spawnGemLeft, .wait(time: 0.2), .spawnGemRight])),
-                               .spawnDetonatorLeft,
-                               .repeated(times: 2, action:
-                                    .sequence(actions: [.wait(time: 0.2), .spawnGemLeft, .wait(time: 0.2), .spawnGemRight])),
-                               .spawnDetonatorRight
+            .sequence(actions: [.wait(time: 1.5), .spawnGemLeft, .spawnGemRight,
+                       .wait(time: 0.2), .spawnGemRight, .spawnDetonatorLeft,
+                       .wait(time: 0.2), .spawnGemLeft,.spawnDetonatorRight,
                       ]))
     
+    private let hardSequence3: GameScene.SpawnAction =
+        .repeated(times: 7, action:
+            .sequence(actions: [.wait(time: 0.4), .spawnGemLeft, .wait(time: 0.2), .spawnDetonatorLeft,
+                                .wait(time: 0.4), .spawnGemRight, .spawnDetonatorRight, .wait(time: 0.2), .spawnGemLeft, .spawnDetonatorRight,
+                                .wait(time: 0.4), .spawnGemRight, .wait(time: 0.2), .spawnDetonatorRight,
+                                ]))
+    
+    private let hardSequence4: GameScene.SpawnAction =
+            .sequence(actions: [.repeated(times: 6, action:
+                                    .sequence(actions: [.wait(time: 0.25), .spawnDetonatorRight, .wait(time: 0.25), .spawnDetonatorRight])),
+                                .repeated(times: 4, action:
+                                    .sequence(actions: [.wait(time: 0.25), .spawnGemRight, .wait(time: 0.45), .spawnGemRight, .spawnDetonatorLeft])),
+                                .repeated(times: 6, action:
+                                    .sequence(actions: [.wait(time: 0.25), .spawnDetonatorLeft, .wait(time: 0.25), .spawnDetonatorLeft])),
+                                .repeated(times: 4, action:
+                                    .sequence(actions: [.wait(time: 0.25), .spawnDetonatorLeft, .wait(time: 0.25), .spawnGemLeft, .wait(time: 0.15), .spawnGemLeft, .spawnDetonatorRight]))
+                                ])
+    
+    private let hardSequence5: GameScene.SpawnAction =
+        .repeated(times: 3, action:
+            .sequence(actions: [.wait(time: 2.0),
+                                .repeated(times: 6, action:
+                                    .sequence(actions: [.wait(time: 0.5), .spawnDetonatorRight, .spawnGemLeft, .wait(time: 0.5), .spawnGemLeft, .spawnGemRight, .spawnDetonatorLeft]))
+                                ]))
     
     
     
@@ -289,20 +303,25 @@ class SpawnSequenceManager {
         basicSequences = [basicSequence0, basicSequence1]
         easySequences = [easySequence0, easySequence1, easySequence2, easySequence3]
         mediumSequences = [mediumSequence0, mediumSequence1, mediumSequence2, mediumSequence3, mediumSequence4, mediumSequence5, mediumSequence6,mediumSequence7]
-        hardSequences = [hardSequence0, hardSequence1, hardSequence2]
+        hardSequences = [hardSequence0, hardSequence1, hardSequence2, hardSequence3, hardSequence4, hardSequence5]
 //        veryHardSequences = []
 //        impossibleSequences = []
+        tempSequences = [basicSequence0, easySequence0, easySequence1, mediumSequence0, mediumSequence1, mediumSequence5, hardSequence0, hardSequence1, hardSequence2, hardSequence3, hardSequence4, hardSequence5]
+        
     }
     
     public func getSpawnSequence(time: Int) -> GameScene.SpawnAction {
         // Gem spawning routine
+//        let sequences = mediumSequences
+//        let sequences = hardSequences
+        let sequences = tempSequences
         
-        if index < hardSequences.count {
-            let sequence = hardSequences[index]
+        if index < sequences.count {
+            let sequence = sequences[index]
             index += 1
             return sequence
         } else {
-            return spawnSequence1
+            return spawnSequenceHard
         }
     }
         
