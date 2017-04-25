@@ -88,36 +88,49 @@ class SpawnSequenceManager {
                                 .spawnGemLeft,
                                 ]))
     
-    struct SequenceCategories {
     
-        let basicSequences:[GameScene.SpawnAction] = []
-        let easySequences:[GameScene.SpawnAction] = []
-        let mediumSequences:[GameScene.SpawnAction] = []
-        let hardSequences:[GameScene.SpawnAction] = []
-        let veryHardSequences:[GameScene.SpawnAction] = []
-        let impossibleSequences:[GameScene.SpawnAction] = []
+    
+    
+    // Start making sequences after this line
+    
+    let basicSequences:[GameScene.SpawnAction]
+//    let easySequences:[GameScene.SpawnAction]
+//    let mediumSequences:[GameScene.SpawnAction]
+//    let hardSequences:[GameScene.SpawnAction]
+//    let veryHardSequences:[GameScene.SpawnAction]
+//    let impossibleSequences:[GameScene.SpawnAction]
+    
+    private let basicSequence0: GameScene.SpawnAction =
+        .repeated(times: 4,
+                  action: .sequence(actions: [.wait(time: 0.9), .spawnGemLeft, .wait(time: 0.9), .spawnGemRight]))
+    
+    private let basicSequence1: GameScene.SpawnAction =
+        .repeated(times: 4,
+                  action: .sequence(actions: [.wait(time: 0.9), .spawnGemRight, .wait(time: 0.9), .spawnGemLeft]))
+
+    var index = 0
+    
+    public init() {
+        
+        basicSequences = [basicSequence0, basicSequence1]
+//        let easySequences = []
+//        let mediumSequences = []
+//        let hardSequences = []
+//        let veryHardSequences = []
+//        let impossibleSequences = []
         
     }
     
     public func getSpawnSequence(time: Int) -> GameScene.SpawnAction {
         // Gem spawning routine
         
-        if time <= 0 {
-            return spawnSequence1
-        } else if time <= 10 {
-            return spawnSequence2
-        } else if time <= 20 {
-            return spawnSequenceBasicDetonators
-        } else if time <= 30 {
-            return spawnSequence3
-        } else if time <= 41 {
-            return spawnSequence4
-        } else if time <= 51 {
-            return spawnSequence4
-        } else if time <= 62 {
-            return spawnSequence3
+        if index < basicSequences.count {
+            let sequence = basicSequences[index]
+            index += 1
+            return sequence
+        } else {
+            return spawnSequenceHard
         }
-        return spawnSequenceHard
     }
         
 }
