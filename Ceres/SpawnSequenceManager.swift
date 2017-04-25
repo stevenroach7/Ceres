@@ -298,9 +298,16 @@ class SpawnSequenceManager {
                                 ]))
     
     private let hardSequence6: GameScene.SpawnAction =
-        .repeated(times: 6, action:
-            .sequence(actions: [.repeated(times: 1, action:
-                .sequence(actions: [.wait(time: 0.2), .spawnGemLeft, .wait(time: 0.2), .spawnGemRight]))
+        .repeated(times: 2, action:
+            .sequence(actions: [.wait(time: 0.7),
+                                .repeated(times: 1, action:
+                                    .sequence(actions: [.wait(time: 0.2), .spawnGemLeft, .wait(time: 0.2), .spawnGemRight])),
+                                .wait(time: 0.7),
+                                .repeated(times: 2, action:
+                                    .sequence(actions: [.wait(time: 0.2), .spawnGemLeft, .wait(time: 0.2), .spawnDetonatorRight])),
+                                .wait(time: 0.7),
+                                .repeated(times: 3, action:
+                                    .sequence(actions: [.wait(time: 0.2), .spawnDetonatorLeft, .wait(time: 0.2), .spawnGemRight]))
                                 ]))
     
     
@@ -314,7 +321,7 @@ class SpawnSequenceManager {
         basicSequences = [basicSequence0, basicSequence1]
         easySequences = [easySequence0, easySequence1, easySequence2, easySequence3]
         mediumSequences = [mediumSequence0, pauseSequence, mediumSequence1, pauseSequence, mediumSequence2, pauseSequence, mediumSequence3, pauseSequence, mediumSequence4, pauseSequence, mediumSequence5, pauseSequence, mediumSequence6, pauseSequence, mediumSequence7, pauseSequence]
-        hardSequences = [hardSequence0, hardSequence1, hardSequence2, hardSequence3, hardSequence4, hardSequence5, pauseSequence]
+        hardSequences = [hardSequence0, hardSequence1, hardSequence2, hardSequence3, hardSequence4, hardSequence5, hardSequence6, pauseSequence]
 //        veryHardSequences = []
 //        impossibleSequences = []
         tempSequences = [basicSequence0, easySequence0, easySequence1, mediumSequence0, mediumSequence1, mediumSequence5, hardSequence0, hardSequence1, hardSequence2, hardSequence3, hardSequence4, hardSequence5]
