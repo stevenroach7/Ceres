@@ -159,7 +159,7 @@ extension GameScene { // GemSpawn
             let gemExplosion = SKEmitterNode(fileNamed: "gemExplosion")!
             gemExplosion.position = gemPosition
             addChild(gemExplosion)
-            run(audioManager.gemExplosionSound)
+            run(audioManager.getGemExplosionSound())
             
             gravityFieldNode.name = "gravityFieldNode"
             gravityFieldNode.strength = -30

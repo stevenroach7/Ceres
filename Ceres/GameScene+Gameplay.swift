@@ -43,7 +43,7 @@ extension GameScene { // Gameplay
         collectGemAnimation(collector: collector)
         
         collector.run(shakeCollector)
-        run(audioManager.collectorExplosionSound)
+        run(audioManager.getCollectorExplosionSound())
         
         let shakeScore = shakeAction(positionX: scoreLabel.position.x)
         scoreLabel.run(shakeScore)
@@ -70,7 +70,7 @@ extension GameScene { // Gameplay
         if !isPaused && !tutorialMode {
             animateLeftHammer()
             addRegularGem(location: .left)
-            run(audioManager.gemCreatedSound)
+            run(audioManager.getGemCreatedSound())
         }
     }
     
@@ -78,7 +78,7 @@ extension GameScene { // Gameplay
         if !isPaused && !tutorialMode {
             animateRightHammer()
             addRegularGem(location: .right)
-            run(audioManager.gemCreatedSound)
+            run(audioManager.getGemCreatedSound())
         }
     }
     
