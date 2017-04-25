@@ -18,6 +18,15 @@ extension GameScene { // Gameplay
         
         physicsWorld.gravity = CGVector(dx: 0, dy: 0.27) // Gravity on Ceres is 0.27 m/s²
         
+        run(SKAction.repeatForever(
+            SKAction.sequence([
+                SKAction.run(animateLeftHammer),
+                SKAction.wait(forDuration: 0.35),
+                SKAction.run(animateRightHammer),
+                SKAction.wait(forDuration: 0.35),
+                ])
+        ))
+        
         run(SKAction.repeatForever( // Serves as timer, Could potentially refactor to use group actions later.
             SKAction.sequence([
                 SKAction.run(spawnGems),
@@ -68,7 +77,6 @@ extension GameScene { // Gameplay
     
     public func onLeftGemSourceTouch() {
         if !isPaused && !tutorialMode {
-            animateLeftHammer()
             addRegularGem(location: .left)
             run(audioManager.getGemCreatedSound())
         }
@@ -76,7 +84,6 @@ extension GameScene { // Gameplay
     
     public func onRightGemSourceTouch() {
         if !isPaused && !tutorialMode {
-            animateRightHammer()
             addRegularGem(location: .right)
             run(audioManager.getGemCreatedSound())
         }
@@ -119,12 +126,12 @@ extension GameScene { // Gameplay
     }
 
     // TODO: Refactor into one method that uses an enum
-    public func animateLeftHammer() {
-        leftGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.25)) // Animation consists of 2 frames.
+    private func animateLeftHammer() {
+        leftGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
     }
     
-    public func animateRightHammer() {
-        rightGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.25)) // Animation consists of 2 frames.
+    private func animateRightHammer() {
+        rightGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
     }
     
     private func shakeAction(positionX : CGFloat) -> SKAction {
