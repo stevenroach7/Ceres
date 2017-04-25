@@ -12,10 +12,10 @@ import SpriteKit
 
 extension GameScene { // Touching logic
     
-    private func findNearestGem (touchLocation: CGPoint) -> (CGFloat, SKNode){
+    private func findNearestGem (touchLocation: CGPoint) -> (CGFloat, SKNode) {
         // Method iterates over all gems and returns the gem with the closest distance to the touchLocation
         
-        var minDist: CGFloat = 44 // recommended iOS touch radius
+        var minDist: CGFloat = 1000
         var closestGem: SKSpriteNode = SKSpriteNode()
         self.enumerateChildNodes(withName: "*"){node,_ in
             if node.name == "gem" || node.name == "detonatorGem" {
@@ -36,9 +36,9 @@ extension GameScene { // Touching logic
         
         for touch in touches {
             let touchLocation = touch.location(in:self)
-            let touchedNode = self.atPoint(touchLocation) as? SKSpriteNode
+            let touchedNode = self.atPoint(touchLocation)
             // Handle touching nodes that are not gems
-            if let name = touchedNode?.name {
+            if let name = touchedNode.name {
                 switch name {
                 case "rightGemSource":
                     onRightGemSourceTouch()
@@ -49,7 +49,7 @@ extension GameScene { // Touching logic
                 default: // Check if gem is touched
                     let (minDist, closestGem) = findNearestGem(touchLocation: touchLocation)
                     let touchedGem = (closestGem as? SKSpriteNode)!
-                    if (minDist < 44){ //If the touch is within 44 px of gem, change touched node to gem
+                    if minDist < (44 + ((touchedGem.size.height / 2) - 3)) { //If the touch is within 44 px of gem, change touched node to gem
                         if !selectedGems.contains(touchedGem) {
                             selectedGems.insert(touchedGem)
                             touchesToGems[touch] = touchedGem
