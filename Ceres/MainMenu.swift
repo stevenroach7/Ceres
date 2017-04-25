@@ -19,6 +19,7 @@ class MenuScene: SKScene {
     
     var playButton = SKSpriteNode(imageNamed: "play")
     var instructionsButton = SKSpriteNode(imageNamed: "instructions")
+    var settingsButton = SKSpriteNode(imageNamed: "settings")
     var ship = SKSpriteNode(imageNamed: "stellaNovaShip")
     var starfield:SKEmitterNode!
     
@@ -40,6 +41,10 @@ class MenuScene: SKScene {
         instructionsButton.setScale(0.5)
         instructionsButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height/8)
         addChild(instructionsButton)
+        
+        settingsButton.setScale(0.06)
+        settingsButton.position = CGPoint(x: size.width * 0.1, y: size.height * 0.06)
+        addChild(settingsButton)
         
         starfield = SKEmitterNode(fileNamed: "starShower")
         starfield.position = CGPoint(x: 0, y: size.height)
@@ -75,6 +80,13 @@ class MenuScene: SKScene {
                     let scene:SKScene = InstructionsScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)
                 }
+            }
+            
+            //transitions to settings screen if settings button is touched
+            if node == settingsButton {
+                let transition:SKTransition = SKTransition.crossFade(withDuration: 1)
+                let scene:SKScene = SettingsScene(size: self.size)
+                self.view?.presentScene(scene, transition: transition)
             }
         }
     }
