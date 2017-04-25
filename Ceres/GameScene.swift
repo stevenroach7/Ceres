@@ -91,7 +91,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         pauseButton.position = CGPoint(x: size.width/12, y: size.height - size.height/24)
         addChild(pauseButton)
         
-        setScoreLabel(font: 30, position: CGPoint(x: size.width/2, y: size.height * 0.7))
         setTimerLabel()
         
         addStagePlanet()
@@ -132,17 +131,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         shape.physicsBody?.contactTestBitMask = PhysicsCategory.Gem;
         shape.physicsBody?.collisionBitMask = PhysicsCategory.None;
         self.addChild(shape)
-    }
-    
-    private func setScoreLabel(font: CGFloat, position: CGPoint) {
-        // Tracks current game score
-        
-        scoreLabel = SKLabelNode(fontNamed: "Menlo-Bold")
-        scoreLabel.text = "+/-: \(gemsPlusMinus)"
-        scoreLabel.fontSize = font
-        //scoreLabel.horizontalAlignmentMode = .right
-        scoreLabel.position = position
-        addChild(scoreLabel)
     }
     
     private func setTimerLabel() {
