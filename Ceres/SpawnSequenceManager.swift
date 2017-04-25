@@ -141,12 +141,13 @@ class SpawnSequenceManager {
     
     private let mediumSequence0: GameScene.SpawnAction =
         .repeated(times: 4, action:
-            .sequence(actions: [.wait(time: 0.9),
+            .sequence(actions: [.wait(time: 0.6),
                                 .spawnGemLeft,
-                                .wait(time: 0.4),
+                                .wait(time: 0.35),
                                 .spawnDetonatorRight,
-                                .wait(time: 0.9),
-                                .spawnGemLeft, .spawnGemRight]))
+                                .wait(time: 0.6),
+                                .spawnGemLeft, .spawnGemRight
+                ]))
     
     private let mediumSequence1: GameScene.SpawnAction =
         .repeated(times: 2, action:
@@ -190,9 +191,9 @@ class SpawnSequenceManager {
     private let mediumSequence4: GameScene.SpawnAction =
         .repeated(times: 3, action:
             .sequence(actions: [.wait(time: 0.75),
-                            .spawnDetonatorRight,
-                            .wait(time: 0.75),
                             .spawnGemLeft, .spawnGemLeft,
+                            .wait(time: 0.4),
+                            .spawnDetonatorRight,
                             .wait(time: 0.75),
                             .spawnGemLeft, .spawnGemRight
             ]))
@@ -206,7 +207,9 @@ class SpawnSequenceManager {
                             .wait(time: 0.35),
                             .spawnGemLeft,
                             .wait(time: 0.50),
-                            .spawnGemLeft, .spawnGemRight
+                            .spawnGemLeft, .spawnGemRight,
+                            .wait(time: 0.35),
+                            .spawnDetonatorLeft
             ]))
     
     private let mediumSequence6: GameScene.SpawnAction =
@@ -223,13 +226,13 @@ class SpawnSequenceManager {
     
     private let mediumSequence7: GameScene.SpawnAction =
         .repeated(times: 3, action:
-            .sequence(actions: [.wait(time: 1),
+            .sequence(actions: [.wait(time: 0.9),
                                 .spawnGemLeft, .spawnGemRight,
-                                .wait(time: 0.8),
+                                .wait(time: 0.70),
                                 .spawnGemLeft,
-                                .wait(time: 0.60),
+                                .wait(time: 0.50),
                                 .spawnDetonatorLeft, .spawnGemRight,
-                                .wait(time: 0.40),
+                                .wait(time: 0.30),
                                 .spawnGemRight
             ]))
 
