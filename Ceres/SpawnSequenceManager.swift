@@ -88,6 +88,16 @@ class SpawnSequenceManager {
                                 .spawnGemLeft,
                                 ]))
     
+    struct SequenceCategories {
+    
+        let basicSequences:[GameScene.SpawnAction] = []
+        let easySequences:[GameScene.SpawnAction] = []
+        let mediumSequences:[GameScene.SpawnAction] = []
+        let hardSequences:[GameScene.SpawnAction] = []
+        let veryHardSequences:[GameScene.SpawnAction] = []
+        let impossibleSequences:[GameScene.SpawnAction] = []
+        
+    }
     
     public func getSpawnSequence(time: Int) -> GameScene.SpawnAction {
         // Gem spawning routine
