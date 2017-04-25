@@ -118,20 +118,20 @@ class SpawnSequenceManager {
     
     private let easySequence0: GameScene.SpawnAction =
         .repeated(times: 6,
-                  action: .sequence(actions: [.wait(time: 1.1), .spawnGemLeft, .wait(time: 0.25), .spawnGemRight]))
+                  action: .sequence(actions: [.wait(time: 0.8), .spawnGemLeft, .wait(time: 0.25), .spawnGemRight]))
     
     private let easySequence1: GameScene.SpawnAction =
         .repeated(times: 2,
-                  action: .sequence(actions: [.wait(time: 1.2), .spawnGemRight,
+                  action: .sequence(actions: [.wait(time: 1.0), .spawnGemRight,
                                               .wait(time: 0.5), .spawnGemLeft,
                                               .wait(time: 0.5), .spawnGemRight,
-                                              .wait(time: 1.2), .spawnGemLeft,
+                                              .wait(time: 1.0), .spawnGemLeft,
                                               .wait(time: 0.5), .spawnGemRight,
                                               .wait(time: 0.5), .spawnGemLeft]))
     
     private let easySequence2: GameScene.SpawnAction =
         .repeated(times: 6,
-                  action: .sequence(actions: [.wait(time: 1.2), .spawnGemRight, .spawnGemLeft]))
+                  action: .sequence(actions: [.wait(time: 0.9), .spawnGemRight, .spawnGemLeft]))
     
     private let easySequence3: GameScene.SpawnAction =
         .repeated(times: 2,
@@ -238,7 +238,6 @@ class SpawnSequenceManager {
                                 .spawnGemRight
             ]))
 
-
     
     
     private let hardSequence0: GameScene.SpawnAction =
@@ -284,10 +283,12 @@ class SpawnSequenceManager {
                                     .sequence(actions: [.wait(time: 0.25), .spawnDetonatorRight, .wait(time: 0.25), .spawnDetonatorRight])),
                                 .repeated(times: 4, action:
                                     .sequence(actions: [.wait(time: 0.25), .spawnGemRight, .wait(time: 0.45), .spawnGemRight, .spawnDetonatorLeft])),
-                                .repeated(times: 6, action:
+                                .repeated(times: 4, action:
                                     .sequence(actions: [.wait(time: 0.25), .spawnDetonatorLeft, .wait(time: 0.25), .spawnDetonatorLeft])),
                                 .repeated(times: 4, action:
-                                    .sequence(actions: [.wait(time: 0.25), .spawnDetonatorLeft, .wait(time: 0.25), .spawnGemLeft, .wait(time: 0.15), .spawnGemLeft, .spawnDetonatorRight]))
+                                    .sequence(actions: [.wait(time: 0.25), .spawnDetonatorLeft, .spawnGemRight,
+                                                        .wait(time: 0.25), .spawnGemLeft, .spawnGemRight,
+                                                        .wait(time: 0.15), .spawnGemLeft, .spawnDetonatorRight]))
                                 ])
     
     private let hardSequence5: GameScene.SpawnAction =
@@ -299,20 +300,34 @@ class SpawnSequenceManager {
     
     private let hardSequence6: GameScene.SpawnAction =
         .repeated(times: 2, action:
-            .sequence(actions: [.wait(time: 0.7),
-                                .repeated(times: 1, action:
-                                    .sequence(actions: [.wait(time: 0.2), .spawnGemLeft, .wait(time: 0.2), .spawnGemRight])),
-                                .wait(time: 0.7),
+            .sequence(actions: [.wait(time: 0.4),
                                 .repeated(times: 2, action:
-                                    .sequence(actions: [.wait(time: 0.2), .spawnGemLeft, .wait(time: 0.2), .spawnDetonatorRight])),
-                                .wait(time: 0.7),
+                                    .sequence(actions: [.wait(time: 0.3), .spawnGemLeft, .wait(time: 0.2), .spawnGemRight])),
+                                .wait(time: 0.4),
                                 .repeated(times: 3, action:
-                                    .sequence(actions: [.wait(time: 0.2), .spawnDetonatorLeft, .wait(time: 0.2), .spawnGemRight]))
+                                    .sequence(actions: [.wait(time: 0.3), .spawnGemLeft, .spawnDetonatorRight, .wait(time: 0.2), .spawnDetonatorLeft, .spawnGemRight])),
+                                .wait(time: 0.4),
+                                .repeated(times: 4, action:
+                                    .sequence(actions: [.wait(time: 0.5), .spawnDetonatorLeft, .spawnDetonatorRight, .wait(time: 0.2), .spawnGemRight, .spawnDetonatorLeft]))
                                 ]))
     
+    private let hardSequence7: GameScene.SpawnAction =
+        .repeated(times: 2, action:
+            .sequence(actions: [.wait(time: 0.4),
+                .repeated(times: 2, action:
+                    .sequence(actions: [.wait(time: 0.2), .spawnGemRight,
+                                        .wait(time: 0.2), .spawnDetonatorRight,
+                                        .wait(time: 0.2), .spawnGemRight,
+                                        .wait(time: 0.5), .spawnGemLeft,
+                                        .wait(time: 0.2), .spawnDetonatorLeft,
+                                        .wait(time: 0.2), .spawnGemLeft])),
+                .repeated(times: 4, action:
+                    .sequence(actions: [.wait(time: 0.25), .spawnDetonatorLeft,
+                                        .wait(time: 0.25), .spawnGemRight,
+                                        .wait(time: 0.15), .spawnGemLeft, .spawnDetonatorRight]))
+            ]))
     
 
-    
     
     var index = 0
     
@@ -320,27 +335,40 @@ class SpawnSequenceManager {
         
         basicSequences = [basicSequence0, basicSequence1]
         easySequences = [easySequence0, easySequence1, easySequence2, easySequence3]
-        mediumSequences = [mediumSequence0, pauseSequence, mediumSequence1, pauseSequence, mediumSequence2, pauseSequence, mediumSequence3, pauseSequence, mediumSequence4, pauseSequence, mediumSequence5, pauseSequence, mediumSequence6, pauseSequence, mediumSequence7, pauseSequence]
-        hardSequences = [hardSequence0, hardSequence1, hardSequence2, hardSequence3, hardSequence4, hardSequence5, hardSequence6, pauseSequence]
+        mediumSequences = [mediumSequence0, mediumSequence1, mediumSequence2, mediumSequence3, mediumSequence4, mediumSequence5,  mediumSequence6, mediumSequence7]
+        hardSequences = [hardSequence0, hardSequence1, hardSequence2, hardSequence3, hardSequence4, hardSequence5, hardSequence6, hardSequence7]
 //        veryHardSequences = []
 //        impossibleSequences = []
-        tempSequences = [basicSequence0, easySequence0, easySequence1, mediumSequence0, mediumSequence1, mediumSequence5, hardSequence0, hardSequence1, hardSequence2, hardSequence3, hardSequence4, hardSequence5]
+        tempSequences = [basicSequence0, easySequence0, easySequence1, mediumSequence0, mediumSequence1, mediumSequence5, hardSequence0, hardSequence1, hardSequence2, hardSequence3, hardSequence4, hardSequence5, hardSequence6]
         
     }
     
     public func getSpawnSequence(time: Int) -> GameScene.SpawnAction {
         // Gem spawning routine
 //        let sequences = mediumSequences
-        let sequences = hardSequences
+//        let sequences = hardSequences
 //        let sequences = tempSequences
         
-        if index < sequences.count {
-            let sequence = sequences[index]
-            index += 1
-            return sequence
-        } else {
-            return spawnSequenceHard
+//        if index < sequences.count {
+//            let sequence = sequences[index]
+//            index += 1
+//            return sequence
+//        } else {
+//            return spawnSequenceHard
+//        }
+        
+        if time <= 0 {
+            return basicSequences[Utility.random(min: 0, max: basicSequences.count - 1)]
+        } else if time <= 20 {
+            return easySequences[Utility.random(min: 0, max: basicSequences.count - 1)]
+        } else if time <= 40 {
+            return mediumSequences[Utility.random(min: 0, max: basicSequences.count - 1)]
+        } else if time <= 70 {
+            return hardSequences[Utility.random(min: 0, max: basicSequences.count - 1)]
+        } else if time <= 120 {
+            return hardSequences[Utility.random(min: 0, max: basicSequences.count - 1)] // TODO: Change to veryHard when sequences are created.
         }
+        return spawnSequenceHard
     }
         
 }
