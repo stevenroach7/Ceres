@@ -26,7 +26,8 @@ class InstructionsScene: SKScene {
     var starfield:SKEmitterNode!
     
     var collector = SKSpriteNode()
-    let collectorTex = SKTexture(imageNamed: "collectorInactive")
+    let collectorTex = SKTexture(imageNamed: "collectorActive")
+    let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
 
     override func didMove(to view: SKView) {
         /***
@@ -60,6 +61,8 @@ class InstructionsScene: SKScene {
         collector.setScale(1/4)
         collector.position = CGPoint(x: size.width / 2, y: size.height * 0.075)
         addChild(collector)
+        collectorGlow.position = CGPoint(x: size.width * 0.525, y: size.height * 0.125)
+        addChild(collectorGlow)
         
         let stagePlanet = StagePlanet(imageNamed: "planet")
         stagePlanet.setStagePlanetProperties()  // Calls stage properties from StagePlanet class
