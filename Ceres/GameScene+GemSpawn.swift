@@ -99,13 +99,13 @@ extension GameScene { // GemSpawn
         addChild(gem)
     }
     
-    public func addRegularGem(location: GemSpawnLocation, velocity: CGFloat = 180) {
+    public func addRegularGem(location: GemSpawnLocation, velocity: CGFloat = Utility.random(min: 170, max: 190)) {
         let gem = Gem(imageNamed: "gemShape1")
         gem.name = "gem"
         addGem(gem: gem, location: location, velocity: velocity)
     }
     
-    public func addDetonatorGem(location: GemSpawnLocation, timeToExplosion: Double = 2.0, velocity: CGFloat = 110) {
+    public func addDetonatorGem(location: GemSpawnLocation, timeToExplosion: Double = 2.0, velocity: CGFloat = Utility.random(min: 100, max: 120)) {
         // Adds a detonating gem to the scene and makes it explode in timeToExplosion seconds.
         
         let detonatorGem = Gem(imageNamed: "rottenGem")
