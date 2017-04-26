@@ -27,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let flickHand = SKSpriteNode(imageNamed: "touch")
     let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
     
-    let losingGemPlusMinus = -100000 // Make this lower during testing
+    let losingGemPlusMinus = -1 // Make this lower during testing
     
     var scoreLabel: SKLabelNode!
     var gemsPlusMinus = 0 {
