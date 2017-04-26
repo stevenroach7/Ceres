@@ -20,16 +20,14 @@ class SettingsScene: SKScene {
     let switchText = "Music"
     let switchLabel = SKLabelNode(fontNamed: "Optima-Bold")
     
+    var musicSwitch = UISwitch()
+    
     var starfield:SKEmitterNode!
     
     override func didMove(to view: SKView) {
         /* Setup your scene here */
         
-        let soundSwitch = UISwitch(frame:CGRect(x: frame.midX - size.width/20, y: frame.midY, width: 2, height: 2))
-        soundSwitch.setOn(true, animated: false)
-        soundSwitch.addTarget(self, action: #selector(switchValueDidChange(sender:)), for: .valueChanged)
-        self.view!.addSubview(soundSwitch)
-        
+        createSwitch()
         showSwitchLabel()
         
         titleNode.text = title
@@ -48,6 +46,13 @@ class SettingsScene: SKScene {
         starfield.advanceSimulationTime(10)
         self.addChild(starfield)
         starfield.zPosition = -1
+    }
+    
+    func createSwitch() {
+        musicSwitch = UISwitch(frame:CGRect(x: frame.midX - size.width/20, y: frame.midY, width: 2, height: 2))
+        musicSwitch.setOn(true, animated: false)
+        musicSwitch.addTarget(self, action: #selector(switchValueDidChange(sender:)), for: .valueChanged)
+        self.view!.addSubview(musicSwitch)
     }
     
     func showSwitchLabel() {
@@ -77,6 +82,7 @@ class SettingsScene: SKScene {
             //transitions back to menu screen if back button is touched
             if node == backButton {
                 if view != nil {
+                    musicSwitch.removeFromSuperview()
                     let transition:SKTransition = SKTransition.crossFade(withDuration: 1)
                     let scene:SKScene = MenuScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)
