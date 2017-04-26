@@ -60,6 +60,7 @@ class InstructionsScene: SKScene {
         collector = SKSpriteNode(texture: collectorTex)
         collector.setScale(1/4)
         collector.position = CGPoint(x: size.width / 2, y: size.height * 0.075)
+        collector.zPosition = 5
         addChild(collector)
         collectorGlow.position = CGPoint(x: size.width * 0.525, y: size.height * 0.125)
         addChild(collectorGlow)
