@@ -17,7 +17,7 @@ class GemCollector: SKSpriteNode {
         setScale(0.23)
         name = "gemCollector"
         zPosition = 5
-        physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: size.width, height: size.height))
+        physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: size.width - 17, height: size.height - 17))
         physicsBody?.usesPreciseCollisionDetection = true
         physicsBody?.isDynamic = false
         physicsBody?.categoryBitMask = GameScene.PhysicsCategory.GemCollector;
