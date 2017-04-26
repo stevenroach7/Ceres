@@ -386,18 +386,25 @@ class SpawnSequenceManager {
 //        }
         
         if time <= 0 {
+            print("basic")
             return basicSequences[Utility.random(min: 0, max: basicSequences.count - 1)]
         } else if time <= 20 {
+            print("easy")
             return easySequences[Utility.random(min: 0, max: easySequences.count - 1)]
-        } else if time <= 33 {
+        } else if time <= 40 {
+            print("medium")
             return mediumSequences[Utility.random(min: 0, max: mediumSequences.count - 1)]
         } else if time <= 53 {
+            print("mediumHard")
             return mediumHardSequences[Utility.random(min: 0, max: mediumHardSequences.count - 1)]
-        } else if time <= 75 {
+        } else if time <= 85 {
+            print("hard")
             return hardSequences[Utility.random(min: 0, max: hardSequences.count - 1)]
-        } else if time <= 125 {
+        } else if time <= 135 {
+            print("veryHard in future")
             return hardSequences[Utility.random(min: 0, max: hardSequences.count - 1)] // TODO: Change to veryHard when sequences are created.
         }
+        print("impossible")
         return spawnSequenceHard
     }
         
