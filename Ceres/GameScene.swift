@@ -39,7 +39,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var timerLabel: SKLabelNode!
     var timerSeconds = 0 {
         didSet {
-            timerLabel.text = "Time: \(timerSeconds)"
+            timerLabel.text = "Score: \(timerSeconds)"
         }
     }
     var timeToBeginNextSequence:Double = 0.0 // Initialize to 0.0 so sequence will start when gameplay begins
@@ -137,7 +137,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Tracks current game time
         
         timerLabel = SKLabelNode(fontNamed: "Menlo-Bold")
-        timerLabel.text = "Time: \(timerSeconds)"
+        timerLabel.text = "Score: \(timerSeconds)"
         timerLabel.fontSize = 20
         //timerLabel.horizontalAlignmentMode = .right
         timerLabel.position = CGPoint(x: size.width * 0.4, y: size.height - size.height/20)

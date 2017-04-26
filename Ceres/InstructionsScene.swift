@@ -71,7 +71,7 @@ class InstructionsScene: SKScene {
         addChild(stagePlanet)
         
         let timerLabel = SKLabelNode(fontNamed: "Menlo-Bold")
-        timerLabel.text = "Time: 0"
+        timerLabel.text = "Score: 0"
         timerLabel.fontSize = 20
         //timerLabel.horizontalAlignmentMode = .right
         timerLabel.position = CGPoint(x: size.width * 0.4, y: size.height - size.height/20)
