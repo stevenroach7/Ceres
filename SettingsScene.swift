@@ -21,13 +21,14 @@ class SettingsScene: SKScene {
     let switchLabel = SKLabelNode(fontNamed: "Optima-Bold")
     
     var musicSwitch = UISwitch()
+    var switchIsOn = Bool()
     
     var starfield:SKEmitterNode!
     
     override func didMove(to view: SKView) {
         /* Setup your scene here */
         
-        createSwitch()
+        createSwitch(on: switchIsOn)
         showSwitchLabel()
         
         titleNode.text = title
@@ -48,14 +49,14 @@ class SettingsScene: SKScene {
         starfield.zPosition = -1
     }
     
-    func createSwitch() {
+    private func createSwitch(on: Bool) {
         musicSwitch = UISwitch(frame:CGRect(x: frame.midX - size.width/20, y: frame.midY, width: 2, height: 2))
-        musicSwitch.setOn(true, animated: false)
+        musicSwitch.setOn(on, animated: false)
         musicSwitch.addTarget(self, action: #selector(switchValueDidChange(sender:)), for: .valueChanged)
         self.view!.addSubview(musicSwitch)
     }
     
-    func showSwitchLabel() {
+    private func showSwitchLabel() {
         switchLabel.text = switchText
         switchLabel.fontSize = 25
         switchLabel.fontColor = SKColor.white
@@ -72,6 +73,13 @@ class SettingsScene: SKScene {
         }
     }
     
+    public func musicSwitchOnOrOff() {
+        if musicSwitch.isOn {
+            switchIsOn = true
+        } else {
+            switchIsOn = false
+        }
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //looks for a touch
@@ -82,6 +90,7 @@ class SettingsScene: SKScene {
             //transitions back to menu screen if back button is touched
             if node == backButton {
                 if view != nil {
+                    musicSwitchOnOrOff()
                     musicSwitch.removeFromSuperview()
                     let transition:SKTransition = SKTransition.crossFade(withDuration: 1)
                     let scene:SKScene = MenuScene(size: self.size)
