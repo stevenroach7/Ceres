@@ -29,6 +29,8 @@ extension GameScene { // GemSpawn
         case spawnGemRight
         case spawnDetonatorLeft
         case spawnDetonatorRight
+        case spawnFastGemLeft
+        case spawnFastGemRight
         
         public func getSpawnActionDuration() -> Double {
             // Returns the duration in seconds of the spawnAction the function is called on
@@ -68,6 +70,10 @@ extension GameScene { // GemSpawn
             return SKAction.run({self.addDetonatorGem(location: GemSpawnLocation.left)})
         case .spawnDetonatorRight:
             return SKAction.run({self.addDetonatorGem(location: GemSpawnLocation.right)})
+        case .spawnFastGemLeft:
+            return SKAction.run({self.addRegularGem(location: GemSpawnLocation.left, velocity: 350)})
+        case .spawnFastGemRight:
+            return SKAction.run({self.addRegularGem(location: GemSpawnLocation.right, velocity: 350)})
         }
     }
     
