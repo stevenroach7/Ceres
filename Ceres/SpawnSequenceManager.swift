@@ -100,7 +100,7 @@ class SpawnSequenceManager {
     let mediumSequences:[GameScene.SpawnAction]
     let mediumHardSequences:[GameScene.SpawnAction]
     let hardSequences:[GameScene.SpawnAction]
-//    let veryHardSequences:[GameScene.SpawnAction]
+    let veryHardSequences:[GameScene.SpawnAction]
 //    let impossibleSequences:[GameScene.SpawnAction]
     let tempSequences:[GameScene.SpawnAction]
     
@@ -354,6 +354,49 @@ class SpawnSequenceManager {
                                         .wait(time: 0.15), .spawnGemLeft, .spawnDetonatorRight]))
             ]))
     
+    
+    
+    private let veryHardSequence0: GameScene.SpawnAction =
+        .repeated(times: 2, action:
+            .sequence(actions: [.wait(time: 1.6),
+                                .repeated(times: 3, action:
+                                    .sequence(actions: [.wait(time: 0.5),
+                                                        .spawnGemRight, .spawnGemLeft, .spawnGemRight, .spawnDetonatorLeft,
+                                                        .spawnGemLeft, .spawnDetonatorRight])),
+                                .repeated(times: 4, action:
+                                    .sequence(actions: [.wait(time: 0.5),
+                                                        .spawnDetonatorLeft, .spawnGemRight, .spawnDetonatorRight,
+                                                        .spawnGemLeft, .spawnDetonatorRight, .spawnGemLeft]))
+                ]))
+    
+    private let veryHardSequence1: GameScene.SpawnAction =
+        .repeated(times: 15, action:
+            .sequence(actions: [.wait(time: 0.2), .spawnDetonatorLeft, .spawnGemLeft,
+                               .wait(time: 0.2), .spawnDetonatorRight, .spawnGemRight]))
+    
+    private let veryHardSequence2: GameScene.SpawnAction =
+    .repeated(times: 2, action:
+        .sequence(actions: [
+            .repeated(times: 4, action:
+                .sequence(actions: [
+                    .repeated(times: 5, action:
+                        .sequence(actions: [.wait(time: 0.1),  .spawnGemLeft,
+                                           .wait(time: 0.1), .spawnGemRight])),
+                    .spawnDetonatorLeft
+                ])
+            ),
+            
+            .repeated(times: 5, action:
+                .sequence(actions: [
+                    .repeated(times: 3, action:
+                        .sequence(actions: [.wait(time: 0.1),  .spawnDetonatorLeft,
+                                            .wait(time: 0.1), .spawnDetonatorRight])),
+                    .spawnGemLeft
+                    ])
+            )
+        ]))
+    
+    
 
     
     var index = 0
@@ -365,9 +408,9 @@ class SpawnSequenceManager {
         mediumSequences = [mediumSequence0, mediumSequence1, mediumSequence2, mediumSequence3, mediumSequence4, mediumSequence5,  mediumSequence6, mediumSequence7]
         mediumHardSequences = [mediumHardSequence0, mediumHardSequence1]
         hardSequences = [hardSequence0, hardSequence1, hardSequence2, hardSequence3, hardSequence4, hardSequence5, hardSequence6, hardSequence7]
-//        veryHardSequences = []
+        veryHardSequences = [veryHardSequence0, veryHardSequence1, veryHardSequence2]
 //        impossibleSequences = []
-        tempSequences = [basicSequence0, easySequence0, easySequence1, mediumSequence0, mediumSequence1, mediumSequence5, hardSequence0, hardSequence1, hardSequence2, hardSequence3, hardSequence4, hardSequence5, hardSequence6]
+        tempSequences = [veryHardSequence2, pauseSequence, veryHardSequence1, pauseSequence, veryHardSequence0, pauseSequence, hardSequence4]
         
     }
     
@@ -376,7 +419,8 @@ class SpawnSequenceManager {
 //        let sequences = mediumSequences
 //        let sequences = hardSequences
 //        let sequences = mediumHardSequences
-        
+//        let sequences = tempSequences
+//        
 //        if index < sequences.count {
 //            let sequence = sequences[index]
 //            index += 1
@@ -386,25 +430,18 @@ class SpawnSequenceManager {
 //        }
         
         if time <= 0 {
-            print("basic")
             return basicSequences[Utility.random(min: 0, max: basicSequences.count - 1)]
         } else if time <= 20 {
-            print("easy")
             return easySequences[Utility.random(min: 0, max: easySequences.count - 1)]
         } else if time <= 40 {
-            print("medium")
             return mediumSequences[Utility.random(min: 0, max: mediumSequences.count - 1)]
         } else if time <= 53 {
-            print("mediumHard")
             return mediumHardSequences[Utility.random(min: 0, max: mediumHardSequences.count - 1)]
         } else if time <= 85 {
-            print("hard")
             return hardSequences[Utility.random(min: 0, max: hardSequences.count - 1)]
         } else if time <= 135 {
-            print("veryHard in future")
-            return hardSequences[Utility.random(min: 0, max: hardSequences.count - 1)] // TODO: Change to veryHard when sequences are created.
+            return veryHardSequences[Utility.random(min: 0, max: veryHardSequences.count - 1)]
         }
-        print("impossible")
         return spawnSequenceHard
     }
         
