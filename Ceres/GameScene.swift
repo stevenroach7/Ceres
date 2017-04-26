@@ -110,7 +110,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         hammerFrames.append(SKTexture(imageNamed: "hammerActive.png"))
         hammerFrames.append(SKTexture(imageNamed: "hammerInactive.png"))
         
-        let backgroundMusic = audioManager.getBackgroundMusic()
+        let backgroundMusic = audioManager.backgroundMusic
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
         
@@ -197,7 +197,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     public func collectGemAnimation(collector: SKSpriteNode) {
         collector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
-        collector.run(audioManager.getGemCollectedSound())
+        collector.run(audioManager.gemCollectedSound)
     }
     
     public func recolorScore(){
