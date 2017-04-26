@@ -1,5 +1,5 @@
 //
-//  MainMenu.swift
+//  MenuScene.swift
 //  Ceres
 //
 //  Created by Sean Cheng on 2/20/17.
@@ -14,24 +14,24 @@ class MenuScene: SKScene {
     Initializes Nodes and Labels
     */
     
-    let game = "Expedition Ceres"
-    let title = SKLabelNode(fontNamed: "Optima-Bold")
+    let titleText = "Expedition Ceres"
+    let titleLabel = SKLabelNode(fontNamed: "Optima-Bold")
+    var ship = SKSpriteNode(imageNamed: "stellaNovaShip")
+    var starfield:SKEmitterNode!
     
     var playButton = SKSpriteNode(imageNamed: "play")
     var instructionsButton = SKSpriteNode(imageNamed: "instructions")
-    var ship = SKSpriteNode(imageNamed: "stellaNovaShip")
-    var starfield:SKEmitterNode!
     
     override func didMove(to view: SKView) {
         /***
         positions labels and nodes on screen
         */
         
-        title.text = game
-        title.fontSize = 32
-        title.fontColor = SKColor.white
-        title.position = CGPoint(x: size.width/2, y: size.height - size.height/6)
-        addChild(title)
+        titleLabel.text = titleText
+        titleLabel.fontSize = 32
+        titleLabel.fontColor = SKColor.white
+        titleLabel.position = CGPoint(x: size.width/2, y: size.height - size.height/6)
+        addChild(titleLabel)
         
         playButton.setScale(0.6)
         playButton.position = CGPoint(x: frame.midX, y: frame.midY + size.height/12)
