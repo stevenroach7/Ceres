@@ -1,5 +1,5 @@
 //
-//  MainMenu.swift
+//  MenuScene.swift
 //  Ceres
 //
 //  Created by Sean Cheng on 2/20/17.
