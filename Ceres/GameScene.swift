@@ -74,12 +74,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         static let StagePlanet: UInt32 = 0b101
     }
     
+    // Positions of several nodes
+    var fixedCollectorPosition = CGPoint()
+    var fixedRatioPosition = CGPoint()
     
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
         
         physicsWorld.contactDelegate = self
        
+        fixedCollectorPosition = CGPoint(x: size.width / 2, y: size.height * 0.085)
+        fixedRatioPosition = CGPoint(x: size.width * 0.8, y: size.height - size.height/20)
+        
         backgroundColor = SKColor.black
         starfield = SKEmitterNode(fileNamed: "starShower")
         starfield.position = CGPoint(x: 0, y: size.height)
@@ -153,7 +159,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     private func addGemCollector() {
         gemCollector.setGemCollectorProperties()  // Calls gem collector properties from GemCollector class
-        gemCollector.position = CGPoint(x: size.width / 2, y: size.height * 0.085)
+        gemCollector.position = fixedCollectorPosition
         addChild(gemCollector)
     }
     

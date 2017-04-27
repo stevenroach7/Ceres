@@ -100,8 +100,7 @@ extension GameScene { // Tutorial
         collectorGlow.removeFromParent()
         flickHand.removeFromParent() // TODO: Move this elsewhere later if we want hand to be removed when user touches gem
         let scaleDown = SKAction.scale(by: 2/3, duration: 0.75)
-        let finalScoreLabelPosition = CGPoint(x: size.width * 0.8, y: size.height - size.height/20)
-        let moveUp = SKAction.move(to: finalScoreLabelPosition, duration: 0.75)
+        let moveUp = SKAction.move(to: fixedRatioPosition, duration: 0.75)
         
         scoreLabel.run(scaleDown)
         scoreLabel.run(moveUp)
