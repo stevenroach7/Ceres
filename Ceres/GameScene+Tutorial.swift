@@ -88,7 +88,7 @@ extension GameScene { // Tutorial
         
         gemsPlusMinus += 1
         recolorScore()
-        collectGemAnimation(collector: collector)
+        collectGemAnimation(collector: collector,implosion: false)
         gem.removeFromParent()
         endTutorial()
         beginGameplay()

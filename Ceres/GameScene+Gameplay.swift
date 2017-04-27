@@ -41,7 +41,7 @@ extension GameScene { // Gameplay
         
         gemsPlusMinus += 1
         recolorScore()
-        collectGemAnimation(collector: collector)
+        collectGemAnimation(collector: collector, implosion: false)
         gem.removeFromParent()
     }
     
@@ -49,7 +49,7 @@ extension GameScene { // Gameplay
         // Removes gem from game scene and increments number of gems collected
         
         let shakeCollector = shakeAction(positionX: gemCollector.position.x)
-        collectGemAnimation(collector: collector)
+        collectGemAnimation(collector: collector, implosion: true)
         
         collector.run(shakeCollector)
         run(audioManager.collectorExplosionSound)
