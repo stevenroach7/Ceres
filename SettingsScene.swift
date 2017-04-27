@@ -23,6 +23,8 @@ class SettingsScene: SKScene {
     let soundLabel = SKLabelNode(fontNamed: "Optima-Bold")
     var soundSwitch = UISwitch()
     
+    let defaults:UserDefaults = UserDefaults.standard
+    
     var starfield:SKEmitterNode!
     
     override func didMove(to view: SKView) {
@@ -50,21 +52,30 @@ class SettingsScene: SKScene {
         starfield.advanceSimulationTime(10)
         self.addChild(starfield)
         starfield.zPosition = -1
+        
+        defaults.set(findDefaultValue(key: "MusicOnOff"), forKey: "MusicOnOff")
+        defaults.set(findDefaultValue(key: "SoundOnOff"), forKey: "SoundOnOff")
+    }
+    
+    private func findDefaultValue(key: String) -> Bool {
+        if !defaults.bool(forKey: key) {
+            return false
+        } else { return true }
     }
     
     public func createMusicSwitch() {
         musicSwitch = UISwitch(frame: CGRect(x: frame.midX + size.width/10, y: size.height/4, width: 2, height: 2))
-        musicSwitch.setOn(true, animated: false)
+        musicSwitch.setOn(defaults.bool(forKey: "MusicOnOff"), animated: false)
         musicSwitch.addTarget(self, action: #selector(musicSwitchOnOff(sender:)), for: .valueChanged)
         self.view!.addSubview(musicSwitch)
     }
     
     func musicSwitchOnOff(sender:UISwitch!) {
-        if sender.isOn == true {
-            print("on")
+        if sender.isOn == false {
+            defaults.set(false, forKey: "MusicOnOff")
         }
         else {
-            print("off")
+            defaults.set(true, forKey: "MusicOnOff")
         }
     }
     
@@ -78,17 +89,17 @@ class SettingsScene: SKScene {
     
     public func createSoundSwitch() {
         soundSwitch = UISwitch(frame: CGRect(x: frame.midX + size.width/10, y: size.height * 3/8, width: 2, height: 2))
-        soundSwitch.setOn(true, animated: false)
+        soundSwitch.setOn(defaults.bool(forKey:"SoundOnOff"), animated: false)
         soundSwitch.addTarget(self, action: #selector(soundSwitchOnOff(sender:)), for: .valueChanged)
         self.view!.addSubview(soundSwitch)
     }
     
     func soundSwitchOnOff(sender:UISwitch!) {
-        if sender.isOn == true {
-            print("on")
+        if sender.isOn == false {
+            defaults.set(false, forKey: "SoundOnOff")
         }
         else {
-            print("off")
+            defaults.set(true, forKey: "SoundOnOff")
         }
     }
     
