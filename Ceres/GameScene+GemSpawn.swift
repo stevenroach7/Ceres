@@ -32,12 +32,13 @@ extension GameScene { // GemSpawn
         case spawnFastGemLeft
         case spawnFastGemRight
         
+        
         public func getSpawnActionDuration() -> Double {
             // Returns the duration in seconds of the spawnAction the function is called on
             
             switch(self) {
             case .sequence(let actions):
-                var duration:Double = 0.0
+                var duration: Double = 0.0
                 for action in actions {
                     duration += action.getSpawnActionDuration()
                 }
@@ -51,6 +52,7 @@ extension GameScene { // GemSpawn
             }
         }
     }
+    
     
     private func createSKAction(spawnAction: SpawnAction) -> SKAction {
         // returns an SKAction to produce that sequence.
