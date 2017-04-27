@@ -507,7 +507,7 @@ class SpawnSequenceManager {
         hardSequences = [hardSequence0, hardSequence1, hardSequence2, hardSequence3, hardSequence4, hardSequence5, hardSequence6, hardSequence7, hardSequence8]
         veryHardSequences = [veryHardSequence0, veryHardSequence1, veryHardSequence2, veryHardSequence3, veryHardSequence4]
 //        impossibleSequences = []
-        tempSequences = [hardSequence8, pauseSequence, veryHardSequence4, pauseSequence]
+        tempSequences = [hardSequence1, pauseSequence, veryHardSequence4, pauseSequence]
     }
     
     public func getSpawnSequence(time: Int) -> GameScene.SpawnAction {

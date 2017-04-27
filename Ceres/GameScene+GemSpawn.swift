@@ -119,14 +119,16 @@ extension GameScene { // GemSpawn
         let detonatorGem = Gem(imageNamed: "rottenGem")
         detonatorGem.name = "detonatorGem"
         let gravityFieldNode = SKFieldNode.radialGravityField()
+        let gemExplosion = SKEmitterNode(fileNamed: "gemExplosion")!
+        
         
         run(SKAction.sequence([
             SKAction.run({self.addGem(gem: detonatorGem, location: location, velocity: velocity)}),
             SKAction.run({self.animateDetonatorGem(detonatorGem: detonatorGem)}),
             SKAction.wait(forDuration: timeToExplosion),
-            SKAction.run({self.detonateGem(detonatorGem: detonatorGem, gravityFieldNode: gravityFieldNode)}),
+            SKAction.run({self.detonateGem(detonatorGem: detonatorGem, gravityFieldNode: gravityFieldNode, gemExplosion: gemExplosion)}),
             SKAction.wait(forDuration: 0.25),
-            SKAction.run({self.detonationCleanup(gravityFieldNode: gravityFieldNode)})
+            SKAction.run({self.detonationCleanup(gravityFieldNode: gravityFieldNode, gemExplosion: gemExplosion)})
             ]))
     }
     
@@ -154,14 +156,13 @@ extension GameScene { // GemSpawn
             ]), count: 20))
     }
     
-    private func detonateGem(detonatorGem: Gem, gravityFieldNode: SKFieldNode) {
+    private func detonateGem(detonatorGem: Gem, gravityFieldNode: SKFieldNode, gemExplosion: SKEmitterNode) {
         // Takes a detonator gem and a gravityFieldNode to add to the scene and simulates the gem exploding in the scene
         
         if detonatorGem.parent != nil { // Don't simulate explosion if gem has been removed
             let gemPosition = detonatorGem.position
             detonatorGem.removeFromParent()
             
-            let gemExplosion = SKEmitterNode(fileNamed: "gemExplosion")!
             gemExplosion.position = gemPosition
             addChild(gemExplosion)
             run(audioManager.gemExplosionSound)
@@ -173,11 +174,17 @@ extension GameScene { // GemSpawn
         }
     }
     
-    private func detonationCleanup(gravityFieldNode: SKFieldNode) {
+    private func detonationCleanup(gravityFieldNode: SKFieldNode, gemExplosion: SKEmitterNode) {
         // Takes a gravityFieldNode and removes it from the scene to end the gem explosion simulation.
         
         if gravityFieldNode.parent != nil {
             gravityFieldNode.removeFromParent()
         }
+        
+        if gemExplosion.parent != nil {
+            gemExplosion.removeFromParent()
+        }
+        
+        
     }
 }
