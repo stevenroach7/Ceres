@@ -52,7 +52,7 @@ extension GameScene { // Gameplay
         collectGemAnimation(collector: collector, implosion: true)
         
         collector.run(shakeCollector)
-        run(audioManager.collectorExplosionSound)
+        audioManager.play(sound: .collectorExplosionSound)
         
         let shakeScore = shakeAction(positionX: scoreLabel.position.x)
         scoreLabel.run(shakeScore)
@@ -78,14 +78,14 @@ extension GameScene { // Gameplay
     public func onLeftGemSourceTouch() { // TODO: Refactor these into one method that takes an enum
         if !isPaused && !tutorialMode {
             addRegularGem(location: .left)
-            run(audioManager.gemCreatedSound)
+            audioManager.play(sound: .gemCreatedSound)
         }
     }
     
     public func onRightGemSourceTouch() {
         if !isPaused && !tutorialMode {
             addRegularGem(location: .right)
-            run(audioManager.gemCreatedSound)
+            audioManager.play(sound: .gemCreatedSound)
         }
     }
     

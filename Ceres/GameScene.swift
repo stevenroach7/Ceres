@@ -111,9 +111,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         hammerFrames.append(SKTexture(imageNamed: "hammerActive.png"))
         hammerFrames.append(SKTexture(imageNamed: "hammerInactive.png"))
         
-        let backgroundMusic = audioManager.backgroundMusic
-        backgroundMusic.autoplayLooped = true
-        addChild(backgroundMusic)
+        addChild(audioManager)
+        
+        audioManager.playBackgroundMusic()
         
         startTutorialMode()
     }
@@ -198,7 +198,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     public func collectGemAnimation(collector: SKSpriteNode, implosion: Bool) {
         collector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
-        collector.run(audioManager.gemCollectedSound)
+        
+        audioManager.play(sound: .gemCollectedSound) // TODO: Move out of this function
+        
         
         let tempCollectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
         tempCollectorGlow.position = CGPoint(x: size.width * 0.525, y: size.height * 0.122)

@@ -165,7 +165,7 @@ extension GameScene { // GemSpawn
             
             gemExplosion.position = gemPosition
             addChild(gemExplosion)
-            run(audioManager.gemExplosionSound)
+            audioManager.play(sound: .gemExplosionSound)
             
             gravityFieldNode.name = "gravityFieldNode"
             gravityFieldNode.strength = -30
