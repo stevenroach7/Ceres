@@ -23,16 +23,20 @@ class AudioManager: SKNode {
     private let collectorExplosionSound = SKAction.playSoundFileNamed("bomb.mp3", waitForCompletion: false)
     private let backgroundMusic = SKAudioNode(fileNamed: "cosmos.mp3")
     
+    private let defaultsManager = DefaultsManager()
+    
     public enum Sound {
-        
         case gemCollectedSound
         case gemCreatedSound
         case gemExplosionSound
         case collectorExplosionSound
-        
     }
     
     public func play(sound: Sound) {
+        
+        if !(defaultsManager.getValue(key: "SoundOnOff")) {
+            return
+        }
         
         switch (sound) {
         case .gemCollectedSound:
@@ -48,12 +52,13 @@ class AudioManager: SKNode {
     
     public func playBackgroundMusic() {
         
+        if !(defaultsManager.getValue(key: "MusicOnOff")) {
+            return
+        }
+        
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
     }
     
-    
 
-    
-    
 }
