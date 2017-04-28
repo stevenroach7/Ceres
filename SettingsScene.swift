@@ -30,12 +30,6 @@ class SettingsScene: SKScene {
     override func didMove(to view: SKView) {
         /* Setup your scene here */
         
-        createMusicSwitch()
-        showMusicSwitchLabel()
-
-        createSoundSwitch()
-        showSoundSwitchLabel()
-        
         titleNode.text = title
         titleNode.fontSize = 32
         titleNode.fontColor = SKColor.white
@@ -53,8 +47,17 @@ class SettingsScene: SKScene {
         self.addChild(starfield)
         starfield.zPosition = -1
         
+        defaults.register(defaults: ["MusicOnOff" : true])
+        defaults.register(defaults: ["SoundOnOff" : true])
+        
         defaults.set(findDefaultValue(key: "MusicOnOff"), forKey: "MusicOnOff")
         defaults.set(findDefaultValue(key: "SoundOnOff"), forKey: "SoundOnOff")
+        
+        createMusicSwitch()
+        showMusicSwitchLabel()
+        
+        createSoundSwitch()
+        showSoundSwitchLabel()
     }
     
     private func findDefaultValue(key: String) -> Bool {
