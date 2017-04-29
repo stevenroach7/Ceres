@@ -9,6 +9,7 @@
 import SpriteKit
 import GameplayKit
 
+
 class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     var tutorialMode = false // Boolean to store whether game is in tutorialMode
@@ -120,9 +121,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         hammerFrames.append(SKTexture(imageNamed: "hammerInactive.png"))
         
         addChild(audioManager)
-        
         audioManager.playBackgroundMusic()
-        
+    
         startTutorialMode()
     }
     
@@ -209,7 +209,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         
         audioManager.play(sound: .gemCollectedSound) // TODO: Move out of this function
         
-        
         let tempCollectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
         tempCollectorGlow.position = CGPoint(x: size.width * 0.525, y: size.height * 0.122)
         tempCollectorGlow.numParticlesToEmit = 8
@@ -220,10 +219,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             tempCollectorGlow.numParticlesToEmit = tempCollectorGlow.numParticlesToEmit * 2
         }
         addChild(tempCollectorGlow)
-        //tempCollectorGlow.removeFromParent()
-        
-
-        
+//        tempCollectorGlow.removeFromParent()
+ 
     }
     
     public func recolorScore(){

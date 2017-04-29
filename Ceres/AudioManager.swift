@@ -11,19 +11,9 @@ import SpriteKit
 
 class AudioManager: SKNode {
     
-    private let gemCollectedSound = SKAction.playSoundFileNamed("hydraulicSound.wav", waitForCompletion: false)
-    private let gemCreatedSound = SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false)
-    
-    // These two sounds are currently not being used anywhere
-//    public let zoomTimerSound = SKAction.playSoundFileNamed("boop.wav", waitForCompletion: false)
-//    public let zipTimerSound = SKAction.playSoundFileNamed("zwip.wav", waitForCompletion: false)
-    //
-    
-    private let gemExplosionSound = SKAction.playSoundFileNamed("blast.mp3", waitForCompletion: false)
-    private let collectorExplosionSound = SKAction.playSoundFileNamed("bomb.mp3", waitForCompletion: false)
     private let backgroundMusic = SKAudioNode(fileNamed: "cosmos.mp3")
-    
     private let defaultsManager = DefaultsManager()
+    
     
     public enum Sound {
         case gemCollectedSound
@@ -38,15 +28,16 @@ class AudioManager: SKNode {
             return
         }
         
+        // Creating private variables for the SKAction sounds automatically disables all other audio output. For this reason, the SKActions  to run sounds are defined on the fly.
         switch (sound) {
         case .gemCollectedSound:
-            run(gemCollectedSound)
+            run(SKAction.playSoundFileNamed("hydraulicSound.wav", waitForCompletion: false))
         case .gemCreatedSound:
-            run(gemCreatedSound)
+            run(SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false))
         case .gemExplosionSound:
-            run(gemExplosionSound)
+            run(SKAction.playSoundFileNamed("blast.mp3", waitForCompletion: false))
         case .collectorExplosionSound:
-            run(collectorExplosionSound)
+            run(SKAction.playSoundFileNamed("bomb.mp3", waitForCompletion: false))
         }
     }
     
@@ -55,10 +46,8 @@ class AudioManager: SKNode {
         if !(defaultsManager.getValue(key: "MusicOnOff")) {
             return
         }
-        
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
     }
     
-
 }

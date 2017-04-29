@@ -21,7 +21,8 @@ class InstructionsScene: SKScene {
     
     var collector = SKSpriteNode(imageNamed: "collectorActive")
     let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
-
+    
+    
     override func didMove(to view: SKView) {
         /***
          positions labels and nodes on screen
