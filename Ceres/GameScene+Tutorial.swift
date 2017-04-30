@@ -76,7 +76,7 @@ extension GameScene { // Tutorial
         // Tracks current game score
         
         scoreLabel = SKLabelNode(fontNamed: "Menlo-Bold")
-        scoreLabel.text = "+/-: \(gemsPlusMinus)"
+        scoreLabel.text = "Gems: \(gemsPlusMinus)"
         scoreLabel.fontSize = font
         //scoreLabel.horizontalAlignmentMode = .right
         scoreLabel.position = position

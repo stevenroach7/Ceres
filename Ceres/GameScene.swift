@@ -34,7 +34,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var scoreLabel: SKLabelNode!
     var gemsPlusMinus = 0 {
         didSet {
-            scoreLabel.text = "+/-: \(gemsPlusMinus)"
+            scoreLabel.text = "Gems: \(gemsPlusMinus)"
         }
     }
     
