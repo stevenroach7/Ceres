@@ -22,6 +22,8 @@ class AboutScene: SKScene {
          positions labels and nodes on screen
          */
         
+        backgroundColor = SKColor.black
+        
         backButton.setScale(0.175)
         backButton.position = CGPoint(x: size.width/12, y: size.height - size.height/24)
         addChild(backButton)
