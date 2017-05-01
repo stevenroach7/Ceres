@@ -79,8 +79,15 @@ class MenuScene: SKScene {
                 }
             }
             
+            //transitions to settings screen if settings button is touched
+            else if node == settingsButton {
+                let transition:SKTransition = SKTransition.crossFade(withDuration: 1)
+                let scene:SKScene = SettingsScene(size: self.size)
+                self.view?.presentScene(scene, transition: transition)
+            }
+            
             //transitions to instructions screen if instructions button is touched
-            if node == instructionsButton {
+            else if node == instructionsButton {
                 if view != nil {
                     let transition:SKTransition = SKTransition.doorsOpenHorizontal(withDuration: 1)
                     let scene:SKScene = InstructionsScene(size: self.size)
@@ -88,10 +95,10 @@ class MenuScene: SKScene {
                 }
             }
             
-            //transitions to settings screen if settings button is touched
-            if node == settingsButton {
-                let transition:SKTransition = SKTransition.crossFade(withDuration: 1)
-                let scene:SKScene = SettingsScene(size: self.size)
+            //transitions to about screen if about button is touched
+            else if node == aboutButton {
+                let transition:SKTransition = SKTransition.doorsOpenVertical(withDuration: 1)
+                let scene:SKScene = AboutScene(size: self.size)
                 self.view?.presentScene(scene, transition: transition)
             }
         }

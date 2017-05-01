@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3C07FDDC1EAFD7CB004DCA78 /* SettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C07FDDB1EAFD7CB004DCA78 /* SettingsScene.swift */; };
 		3C3BFDC91E871CC90059D6CE /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3BFDC81E871CC90059D6CE /* GameOverScene.swift */; };
+		3C55D7E41EB7C1AE004271FC /* AboutScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C55D7E31EB7C1AE004271FC /* AboutScene.swift */; };
 		3C67AD991E8331E100C8B980 /* StagePlanet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AD981E8331E100C8B980 /* StagePlanet.swift */; };
 		3C67AD9B1E835C3500C8B980 /* GemCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AD9A1E835C3500C8B980 /* GemCollector.swift */; };
 		3C67AD9D1E84310000C8B980 /* GemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AD9C1E84310000C8B980 /* GemSource.swift */; };
@@ -68,6 +69,7 @@
 /* Begin PBXFileReference section */
 		3C07FDDB1EAFD7CB004DCA78 /* SettingsScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsScene.swift; path = ../SettingsScene.swift; sourceTree = "<group>"; };
 		3C3BFDC81E871CC90059D6CE /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		3C55D7E31EB7C1AE004271FC /* AboutScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutScene.swift; sourceTree = "<group>"; };
 		3C67AD981E8331E100C8B980 /* StagePlanet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StagePlanet.swift; sourceTree = "<group>"; };
 		3C67AD9A1E835C3500C8B980 /* GemCollector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GemCollector.swift; sourceTree = "<group>"; };
 		3C67AD9C1E84310000C8B980 /* GemSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GemSource.swift; sourceTree = "<group>"; };
@@ -163,8 +165,9 @@
 			isa = PBXGroup;
 			children = (
 				3CB7250B1E5B91B300B28AE5 /* MenuScene.swift */,
-				3C07FDDB1EAFD7CB004DCA78 /* SettingsScene.swift */,
 				3CB7250F1E5BE16600B28AE5 /* InstructionsScene.swift */,
+				3C55D7E31EB7C1AE004271FC /* AboutScene.swift */,
+				3C07FDDB1EAFD7CB004DCA78 /* SettingsScene.swift */,
 				B07805E51E5506C300073DD6 /* GameScene.swift */,
 				3C3BFDC81E871CC90059D6CE /* GameOverScene.swift */,
 			);
@@ -449,6 +452,7 @@
 				A9FDA30C1EAC35C300D431E5 /* GameScene+Touch.swift in Sources */,
 				B0F2D1641EABD66F0040F6DE /* SpawnSequenceManager.swift in Sources */,
 				B0F2D15F1EABC84D0040F6DE /* GameScene+GemSpawn.swift in Sources */,
+				3C55D7E41EB7C1AE004271FC /* AboutScene.swift in Sources */,
 				B07805E81E5506C300073DD6 /* GameViewController.swift in Sources */,
 				3C67AD9D1E84310000C8B980 /* GemSource.swift in Sources */,
 				B0F2D1611EABC8BF0040F6DE /* Utility.swift in Sources */,
