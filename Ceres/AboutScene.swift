@@ -15,7 +15,7 @@ class AboutScene: SKScene {
      */
     
     let backButton = SKSpriteNode(imageNamed: "back")
-    let text = SKSpriteNode(imageNamed: "instructionScreen")
+    let text = SKSpriteNode(imageNamed: "aboutScreen")
     
     override func didMove(to view: SKView) {
         /***
@@ -26,6 +26,8 @@ class AboutScene: SKScene {
         backButton.position = CGPoint(x: size.width/12, y: size.height - size.height/24)
         addChild(backButton)
         
+        text.position = CGPoint(x: frame.midX, y: size.height/2)
+        addChild(text)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
