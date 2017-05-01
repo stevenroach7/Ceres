@@ -21,6 +21,7 @@ class MenuScene: SKScene {
     
     var playButton = SKSpriteNode(imageNamed: "play")
     var instructionsButton = SKSpriteNode(imageNamed: "instructions")
+    var aboutButton = SKSpriteNode(imageNamed: "about")
 
     var settingsButton = SKSpriteNode(imageNamed: "settings")
     
@@ -32,16 +33,20 @@ class MenuScene: SKScene {
         titleLabel.text = titleText
         titleLabel.fontSize = 32
         titleLabel.fontColor = SKColor.white
-        titleLabel.position = CGPoint(x: size.width/2, y: size.height - size.height/6)
+        titleLabel.position = CGPoint(x: frame.midX, y: size.height - size.height/6)
         addChild(titleLabel)
         
         playButton.setScale(0.6)
-        playButton.position = CGPoint(x: frame.midX, y: frame.midY + size.height/12)
+        playButton.position = CGPoint(x: frame.midX, y: frame.midY + size.height/9)
         addChild(playButton)
         
         instructionsButton.setScale(0.5)
-        instructionsButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height/8)
+        instructionsButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height/15)
         addChild(instructionsButton)
+        
+        aboutButton.setScale(0.5)
+        aboutButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height/6)
+        addChild(aboutButton)
         
         settingsButton.setScale(0.06)
         settingsButton.position = CGPoint(x: size.width * 0.1, y: size.height * 0.06)
@@ -54,7 +59,7 @@ class MenuScene: SKScene {
         starfield.zPosition = -1
         
         ship.setScale(0.5)
-        ship.position = CGPoint(x: size.width/2, y: size.height/5)
+        ship.position = CGPoint(x: size.width/2, y: size.height/7)
         addChild(ship)
     }
     
