@@ -74,7 +74,7 @@ class GameOverScene: SKScene {
             //transitions to game screen if play button is touched
             if node == playButton {
                 if view != nil {
-                    let transition:SKTransition = SKTransition.fade(withDuration: 1)
+                    let transition:SKTransition = SKTransition.doorsOpenVertical(withDuration: 1)
                     let scene:SKScene = GameScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)
                 }
@@ -82,7 +82,7 @@ class GameOverScene: SKScene {
             //transitions to main menu if main menu button is touched
             if node == menuButton {
                 if view != nil {
-                    let transition:SKTransition = SKTransition.doorsCloseHorizontal(withDuration: 1)
+                    let transition:SKTransition = SKTransition.crossFade(withDuration: 1)
                     let scene:SKScene = MenuScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)
                 }

@@ -74,7 +74,7 @@ class MenuScene: SKScene {
             //transitions to game screen if play button is touched
             if node == playButton {
                 if view != nil {
-                    let transition:SKTransition = SKTransition.fade(withDuration: 1)
+                    let transition:SKTransition = SKTransition.crossFade(withDuration: 1)
                     let scene:SKScene = GameScene(size: self.size)
                     scene.name = "game"
                     self.view?.presentScene(scene, transition: transition)
