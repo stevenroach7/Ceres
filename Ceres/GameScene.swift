@@ -219,16 +219,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
  
     }
     
-    public func recolorScore(){
-        if gemsPlusMinus < 0 {
-            scoreLabel.fontColor = SKColor.red
-        } else if gemsPlusMinus > 0 {
-            scoreLabel.fontColor = SKColor.green
-        } else {
-            scoreLabel.fontColor = SKColor.white
-        }
+    public func flashScoreLabelAnimation(color: SKColor, percentGrowth: Double = 1.075) {
+        
+        let colorScore = SKAction.run({self.scoreLabel.fontColor = color})
+        let expand = SKAction.scale(by: CGFloat(percentGrowth), duration: 0.25)
+        let shrink = SKAction.scale(by: CGFloat(1 / percentGrowth), duration: 0.25)
+        let recolorWhite = SKAction.run({self.scoreLabel.fontColor = SKColor.white})
+        let flashAnimation = SKAction.sequence([colorScore, expand, shrink, recolorWhite])
+        
+        scoreLabel.run(flashAnimation)
     }
-
+    
     func onPauseButtonTouch() { 
         pauseAlert(title: "Game Paused", message: "")
     }

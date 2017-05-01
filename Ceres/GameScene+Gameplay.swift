@@ -46,7 +46,7 @@ extension GameScene { // Gameplay
         // Removes gem from game scene and increments number of gems collected
         
         gemsPlusMinus += 1
-        recolorScore()
+        flashScoreLabelAnimation(color: SKColor.green, percentGrowth: 1.075)
         collectGemAnimation(collector: collector, implosion: false)
         audioManager.play(sound: .gemCollectedSound)
         gem.removeFromParent()
@@ -66,7 +66,7 @@ extension GameScene { // Gameplay
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         minusAlert(text: "-5", fontSize: 40)
         gemsPlusMinus -= 5
-        recolorScore()
+        flashScoreLabelAnimation(color: SKColor.red, percentGrowth: 1.0)
 
         gem.removeFromParent()
         checkGameOver()
@@ -76,9 +76,8 @@ extension GameScene { // Gameplay
         // Removes gems from game scene when they fly off screen
         
         gemsPlusMinus -= 1
-        recolorScore()
+        flashScoreLabelAnimation(color: SKColor.red, percentGrowth: 0.925)
         gem.removeFromParent()
-        minusAlert(text: "-1", fontSize: 30)
         checkGameOver()
     }
 
