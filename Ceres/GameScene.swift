@@ -50,8 +50,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var spawnSequenceManager: SpawnSequenceManager = SpawnSequenceManager()
     var audioManager: AudioManager = AudioManager()
     
-    
-    // TODO: Possibly store animations frames and sounds in their own structure
     var collectorAtlas = SKTextureAtlas()
     var collectorFrames = [SKTexture]()
     var hammerAtlas = SKTextureAtlas()
@@ -108,11 +106,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addGemSources()
         addAstronauts()
         
-        makeWall(location: CGPoint(x: size.width/2, y: size.height+50), size: CGSize(width: size.width*1.5, height: 1)) // TODO: Use constants here
+        makeWall(location: CGPoint(x: size.width/2, y: size.height+50), size: CGSize(width: size.width*1.5, height: 1))
         makeWall(location: CGPoint(x: -50, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
         makeWall(location: CGPoint(x: size.width+50, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
         
-        // TODO: Refactor animation code into class
         collectorAtlas = SKTextureAtlas(named: "collectorImages")
         collectorFrames.append(SKTexture(imageNamed: "collectorActive.png"))
         collectorFrames.append(SKTexture(imageNamed: "collectorInactive.png"))
