@@ -62,7 +62,7 @@ class InstructionsScene: SKScene {
         addChild(timerLabel)
         
         let scoreLabel = SKLabelNode(fontNamed: "Menlo-Bold")
-        scoreLabel.text = "+/-: 0"
+        scoreLabel.text = "Gems: 0"
         scoreLabel.fontSize = 20
         scoreLabel.position = CGPoint(x: size.width * 0.75, y: size.height - size.height/20)
         addChild(scoreLabel)
