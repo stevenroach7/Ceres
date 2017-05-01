@@ -216,8 +216,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             tempCollectorGlow.particleColor = UIColor.red
             tempCollectorGlow.numParticlesToEmit = tempCollectorGlow.numParticlesToEmit * 2
         }
-        addChild(tempCollectorGlow) // TODO: Write a sequence to remove the temporary glow after a couple seconds.
-//        tempCollectorGlow.removeFromParent()
+        addChild(tempCollectorGlow)
+        // Remove collector glow node after 3 seconds
+        run(SKAction.sequence([SKAction.wait(forDuration: 3.0), SKAction.run({tempCollectorGlow.removeFromParent()})]))
  
     }
     
