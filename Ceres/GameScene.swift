@@ -76,7 +76,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     // Positions of several nodes
     public struct FixedPosition {
         static var Collector = CGPoint()
-        static var Ratio = CGPoint()
+        static var GemsLabel = CGPoint()
     }
     
     override func didMove(to view: SKView) {
@@ -85,7 +85,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         physicsWorld.contactDelegate = self
        
         FixedPosition.Collector = CGPoint(x: size.width / 2, y: size.height * 0.085)
-        FixedPosition.Ratio = CGPoint(x: size.width * 0.8, y: size.height - size.height/20)
+        FixedPosition.GemsLabel = CGPoint(x: size.width * 0.8, y: size.height - size.height/20)
         
         backgroundColor = SKColor.black
         starfield = SKEmitterNode(fileNamed: "starShower")
