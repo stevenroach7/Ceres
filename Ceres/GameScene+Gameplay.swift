@@ -75,19 +75,13 @@ extension GameScene { // Gameplay
         minusAlert(text: "-1", fontSize: 30)
         checkGameOver()
     }
-    
-    public func onLeftGemSourceTouch() { // TODO: Refactor these into one method that takes an enum
+
+    public func onGemSourceTouch(gemSourceLocation: GemSpawnLocation) {
         if !isPaused && !tutorialMode {
-            addRegularGem(location: .left)
+            addRegularGem(location: gemSourceLocation)
             audioManager.play(sound: .gemCreatedSound)
         }
-    }
-    
-    public func onRightGemSourceTouch() {
-        if !isPaused && !tutorialMode {
-            addRegularGem(location: .right)
-            audioManager.play(sound: .gemCreatedSound)
-        }
+        
     }
     
     private func incrementTimer() {
@@ -126,7 +120,7 @@ extension GameScene { // Gameplay
         minus.run(SKAction.fadeOut(withDuration: 1.0))
     }
     
-    private func animateGemSource(gemSourceLocation: GameScene.GemSpawnLocation) {
+    private func animateGemSource(gemSourceLocation: GemSpawnLocation) {
         switch gemSourceLocation {
         case .left:
             leftGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
