@@ -447,15 +447,15 @@ class SpawnSequenceManager {
     
     
     private let hardSequence9: GameScene.SpawnAction =
-        .repeated(times: 3, action:
+        .repeated(times: 5, action:
             .sequence(actions: [.wait(time: 0.4),
                                 .spawnDetonatorLeft, .spawnFastGemRight,
                                 .wait(time: 0.45),
-                                .spawnFastGemLeft,
-                                .wait(time: 0.45),
+                                .spawnFastGemLeft, .spawnDetonatorRight,
+                                .wait(time: 0.15),
                                 .spawnFastGemRight,
                                 .wait(time: 0.20),
-                                .spawnDetonatorRight
+                                .spawnGemRight, .spawnDetonatorRight, .spawnGemLeft
                 ]))
     
     
@@ -535,7 +535,7 @@ class SpawnSequenceManager {
         easySequences = [easySequence0, easySequence1, easySequence2, easySequence3]
         easyMediumSequences = [easyMediumSequence0, easyMediumSequence1, easyMediumSequence2, easyMediumSequence3]
         mediumSequences = [mediumSequence0, mediumSequence1, mediumSequence2, mediumSequence3, mediumSequence4, mediumSequence5,  mediumSequence6, mediumSequence7]
-        mediumHardSequences = [mediumHardSequence0, mediumHardSequence1, mediumHardSequence2, mediumHardSequence3]
+        mediumHardSequences = [mediumHardSequence0, mediumHardSequence1, mediumHardSequence2, mediumHardSequence3, mediumHardSequence4]
         hardSequences = [hardSequence0, hardSequence1, hardSequence2, hardSequence3, hardSequence4, hardSequence5, hardSequence6, hardSequence7, hardSequence8, hardSequence9]
         veryHardSequences = [veryHardSequence0, veryHardSequence1, veryHardSequence2, veryHardSequence3, veryHardSequence4]
 //        impossibleSequences = []
@@ -547,7 +547,7 @@ class SpawnSequenceManager {
 //        ,  hardSequence0, pauseSequenceShort, hardSequence1, pauseSequenceShort, hardSequence2, pauseSequenceShort, hardSequence3, pauseSequenceShort, hardSequence4, pauseSequenceShort, hardSequence5, pauseSequenceShort, hardSequence6, pauseSequenceShort, hardSequence7, pauseSequenceShort, hardSequence8  ,  pauseSequenceLong
 //        ,  veryHardSequence0, pauseSequenceShort, veryHardSequence1, pauseSequenceShort, veryHardSequence2, pauseSequenceShort, veryHardSequence3, pauseSequenceShort, veryHardSequence4  ,  pauseSequenceLong]
         
-        tempSequences = [mediumHardSequence4, pauseSequenceShort]
+        tempSequences = [mediumHardSequence4, pauseSequenceShort, hardSequence9]
 
     }
     
@@ -558,7 +558,7 @@ class SpawnSequenceManager {
 //        let sequences = mediumHardSequences
 //        let sequences = tempSequences
 //        let sequences = easyMediumSequences
-        
+//        
 //        if index < sequences.count {
 //            let sequence = sequences[index]
 //            index += 1
