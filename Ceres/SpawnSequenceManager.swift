@@ -137,8 +137,8 @@ class SpawnSequenceManager {
     
     private let easySequence3: GameScene.SpawnAction =
         .repeated(times: 2,
-                  action: .sequence(actions: [.repeated(times: 3, action: .sequence(actions: [.wait(time: 0.7), .spawnGemRight])),
-                                              .repeated(times: 3, action: .sequence(actions: [.wait(time: 0.7), .spawnGemLeft]))]))
+                  action: .sequence(actions: [.repeated(times: 3, action: .sequence(actions: [.wait(time: 0.5), .spawnGemRight])),
+                                              .repeated(times: 3, action: .sequence(actions: [.wait(time: 0.5), .spawnGemLeft]))]))
     
     
     private let easyMediumSequence0: GameScene.SpawnAction =
@@ -147,10 +147,10 @@ class SpawnSequenceManager {
     
     private let easyMediumSequence1: GameScene.SpawnAction =
         .repeated(times: 2,
-                  action: .sequence(actions: [.wait(time: 1.0), .spawnGemRight, .spawnGemLeft,
+                  action: .sequence(actions: [.wait(time: 0.9), .spawnGemRight, .spawnGemLeft,
                                               .wait(time: 0.5), .spawnGemLeft,
                                               .wait(time: 0.5), .spawnGemRight,
-                                              .wait(time: 1.0), .spawnGemLeft, .spawnGemRight,
+                                              .wait(time: 0.9), .spawnGemLeft, .spawnGemRight,
                                               .wait(time: 0.5), .spawnGemRight,
                                               .wait(time: 0.5), .spawnGemLeft]))
     
@@ -177,11 +177,18 @@ class SpawnSequenceManager {
     
     
     private let mediumSequence0: GameScene.SpawnAction =
-        .repeated(times: 4, action:
+        .repeated(times: 2, action:
             .sequence(actions: [.wait(time: 0.6),
                                 .spawnGemLeft,
                                 .wait(time: 0.35),
                                 .spawnDetonatorRight,
+                                .wait(time: 0.6),
+                                .spawnGemLeft, .spawnGemRight,
+                
+                                .wait(time: 0.6),
+                                .spawnGemRight,
+                                .wait(time: 0.35),
+                                .spawnDetonatorLeft,
                                 .wait(time: 0.6),
                                 .spawnGemLeft, .spawnGemRight
                 ]))
@@ -254,7 +261,7 @@ class SpawnSequenceManager {
             .sequence(actions: [.wait(time: 0.55),
                                 .spawnGemLeft, .spawnGemRight,
                                 .wait(time: 0.55),
-                                .spawnGemLeft,
+                                .spawnFastGemLeft,
                                 .wait(time: 0.55),
                                 .spawnGemRight,
                                 .wait(time: 0.55),
@@ -346,7 +353,7 @@ class SpawnSequenceManager {
                                 .wait(time: 0.2),
                                 .spawnDetonatorRight, .spawnGemLeft, .spawnDetonatorLeft,
                                 .wait(time: 0.5),
-                                .spawnDetonatorLeft, .spawnDetonatorRight,
+                                .spawnDetonatorLeft, .spawnGemRight, .spawnDetonatorRight,
                                 .wait(time: 0.3),
                                 .spawnDetonatorLeft,
                                 ]))
@@ -393,7 +400,9 @@ class SpawnSequenceManager {
                                 .wait(time: 0.4),
                                 .repeated(times: 3, action:
                                     .sequence(actions: [.wait(time: 0.3), .spawnGemLeft, .spawnDetonatorRight, .wait(time: 0.2), .spawnDetonatorLeft, .spawnGemRight])),
-                                .wait(time: 0.4),
+                                .wait(time: 0.2),
+                                .spawnFastGemRight,
+                                .wait(time: 0.2),
                                 .repeated(times: 4, action:
                                     .sequence(actions: [.wait(time: 0.5), .spawnDetonatorLeft, .spawnDetonatorRight, .wait(time: 0.2), .spawnGemRight, .spawnDetonatorLeft]))
                                 ]))
@@ -514,8 +523,7 @@ class SpawnSequenceManager {
 //        ,  hardSequence0, pauseSequenceShort, hardSequence1, pauseSequenceShort, hardSequence2, pauseSequenceShort, hardSequence3, pauseSequenceShort, hardSequence4, pauseSequenceShort, hardSequence5, pauseSequenceShort, hardSequence6, pauseSequenceShort, hardSequence7, pauseSequenceShort, hardSequence8  ,  pauseSequenceLong
 //        ,  veryHardSequence0, pauseSequenceShort, veryHardSequence1, pauseSequenceShort, veryHardSequence2, pauseSequenceShort, veryHardSequence3, pauseSequenceShort, veryHardSequence4  ,  pauseSequenceLong]
         
-        tempSequences = [hardSequence0, pauseSequenceShort, hardSequence1, pauseSequenceShort, hardSequence2, pauseSequenceShort, hardSequence3, pauseSequenceShort, hardSequence4, pauseSequenceShort, hardSequence5, pauseSequenceShort, hardSequence6, pauseSequenceShort, hardSequence7, pauseSequenceShort, hardSequence8  ,  pauseSequenceLong
-            ,  veryHardSequence0, pauseSequenceShort, veryHardSequence1, pauseSequenceShort, veryHardSequence2, pauseSequenceShort, veryHardSequence3, pauseSequenceShort, veryHardSequence4  ,  pauseSequenceLong]
+        tempSequences = [easySequence3, pauseSequenceShort, easyMediumSequence1, pauseSequenceShort, mediumSequence0, pauseSequenceShort, mediumSequence4, pauseSequenceShort, mediumSequence6, pauseSequenceShort, hardSequence1, pauseSequenceShort, hardSequence6]
 
     }
     
