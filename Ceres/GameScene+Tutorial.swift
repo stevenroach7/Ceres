@@ -21,7 +21,8 @@ extension GameScene { // Tutorial
         physicsWorld.gravity = CGVector(dx: 0, dy: 0.0)
         addTutorialGem()
         makeTutorialHand()
-        setGemsLabel(font: 30, position: CGPoint(x: size.width/2, y: size.height * 0.7))
+        setGemsLabel(font: 20, position: CGPoint(x: size.width/2, y: size.height * 0.7))
+        gemsLabel.setScale(3/2) // Set scale to be bigger than usual when label is first displayed
         collectorGlow.position = CGPoint(x: size.width * 0.525, y: size.height * 0.125)
         addChild(collectorGlow)
     }
@@ -103,7 +104,7 @@ extension GameScene { // Tutorial
         let scaleDown = SKAction.scale(by: 2/3, duration: 0.75)
         let moveUp = SKAction.move(to: FixedPosition.Ratio, duration: 0.75)
         
-        gemsLabel.run(scaleDown)
+        gemsLabel.run(scaleDown) // / Scale gems label back to normal size
         gemsLabel.run(moveUp)
         
         let expand = SKAction.scale(by: 3/2, duration: 1.0)
