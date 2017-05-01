@@ -14,6 +14,8 @@ class AboutScene: SKScene {
      Initializes Nodes and Labels
      */
     
+    var starfield:SKEmitterNode!
+    
     let backButton = SKSpriteNode(imageNamed: "back")
     let text = SKSpriteNode(imageNamed: "aboutScreen")
     
@@ -21,6 +23,12 @@ class AboutScene: SKScene {
         /***
          positions labels and nodes on screen
          */
+        
+        starfield = SKEmitterNode(fileNamed: "starShower")
+        starfield.position = CGPoint(x: 0, y: size.height)
+        starfield.advanceSimulationTime(10)
+        starfield.zPosition = -10
+        self.addChild(starfield)
         
         backButton.setScale(0.175)
         backButton.position = CGPoint(x: size.width/12, y: size.height - size.height/24)
@@ -39,7 +47,7 @@ class AboutScene: SKScene {
             //transitions back to menu screen if back button is touched
             if node == backButton {
                 if view != nil {
-                    let transition:SKTransition = SKTransition.doorsCloseVertical(withDuration: 1)
+                    let transition:SKTransition = SKTransition.flipVertical(withDuration: 1)
                     let scene:SKScene = MenuScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)
                 }

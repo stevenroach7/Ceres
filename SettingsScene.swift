@@ -128,7 +128,7 @@ class SettingsScene: SKScene {
                 if view != nil {
                     musicSwitch.removeFromSuperview()
                     soundSwitch.removeFromSuperview()
-                    let transition:SKTransition = SKTransition.crossFade(withDuration: 1)
+                    let transition:SKTransition = SKTransition.fade(withDuration: 1)
                     let scene:SKScene = MenuScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)
                 }

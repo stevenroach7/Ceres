@@ -83,7 +83,7 @@ class MenuScene: SKScene {
             
             //transitions to settings screen if settings button is touched
             else if node == settingsButton {
-                let transition:SKTransition = SKTransition.crossFade(withDuration: 1)
+                let transition:SKTransition = SKTransition.fade(withDuration: 0.5)
                 let scene:SKScene = SettingsScene(size: self.size)
                 self.view?.presentScene(scene, transition: transition)
             }
@@ -99,7 +99,7 @@ class MenuScene: SKScene {
             
             //transitions to about screen if about button is touched
             else if node == aboutButton {
-                let transition:SKTransition = SKTransition.doorsOpenVertical(withDuration: 1)
+                let transition:SKTransition = SKTransition.flipVertical(withDuration: 1)
                 let scene:SKScene = AboutScene(size: self.size)
                 self.view?.presentScene(scene, transition: transition)
             }
