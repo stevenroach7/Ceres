@@ -27,6 +27,10 @@ class SettingsScene: SKScene {
     
     var starfield:SKEmitterNode!
     
+    var collector = SKSpriteNode(imageNamed: "collectorActive")
+    let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
+    let stagePlanet = StagePlanet(imageNamed: "planet")
+    
     override func didMove(to view: SKView) {
         /* Setup your scene here */
         
@@ -46,6 +50,17 @@ class SettingsScene: SKScene {
         starfield.advanceSimulationTime(10)
         self.addChild(starfield)
         starfield.zPosition = -1
+        
+        collector.setScale(1/4)
+        collector.position = CGPoint(x: size.width / 2, y: size.height * 0.075)
+        collector.zPosition = 5
+        addChild(collector)
+        collectorGlow.position = CGPoint(x: size.width * 0.525, y: size.height * 0.125)
+        addChild(collectorGlow)
+        
+        stagePlanet.setStagePlanetProperties()  // Calls stage properties from StagePlanet class
+        stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.075)
+        addChild(stagePlanet)
         
         createMusicSwitch()
         showMusicSwitchLabel()
@@ -74,7 +89,7 @@ class SettingsScene: SKScene {
         musicLabel.text = "Music"
         musicLabel.fontSize = 25
         musicLabel.fontColor = SKColor.white
-        musicLabel.position = CGPoint(x: size.width/2 - size.width/12, y: size.height * 3/4 - size.height/22)
+        musicLabel.position = CGPoint(x: size.width/2 - size.width/13, y: size.height * 3/4 - size.height/25)
         addChild(musicLabel)
     }
     
@@ -97,7 +112,7 @@ class SettingsScene: SKScene {
         soundLabel.text = "Sound Effects"
         soundLabel.fontSize = 25
         soundLabel.fontColor = SKColor.white
-        soundLabel.position = CGPoint(x: size.width/2 - size.width/5, y: size.height * 5/8 - size.height/22)
+        soundLabel.position = CGPoint(x: size.width/2 - size.width/5, y: size.height * 5/8 - size.height/25)
         addChild(soundLabel)
     }
     
