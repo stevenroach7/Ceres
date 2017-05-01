@@ -207,8 +207,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     public func collectGemAnimation(collector: SKSpriteNode, implosion: Bool) {
         collector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
         
-        audioManager.play(sound: .gemCollectedSound) // TODO: Move out of this function
-        
         let tempCollectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
         tempCollectorGlow.position = CGPoint(x: size.width * 0.525, y: size.height * 0.122)
         tempCollectorGlow.numParticlesToEmit = 8
@@ -218,7 +216,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             tempCollectorGlow.particleColor = UIColor.red
             tempCollectorGlow.numParticlesToEmit = tempCollectorGlow.numParticlesToEmit * 2
         }
-        addChild(tempCollectorGlow)
+        addChild(tempCollectorGlow) // TODO: Write a sequence to remove the temporary glow after a couple seconds.
 //        tempCollectorGlow.removeFromParent()
  
     }

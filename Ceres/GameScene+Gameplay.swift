@@ -42,6 +42,7 @@ extension GameScene { // Gameplay
         gemsPlusMinus += 1
         recolorScore()
         collectGemAnimation(collector: collector, implosion: false)
+        audioManager.play(sound: .gemCollectedSound)
         gem.removeFromParent()
     }
     

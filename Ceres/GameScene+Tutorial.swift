@@ -89,6 +89,7 @@ extension GameScene { // Tutorial
         gemsPlusMinus += 1
         recolorScore()
         collectGemAnimation(collector: collector,implosion: false)
+        audioManager.play(sound: .gemCollectedSound)
         gem.removeFromParent()
         endTutorial()
         beginGameplay()
@@ -98,7 +99,7 @@ extension GameScene { // Tutorial
         tutorialMode = false
         
         collectorGlow.removeFromParent()
-        flickHand.removeFromParent() // TODO: Move this elsewhere later if we want hand to be removed when user touches gem
+        flickHand.removeFromParent()
         let scaleDown = SKAction.scale(by: 2/3, duration: 0.75)
         let moveUp = SKAction.move(to: FixedPosition.Ratio, duration: 0.75)
         
