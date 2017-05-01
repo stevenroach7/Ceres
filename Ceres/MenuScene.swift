@@ -30,6 +30,8 @@ class MenuScene: SKScene {
         positions labels and nodes on screen
         */
         
+        backgroundColor = SKColor.black
+        
         titleLabel.text = titleText
         titleLabel.fontSize = 32
         titleLabel.fontColor = SKColor.white

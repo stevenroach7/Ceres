@@ -50,8 +50,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var spawnSequenceManager: SpawnSequenceManager = SpawnSequenceManager()
     var audioManager: AudioManager = AudioManager()
     
-    
-    // TODO: Possibly store animations frames and sounds in their own structure
     var collectorAtlas = SKTextureAtlas()
     var collectorFrames = [SKTexture]()
     var hammerAtlas = SKTextureAtlas()
@@ -108,11 +106,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addGemSources()
         addAstronauts()
         
-        makeWall(location: CGPoint(x: size.width/2, y: size.height+50), size: CGSize(width: size.width*1.5, height: 1)) // TODO: Use constants here
+        makeWall(location: CGPoint(x: size.width/2, y: size.height+50), size: CGSize(width: size.width*1.5, height: 1))
         makeWall(location: CGPoint(x: -50, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
         makeWall(location: CGPoint(x: size.width+50, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
         
-        // TODO: Refactor animation code into a function
         collectorAtlas = SKTextureAtlas(named: "collectorImages")
         collectorFrames.append(SKTexture(imageNamed: "collectorActive.png"))
         collectorFrames.append(SKTexture(imageNamed: "collectorInactive.png"))
@@ -207,8 +204,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     public func collectGemAnimation(collector: SKSpriteNode, implosion: Bool) {
         collector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
         
-        audioManager.play(sound: .gemCollectedSound) // TODO: Move out of this function
-        
         let tempCollectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
         tempCollectorGlow.position = CGPoint(x: size.width * 0.525, y: size.height * 0.122)
         tempCollectorGlow.numParticlesToEmit = 8
@@ -219,7 +214,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             tempCollectorGlow.numParticlesToEmit = tempCollectorGlow.numParticlesToEmit * 2
         }
         addChild(tempCollectorGlow)
-//        tempCollectorGlow.removeFromParent()
+        // Remove collector glow node after 3 seconds
+        run(SKAction.sequence([SKAction.wait(forDuration: 3.0), SKAction.run({tempCollectorGlow.removeFromParent()})]))
  
     }
     

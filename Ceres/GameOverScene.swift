@@ -36,13 +36,14 @@ class GameOverScene: SKScene {
          positions labels and nodes on screen
          */
         
+        backgroundColor = SKColor.black
+        
         title.text = gameLabel
         title.fontSize = 32
         title.fontColor = SKColor.white
         title.position = CGPoint(x: size.width/2, y: size.height - size.height/6)
         addChild(title)
 
-        // TODO: Make table of high scores
         scoreLabel.text = "Score: \(score)"
         scoreLabel.fontSize = 28
         scoreLabel.fontColor = SKColor.white

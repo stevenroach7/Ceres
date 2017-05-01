@@ -12,6 +12,12 @@ import AudioToolbox.AudioServices
 
 extension GameScene { // Gameplay
     
+    enum GemSourceLocation {
+        // Enum holds the locations where gems sources are located which is where gems may spawn from.
+        case left
+        case right
+    }
+    
     
     public func beginGameplay() {
         // Adjust gravity of scene
@@ -20,9 +26,9 @@ extension GameScene { // Gameplay
         
         run(SKAction.repeatForever(
             SKAction.sequence([
-                SKAction.run(animateLeftHammer),
+                SKAction.run({self.animateGemSource(gemSourceLocation: .left)}),
                 SKAction.wait(forDuration: 0.35),
-                SKAction.run(animateRightHammer),
+                SKAction.run({self.animateGemSource(gemSourceLocation: .right)}),
                 SKAction.wait(forDuration: 0.35),
                 ])
         ))
@@ -42,6 +48,7 @@ extension GameScene { // Gameplay
         gemsPlusMinus += 1
         recolorScore()
         collectGemAnimation(collector: collector, implosion: false)
+        audioManager.play(sound: .gemCollectedSound)
         gem.removeFromParent()
     }
     
@@ -74,19 +81,13 @@ extension GameScene { // Gameplay
         minusAlert(text: "-1", fontSize: 30)
         checkGameOver()
     }
-    
-    public func onLeftGemSourceTouch() { // TODO: Refactor these into one method that takes an enum
+
+    public func onGemSourceTouch(gemSourceLocation: GemSourceLocation) {
         if !isPaused && !tutorialMode {
-            addRegularGem(location: .left)
+            addRegularGem(location: gemSourceLocation)
             audioManager.play(sound: .gemCreatedSound)
         }
-    }
-    
-    public func onRightGemSourceTouch() {
-        if !isPaused && !tutorialMode {
-            addRegularGem(location: .right)
-            audioManager.play(sound: .gemCreatedSound)
-        }
+        
     }
     
     private func incrementTimer() {
@@ -124,15 +125,16 @@ extension GameScene { // Gameplay
         minus.run(moveDown)
         minus.run(SKAction.fadeOut(withDuration: 1.0))
     }
-
-    // TODO: Refactor into one method that uses an enum
-    private func animateLeftHammer() {
-        leftGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
+    
+    private func animateGemSource(gemSourceLocation: GemSourceLocation) {
+        switch gemSourceLocation {
+        case .left:
+            leftGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
+        case .right:
+            rightGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35))
+        }
     }
     
-    private func animateRightHammer() {
-        rightGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
-    }
     
     private func shakeAction(positionX : CGFloat) -> SKAction {
         //returns a shaking animation

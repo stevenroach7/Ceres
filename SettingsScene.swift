@@ -32,7 +32,8 @@ class SettingsScene: SKScene {
     let stagePlanet = StagePlanet(imageNamed: "planet")
     
     override func didMove(to view: SKView) {
-        /* Setup your scene here */
+        
+        backgroundColor = SKColor.black
         
         titleNode.text = title
         titleNode.fontSize = 32

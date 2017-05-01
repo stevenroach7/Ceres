@@ -41,9 +41,9 @@ extension GameScene { // Touching logic
             if let name = touchedNode.name {
                 switch name {
                 case "rightGemSource":
-                    onRightGemSourceTouch()
+                    onGemSourceTouch(gemSourceLocation: .right)
                 case "leftGemSource":
-                    onLeftGemSourceTouch()
+                    onGemSourceTouch(gemSourceLocation: .left)
                 case "pauseButton":
                     onPauseButtonTouch()
                 default: // Check if gem is touched
