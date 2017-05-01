@@ -102,7 +102,7 @@ extension GameScene { // Tutorial
         collectorGlow.removeFromParent()
         flickHand.removeFromParent()
         let scaleDown = SKAction.scale(by: 2/3, duration: 0.75)
-        let moveUp = SKAction.move(to: FixedPosition.Ratio, duration: 0.75)
+        let moveUp = SKAction.move(to: FixedPosition.GemsLabel, duration: 0.75)
         
         gemsLabel.run(scaleDown) // / Scale gems label back to normal size
         gemsLabel.run(moveUp)

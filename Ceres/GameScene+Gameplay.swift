@@ -61,7 +61,7 @@ extension GameScene { // Gameplay
         collector.run(shakeCollector)
         audioManager.play(sound: .collectorExplosionSound)
         
-        let shakeScore = shakeAction(positionX: FixedPosition.Ratio.x)
+        let shakeScore = shakeAction(positionX: FixedPosition.GemsLabel.x)
         gemsLabel.run(shakeScore)
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         minusAlert(text: "-5", fontSize: 40)
