@@ -21,7 +21,7 @@ extension GameScene { // Tutorial
         physicsWorld.gravity = CGVector(dx: 0, dy: 0.0)
         addTutorialGem()
         makeTutorialHand()
-        setScoreLabel(font: 30, position: CGPoint(x: size.width/2, y: size.height * 0.7))
+        setGemsLabel(font: 30, position: CGPoint(x: size.width/2, y: size.height * 0.7))
         collectorGlow.position = CGPoint(x: size.width * 0.525, y: size.height * 0.125)
         addChild(collectorGlow)
     }
@@ -72,22 +72,22 @@ extension GameScene { // Tutorial
         flickHand.run(SKAction.repeatForever(tutorialAnimation))
     }
     
-    private func setScoreLabel(font: CGFloat, position: CGPoint) {
+    private func setGemsLabel(font: CGFloat, position: CGPoint) {
         // Tracks current game score
         
-        scoreLabel = SKLabelNode(fontNamed: "Menlo-Bold")
-        scoreLabel.text = "Gems: \(gemsPlusMinus)"
-        scoreLabel.fontSize = font
-        //scoreLabel.horizontalAlignmentMode = .right
-        scoreLabel.position = position
-        addChild(scoreLabel)
+        gemsLabel = SKLabelNode(fontNamed: "Menlo-Bold")
+        gemsLabel.text = "Gems: \(gemsPlusMinus)"
+        gemsLabel.fontSize = font
+        //gemsLabel.horizontalAlignmentMode = .right
+        gemsLabel.position = position
+        addChild(gemsLabel)
     }
     
     public func tutorialGemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
         // Removes gem from game scene and increments number of gems collected
         
         gemsPlusMinus += 1
-        flashScoreLabelAnimation(color: SKColor.green, percentGrowth: 1.0)
+        flashGemsLabelAnimation(color: SKColor.green, percentGrowth: 1.0)
         collectGemAnimation(collector: collector,implosion: false)
         audioManager.play(sound: .gemCollectedSound)
         gem.removeFromParent()
@@ -103,12 +103,12 @@ extension GameScene { // Tutorial
         let scaleDown = SKAction.scale(by: 2/3, duration: 0.75)
         let moveUp = SKAction.move(to: FixedPosition.Ratio, duration: 0.75)
         
-        scoreLabel.run(scaleDown)
-        scoreLabel.run(moveUp)
+        gemsLabel.run(scaleDown)
+        gemsLabel.run(moveUp)
         
         let expand = SKAction.scale(by: 3/2, duration: 1.0)
         let shrink = SKAction.scale(by: 2/3, duration: 1.0)
         let expandAndShrink = SKAction.sequence([expand,shrink])
-        timerLabel.run(expandAndShrink)
+        scoreLabel.run(expandAndShrink)
     }
 }

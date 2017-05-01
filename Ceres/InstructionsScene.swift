@@ -56,17 +56,17 @@ class InstructionsScene: SKScene {
         stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.075)
         addChild(stagePlanet)
         
-        let timerLabel = SKLabelNode(fontNamed: "Menlo-Bold")
-        timerLabel.text = "Score: 0"
-        timerLabel.fontSize = 20
-        timerLabel.position = CGPoint(x: size.width * 0.4, y: size.height - size.height/20)
-        addChild(timerLabel)
-        
         let scoreLabel = SKLabelNode(fontNamed: "Menlo-Bold")
-        scoreLabel.text = "Gems: 0"
+        scoreLabel.text = "Score: 0"
         scoreLabel.fontSize = 20
-        scoreLabel.position = CGPoint(x: size.width * 0.75, y: size.height - size.height/20)
+        scoreLabel.position = CGPoint(x: size.width * 0.4, y: size.height - size.height/20)
         addChild(scoreLabel)
+        
+        let gemsLabel = SKLabelNode(fontNamed: "Menlo-Bold")
+        gemsLabel.text = "Gems: 0"
+        gemsLabel.fontSize = 20
+        gemsLabel.position = CGPoint(x: size.width * 0.75, y: size.height - size.height/20)
+        addChild(gemsLabel)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
