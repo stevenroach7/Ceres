@@ -104,7 +104,7 @@ extension GameScene { // Gameplay
     private func gameOverTransition() {
         isPaused = true
         if view != nil {
-            let transition:SKTransition = SKTransition.fade(withDuration: 1)
+            let transition:SKTransition = SKTransition.doorsCloseVertical(withDuration: 1)
             let scene = GameOverScene(size: size)
             scene.setScore(score: timerSeconds)
             view?.presentScene(scene, transition: transition)
