@@ -31,17 +31,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     let losingGemPlusMinus = -1 // Make this lower during testing
     
-    var scoreLabel: SKLabelNode!
+    var gemsLabel: SKLabelNode!
     var gemsPlusMinus = 0 {
         didSet {
-            scoreLabel.text = "Gems: \(gemsPlusMinus)"
+            gemsLabel.text = "Gems: \(gemsPlusMinus)"
         }
     }
     
-    var timerLabel: SKLabelNode!
+    var scoreLabel: SKLabelNode!
     var timerSeconds = 0 {
         didSet {
-            timerLabel.text = "Score: \(timerSeconds)"
+            scoreLabel.text = "Score: \(timerSeconds)"
         }
     }
     var timeToBeginNextSequence:Double = 0.0 // Initialize to 0.0 so sequence will start when gameplay begins
@@ -99,7 +99,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         pauseButton.position = CGPoint(x: size.width/12, y: size.height - size.height/24)
         addChild(pauseButton)
         
-        setTimerLabel()
+        setScoreLabel()
         
         addStagePlanet()
         addGemCollector()
@@ -139,15 +139,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         self.addChild(shape)
     }
     
-    private func setTimerLabel() {
+    private func setScoreLabel() {
         // Tracks current game time
         
-        timerLabel = SKLabelNode(fontNamed: "Menlo-Bold")
-        timerLabel.text = "Score: \(timerSeconds)"
-        timerLabel.fontSize = 20
-        //timerLabel.horizontalAlignmentMode = .right
-        timerLabel.position = CGPoint(x: size.width * 0.4, y: size.height - size.height/20)
-        addChild(timerLabel)
+        scoreLabel = SKLabelNode(fontNamed: "Menlo-Bold")
+        scoreLabel.text = "Score: \(timerSeconds)"
+        scoreLabel.fontSize = 20
+        //scoreLabel.horizontalAlignmentMode = .right
+        scoreLabel.position = CGPoint(x: size.width * 0.4, y: size.height - size.height/20)
+        addChild(scoreLabel)
     }
 
     private func addStagePlanet() {
@@ -219,16 +219,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
  
     }
     
-    public func recolorScore(){
-        if gemsPlusMinus < 0 {
-            scoreLabel.fontColor = SKColor.red
-        } else if gemsPlusMinus > 0 {
-            scoreLabel.fontColor = SKColor.green
-        } else {
-            scoreLabel.fontColor = SKColor.white
-        }
+    public func flashGemsLabelAnimation(color: SKColor, percentGrowth: Double = 1.075) {
+        
+        let colorScore = SKAction.run({self.gemsLabel.fontColor = color})
+        let expand = SKAction.scale(by: CGFloat(percentGrowth), duration: 0.25)
+        let shrink = SKAction.scale(by: CGFloat(1 / percentGrowth), duration: 0.25)
+        let recolorWhite = SKAction.run({self.gemsLabel.fontColor = SKColor.white})
+        let flashAnimation = SKAction.sequence([colorScore, expand, shrink, recolorWhite])
+        
+        gemsLabel.run(flashAnimation)
     }
-
+    
     func onPauseButtonTouch() { 
         pauseAlert(title: "Game Paused", message: "")
     }

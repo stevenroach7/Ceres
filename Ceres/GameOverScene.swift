@@ -20,7 +20,7 @@ class GameOverScene: SKScene {
     
     
     var score = 0
-    let scoreLabel = SKLabelNode(fontNamed: "GillSans")
+    let gemsLabel = SKLabelNode(fontNamed: "GillSans")
     
     var playButton = SKSpriteNode(imageNamed: "replay")
     var menuButton = SKSpriteNode(imageNamed: "menu")
@@ -44,11 +44,11 @@ class GameOverScene: SKScene {
         title.position = CGPoint(x: size.width/2, y: size.height - size.height/6)
         addChild(title)
 
-        scoreLabel.text = "Score: \(score)"
-        scoreLabel.fontSize = 28
-        scoreLabel.fontColor = SKColor.white
-        scoreLabel.position = CGPoint(x: frame.midX, y: frame.midY + size.height/4)
-        addChild(scoreLabel)
+        gemsLabel.text = "Score: \(score)"
+        gemsLabel.fontSize = 28
+        gemsLabel.fontColor = SKColor.white
+        gemsLabel.position = CGPoint(x: frame.midX, y: frame.midY + size.height/4)
+        addChild(gemsLabel)
         
         playButton.setScale(1/2)
         playButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height/5)

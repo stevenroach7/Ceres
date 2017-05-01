@@ -24,6 +24,8 @@ class AboutScene: SKScene {
          positions labels and nodes on screen
          */
         
+        backgroundColor = SKColor.black
+        
         starfield = SKEmitterNode(fileNamed: "starShower")
         starfield.position = CGPoint(x: 0, y: size.height)
         starfield.advanceSimulationTime(10)
