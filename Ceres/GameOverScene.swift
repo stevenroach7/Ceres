@@ -36,6 +36,8 @@ class GameOverScene: SKScene {
          positions labels and nodes on screen
          */
         
+        backgroundColor = SKColor.black
+        
         title.text = gameLabel
         title.fontSize = 32
         title.fontColor = SKColor.white
