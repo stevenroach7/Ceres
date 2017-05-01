@@ -88,8 +88,8 @@ class SpawnSequenceManager {
                                 .spawnGemLeft,
                                 ]))
     
-    private let pauseSequence: GameScene.SpawnAction = .wait(time: 3.0)
-    
+    private let pauseSequenceShort: GameScene.SpawnAction = .wait(time: 3.0)
+    private let pauseSequenceLong: GameScene.SpawnAction = .wait(time: 10.0)
     
     
     
@@ -493,7 +493,6 @@ class SpawnSequenceManager {
             ])
 
     
-
     
     var index = 0
     
@@ -507,7 +506,17 @@ class SpawnSequenceManager {
         hardSequences = [hardSequence0, hardSequence1, hardSequence2, hardSequence3, hardSequence4, hardSequence5, hardSequence6, hardSequence7, hardSequence8]
         veryHardSequences = [veryHardSequence0, veryHardSequence1, veryHardSequence2, veryHardSequence3, veryHardSequence4]
 //        impossibleSequences = []
-        tempSequences = [hardSequence1, pauseSequence, veryHardSequence4, pauseSequence]
+//        tempSequences = [basicSequence0, pauseSequenceShort, basicSequence1 ,  pauseSequenceLong
+//              , easySequence0, pauseSequenceShort, easySequence1, pauseSequenceShort, easySequence2, pauseSequenceShort, easySequence3 ,  pauseSequenceLong
+//            ,  easyMediumSequence0, pauseSequenceShort, easyMediumSequence1, pauseSequenceShort, easyMediumSequence2, pauseSequenceShort, easyMediumSequence3 ,  pauseSequenceLong
+//        ,  mediumSequence0, pauseSequenceShort, mediumSequence1, pauseSequenceShort, mediumSequence2, pauseSequenceShort, mediumSequence3, pauseSequenceShort, mediumSequence4, pauseSequenceShort, mediumSequence5,  pauseSequenceShort, mediumSequence6, pauseSequenceShort, mediumSequence7  ,  pauseSequenceLong
+//        ,  mediumHardSequence0, pauseSequenceShort, mediumHardSequence1, pauseSequenceShort, mediumHardSequence2, pauseSequenceShort, mediumHardSequence3  ,  pauseSequenceLong
+//        ,  hardSequence0, pauseSequenceShort, hardSequence1, pauseSequenceShort, hardSequence2, pauseSequenceShort, hardSequence3, pauseSequenceShort, hardSequence4, pauseSequenceShort, hardSequence5, pauseSequenceShort, hardSequence6, pauseSequenceShort, hardSequence7, pauseSequenceShort, hardSequence8  ,  pauseSequenceLong
+//        ,  veryHardSequence0, pauseSequenceShort, veryHardSequence1, pauseSequenceShort, veryHardSequence2, pauseSequenceShort, veryHardSequence3, pauseSequenceShort, veryHardSequence4  ,  pauseSequenceLong]
+        
+        tempSequences = [hardSequence0, pauseSequenceShort, hardSequence1, pauseSequenceShort, hardSequence2, pauseSequenceShort, hardSequence3, pauseSequenceShort, hardSequence4, pauseSequenceShort, hardSequence5, pauseSequenceShort, hardSequence6, pauseSequenceShort, hardSequence7, pauseSequenceShort, hardSequence8  ,  pauseSequenceLong
+            ,  veryHardSequence0, pauseSequenceShort, veryHardSequence1, pauseSequenceShort, veryHardSequence2, pauseSequenceShort, veryHardSequence3, pauseSequenceShort, veryHardSequence4  ,  pauseSequenceLong]
+
     }
     
     public func getSpawnSequence(time: Int) -> GameScene.SpawnAction {
@@ -515,33 +524,33 @@ class SpawnSequenceManager {
 //        let sequences = mediumSequences
 //        let sequences = hardSequences
 //        let sequences = mediumHardSequences
-//        let sequences = tempSequences
+        let sequences = tempSequences
 //        let sequences = easyMediumSequences
-//        
-//        if index < sequences.count {
-//            let sequence = sequences[index]
-//            index += 1
-//            return sequence
-//        } else {
-//            return spawnSequenceHard
-//        }
         
-        if time <= 0 {
-            return basicSequences[Utility.random(min: 0, max: basicSequences.count - 1)]
-        } else if time <= 11 {
-            return easySequences[Utility.random(min: 0, max: easySequences.count - 1)]
-        } else if time <= 18 {
-            return easyMediumSequences[Utility.random(min: 0, max: easyMediumSequences.count - 1)]
-        } else if time <= 40 {
-            return mediumSequences[Utility.random(min: 0, max: mediumSequences.count - 1)]
-        } else if time <= 53 {
-            return mediumHardSequences[Utility.random(min: 0, max: mediumHardSequences.count - 1)]
-        } else if time <= 85 {
-            return hardSequences[Utility.random(min: 0, max: hardSequences.count - 1)]
-        } else if time <= 135 {
-            return veryHardSequences[Utility.random(min: 0, max: veryHardSequences.count - 1)]
+        if index < sequences.count {
+            let sequence = sequences[index]
+            index += 1
+            return sequence
+        } else {
+            return pauseSequenceLong
         }
-        return spawnSequenceHard
+        
+//        if time <= 0 {
+//            return basicSequences[Utility.random(min: 0, max: basicSequences.count - 1)]
+//        } else if time <= 11 {
+//            return easySequences[Utility.random(min: 0, max: easySequences.count - 1)]
+//        } else if time <= 18 {
+//            return easyMediumSequences[Utility.random(min: 0, max: easyMediumSequences.count - 1)]
+//        } else if time <= 40 {
+//            return mediumSequences[Utility.random(min: 0, max: mediumSequences.count - 1)]
+//        } else if time <= 53 {
+//            return mediumHardSequences[Utility.random(min: 0, max: mediumHardSequences.count - 1)]
+//        } else if time <= 85 {
+//            return hardSequences[Utility.random(min: 0, max: hardSequences.count - 1)]
+//        } else if time <= 135 {
+//            return veryHardSequences[Utility.random(min: 0, max: veryHardSequences.count - 1)]
+//        }
+//        return spawnSequenceHard
     }
         
 }
