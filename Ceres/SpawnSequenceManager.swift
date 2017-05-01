@@ -332,7 +332,19 @@ class SpawnSequenceManager {
                                 .spawnGemLeft,
             ]))
     
-    
+    private let mediumHardSequence4: GameScene.SpawnAction =
+        .repeated(times: 3, action:
+            .sequence(actions: [.wait(time: 0.6),
+                                .spawnFastGemLeft, .spawnGemRight,
+                                .wait(time: 0.35),
+                                .spawnDetonatorRight,
+                                .wait(time: 0.35),
+                                .spawnFastGemLeft,
+                                .wait(time: 0.50),
+                                .spawnGemLeft, .spawnFastGemRight,
+                                .wait(time: 0.35),
+                                .spawnDetonatorLeft
+                ]))
     
     private let hardSequence0: GameScene.SpawnAction =
         .repeated(times: 4, action:
@@ -535,7 +547,7 @@ class SpawnSequenceManager {
 //        ,  hardSequence0, pauseSequenceShort, hardSequence1, pauseSequenceShort, hardSequence2, pauseSequenceShort, hardSequence3, pauseSequenceShort, hardSequence4, pauseSequenceShort, hardSequence5, pauseSequenceShort, hardSequence6, pauseSequenceShort, hardSequence7, pauseSequenceShort, hardSequence8  ,  pauseSequenceLong
 //        ,  veryHardSequence0, pauseSequenceShort, veryHardSequence1, pauseSequenceShort, veryHardSequence2, pauseSequenceShort, veryHardSequence3, pauseSequenceShort, veryHardSequence4  ,  pauseSequenceLong]
         
-        tempSequences = [easySequence3, pauseSequenceShort, easyMediumSequence1, pauseSequenceShort, mediumSequence0, pauseSequenceShort, mediumSequence4, pauseSequenceShort, mediumSequence6, pauseSequenceShort, hardSequence1, pauseSequenceShort, hardSequence6]
+        tempSequences = [mediumHardSequence4, pauseSequenceShort]
 
     }
     
