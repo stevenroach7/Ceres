@@ -12,6 +12,12 @@ import AudioToolbox.AudioServices
 
 extension GameScene { // Gameplay
     
+    enum GemSourceLocation {
+        // Enum holds the locations where gems sources are located which is where gems may spawn from.
+        case left
+        case right
+    }
+    
     
     public func beginGameplay() {
         // Adjust gravity of scene
@@ -76,7 +82,7 @@ extension GameScene { // Gameplay
         checkGameOver()
     }
 
-    public func onGemSourceTouch(gemSourceLocation: GemSpawnLocation) {
+    public func onGemSourceTouch(gemSourceLocation: GemSourceLocation) {
         if !isPaused && !tutorialMode {
             addRegularGem(location: gemSourceLocation)
             audioManager.play(sound: .gemCreatedSound)
@@ -120,7 +126,7 @@ extension GameScene { // Gameplay
         minus.run(SKAction.fadeOut(withDuration: 1.0))
     }
     
-    private func animateGemSource(gemSourceLocation: GemSpawnLocation) {
+    private func animateGemSource(gemSourceLocation: GemSourceLocation) {
         switch gemSourceLocation {
         case .left:
             leftGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.

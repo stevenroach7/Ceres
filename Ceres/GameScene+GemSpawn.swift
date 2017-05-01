@@ -12,12 +12,6 @@ import SpriteKit
 
 extension GameScene { // GemSpawn
     
-    enum GemSpawnLocation {
-        // Enum holds the locations where gems may spawn
-        
-        case left
-        case right
-    }
     
     enum SpawnAction {
         // Enum holds the actions used to build gem sequences
@@ -65,17 +59,17 @@ extension GameScene { // GemSpawn
         case .wait(let time):
             return SKAction.wait(forDuration: time)
         case .spawnGemLeft:
-            return SKAction.run({self.addRegularGem(location: GemSpawnLocation.left)})
+            return SKAction.run({self.addRegularGem(location: GemSourceLocation.left)})
         case .spawnGemRight:
-            return SKAction.run({self.addRegularGem(location: GemSpawnLocation.right)})
+            return SKAction.run({self.addRegularGem(location: GemSourceLocation.right)})
         case .spawnDetonatorLeft:
-            return SKAction.run({self.addDetonatorGem(location: GemSpawnLocation.left)})
+            return SKAction.run({self.addDetonatorGem(location: GemSourceLocation.left)})
         case .spawnDetonatorRight:
-            return SKAction.run({self.addDetonatorGem(location: GemSpawnLocation.right)})
+            return SKAction.run({self.addDetonatorGem(location: GemSourceLocation.right)})
         case .spawnFastGemLeft:
-            return SKAction.run({self.addRegularGem(location: GemSpawnLocation.left, velocity: 350)})
+            return SKAction.run({self.addRegularGem(location: GemSourceLocation.left, velocity: 350)})
         case .spawnFastGemRight:
-            return SKAction.run({self.addRegularGem(location: GemSpawnLocation.right, velocity: 350)})
+            return SKAction.run({self.addRegularGem(location: GemSourceLocation.right, velocity: 350)})
         }
     }
     
@@ -89,7 +83,7 @@ extension GameScene { // GemSpawn
         }
     }
     
-    private func addGem(gem: Gem, location: GemSpawnLocation, velocity: CGFloat) {
+    private func addGem(gem: Gem, location: GemSourceLocation, velocity: CGFloat) {
         // Produces a Gem from the left astronaut
         
         gem.setGemProperties()  // Calls gem properties from Gem class
@@ -107,13 +101,13 @@ extension GameScene { // GemSpawn
         addChild(gem)
     }
     
-    public func addRegularGem(location: GemSpawnLocation, velocity: CGFloat = Utility.random(min: 170, max: 190)) {
+    public func addRegularGem(location: GemSourceLocation, velocity: CGFloat = Utility.random(min: 170, max: 190)) {
         let gem = Gem(imageNamed: "gemShape1")
         gem.name = "gem"
         addGem(gem: gem, location: location, velocity: velocity)
     }
     
-    public func addDetonatorGem(location: GemSpawnLocation, timeToExplosion: Double = 2.0, velocity: CGFloat = Utility.random(min: 100, max: 120)) {
+    public func addDetonatorGem(location: GemSourceLocation, timeToExplosion: Double = 2.0, velocity: CGFloat = Utility.random(min: 100, max: 120)) {
         // Adds a detonating gem to the scene and makes it explode in timeToExplosion seconds.
         
         let detonatorGem = Gem(imageNamed: "rottenGem")
