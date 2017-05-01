@@ -17,12 +17,19 @@ class AboutScene: SKScene {
     let backButton = SKSpriteNode(imageNamed: "back")
     let text = SKSpriteNode(imageNamed: "aboutScreen")
     
+    var starfield:SKEmitterNode!
+    
     override func didMove(to view: SKView) {
         /***
          positions labels and nodes on screen
          */
         
         backgroundColor = SKColor.black
+        starfield = SKEmitterNode(fileNamed: "starShower")
+        starfield.position = CGPoint(x: 0, y: size.height)
+        starfield.advanceSimulationTime(10)
+        starfield.zPosition = -10
+        self.addChild(starfield)
         
         backButton.setScale(0.175)
         backButton.position = CGPoint(x: size.width/12, y: size.height - size.height/24)
