@@ -225,30 +225,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     func onPauseButtonTouch() { 
-        //pauseAlert(title: "Game Paused", message: "")
-        let pauseMenu = SKSpriteNode(imageNamed: "pauseMenu")
-        pauseMenu.setScale(0.875)
+        pauseAlert(title: "Game Paused", message: "")
+        
+        let pauseMenu = SKSpriteNode(imageNamed: "pauseMenu")        
+        let pauseMenuSize = RelativeScales.PauseMenu.getAbsoluteSize(screenSize: size, nodeSize: pauseMenu.size)
+        pauseMenu.xScale = pauseMenuSize.width
+        pauseMenu.xScale = pauseMenuSize.height
+        
         pauseMenu.position = CGPoint(x: size.width * 0.5, y: size.height * 0.55)
         pauseMenu.zPosition = 8
-        addChild(pauseMenu)
+        //addChild(pauseMenu)
         
         let resume = SKSpriteNode(imageNamed: "play")
-        resume.setScale(0.55)
+        resume.setScale(0.3 * (size.width / resume.size.width))
         resume.position = CGPoint(x: size.width * 0.5, y: size.height * 0.5)
         resume.zPosition = 9
-        addChild(resume)
+        //addChild(resume)
         
         let back = SKSpriteNode(imageNamed: "back")
-        back.setScale(0.35)
+        back.setScale(0.2 * (size.width / back.size.width))
         back.position = CGPoint(x: size.width * 0.2, y: size.height * 0.5)
         back.zPosition = 9
-        addChild(back)
+        //addChild(back)
         
         let restart = SKSpriteNode(imageNamed: "replay")
-        restart.setScale(0.35)
+        restart.setScale(0.2 * (size.width / restart.size.width))
         restart.zPosition = 9
         restart.position = CGPoint(x: size.width * 0.8, y: size.height * 0.5)
-        addChild(restart)
+        //addChild(restart)
     }
     
 }
