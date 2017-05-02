@@ -29,7 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
     
     
-    let losingGemPlusMinus = -1 // Make this lower during testing
+    let losingGemPlusMinus = -100000000 // Make this lower during testing
     
     var gemsLabel: SKLabelNode!
     var gemsPlusMinus = 0 {
@@ -73,30 +73,60 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         static let StagePlanet: UInt32 = 0b101
     }
     
+    
+    public struct RelativeCoordinate {
+        let x: CGFloat
+        let y: CGFloat
+    }
+    
     // Positions of several nodes
-    public struct FixedPosition {
-        static var Collector = CGPoint()
-        static var GemsLabel = CGPoint()
+    public struct RelativeNodePosition {
+
+        static var Collector = RelativeCoordinate.init(x: 0.5, y: 0.085)
+        static var GemsLabel = RelativeCoordinate.init(x: 0.8, y: 0.95)
+        static var InitialGemsLabel = RelativeCoordinate.init(x: 0.5, y: 0.7)
+        static var PauseButton = RelativeCoordinate.init(x: 1/12, y: 23/24)
+        static var ScoreLabel = RelativeCoordinate.init(x: 0.4, y: 19/20)
+        static var StagePlanet = RelativeCoordinate.init(x: 0.5, y: 0.075)
+        static var LeftGemSource = RelativeCoordinate.init(x: 0.15, y: 0.1)
+        static var RightGemSource = RelativeCoordinate.init(x: 0.85, y: 0.1)
+        static var LeftAstronaut = RelativeCoordinate.init(x: 0.15, y: 0.1)
+        static var RightAstronaut = RelativeCoordinate.init(x: 0.85, y: 0.1)
+        static var CollectorGlow = RelativeCoordinate.init(x: 0.525, y: 0.125)
+        static var Starfield = RelativeCoordinate.init(x: 0, y: 1)
+        static var TutorialGem = RelativeCoordinate.init(x: 0.5, y: 0.5)
+        static var FlickHand = RelativeCoordinate.init(x: 0.65, y: 0.45)
+        static var FlickHandTouch = RelativeCoordinate.init(x: 0.55, y: 0.45)
+        static var FlickHandDownSlow = RelativeCoordinate.init(x: 0.55, y: 0.4)
+        static var FlickHandDownFast = RelativeCoordinate.init(x: 0.55, y: 0.225)
+        static var FlickHandRelease = RelativeCoordinate.init(x: 0.575, y: 0.25)
+        static var FlickHandReset = RelativeCoordinate.init(x: 0.675, y: 0.45)
+    }
+    
+    public func relativePosToAbsolute(relativePos: RelativeCoordinate, constantX: CGFloat = 0, constantY: CGFloat = 0) -> CGPoint {
+        return CGPoint(x: (size.width * relativePos.x) + constantX, y: (size.height * relativePos.y) + constantY)
+    }
+    
+    private struct Constant {
+        static let wallOffScreenDistance: CGFloat = 50
+        static let gemSourceDistBelowAstronaut: CGFloat = 20
     }
     
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
         
         physicsWorld.contactDelegate = self
-       
-        FixedPosition.Collector = CGPoint(x: size.width / 2, y: size.height * 0.085)
-        FixedPosition.GemsLabel = CGPoint(x: size.width * 0.8, y: size.height - size.height/20)
         
         backgroundColor = SKColor.black
         starfield = SKEmitterNode(fileNamed: "starShower")
-        starfield.position = CGPoint(x: 0, y: size.height)
+        starfield.position = relativePosToAbsolute(relativePos: RelativeNodePosition.Starfield)
         starfield.zPosition = -10
         starfield.advanceSimulationTime(1)
         addChild(starfield)
         
         pauseButton.setScale(0.175)
         pauseButton.name = "pauseButton"
-        pauseButton.position = CGPoint(x: size.width/12, y: size.height - size.height/24)
+        pauseButton.position = relativePosToAbsolute(relativePos: RelativeNodePosition.PauseButton)
         addChild(pauseButton)
         
         setScoreLabel()
@@ -106,9 +136,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addGemSources()
         addAstronauts()
         
-        makeWall(location: CGPoint(x: size.width/2, y: size.height+50), size: CGSize(width: size.width*1.5, height: 1))
-        makeWall(location: CGPoint(x: -50, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
-        makeWall(location: CGPoint(x: size.width+50, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
+        makeWall(location: CGPoint(x: size.width/2, y: size.height + Constant.wallOffScreenDistance), size: CGSize(width: size.width*1.5, height: 1))
+        makeWall(location: CGPoint(x: -Constant.wallOffScreenDistance, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
+        makeWall(location: CGPoint(x: size.width + Constant.wallOffScreenDistance, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
         
         collectorAtlas = SKTextureAtlas(named: "collectorImages")
         collectorFrames.append(SKTexture(imageNamed: "collectorActive.png"))
@@ -146,19 +176,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         scoreLabel.text = "Score: \(timerSeconds)"
         scoreLabel.fontSize = 20
         //scoreLabel.horizontalAlignmentMode = .right
-        scoreLabel.position = CGPoint(x: size.width * 0.4, y: size.height - size.height/20)
+        scoreLabel.position = relativePosToAbsolute(relativePos: RelativeNodePosition.ScoreLabel)
         addChild(scoreLabel)
     }
 
     private func addStagePlanet() {
         stagePlanet.setStagePlanetProperties()  // Calls stage properties from StagePlanet class
-        stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.075)
+        stagePlanet.position = relativePosToAbsolute(relativePos: RelativeNodePosition.StagePlanet)
         addChild(stagePlanet)
     }
     
     private func addGemCollector() {
         gemCollector.setGemCollectorProperties()  // Calls gem collector properties from GemCollector class
-        gemCollector.position = FixedPosition.Collector
+        gemCollector.position = relativePosToAbsolute(relativePos: RelativeNodePosition.Collector)
         addChild(gemCollector)
     }
     
@@ -166,12 +196,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Adds 2 gem sources, one for each astronaut
         
         leftGemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
-        leftGemSource.position = CGPoint(x: size.width * 0.15, y: size.height * 0.1 - 20)
+        leftGemSource.position = relativePosToAbsolute(relativePos: RelativeNodePosition.LeftGemSource, constantY: -Constant.gemSourceDistBelowAstronaut)
         leftGemSource.name = "leftGemSource"
         addChild(leftGemSource)
         
         rightGemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
-        rightGemSource.position = CGPoint(x: size.width * 0.85, y: size.height * 0.1 - 20)
+        rightGemSource.position = relativePosToAbsolute(relativePos: RelativeNodePosition.RightGemSource, constantY: -Constant.gemSourceDistBelowAstronaut)
         rightGemSource.name = "rightGemSource"
         addChild(rightGemSource)
     }
@@ -179,7 +209,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     private func addAstronauts() {
         // Creates 2 astronauts on either side of the planet
         
-        redAstronaut.position = CGPoint(x: size.width * 0.15, y: size.height * 0.1)
+        redAstronaut.position = relativePosToAbsolute(relativePos: RelativeNodePosition.LeftAstronaut)
         redAstronaut.setScale(0.175)
         redAstronaut.name = "redAstronaut"
         redAstronaut.zPosition = 2
@@ -188,7 +218,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         redAstronaut.physicsBody?.isDynamic = false
         redAstronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
         
-        blueAstronaut.position = CGPoint(x: size.width * 0.85, y: size.height * 0.1)
+        blueAstronaut.position = relativePosToAbsolute(relativePos: RelativeNodePosition.RightAstronaut)
         blueAstronaut.setScale(0.175)
         blueAstronaut.name = "blueAstronaut"
         blueAstronaut.zPosition = 2
@@ -205,7 +235,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         collector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
         
         let tempCollectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
-        tempCollectorGlow.position = CGPoint(x: size.width * 0.525, y: size.height * 0.122)
+        tempCollectorGlow.position = relativePosToAbsolute(relativePos: RelativeNodePosition.CollectorGlow)
         tempCollectorGlow.numParticlesToEmit = 8
         if implosion {
             tempCollectorGlow.particleColorSequence = nil;

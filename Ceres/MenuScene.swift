@@ -11,13 +11,14 @@ import SpriteKit
 
 class MenuScene: SKScene {
     /***
-    Initializes Nodes and Labels
+    Initializes Nodes
     */
     
-    let titleText = "Expedition Ceres"
-    let titleLabel = SKLabelNode(fontNamed: "Optima-Bold")
+    let gameTitle = SKSpriteNode(imageNamed: "expeditionCeresTall")
     var ship = SKSpriteNode(imageNamed: "stellaNovaShip")
     var starfield:SKEmitterNode!
+    var leftExhaust:SKEmitterNode!
+    var rightExhaust:SKEmitterNode!
     
     var playButton = SKSpriteNode(imageNamed: "play")
     var instructionsButton = SKSpriteNode(imageNamed: "instructions")
@@ -32,11 +33,9 @@ class MenuScene: SKScene {
         
         backgroundColor = SKColor.black
         
-        titleLabel.text = titleText
-        titleLabel.fontSize = 32
-        titleLabel.fontColor = SKColor.white
-        titleLabel.position = CGPoint(x: frame.midX, y: size.height - size.height/6)
-        addChild(titleLabel)
+        gameTitle.position = CGPoint(x: frame.midX, y: size.height - size.height/6)
+        gameTitle.setScale(1.75)
+        addChild(gameTitle)
         
         playButton.setScale(0.6)
         playButton.position = CGPoint(x: frame.midX, y: frame.midY + size.height/9)
@@ -50,7 +49,7 @@ class MenuScene: SKScene {
         aboutButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height/6)
         addChild(aboutButton)
         
-        settingsButton.setScale(0.06)
+        settingsButton.setScale(0.375)
         settingsButton.position = CGPoint(x: size.width * 0.1, y: size.height * 0.06)
         addChild(settingsButton)
         
@@ -58,10 +57,21 @@ class MenuScene: SKScene {
         starfield.position = CGPoint(x: 0, y: size.height)
         starfield.advanceSimulationTime(10)
         self.addChild(starfield)
-        starfield.zPosition = -1
+        starfield.zPosition = -2
         
-        ship.setScale(0.5)
-        ship.position = CGPoint(x: size.width/2, y: size.height/7)
+        leftExhaust = SKEmitterNode(fileNamed: "shipExhaust")
+        leftExhaust.position = CGPoint(x: size.width * 0.375, y: size.height * 0.075)
+        self.addChild(leftExhaust)
+        leftExhaust.zPosition = -1
+        
+        rightExhaust = SKEmitterNode(fileNamed: "shipExhaust")
+        rightExhaust.position = CGPoint(x: size.width * 0.625, y: size.height * 0.075)
+        self.addChild(rightExhaust)
+        rightExhaust.zPosition = -1
+        
+        ship.xScale = 0.3 * (size.width / ship.size.width)
+        ship.yScale = 0.15 * (size.height / ship.size.height)
+        ship.position = CGPoint(x: size.width * 0.5, y: size.height * 0.15)
         addChild(ship)
     }
     
