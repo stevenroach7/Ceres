@@ -90,6 +90,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         static var StagePlanet = RelativeCoordinate.init(x: 0.5, y: 0.075)
         static var LeftGemSource = RelativeCoordinate.init(x: 0.15, y: 0.1)
         static var RightGemSource = RelativeCoordinate.init(x: 0.85, y: 0.1)
+        static var GemSpawnLeft = RelativeCoordinate.init(x: 0.15, y: 0.15)
+        static var GemSpawnRight = RelativeCoordinate.init(x: 0.85, y: 0.15)
         static var LeftAstronaut = RelativeCoordinate.init(x: 0.15, y: 0.1)
         static var RightAstronaut = RelativeCoordinate.init(x: 0.85, y: 0.1)
         static var CollectorGlow = RelativeCoordinate.init(x: 0.525, y: 0.125)
@@ -101,6 +103,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         static var FlickHandDownFast = RelativeCoordinate.init(x: 0.55, y: 0.225)
         static var FlickHandRelease = RelativeCoordinate.init(x: 0.575, y: 0.25)
         static var FlickHandReset = RelativeCoordinate.init(x: 0.675, y: 0.45)
+        static let MinusAlert = RelativeCoordinate.init(x: 0.8, y: 0.9)
     }
     
     public func relativePosToAbsolute(relativePos: RelativeCoordinate, constantX: CGFloat = 0, constantY: CGFloat = 0) -> CGPoint {

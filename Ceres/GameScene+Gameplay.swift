@@ -117,7 +117,7 @@ extension GameScene { // Gameplay
         minus.text = text
         minus.fontColor = SKColor.red
         minus.fontSize = fontSize
-        minus.position = CGPoint(x: size.width * 0.8, y: size.height * 0.9)
+        minus.position = relativePosToAbsolute(relativePos: RelativeNodePosition.PauseButton)
         addChild(minus)
         
         let moveDown = SKAction.moveTo(y: size.height * 0.7, duration: 0.6)

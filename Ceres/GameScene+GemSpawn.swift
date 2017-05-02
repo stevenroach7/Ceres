@@ -90,10 +90,10 @@ extension GameScene { // GemSpawn
         let position: CGPoint, angle: CGFloat
         switch location {
         case .left:
-            position = CGPoint(x: size.width * 0.15, y: size.height * 0.15)
+            position = relativePosToAbsolute(relativePos: RelativeNodePosition.GemSpawnLeft)
             angle = Utility.random(min: CGFloat.pi * (1/4), max: CGFloat.pi * (1/2))
         case .right:
-            position = CGPoint(x: size.width * 0.85, y: size.height * 0.15)
+            position = relativePosToAbsolute(relativePos: RelativeNodePosition.GemSpawnRight)
             angle = Utility.random(min: CGFloat.pi * (1/2), max: CGFloat.pi * (3/4))
         }
         gem.position = position
