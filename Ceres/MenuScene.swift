@@ -31,6 +31,8 @@ class MenuScene: SKScene {
         positions labels and nodes on screen
         */
         
+        self.scene?.name = "menu"
+        
         backgroundColor = SKColor.black
         
         gameTitle.position = RelativePositions.Title.getAbsolutePosition(size: size)

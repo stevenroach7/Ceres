@@ -22,9 +22,20 @@ class DefaultsManager {
         defaults.set(value, forKey: key)
     }
     
+    public func getHighScore() -> Int {
+        return defaults.integer(forKey: "HighScore")
+    }
+    
+    public func setHighScore(key: String, value: Int) {
+        defaults.set(value, forKey: key)
+    }
+    
     public func registerMusicAndSound() {
         defaults.register(defaults: ["MusicOnOff" : true])
         defaults.register(defaults: ["SoundOnOff" : true])
     }
     
+    public func registerHighScore() {
+        defaults.register(defaults: ["HighScore" : 0])
+    }
 }

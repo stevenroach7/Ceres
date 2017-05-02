@@ -107,6 +107,7 @@ extension GameScene { // Gameplay
             let transition:SKTransition = SKTransition.doorsCloseVertical(withDuration: 1)
             let scene = GameOverScene(size: size)
             scene.setScore(score: timerSeconds)
+            scene.setHighScore()
             view?.presentScene(scene, transition: transition)
         }
         removeAllActions()
