@@ -41,7 +41,7 @@ class SettingsScene: SKScene {
         titleNode.text = title
         titleNode.fontSize = 32
         titleNode.fontColor = SKColor.white
-        titleNode.position = RelativePositions.TitleNode.getAbsolutePosition(size: size)
+        titleNode.position = RelativePositions.Title.getAbsolutePosition(size: size)
         addChild(titleNode)
         
         backButton = SKSpriteNode(texture: backButtonTex)

@@ -33,7 +33,7 @@ class MenuScene: SKScene {
         
         backgroundColor = SKColor.black
         
-        gameTitle.position = RelativePositions.GameTitle.getAbsolutePosition(size: size)
+        gameTitle.position = RelativePositions.Title.getAbsolutePosition(size: size)
         gameTitle.setScale(0.75)
         addChild(gameTitle)
         
