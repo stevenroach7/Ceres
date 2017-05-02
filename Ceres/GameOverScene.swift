@@ -17,8 +17,6 @@ class GameOverScene: SKScene {
     let gameLabel = "Game Over"
     let title = SKLabelNode(fontNamed: "GillSans-Bold")
     
-    
-    
     var score = 0
     let gemsLabel = SKLabelNode(fontNamed: "GillSans")
     
@@ -26,9 +24,19 @@ class GameOverScene: SKScene {
     var menuButton = SKSpriteNode(imageNamed: "menu")
     var starfield:SKEmitterNode!
     
+    let defaultsManager = DefaultsManager()
     
     public func setScore(score: Int) {
         self.score = score
+    }
+    
+    public func setHighScore(){
+        let currHighScore = defaultsManager.getHighScore()
+        print(currHighScore)
+        if (score > currHighScore){
+            defaultsManager.setHighScore(key: "HighScore", value: score)
+        }
+        print(defaultsManager.getHighScore())
     }
     
     override func didMove(to view: SKView) {
