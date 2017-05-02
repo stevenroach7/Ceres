@@ -16,6 +16,7 @@ import SpriteKit
 public struct RelativePositions {
     // Holds relative coordinates to be used for positioning
     
+    // Game positioning
     static let Collector = RelativeCoordinate.init(x: 0.5, y: 0.085)
     static let GemsLabel = RelativeCoordinate.init(x: 0.8, y: 0.95)
     static let InitialGemsLabel = RelativeCoordinate.init(x: 0.5, y: 0.7)
@@ -38,6 +39,10 @@ public struct RelativePositions {
     static let FlickHandRelease = RelativeCoordinate.init(x: 0.575, y: 0.25)
     static let FlickHandReset = RelativeCoordinate.init(x: 0.675, y: 0.45)
     static let MinusAlert = RelativeCoordinate.init(x: 0.8, y: 0.9)
+    
+    // Menu positioning
+    static let BackButton = RelativeCoordinate.init(x: 1/12, y: 23/24)
+    
 }
 
 

@@ -34,7 +34,7 @@ class AboutScene: SKScene {
         self.addChild(starfield)
         
         backButton.setScale(0.175)
-        backButton.position = CGPoint(x: size.width/12, y: size.height - size.height/24)
+        backButton.position = RelativePositions.BackButton.getAbsolutePosition(size: size)
         backButton.zPosition = 2
         addChild(backButton)
         

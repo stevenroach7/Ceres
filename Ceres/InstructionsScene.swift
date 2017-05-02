@@ -31,7 +31,7 @@ class InstructionsScene: SKScene {
         backgroundColor = SKColor.black
         
         backButton.setScale(0.175)
-        backButton.position = CGPoint(x: size.width/12, y: size.height - size.height/24)
+        backButton.position = RelativePositions.BackButton.getAbsolutePosition(size: size)
         addChild(backButton)
         
         text.setScale(0.9)
