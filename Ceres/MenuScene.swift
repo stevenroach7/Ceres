@@ -14,7 +14,7 @@ class MenuScene: SKScene {
     Initializes Nodes
     */
     
-    let gameTitle = SKSpriteNode(imageNamed: "expeditionCeresTall")
+    let gameTitle = SKSpriteNode(imageNamed: "expeditionCeresTitle")
     var ship = SKSpriteNode(imageNamed: "stellaNovaShip")
     var starfield:SKEmitterNode!
     var leftExhaust:SKEmitterNode!
@@ -34,7 +34,7 @@ class MenuScene: SKScene {
         backgroundColor = SKColor.black
         
         gameTitle.position = CGPoint(x: frame.midX, y: size.height - size.height/6)
-        gameTitle.setScale(1.75)
+        gameTitle.setScale(0.75)
         addChild(gameTitle)
         
         playButton.setScale(0.6)
