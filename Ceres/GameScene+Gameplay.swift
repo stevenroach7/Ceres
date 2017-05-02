@@ -55,13 +55,13 @@ extension GameScene { // Gameplay
     public func detonatorGemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
         // Removes gem from game scene and increments number of gems collected
         
-        let shakeCollector = shakeAction(positionX: relativePosToAbsolute(relativePos: RelativeNodePosition.Collector).x)
+        let shakeCollector = shakeAction(positionX: RelativePositions.Collector.getAbsolutePosition(size: size).x)
         collectGemAnimation(collector: collector, implosion: true)
         
         collector.run(shakeCollector)
         audioManager.play(sound: .collectorExplosionSound)
         
-        let shakeGemLabel = shakeAction(positionX: relativePosToAbsolute(relativePos: RelativeNodePosition.GemsLabel).x)
+        let shakeGemLabel = shakeAction(positionX: RelativePositions.GemsLabel.getAbsolutePosition(size: size).x)
         gemsLabel.run(shakeGemLabel)
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         minusAlert(text: "-5", fontSize: 40)
@@ -117,7 +117,7 @@ extension GameScene { // Gameplay
         minus.text = text
         minus.fontColor = SKColor.red
         minus.fontSize = fontSize
-        minus.position = relativePosToAbsolute(relativePos: RelativeNodePosition.PauseButton)
+        minus.position = RelativePositions.PauseButton.getAbsolutePosition(size: size)
         addChild(minus)
         
         let moveDown = SKAction.moveTo(y: size.height * 0.7, duration: 0.6)

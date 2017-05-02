@@ -21,9 +21,9 @@ extension GameScene { // Tutorial
         physicsWorld.gravity = CGVector(dx: 0, dy: 0.0)
         addTutorialGem()
         makeTutorialHand()
-        setGemsLabel(font: 20, position: relativePosToAbsolute(relativePos: RelativeNodePosition.InitialGemsLabel))
+        setGemsLabel(font: 20, position: RelativePositions.InitialGemsLabel.getAbsolutePosition(size: size))
         gemsLabel.setScale(3/2) // Set scale to be bigger than usual when label is first displayed
-        collectorGlow.position = relativePosToAbsolute(relativePos: RelativeNodePosition.CollectorGlow)
+        collectorGlow.position = RelativePositions.CollectorGlow.getAbsolutePosition(size: size)
         addChild(collectorGlow)
     }
     
@@ -31,7 +31,7 @@ extension GameScene { // Tutorial
         let gem = Gem(imageNamed: "gemShape1")
         gem.name = "gem"
         gem.setGemProperties()  // Calls gem properties from Gem class
-        gem.position = relativePosToAbsolute(relativePos: RelativeNodePosition.TutorialGem)
+        gem.position = RelativePositions.TutorialGem.getAbsolutePosition(size: size)
         addChild(gem)
     }
     
@@ -40,16 +40,16 @@ extension GameScene { // Tutorial
         let drag  = SKAction.setTexture(SKTexture(imageNamed: "drag"))
         let flick = SKAction.setTexture(SKTexture(imageNamed: "flick"))
         
-        flickHand.position = relativePosToAbsolute(relativePos: RelativeNodePosition.FlickHand)
+        flickHand.position = RelativePositions.FlickHand.getAbsolutePosition(size: size)
         flickHand.setScale(0.3)
         flickHand.zPosition = 9
         addChild(flickHand)
         
-        let initiateTouch = SKAction.move(to: relativePosToAbsolute(relativePos: RelativeNodePosition.FlickHandTouch), duration: 0.6)
-        let moveDownSlow = SKAction.move(to: relativePosToAbsolute(relativePos: RelativeNodePosition.FlickHandDownSlow), duration: 0.75)
-        let moveDownFast = SKAction.move(to: relativePosToAbsolute(relativePos: RelativeNodePosition.FlickHandDownFast), duration: 0.3)
-        let release = SKAction.move(to: relativePosToAbsolute(relativePos: RelativeNodePosition.FlickHandRelease), duration: 0.15)
-        let resetHand = SKAction.move(to: relativePosToAbsolute(relativePos: RelativeNodePosition.FlickHandReset), duration: 0.1)
+        let initiateTouch = SKAction.move(to:  RelativePositions.FlickHandTouch.getAbsolutePosition(size: size), duration: 0.6)
+        let moveDownSlow = SKAction.move(to: RelativePositions.FlickHandDownSlow.getAbsolutePosition(size: size), duration: 0.75)
+        let moveDownFast = SKAction.move(to: RelativePositions.FlickHandDownFast.getAbsolutePosition(size: size), duration: 0.3)
+        let release = SKAction.move(to: RelativePositions.FlickHandRelease.getAbsolutePosition(size: size), duration: 0.15)
+        let resetHand = SKAction.move(to: RelativePositions.FlickHandReset.getAbsolutePosition(size: size), duration: 0.1)
         let shortWait = SKAction.wait(forDuration: 0.2)
         let longWait = SKAction.wait(forDuration: 1.25)
         let fadeOut = SKAction.fadeOut(withDuration: 0.5)
@@ -102,7 +102,7 @@ extension GameScene { // Tutorial
         collectorGlow.removeFromParent()
         flickHand.removeFromParent()
         let scaleDown = SKAction.scale(by: 2/3, duration: 0.75)
-        let moveUp = SKAction.move(to: relativePosToAbsolute(relativePos: RelativeNodePosition.GemsLabel), duration: 0.75)
+        let moveUp = SKAction.move(to: RelativePositions.GemsLabel.getAbsolutePosition(size: size), duration: 0.75)
         
         gemsLabel.run(scaleDown) // / Scale gems label back to normal size
         gemsLabel.run(moveUp)
