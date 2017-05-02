@@ -42,6 +42,21 @@ public struct RelativePositions {
     
     // Menu positioning
     static let BackButton = RelativeCoordinate.init(x: 1/12, y: 23/24)
+    static let GameTitle = RelativeCoordinate.init(x: 0.5, y: 5/6)
+    static let PlayButton = RelativeCoordinate.init(x: 0.5, y: 11/18)
+    static let InstructionsButton = RelativeCoordinate.init(x: 0.5, y: 13/30)
+    static let AboutButton = RelativeCoordinate.init(x: 0.5, y: 1/3)
+    static let SettingsButton = RelativeCoordinate.init(x: 0.1, y: 0.06)
+    static let LeftExhaust = RelativeCoordinate.init(x: 0.375, y: 0.075)
+    static let RightExhaust = RelativeCoordinate.init(x: 0.625, y: 0.075)
+    static let Ship = RelativeCoordinate.init(x: 0.5, y: 0.15)
+    
+    // Instructions positioning
+    static let InstructionsText = RelativeCoordinate.init(x: 0.5, y: 11/20)
+    
+    // About positioning
+    static let AboutText = RelativeCoordinate.init(x: 0.5, y: 0.35)
+    static let AboutLogo = RelativeCoordinate.init(x: 0.5, y: 7/9)
     
 }
 
