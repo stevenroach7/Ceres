@@ -17,7 +17,7 @@ class AboutScene: SKScene {
     var starfield:SKEmitterNode!
     
     let backButton = SKSpriteNode(imageNamed: "back")
-    let text = SKSpriteNode(imageNamed: "aboutScreen")
+    let text = SKSpriteNode(imageNamed: "aboutPage")
     let logo = SKSpriteNode(imageNamed: "finalStellaNovaLogo")
     
     let swipeRightRec = UISwipeGestureRecognizer()
@@ -44,7 +44,7 @@ class AboutScene: SKScene {
         logo.position = CGPoint(x: frame.midX, y: size.height * 0.75)
         addChild(logo)
         
-        text.position = CGPoint(x: frame.midX, y: size.height/3)
+        text.position = CGPoint(x: frame.midX, y: size.height * 0.35)
         addChild(text)
         
         swipeRightRec.addTarget(self, action: #selector(AboutScene.swipedRight) )
