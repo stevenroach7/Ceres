@@ -35,15 +35,24 @@ class AboutScene: SKScene {
         starfield.zPosition = -10
         self.addChild(starfield)
         
-        backButton.setScale(0.175)
+//        backButton.setScale(0.175)
+        let backButtonSize = RelativeScales.BackButton.getAbsoluteSize(screenSize: size, nodeSize: backButton.size)
+        backButton.xScale = backButtonSize.width
+        backButton.yScale = backButtonSize.height
         backButton.position = RelativePositions.BackButton.getAbsolutePosition(size: size)
         backButton.zPosition = 2
         addChild(backButton)
         
-        logo.setScale(0.9)
+//        logo.setScale(0.9)
+        let logoSize = RelativeScales.AboutLogo.getAbsoluteSize(screenSize: size, nodeSize: logo.size)
+        logo.xScale = logoSize.width
+        logo.yScale = logoSize.height
         logo.position = RelativePositions.AboutLogo.getAbsolutePosition(size: size)
         addChild(logo)
         
+        let textSize = RelativeScales.AboutText.getAbsoluteSize(screenSize: size, nodeSize: text.size)
+        text.xScale = textSize.width
+        text.yScale = textSize.height
         text.position = RelativePositions.AboutText.getAbsolutePosition(size: size)
         addChild(text)
         
