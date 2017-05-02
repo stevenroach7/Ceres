@@ -18,6 +18,7 @@ class AboutScene: SKScene {
     
     let backButton = SKSpriteNode(imageNamed: "back")
     let text = SKSpriteNode(imageNamed: "aboutScreen")
+    let logo = SKSpriteNode(imageNamed: "finalStellaNovaLogo")
     
     override func didMove(to view: SKView) {
         /***
@@ -34,9 +35,14 @@ class AboutScene: SKScene {
         
         backButton.setScale(0.175)
         backButton.position = CGPoint(x: size.width/12, y: size.height - size.height/24)
+        backButton.zPosition = 2
         addChild(backButton)
         
-        text.position = CGPoint(x: frame.midX, y: size.height/2)
+        logo.setScale(0.9)
+        logo.position = CGPoint(x: frame.midX, y: size.height * 0.75)
+        addChild(logo)
+        
+        text.position = CGPoint(x: frame.midX, y: size.height/3)
         addChild(text)
     }
     

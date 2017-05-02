@@ -11,11 +11,10 @@ import SpriteKit
 
 class MenuScene: SKScene {
     /***
-    Initializes Nodes and Labels
+    Initializes Nodes
     */
     
-    let titleText = "Expedition Ceres"
-    let titleLabel = SKLabelNode(fontNamed: "Optima-Bold")
+    let gameTitle = SKSpriteNode(imageNamed: "expeditionCeresTall")
     var ship = SKSpriteNode(imageNamed: "stellaNovaShip")
     var starfield:SKEmitterNode!
     
@@ -32,11 +31,9 @@ class MenuScene: SKScene {
         
         backgroundColor = SKColor.black
         
-        titleLabel.text = titleText
-        titleLabel.fontSize = 32
-        titleLabel.fontColor = SKColor.white
-        titleLabel.position = CGPoint(x: frame.midX, y: size.height - size.height/6)
-        addChild(titleLabel)
+        gameTitle.position = CGPoint(x: frame.midX, y: size.height - size.height/6)
+        gameTitle.setScale(1.75)
+        addChild(gameTitle)
         
         playButton.setScale(0.6)
         playButton.position = CGPoint(x: frame.midX, y: frame.midY + size.height/9)
@@ -50,7 +47,7 @@ class MenuScene: SKScene {
         aboutButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height/6)
         addChild(aboutButton)
         
-        settingsButton.setScale(0.06)
+        settingsButton.setScale(0.375)
         settingsButton.position = CGPoint(x: size.width * 0.1, y: size.height * 0.06)
         addChild(settingsButton)
         
