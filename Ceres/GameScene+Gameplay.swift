@@ -64,7 +64,7 @@ extension GameScene { // Gameplay
         let shakeGemLabel = shakeAction(positionX: RelativePositions.GemsLabel.getAbsolutePosition(size: size).x)
         gemsLabel.run(shakeGemLabel)
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-        minusAlert(text: "-5", fontSize: 40)
+        minusAlert()
         gemsPlusMinus -= 5
         flashGemsLabelAnimation(color: SKColor.red, percentGrowth: 1.0)
 
@@ -113,12 +113,12 @@ extension GameScene { // Gameplay
         removeAllActions()
     }
     
-    private func minusAlert(text: String, fontSize: CGFloat) {
+    private func minusAlert() {
         let minus = SKLabelNode(fontNamed: "Menlo-Bold")
-        minus.text = text
+        minus.text = "-5"
         minus.fontColor = SKColor.red
-        minus.fontSize = fontSize
-        minus.position = RelativePositions.PauseButton.getAbsolutePosition(size: size)
+        minus.fontSize = 30
+        minus.position = RelativePositions.MinusAlert.getAbsolutePosition(size: size)
         addChild(minus)
         
         let moveDown = SKAction.moveTo(y: size.height * 0.7, duration: 0.6)
