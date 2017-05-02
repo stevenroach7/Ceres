@@ -165,9 +165,7 @@ class SpawnSequenceManager {
                                 .spawnGemLeft, .spawnGemRight,
                                 .wait(time: 0.15),
                                 .spawnGemRight,
-                                .wait(time: 0.75),
-                                .spawnGemLeft,
-                                .wait(time: 0.10),
+                                .wait(time: 0.65),
                                 .spawnGemLeft, .spawnGemRight,
                                 .wait(time: 0.15),
                                 .spawnGemLeft
@@ -543,11 +541,11 @@ class SpawnSequenceManager {
 //              , easySequence0, pauseSequenceShort, easySequence1, pauseSequenceShort, easySequence2, pauseSequenceShort, easySequence3 ,  pauseSequenceLong
 //            ,  easyMediumSequence0, pauseSequenceShort, easyMediumSequence1, pauseSequenceShort, easyMediumSequence2, pauseSequenceShort, easyMediumSequence3 ,  pauseSequenceLong
 //        ,  mediumSequence0, pauseSequenceShort, mediumSequence1, pauseSequenceShort, mediumSequence2, pauseSequenceShort, mediumSequence3, pauseSequenceShort, mediumSequence4, pauseSequenceShort, mediumSequence5,  pauseSequenceShort, mediumSequence6, pauseSequenceShort, mediumSequence7  ,  pauseSequenceLong
-//        ,  mediumHardSequence0, pauseSequenceShort, mediumHardSequence1, pauseSequenceShort, mediumHardSequence2, pauseSequenceShort, mediumHardSequence3  ,  pauseSequenceLong
-//        ,  hardSequence0, pauseSequenceShort, hardSequence1, pauseSequenceShort, hardSequence2, pauseSequenceShort, hardSequence3, pauseSequenceShort, hardSequence4, pauseSequenceShort, hardSequence5, pauseSequenceShort, hardSequence6, pauseSequenceShort, hardSequence7, pauseSequenceShort, hardSequence8  ,  pauseSequenceLong
+//        ,  mediumHardSequence0, pauseSequenceShort, mediumHardSequence1, pauseSequenceShort, mediumHardSequence2, pauseSequenceShort, mediumHardSequence3  ,  pauseSequenceShort, mediumHardSequence4, pauseSequenceLong
+//        ,  hardSequence0, pauseSequenceShort, hardSequence1, pauseSequenceShort, hardSequence2, pauseSequenceShort, hardSequence3, pauseSequenceShort, hardSequence4, pauseSequenceShort, hardSequence5, pauseSequenceShort, hardSequence6, pauseSequenceShort, hardSequence7, pauseSequenceShort, hardSequence8  ,  pauseSequenceShort , hardSequence9  ,  pauseSequenceLong
 //        ,  veryHardSequence0, pauseSequenceShort, veryHardSequence1, pauseSequenceShort, veryHardSequence2, pauseSequenceShort, veryHardSequence3, pauseSequenceShort, veryHardSequence4  ,  pauseSequenceLong]
         
-        tempSequences = [mediumHardSequence4, pauseSequenceShort, hardSequence9]
+        tempSequences = [easyMediumSequence3, pauseSequenceShort, hardSequence9]
 
     }
     
