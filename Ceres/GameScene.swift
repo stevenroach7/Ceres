@@ -225,7 +225,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     func onPauseButtonTouch() { 
-        pauseAlert(title: "Game Paused", message: "")
+        //pauseAlert(title: "Game Paused", message: "")
+        let pauseMenu = SKSpriteNode(imageNamed: "pauseMenu")
+        pauseMenu.setScale(0.875)
+        pauseMenu.position = CGPoint(x: size.width * 0.5, y: size.height * 0.55)
+        pauseMenu.zPosition = 8
+        addChild(pauseMenu)
+        
+        let resume = SKSpriteNode(imageNamed: "play")
+        resume.setScale(0.55)
+        resume.position = CGPoint(x: size.width * 0.5, y: size.height * 0.5)
+        resume.zPosition = 9
+        addChild(resume)
+        
+        let back = SKSpriteNode(imageNamed: "back")
+        back.setScale(0.35)
+        back.position = CGPoint(x: size.width * 0.2, y: size.height * 0.5)
+        back.zPosition = 9
+        addChild(back)
+        
+        let restart = SKSpriteNode(imageNamed: "replay")
+        restart.setScale(0.35)
+        restart.zPosition = 9
+        restart.position = CGPoint(x: size.width * 0.8, y: size.height * 0.5)
+        addChild(restart)
     }
     
 }
