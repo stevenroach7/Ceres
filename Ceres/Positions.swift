@@ -58,6 +58,12 @@ public struct RelativePositions {
     static let AboutText = RelativeCoordinate.init(x: 0.5, y: 0.35)
     static let AboutLogo = RelativeCoordinate.init(x: 0.5, y: 7/9)
     
+    // Settings positioning
+    static let TitleNode = RelativeCoordinate.init(x: 0.5, y: 5/6)
+    static let MusicLabel = RelativeCoordinate.init(x: 11/24, y: 0.71)
+    static let SoundLabel = RelativeCoordinate.init(x: 0.3, y: 0.585)
+    
+    
 }
 
 
