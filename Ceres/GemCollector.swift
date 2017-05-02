@@ -20,8 +20,8 @@ class GemCollector: SKSpriteNode {
         physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: size.width - 17, height: size.height - 17))
         physicsBody?.usesPreciseCollisionDetection = true
         physicsBody?.isDynamic = false
-        physicsBody?.categoryBitMask = GameScene.PhysicsCategory.GemCollector;
-        physicsBody?.contactTestBitMask = GameScene.PhysicsCategory.Gem;
-        physicsBody?.collisionBitMask = GameScene.PhysicsCategory.None;
+        physicsBody?.categoryBitMask = GameScene.PhysicsCategories.GemCollector;
+        physicsBody?.contactTestBitMask = GameScene.PhysicsCategories.Gem;
+        physicsBody?.collisionBitMask = GameScene.PhysicsCategories.None;
     }
 }

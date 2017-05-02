@@ -20,9 +20,9 @@ class StagePlanet: SKSpriteNode {
         physicsBody = SKPhysicsBody(circleOfRadius: 800, center: CGPoint(x: frame.midX-10, y: -790))
         physicsBody?.usesPreciseCollisionDetection = true
         physicsBody?.isDynamic = false
-        physicsBody?.categoryBitMask = GameScene.PhysicsCategory.StagePlanet;
-        physicsBody?.contactTestBitMask = GameScene.PhysicsCategory.Gem;
-        physicsBody?.collisionBitMask = GameScene.PhysicsCategory.None;
+        physicsBody?.categoryBitMask = GameScene.PhysicsCategories.StagePlanet;
+        physicsBody?.contactTestBitMask = GameScene.PhysicsCategories.Gem;
+        physicsBody?.collisionBitMask = GameScene.PhysicsCategories.None;
         
     }
 }

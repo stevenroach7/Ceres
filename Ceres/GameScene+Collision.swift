@@ -12,6 +12,17 @@ import SpriteKit
 
 extension GameScene { // Collision logic
 
+    // Determines collisions between different objects
+    public struct PhysicsCategories {
+        static let None      : UInt32 = 0
+        static let All       : UInt32 = UInt32.max
+        static let GemCollector   : UInt32 = 0b1
+        static let Wall: UInt32 = 0b10
+        static let Gem: UInt32 = 0b11
+        static let GemSource: UInt32 = 0b100
+        static let StagePlanet: UInt32 = 0b101
+    }
+    
     func didBegin(_ contact: SKPhysicsContact) {
         // Called every time two physics bodies collide
         
@@ -28,7 +39,7 @@ extension GameScene { // Collision logic
         }
         
         // If the two colliding bodies are a gem and gemCollector, remove the gem
-        if ((firstBody.categoryBitMask == PhysicsCategory.GemCollector) && (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
+        if ((firstBody.categoryBitMask == PhysicsCategories.GemCollector) && (secondBody.categoryBitMask == PhysicsCategories.Gem)) {
             if let gem = secondBody.node as? SKSpriteNode, let collector = firstBody.node as? SKSpriteNode {
                 switch gem.name! {
                 case "gem":
@@ -46,8 +57,8 @@ extension GameScene { // Collision logic
         }
         
         // If the two colliding bodies are a gem and wall, remove the gem
-        if ((firstBody.categoryBitMask == PhysicsCategory.Wall) &&
-            (secondBody.categoryBitMask == PhysicsCategory.Gem)) {
+        if ((firstBody.categoryBitMask == PhysicsCategories.Wall) &&
+            (secondBody.categoryBitMask == PhysicsCategories.Gem)) {
             if let gem = secondBody.node as? SKSpriteNode {
                 if !tutorialMode { // Check for tutorialMode being false first because that is more common
                     if gem.name == "gem" { // Don't penalize detonator gems going of screen

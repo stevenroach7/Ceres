@@ -62,18 +62,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var touchesToGems:[UITouch: SKSpriteNode] = [:] // Dictionary to map currently selected user touches to the gems they are dragging
     var selectedGems: Set<SKSpriteNode> = Set()
     var nodeDisplacements:[SKSpriteNode: CGVector] = [:] // Dictionary to map currently selected nodes to their displacements from the user's finger
-
-    
-    // Determines collisions between different objects
-    public struct PhysicsCategory {
-        static let None      : UInt32 = 0
-        static let All       : UInt32 = UInt32.max
-        static let GemCollector   : UInt32 = 0b1
-        static let Wall: UInt32 = 0b10
-        static let Gem: UInt32 = 0b11
-        static let GemSource: UInt32 = 0b100
-        static let StagePlanet: UInt32 = 0b101
-    }
     
     
     override func didMove(to view: SKView) {
@@ -127,9 +115,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         shape.physicsBody = SKPhysicsBody(rectangleOf: size)
         shape.physicsBody?.isDynamic = false
         shape.physicsBody?.usesPreciseCollisionDetection = true
-        shape.physicsBody?.categoryBitMask = PhysicsCategory.Wall;
-        shape.physicsBody?.contactTestBitMask = PhysicsCategory.Gem;
-        shape.physicsBody?.collisionBitMask = PhysicsCategory.None;
+        shape.physicsBody?.categoryBitMask = PhysicsCategories.Wall;
+        shape.physicsBody?.contactTestBitMask = PhysicsCategories.Gem;
+        shape.physicsBody?.collisionBitMask = PhysicsCategories.None;
         self.addChild(shape)
     }
     

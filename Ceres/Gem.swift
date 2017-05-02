@@ -21,9 +21,9 @@ class Gem: SKSpriteNode {
         physicsBody?.usesPreciseCollisionDetection = true
         physicsBody?.allowsRotation = true
         physicsBody?.restitution = 0.25
-        physicsBody?.categoryBitMask = GameScene.PhysicsCategory.Gem;
-        physicsBody?.contactTestBitMask = GameScene.PhysicsCategory.GemCollector;
-        physicsBody?.collisionBitMask = GameScene.PhysicsCategory.Gem | GameScene.PhysicsCategory.GemSource | GameScene.PhysicsCategory.StagePlanet;
+        physicsBody?.categoryBitMask = GameScene.PhysicsCategories.Gem;
+        physicsBody?.contactTestBitMask = GameScene.PhysicsCategories.GemCollector;
+        physicsBody?.collisionBitMask = GameScene.PhysicsCategories.Gem | GameScene.PhysicsCategories.GemSource | GameScene.PhysicsCategories.StagePlanet;
     }
     
     
