@@ -29,6 +29,7 @@ class SettingsScene: SKScene {
     
     var collector = SKSpriteNode(imageNamed: "collectorActive")
     let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
+    
     let stagePlanet = StagePlanet(imageNamed: "planet")
     
     let swipeRightRec = UISwipeGestureRecognizer()
@@ -58,7 +59,11 @@ class SettingsScene: SKScene {
         collector.position = RelativePositions.Collector.getAbsolutePosition(size: size)
         collector.zPosition = 5
         addChild(collector)
+        
         collectorGlow.position = RelativePositions.CollectorGlow.getAbsolutePosition(size: size)
+        collectorGlow.particleColorSequence = nil
+        collectorGlow.particleColorBlendFactor = 0.8
+        collectorGlow.particleColor = UIColor.red
         addChild(collectorGlow)
         
         stagePlanet.setStagePlanetProperties()  // Calls stage properties from StagePlanet class
