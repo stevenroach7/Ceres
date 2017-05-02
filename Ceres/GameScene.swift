@@ -29,7 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
     
     
-    let losingGemPlusMinus = -100000000 // Make this lower during testing
+    let losingGemPlusMinus = -1 // Make this lower during testing
     
     var gemsLabel: SKLabelNode!
     var gemsPlusMinus = 0 {
