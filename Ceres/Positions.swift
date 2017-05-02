@@ -67,3 +67,36 @@ public struct RelativeCoordinate {
 
 
 
+
+
+
+
+
+public struct RelativeScales {
+    
+    static let PauseMenu = ScaleFactor.init(width: 0.9, height: 0.3)
+    
+    
+    
+    
+    
+}
+
+
+public struct ScaleFactor {
+    let width: CGFloat
+    let height: CGFloat
+    
+    public func getAbsoluteSize(screenSize: CGSize, nodeSize: CGSize) -> CGSize {
+        // Takes a size and constants to shift the position by and returns the absolute position of the coordinate.
+        return CGSize(width: self.width * (screenSize.width / nodeSize.width), height: self.height * (screenSize.height / nodeSize.height) )
+    
+    
+}
+}
+
+
+
+
+
+
