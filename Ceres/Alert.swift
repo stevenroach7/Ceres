@@ -35,7 +35,7 @@ extension Alerts where Self: SKScene {
         let quitAction = UIAlertAction(title: "Quit Game", style: UIAlertActionStyle.destructive)  { (action:UIAlertAction!) in
             if self.view != nil {
                 self.view?.isPaused = false;
-                let transition:SKTransition = SKTransition.fade(withDuration: 0.3)
+                let transition:SKTransition = SKTransition.fade(withDuration: 4.0)
                 let scene:SKScene = MenuScene(size: self.size)
                 self.view?.presentScene(scene, transition: transition)
             }}
