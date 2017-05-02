@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         let defaultsManager = DefaultsManager()
         defaultsManager.registerMusicAndSound() // Register values for sound and music settings in UserDefaults
-        defaultsManager.registerHighScore()
+        defaultsManager.registerHighScores()
         let audioSession = AVAudioSession.sharedInstance()
         try!audioSession.setCategory(AVAudioSessionCategoryPlayback, with: AVAudioSessionCategoryOptions.mixWithOthers) // Causes audio from other sessions to be ducked (reduced in volume) while audio from this session plays
         sleep(1)

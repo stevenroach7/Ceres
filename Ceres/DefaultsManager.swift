@@ -22,12 +22,12 @@ class DefaultsManager {
         defaults.set(value, forKey: key)
     }
     
-    public func getHighScore() -> Int {
-        return defaults.integer(forKey: "HighScore")
+    public func getHighScores() -> [Int] {
+        return (defaults.array(forKey: "HighScores") as! [Int])
     }
     
-    public func setHighScore(key: String, value: Int) {
-        defaults.set(value, forKey: key)
+    public func setHighScores(value: [Int]) {
+        defaults.set(value, forKey: "HighScores")
     }
     
     public func registerMusicAndSound() {
@@ -35,7 +35,7 @@ class DefaultsManager {
         defaults.register(defaults: ["SoundOnOff" : true])
     }
     
-    public func registerHighScore() {
-        defaults.register(defaults: ["HighScore" : 0])
+    public func registerHighScores() {
+        defaults.register(defaults: ["HighScores" : [Int]()])
     }
 }

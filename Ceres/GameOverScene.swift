@@ -30,13 +30,20 @@ class GameOverScene: SKScene {
         self.score = score
     }
     
-    public func setHighScore(){
-        let currHighScore = defaultsManager.getHighScore()
-        print(currHighScore)
-        if (score > currHighScore){
-            defaultsManager.setHighScore(key: "HighScore", value: score)
+    public func setHighScores(){
+        var HighScores: [Int] = defaultsManager.getHighScores()
+        print(HighScores)
+        for var i in (0...4) {
+            if (score > HighScores[i]) {
+                insertArray(array: HighScores, value: score, index: i)
+            }
         }
-        print(defaultsManager.getHighScore())
+        defaultsManager.setHighScores(value: HighScores)
+        print(defaultsManager.getHighScores())
+    }
+    
+    private func insertArray(array: [Int], value: Int, index: Int){
+        //Implement this
     }
     
     override func didMove(to view: SKView) {
