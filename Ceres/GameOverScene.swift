@@ -59,7 +59,7 @@ class GameOverScene: SKScene {
         addChild(menuButton)
         
         starfield = SKEmitterNode(fileNamed: "starShower")
-        starfield.position = CGPoint(x: 0, y: size.height)
+        starfield.position = RelativePositions.Starfield.getAbsolutePosition(size: size)
         starfield.advanceSimulationTime(10)
         self.addChild(starfield)
         starfield.zPosition = -1

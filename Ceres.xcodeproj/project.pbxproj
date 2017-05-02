@@ -20,6 +20,7 @@
 		A9FDA30C1EAC35C300D431E5 /* GameScene+Touch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FDA30B1EAC35C300D431E5 /* GameScene+Touch.swift */; };
 		A9FDA30E1EAC386E00D431E5 /* GameScene+Collision.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9FDA30D1EAC386E00D431E5 /* GameScene+Collision.swift */; };
 		B02B072E1E6651A100FC8D11 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02B072D1E6651A100FC8D11 /* Alert.swift */; };
+		B03858381EB8491100665807 /* Positions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03858371EB8491100665807 /* Positions.swift */; };
 		B0708D701E5507CE008A9950 /* cosmos.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B0708D6F1E5507CE008A9950 /* cosmos.mp3 */; };
 		B07805E01E5506C300073DD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07805DF1E5506C300073DD6 /* AppDelegate.swift */; };
 		B07805E61E5506C300073DD6 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07805E51E5506C300073DD6 /* GameScene.swift */; };
@@ -81,6 +82,7 @@
 		A9FDA30B1EAC35C300D431E5 /* GameScene+Touch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GameScene+Touch.swift"; sourceTree = "<group>"; };
 		A9FDA30D1EAC386E00D431E5 /* GameScene+Collision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GameScene+Collision.swift"; sourceTree = "<group>"; };
 		B02B072D1E6651A100FC8D11 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		B03858371EB8491100665807 /* Positions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Positions.swift; sourceTree = "<group>"; };
 		B0708D6F1E5507CE008A9950 /* cosmos.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cosmos.mp3; sourceTree = "<group>"; };
 		B07805DC1E5506C300073DD6 /* Ceres.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ceres.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B07805DF1E5506C300073DD6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 			children = (
 				B02B072D1E6651A100FC8D11 /* Alert.swift */,
 				B0F2D1601EABC8BF0040F6DE /* Utility.swift */,
+				B03858371EB8491100665807 /* Positions.swift */,
 			);
 			name = UtilityClasses;
 			sourceTree = "<group>";
@@ -453,6 +456,7 @@
 				3C3BFDC91E871CC90059D6CE /* GameOverScene.swift in Sources */,
 				B07805E61E5506C300073DD6 /* GameScene.swift in Sources */,
 				A9406C841EAEE77B00E0EA50 /* AudioManager.swift in Sources */,
+				B03858381EB8491100665807 /* Positions.swift in Sources */,
 				A9FDA30C1EAC35C300D431E5 /* GameScene+Touch.swift in Sources */,
 				B0F2D1641EABD66F0040F6DE /* SpawnSequenceManager.swift in Sources */,
 				B0F2D15F1EABC84D0040F6DE /* GameScene+GemSpawn.swift in Sources */,

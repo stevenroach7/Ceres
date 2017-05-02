@@ -47,20 +47,20 @@ class SettingsScene: SKScene {
         addChild(backButton)
         
         starfield = SKEmitterNode(fileNamed: "starShower")
-        starfield.position = CGPoint(x: 0, y: size.height)
+        starfield.position = RelativePositions.Starfield.getAbsolutePosition(size: size)
         starfield.advanceSimulationTime(10)
         self.addChild(starfield)
         starfield.zPosition = -1
         
         collector.setScale(1/4)
-        collector.position = CGPoint(x: size.width / 2, y: size.height * 0.075)
+        collector.position = RelativePositions.Collector.getAbsolutePosition(size: size)
         collector.zPosition = 5
         addChild(collector)
-        collectorGlow.position = CGPoint(x: size.width * 0.525, y: size.height * 0.125)
+        collectorGlow.position = RelativePositions.CollectorGlow.getAbsolutePosition(size: size)
         addChild(collectorGlow)
         
         stagePlanet.setStagePlanetProperties()  // Calls stage properties from StagePlanet class
-        stagePlanet.position = CGPoint(x: size.width * 0.5, y: size.height * 0.075)
+        stagePlanet.position = RelativePositions.StagePlanet.getAbsolutePosition(size: size)
         addChild(stagePlanet)
         
         createMusicSwitch()
