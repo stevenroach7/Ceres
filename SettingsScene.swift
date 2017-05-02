@@ -12,15 +12,15 @@ import SpriteKit
 class SettingsScene: SKScene {
     
     let title = "Settings"
-    let titleNode = SKLabelNode(fontNamed: "Optima-Bold")
+    let titleNode = SKLabelNode(fontNamed: "Menlo-Bold")
     
     var backButton = SKSpriteNode()
     let backButtonTex = SKTexture(imageNamed: "back")
     
-    let musicLabel = SKLabelNode(fontNamed: "Optima-Bold")
+    let musicLabel = SKLabelNode(fontNamed: "Menlo-Bold")
     var musicSwitch = UISwitch()
     
-    let soundLabel = SKLabelNode(fontNamed: "Optima-Bold")
+    let soundLabel = SKLabelNode(fontNamed: "Menlo-Bold")
     var soundSwitch = UISwitch()
     
     let defaultsManager = DefaultsManager()
