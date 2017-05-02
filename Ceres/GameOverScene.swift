@@ -18,9 +18,9 @@ class GameOverScene: SKScene {
     let title = SKLabelNode(fontNamed: "GillSans-Bold")
     
     var score = 0
-    let gemsLabel = SKLabelNode(fontNamed: "GillSans")
+    let finalScoreLabel = SKLabelNode(fontNamed: "GillSans")
     
-    var playButton = SKSpriteNode(imageNamed: "replay")
+    var replayButton = SKSpriteNode(imageNamed: "replay")
     var menuButton = SKSpriteNode(imageNamed: "menu")
     var starfield:SKEmitterNode!
     
@@ -49,21 +49,21 @@ class GameOverScene: SKScene {
         title.text = gameLabel
         title.fontSize = 32
         title.fontColor = SKColor.white
-        title.position = CGPoint(x: size.width/2, y: size.height - size.height/6)
+        title.position = RelativePositions.Title.getAbsolutePosition(size: size)
         addChild(title)
 
-        gemsLabel.text = "Score: \(score)"
-        gemsLabel.fontSize = 28
-        gemsLabel.fontColor = SKColor.white
-        gemsLabel.position = CGPoint(x: frame.midX, y: frame.midY + size.height/4)
-        addChild(gemsLabel)
+        finalScoreLabel.text = "Score: \(score)"
+        finalScoreLabel.fontSize = 28
+        finalScoreLabel.fontColor = SKColor.white
+        finalScoreLabel.position = RelativePositions.FinalScoreLabel.getAbsolutePosition(size: size)
+        addChild(finalScoreLabel)
         
-        playButton.setScale(1/2)
-        playButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height/5)
-        addChild(playButton)
+        replayButton.setScale(1/2)
+        replayButton.position = RelativePositions.ReplayButton.getAbsolutePosition(size: size)
+        addChild(replayButton)
         
         menuButton.setScale(3/5)
-        menuButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height*2/5)
+        menuButton.position = RelativePositions.MenuButton.getAbsolutePosition(size: size)
         addChild(menuButton)
         
         starfield = SKEmitterNode(fileNamed: "starShower")
@@ -80,7 +80,7 @@ class GameOverScene: SKScene {
             let node = self.atPoint(pos)
             
             //transitions to game screen if play button is touched
-            if node == playButton {
+            if node == replayButton {
                 if view != nil {
                     let transition:SKTransition = SKTransition.doorsOpenVertical(withDuration: 1)
                     let scene:SKScene = GameScene(size: self.size)

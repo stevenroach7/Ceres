@@ -35,24 +35,24 @@ class MenuScene: SKScene {
         
         backgroundColor = SKColor.black
         
-        gameTitle.position = CGPoint(x: frame.midX, y: size.height - size.height/6)
+        gameTitle.position = RelativePositions.Title.getAbsolutePosition(size: size)
         gameTitle.setScale(0.75)
         addChild(gameTitle)
         
         playButton.setScale(0.6)
-        playButton.position = CGPoint(x: frame.midX, y: frame.midY + size.height/9)
+        playButton.position = RelativePositions.PlayButton.getAbsolutePosition(size: size)
         addChild(playButton)
         
         instructionsButton.setScale(0.5)
-        instructionsButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height/15)
+        instructionsButton.position = RelativePositions.InstructionsButton.getAbsolutePosition(size: size)
         addChild(instructionsButton)
         
         aboutButton.setScale(0.5)
-        aboutButton.position = CGPoint(x: frame.midX, y: frame.midY - size.height/6)
+        aboutButton.position = RelativePositions.AboutButton.getAbsolutePosition(size: size)
         addChild(aboutButton)
         
         settingsButton.setScale(0.375)
-        settingsButton.position = CGPoint(x: size.width * 0.1, y: size.height * 0.06)
+        settingsButton.position = RelativePositions.SettingsButton.getAbsolutePosition(size: size)
         addChild(settingsButton)
         
         starfield = SKEmitterNode(fileNamed: "starShower")
@@ -62,18 +62,18 @@ class MenuScene: SKScene {
         starfield.zPosition = -2
         
         leftExhaust = SKEmitterNode(fileNamed: "shipExhaust")
-        leftExhaust.position = CGPoint(x: size.width * 0.375, y: size.height * 0.075)
+        leftExhaust.position = RelativePositions.LeftExhaust.getAbsolutePosition(size: size)
         self.addChild(leftExhaust)
         leftExhaust.zPosition = -1
         
         rightExhaust = SKEmitterNode(fileNamed: "shipExhaust")
-        rightExhaust.position = CGPoint(x: size.width * 0.625, y: size.height * 0.075)
+        rightExhaust.position = RelativePositions.RightExhaust.getAbsolutePosition(size: size)
         self.addChild(rightExhaust)
         rightExhaust.zPosition = -1
         
         ship.xScale = 0.3 * (size.width / ship.size.width)
         ship.yScale = 0.15 * (size.height / ship.size.height)
-        ship.position = CGPoint(x: size.width * 0.5, y: size.height * 0.15)
+        ship.position = RelativePositions.Ship.getAbsolutePosition(size:size)
         addChild(ship)
     }
     

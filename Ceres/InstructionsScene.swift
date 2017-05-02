@@ -37,7 +37,7 @@ class InstructionsScene: SKScene {
         addChild(backButton)
         
         text.setScale(0.9)
-        text.position = CGPoint(x: frame.midX, y: size.height/2 + size.height/20)
+        text.position = RelativePositions.InstructionsText.getAbsolutePosition(size: size)
         addChild(text)
         
         starfield = SKEmitterNode(fileNamed: "starShower")

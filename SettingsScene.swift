@@ -41,7 +41,7 @@ class SettingsScene: SKScene {
         titleNode.text = title
         titleNode.fontSize = 32
         titleNode.fontColor = SKColor.white
-        titleNode.position = CGPoint(x: size.width/2, y: size.height - size.height/6)
+        titleNode.position = RelativePositions.Title.getAbsolutePosition(size: size)
         addChild(titleNode)
         
         backButton = SKSpriteNode(texture: backButtonTex)
@@ -100,9 +100,9 @@ class SettingsScene: SKScene {
     
     private func showMusicSwitchLabel() {
         musicLabel.text = "Music"
-        musicLabel.fontSize = 25
+        musicLabel.fontSize = 22
         musicLabel.fontColor = SKColor.white
-        musicLabel.position = CGPoint(x: size.width/2 - size.width/13, y: size.height * 3/4 - size.height/25)
+        musicLabel.position = RelativePositions.MusicLabel.getAbsolutePosition(size: size)
         addChild(musicLabel)
     }
     
@@ -123,9 +123,9 @@ class SettingsScene: SKScene {
     
     private func showSoundSwitchLabel() {
         soundLabel.text = "Sound Effects"
-        soundLabel.fontSize = 25
+        soundLabel.fontSize = 22
         soundLabel.fontColor = SKColor.white
-        soundLabel.position = CGPoint(x: size.width/2 - size.width/5, y: size.height * 5/8 - size.height/25)
+        soundLabel.position = RelativePositions.SoundLabel.getAbsolutePosition(size: size)
         addChild(soundLabel)
     }
     

@@ -41,10 +41,10 @@ class AboutScene: SKScene {
         addChild(backButton)
         
         logo.setScale(0.9)
-        logo.position = CGPoint(x: frame.midX, y: size.height * 0.75)
+        logo.position = RelativePositions.AboutLogo.getAbsolutePosition(size: size)
         addChild(logo)
         
-        text.position = CGPoint(x: frame.midX, y: size.height * 0.35)
+        text.position = RelativePositions.AboutText.getAbsolutePosition(size: size)
         addChild(text)
         
         swipeRightRec.addTarget(self, action: #selector(AboutScene.swipedRight) )
