@@ -102,7 +102,7 @@ class SpawnSequenceManager {
     let mediumHardSequences: [GameScene.SpawnAction]
     let hardSequences: [GameScene.SpawnAction]
     let veryHardSequences: [GameScene.SpawnAction]
-//    let impossibleSequences:[GameScene.SpawnAction]
+    let impossibleSequences:[GameScene.SpawnAction]
     let tempSequences: [GameScene.SpawnAction]
     
     
@@ -536,6 +536,60 @@ class SpawnSequenceManager {
                 ]))
             ])
     
+    private let impossibleSequence0: GameScene.SpawnAction =
+        .sequence(actions: [
+            .wait(time: 2.0),
+            .repeated(times: 5, action: .sequence(actions: [
+                .wait(time: 0.3),
+                .spawnDetonatorLeft, .spawnFastGemRight, .spawnDetonatorRight,
+                .wait(time: 0.2),
+                .spawnFastGemLeft, .spawnDetonatorRight, .spawnFastGemRight,
+                .wait(time: 0.2),
+                .spawnDetonatorLeft, .spawnFastGemRight,
+                .wait(time: 0.3),
+                .spawnDetonatorLeft, .spawnDetonatorRight, .spawnFastGemLeft, .spawnFastGemRight,
+                .wait(time: 0.2),
+                .spawnDetonatorLeft, .spawnFastGemRight,
+                .wait(time: 0.2),
+                .spawnFastGemLeft, .spawnDetonatorLeft, .spawnFastGemRight,
+                .wait(time: 0.2),
+                .spawnDetonatorRight, .spawnFastGemLeft
+                ]))
+            ])
+    
+    private let impossibleSequence1: GameScene.SpawnAction =
+        .sequence(actions: [
+            .wait(time: 2.0),
+            .repeated(times: 10, action: .sequence(actions: [
+                .spawnFastGemRight, .spawnFastGemRight, .spawnFastGemLeft, .spawnFastGemRight, .spawnDetonatorLeft,
+                .wait(time: 0.20),
+                .spawnFastGemLeft, .spawnFastGemLeft, .spawnFastGemRight, .spawnDetonatorRight, .spawnDetonatorLeft,
+                .wait(time: 0.35)
+                ]))
+            ])
+    
+    private let impossibleSequence2: GameScene.SpawnAction =
+        .sequence(actions: [
+            .wait(time: 2.0),
+            .spawnFastGemRight, .spawnFastGemRight, .spawnFastGemLeft, .spawnFastGemLeft,
+            .wait(time: 0.2),
+            .spawnDetonatorLeft, .spawnDetonatorLeft, .spawnDetonatorLeft, .spawnDetonatorLeft, .spawnDetonatorRight, .spawnDetonatorRight, .spawnDetonatorRight, .spawnDetonatorRight,
+            .wait(time: 0.5),
+            .spawnGemLeft, .spawnGemRight,
+            .repeated(times: 7, action: .sequence(actions: [
+                .wait(time: 0.3),
+                .spawnFastGemLeft, .spawnFastGemRight, .spawnDetonatorLeft, .spawnDetonatorRight,
+                .wait(time: 0.2),
+                .spawnDetonatorRight, .spawnFastGemRight,
+                .wait(time: 0.3),
+                .repeated(times: 3, action: .sequence(actions: [.wait(time: 0.15),
+                    .spawnDetonatorLeft, .spawnFastGemLeft,
+                    .wait(time: 0.15),
+                    .spawnDetonatorRight, .spawnFastGemRight])),
+                .spawnFastGemRight, .spawnDetonatorLeft, .spawnFastGemLeft
+                ]))
+            ])
+    
     var index = 0
     
     public init() {
@@ -547,7 +601,7 @@ class SpawnSequenceManager {
         mediumHardSequences = [mediumHardSequence0, mediumHardSequence1, mediumHardSequence2, mediumHardSequence3, mediumHardSequence4]
         hardSequences = [hardSequence0, hardSequence1, hardSequence2, hardSequence3, hardSequence4, hardSequence5, hardSequence6, hardSequence7, hardSequence8, hardSequence9]
         veryHardSequences = [veryHardSequence0, veryHardSequence1, veryHardSequence2, veryHardSequence3, veryHardSequence4, veryHardSequence5]
-//        impossibleSequences = []
+        impossibleSequences = [impossibleSequence0, impossibleSequence1, impossibleSequence2]
 //        tempSequences = [basicSequence0, pauseSequenceShort, basicSequence1 ,  pauseSequenceLong
 //              , easySequence0, pauseSequenceShort, easySequence1, pauseSequenceShort, easySequence2, pauseSequenceShort, easySequence3 ,  pauseSequenceLong
 //            ,  easyMediumSequence0, pauseSequenceShort, easyMediumSequence1, pauseSequenceShort, easyMediumSequence2, pauseSequenceShort, easyMediumSequence3 ,  pauseSequenceLong
@@ -556,7 +610,7 @@ class SpawnSequenceManager {
 //        ,  hardSequence0, pauseSequenceShort, hardSequence1, pauseSequenceShort, hardSequence2, pauseSequenceShort, hardSequence3, pauseSequenceShort, hardSequence4, pauseSequenceShort, hardSequence5, pauseSequenceShort, hardSequence6, pauseSequenceShort, hardSequence7, pauseSequenceShort, hardSequence8  ,  pauseSequenceShort , hardSequence9  ,  pauseSequenceLong
 //        ,  veryHardSequence0, pauseSequenceShort, veryHardSequence1, pauseSequenceShort, veryHardSequence2, pauseSequenceShort, veryHardSequence3, pauseSequenceShort, veryHardSequence4  ,  pauseSequenceLong]
         
-        tempSequences = [veryHardSequence1, pauseSequenceShort, veryHardSequence5, pauseSequenceShort]
+        tempSequences = [impossibleSequence2, pauseSequenceShort]
 
     }
     
@@ -591,7 +645,7 @@ class SpawnSequenceManager {
         } else if time <= 135 {
             return veryHardSequences[Utility.random(min: 0, max: veryHardSequences.count - 1)]
         }
-        return spawnSequenceHard
+        return impossibleSequences[Utility.random(min: 0, max: impossibleSequences.count - 1)]
     }
         
 }
