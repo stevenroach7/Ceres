@@ -66,18 +66,13 @@ public struct RelativePositions {
     static let FinalScoreLabel = RelativeCoordinate.init(x: 0.5, y: 0.75)
     static let ReplayButton = RelativeCoordinate.init(x: 0.5, y: 0.3)
     static let MenuButton = RelativeCoordinate.init(x: 0.5, y: 0.1)
-    
-    
-    
 }
-
 
 public struct PositionConstants {
     // Holds constants used for positioning
     static let wallOffScreenDistance: CGFloat = 50
     static let gemSourceDistBelowAstronaut: CGFloat = 20
 }
-
 
 public struct RelativeCoordinate {
     // Data structure to define relative positions
@@ -91,35 +86,6 @@ public struct RelativeCoordinate {
     }
 }
 
-
-
-
-
-
-
-
-public struct RelativeScales {
-    
-    static let PauseMenu = ScaleFactor.init(width: 0.9, height: 0.3)
-    
-    
-    
-    
-    
-}
-
-
-public struct ScaleFactor {
-    let width: CGFloat
-    let height: CGFloat
-    
-    public func getAbsoluteSize(screenSize: CGSize, nodeSize: CGSize) -> CGSize {
-        // Takes a size and constants to shift the position by and returns the absolute position of the coordinate.
-        return CGSize(width: self.width * (screenSize.width / nodeSize.width), height: self.height * (screenSize.height / nodeSize.height) )
-    
-    
-}
-}
 
 
 
