@@ -61,6 +61,10 @@ extension GameScene { // Touching logic
         }
     }
     
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touchesEnded(touches, with: event)
+    }
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Method to handle touch events. Senses when user touches up (removes finger from screen).
         
