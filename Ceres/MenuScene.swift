@@ -17,6 +17,8 @@ class MenuScene: SKScene {
     let gameTitle = SKSpriteNode(imageNamed: "expeditionCeresTall")
     var ship = SKSpriteNode(imageNamed: "stellaNovaShip")
     var starfield:SKEmitterNode!
+    var leftExhaust:SKEmitterNode!
+    var rightExhaust:SKEmitterNode!
     
     var playButton = SKSpriteNode(imageNamed: "play")
     var instructionsButton = SKSpriteNode(imageNamed: "instructions")
@@ -55,10 +57,21 @@ class MenuScene: SKScene {
         starfield.position = CGPoint(x: 0, y: size.height)
         starfield.advanceSimulationTime(10)
         self.addChild(starfield)
-        starfield.zPosition = -1
+        starfield.zPosition = -2
         
-        ship.setScale(0.5)
-        ship.position = CGPoint(x: size.width/2, y: size.height/7)
+        leftExhaust = SKEmitterNode(fileNamed: "shipExhaust")
+        leftExhaust.position = CGPoint(x: size.width * 0.375, y: size.height * 0.075)
+        self.addChild(leftExhaust)
+        leftExhaust.zPosition = -1
+        
+        rightExhaust = SKEmitterNode(fileNamed: "shipExhaust")
+        rightExhaust.position = CGPoint(x: size.width * 0.625, y: size.height * 0.075)
+        self.addChild(rightExhaust)
+        rightExhaust.zPosition = -1
+        
+        ship.xScale = 0.3 * (size.width / ship.size.width)
+        ship.yScale = 0.15 * (size.height / ship.size.height)
+        ship.position = CGPoint(x: size.width * 0.5, y: size.height * 0.15)
         addChild(ship)
     }
     

@@ -43,6 +43,7 @@
 		B28798B61EADA1620058D08B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B28798B41EADA1620058D08B /* LaunchScreen.storyboard */; };
 		B28F8DD81E56663E005D803B /* starShower.sks in Resources */ = {isa = PBXBuildFile; fileRef = B28F8DD71E56663E005D803B /* starShower.sks */; };
 		B29319B01E7F7C7700147924 /* collectorImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B29319AF1E7F7C7700147924 /* collectorImages.atlas */; };
+		B29C67C91EB81B7D0070CC23 /* shipExhaust.sks in Resources */ = {isa = PBXBuildFile; fileRef = B29C67C81EB81B7D0070CC23 /* shipExhaust.sks */; };
 		B2A6A25A1E726FD100F64EAF /* anvil.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B2A6A2581E726FD100F64EAF /* anvil.mp3 */; };
 		B2CDC03C1E8368DA00AA93DC /* gemExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = B2CDC03B1E8368DA00AA93DC /* gemExplosion.sks */; };
 		B2D7DB4E1E97FFFC00CB4EEE /* blast.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B2D7DB4C1E97FFFC00CB4EEE /* blast.mp3 */; };
@@ -109,6 +110,7 @@
 		B28798B51EADA1620058D08B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B28F8DD71E56663E005D803B /* starShower.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = starShower.sks; sourceTree = "<group>"; };
 		B29319AF1E7F7C7700147924 /* collectorImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = collectorImages.atlas; sourceTree = "<group>"; };
+		B29C67C81EB81B7D0070CC23 /* shipExhaust.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = shipExhaust.sks; sourceTree = "<group>"; };
 		B2A6A2581E726FD100F64EAF /* anvil.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = anvil.mp3; sourceTree = "<group>"; };
 		B2CDC03B1E8368DA00AA93DC /* gemExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = gemExplosion.sks; sourceTree = "<group>"; };
 		B2D7DB4C1E97FFFC00CB4EEE /* blast.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = blast.mp3; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				B28F8DD71E56663E005D803B /* starShower.sks */,
 				B26BB8DB1EA52F8900D39079 /* collectorGlow.sks */,
 				B2CDC03B1E8368DA00AA93DC /* gemExplosion.sks */,
+				B29C67C81EB81B7D0070CC23 /* shipExhaust.sks */,
 			);
 			name = ParticleEffects;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B29C67C91EB81B7D0070CC23 /* shipExhaust.sks in Resources */,
 				B212A1271E89DAEC00DDEC64 /* boop.wav in Resources */,
 				B2A6A25A1E726FD100F64EAF /* anvil.mp3 in Resources */,
 				B29319B01E7F7C7700147924 /* collectorImages.atlas in Resources */,
