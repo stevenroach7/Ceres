@@ -31,6 +31,8 @@ class SettingsScene: SKScene {
     let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
     let stagePlanet = StagePlanet(imageNamed: "planet")
     
+    let swipeRightRec = UISwipeGestureRecognizer()
+    
     override func didMove(to view: SKView) {
         
         backgroundColor = SKColor.black
@@ -68,6 +70,11 @@ class SettingsScene: SKScene {
         
         createSoundSwitch()
         showSoundSwitchLabel()
+        
+        swipeRightRec.addTarget(self, action: #selector(SettingsScene.swipedRight) )
+        swipeRightRec.direction = .right
+        self.view!.addGestureRecognizer(swipeRightRec)
+        
     }
     
     
@@ -126,14 +133,23 @@ class SettingsScene: SKScene {
             //transitions back to menu screen if back button is touched
             if node == backButton {
                 if view != nil {
-                    musicSwitch.removeFromSuperview()
-                    soundSwitch.removeFromSuperview()
-                    let transition:SKTransition = SKTransition.fade(withDuration: 0.5)
-                    let scene:SKScene = MenuScene(size: self.size)
-                    self.view?.presentScene(scene, transition: transition)
+                    transitionHome()
                 }
             }
         }
+    }
+    
+    
+    func swipedRight() {
+        transitionHome()
+    }
+    
+    private func transitionHome() {
+        musicSwitch.removeFromSuperview()
+        soundSwitch.removeFromSuperview()
+        let transition:SKTransition = SKTransition.fade(withDuration: 0.5)
+        let scene:SKScene = MenuScene(size: self.size)
+        self.view?.presentScene(scene, transition: transition)
     }
     
 }

@@ -20,6 +20,8 @@ class AboutScene: SKScene {
     let text = SKSpriteNode(imageNamed: "aboutScreen")
     let logo = SKSpriteNode(imageNamed: "finalStellaNovaLogo")
     
+    let swipeRightRec = UISwipeGestureRecognizer()
+    
     override func didMove(to view: SKView) {
         /***
          positions labels and nodes on screen
@@ -44,6 +46,10 @@ class AboutScene: SKScene {
         
         text.position = CGPoint(x: frame.midX, y: size.height/3)
         addChild(text)
+        
+        swipeRightRec.addTarget(self, action: #selector(AboutScene.swipedRight) )
+        swipeRightRec.direction = .right
+        self.view!.addGestureRecognizer(swipeRightRec)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -55,11 +61,21 @@ class AboutScene: SKScene {
             //transitions back to menu screen if back button is touched
             if node == backButton {
                 if view != nil {
-                    let transition:SKTransition = SKTransition.flipVertical(withDuration: 1)
-                    let scene:SKScene = MenuScene(size: self.size)
-                    self.view?.presentScene(scene, transition: transition)
+                    transitionHome()
                 }
             }
         }
     }
+    
+    
+    func swipedRight() {
+        transitionHome()
+    }
+    
+    private func transitionHome() {
+        let transition:SKTransition = SKTransition.flipVertical(withDuration: 1)
+        let scene:SKScene = MenuScene(size: self.size)
+        self.view?.presentScene(scene, transition: transition)
+    }
+    
 }

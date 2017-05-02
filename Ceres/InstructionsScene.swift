@@ -22,6 +22,8 @@ class InstructionsScene: SKScene {
     var collector = SKSpriteNode(imageNamed: "collectorActive")
     let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
     
+    let swipeRightRec = UISwipeGestureRecognizer()
+    
     
     override func didMove(to view: SKView) {
         /***
@@ -67,6 +69,12 @@ class InstructionsScene: SKScene {
         gemsLabel.fontSize = 20
         gemsLabel.position = RelativePositions.GemsLabel.getAbsolutePosition(size: size)
         addChild(gemsLabel)
+        
+        
+        swipeRightRec.addTarget(self, action: #selector(InstructionsScene.swipedRight) )
+        swipeRightRec.direction = .right
+        self.view!.addGestureRecognizer(swipeRightRec)
+
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -78,12 +86,22 @@ class InstructionsScene: SKScene {
             //transitions back to menu screen if back button is touched
             if node == backButton {
                 if view != nil {
-                    let transition:SKTransition = SKTransition.doorsCloseHorizontal(withDuration: 1)
-                    let scene:SKScene = MenuScene(size: self.size)
-                    self.view?.presentScene(scene, transition: transition)
+                    transitionHome()
                 }
             }
         }
     }
+    
+    
+    func swipedRight() {
+        transitionHome()
+    }
+    
+    private func transitionHome() {
+        let transition:SKTransition = SKTransition.doorsCloseHorizontal(withDuration: 1)
+        let scene:SKScene = MenuScene(size: self.size)
+        view?.presentScene(scene, transition: transition)
+    }
+    
 }
 
