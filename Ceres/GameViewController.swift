@@ -36,7 +36,7 @@ class GameViewController: UIViewController {
         // To be called on app goes to background
         
         if (skView?.window?.rootViewController?.presentedViewController?.title != "Game Paused"){
-            skView?.isPaused = false; //Because going to app background auto pauses & we want to display alert
+            skView?.isPaused = false; // Because going to app background auto pauses & we want to display alert
             if skView?.scene?.name == "game" {
                 (skView?.scene as! GameScene).onPauseButtonTouch()
             }
