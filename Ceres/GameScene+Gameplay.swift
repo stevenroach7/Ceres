@@ -102,6 +102,7 @@ extension GameScene { // Gameplay
     }
     
     private func gameOverTransition() {
+        audioManager.stopBackgroundMusic()
         isPaused = true
         if view != nil {
             let transition:SKTransition = SKTransition.doorsCloseVertical(withDuration: 1)

@@ -48,6 +48,7 @@ extension GameScene { // Touching logic
                         gameLayer.isPaused = false
                         physicsWorld.speed = 1
                         pauseLayer.removeFromParent()
+                        audioManager.toggleBackgroundMusic()
                         // TODO: Also resume background musis
                     case "back":
                         let transition:SKTransition = SKTransition.fade(withDuration: 3.0)

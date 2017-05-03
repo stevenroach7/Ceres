@@ -8,10 +8,11 @@
 
 import Foundation
 import SpriteKit
+import AVFoundation
 
 class AudioManager: SKNode {
     
-    private let backgroundMusic = SKAudioNode(fileNamed: "cosmos.mp3")
+    private var backgroundMusic = AVAudioPlayer()
     private let defaultsManager = DefaultsManager()
     
     
@@ -46,8 +47,48 @@ class AudioManager: SKNode {
         if !(defaultsManager.getValue(key: "MusicOnOff")) {
             return
         }
-        backgroundMusic.autoplayLooped = true
-        addChild(backgroundMusic)
+        
+        let path = Bundle.main.path(forResource: "cosmos.mp3", ofType:nil)!
+        let url = URL(fileURLWithPath: path)
+        
+        do {
+            backgroundMusic = try AVAudioPlayer(contentsOf: url)
+            backgroundMusic.numberOfLoops = -1
+            backgroundMusic.prepareToPlay()
+            backgroundMusic.play()
+        } catch {
+            // couldn't load file.
+            
+        }
+    
     }
+    
+    public func stopBackgroundMusic() {
+        
+        if !(defaultsManager.getValue(key: "MusicOnOff")) {
+            return
+        }
+        
+        if backgroundMusic.isPlaying {
+            backgroundMusic.stop()
+        }
+    }
+    
+    
+    public func toggleBackgroundMusic() {
+        
+        if !(defaultsManager.getValue(key: "MusicOnOff")) {
+            return
+        }
+        
+        if backgroundMusic.isPlaying {
+            backgroundMusic.pause()
+        } else {
+            backgroundMusic.play()
+        }
+    }
+    
+    
+    
         
 }

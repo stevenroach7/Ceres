@@ -237,6 +237,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             gameLayer.isPaused = true
             addChild(pauseLayer)
             physicsWorld.speed = 0
+            audioManager.toggleBackgroundMusic()
             // TODO: Also Pause background music
         }
 
