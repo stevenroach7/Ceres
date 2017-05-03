@@ -213,7 +213,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     func onPauseButtonTouch() { 
-        pauseAlert(title: "Game Paused", message: "")
+        //pauseAlert(title: "Game Paused", message: "")
         
         let pauseMenu = SKSpriteNode(imageNamed: "pauseMenu")        
         let pauseMenuSize = RelativeScales.PauseMenu.getAbsoluteSize(screenSize: size, nodeSize: pauseMenu.size)
