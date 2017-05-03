@@ -11,7 +11,7 @@ import SpriteKit
 
 class LeaderBoardScene: SKScene {
     
-    let title = "Leader Board"
+    let title = "Leaderboard"
     let titleNode = SKLabelNode(fontNamed: "Menlo-Bold")
     
     var backButton = SKSpriteNode()
@@ -48,8 +48,20 @@ class LeaderBoardScene: SKScene {
         swipeRightRec.addTarget(self, action: #selector(SettingsScene.swipedRight) )
         swipeRightRec.direction = .right
         self.view!.addGestureRecognizer(swipeRightRec)
-
+        
+        showScores()
     }
+    
+    //Testing leaderboard stuff
+    private func showScores(){
+        let score1 = SKLabelNode(fontNamed: "Menlo-Bold")
+        score1.text = "1. 100"
+        score1.fontSize = 32
+        score1.fontColor = SKColor.white
+        score1.position = RelativePositions.TopScoresLabel.getAbsolutePosition(size: size)
+        addChild(score1)
+    }
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //looks for a touch

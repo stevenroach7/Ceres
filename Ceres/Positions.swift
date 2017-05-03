@@ -67,6 +67,9 @@ public struct RelativePositions {
     static let FinalScoreLabel = RelativeCoordinate.init(x: 0.5, y: 0.75)
     static let ReplayButton = RelativeCoordinate.init(x: 0.5, y: 0.3)
     static let MenuButton = RelativeCoordinate.init(x: 0.5, y: 0.1)
+    
+    // Leaderboard positioning
+    static let TopScoresLabel = RelativeCoordinate.init(x: 0.5, y: 4/6)
 }
 
 public struct PositionConstants {
