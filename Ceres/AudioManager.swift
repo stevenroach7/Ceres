@@ -74,8 +74,7 @@ class AudioManager: SKNode {
         }
     }
     
-    
-    public func toggleBackgroundMusic() {
+    public func pauseBackgroundMusic() {
         
         if !(defaultsManager.getValue(key: "MusicOnOff")) {
             return
@@ -83,12 +82,18 @@ class AudioManager: SKNode {
         
         if backgroundMusic.isPlaying {
             backgroundMusic.pause()
-        } else {
+        }
+    }
+    
+    public func resumeBackgroundMusic() {
+        
+        if !(defaultsManager.getValue(key: "MusicOnOff")) {
+            return
+        }
+        
+        if !backgroundMusic.isPlaying {
             backgroundMusic.play()
         }
     }
     
-    
-    
-        
 }

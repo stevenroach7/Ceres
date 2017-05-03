@@ -33,7 +33,6 @@ extension GameScene { // Touching logic
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Method to handle touch events. Senses when user touches down (places finger on screen)
-        
         for touch in touches {
             let touchLocation = touch.location(in:self)
             let touchedNode = self.atPoint(touchLocation)
@@ -41,22 +40,17 @@ extension GameScene { // Touching logic
             
             if let name = touchedNode.name {
                 
-                if gameLayer.gamePaused {
+                if gamePaused {
                     switch name {
                     case "resume":
-                        gameLayer.gamePaused = false
-                        gameLayer.isPaused = false
-                        physicsWorld.speed = 1
-                        pauseLayer.removeFromParent()
-                        audioManager.toggleBackgroundMusic()
-                        // TODO: Also resume background musis
+                        gamePaused = false
                     case "back":
                         let transition:SKTransition = SKTransition.fade(withDuration: 3.0)
                         let scene:SKScene = MenuScene(size: self.size)
                         self.scene?.name = "transition" // Change name of scene since we are no longer in game once the transition begins
                         self.view?.presentScene(scene, transition: transition)
                     case "restart":
-                        let scene:SKScene = GameScene(size: self.size)
+                        let scene: SKScene = GameScene(size: self.size)
                         self.view?.presentScene(scene)
                     default:
                         break
@@ -105,7 +99,7 @@ extension GameScene { // Touching logic
     
     override func update(_ currentTime: CFTimeInterval) {
         // Updates position of gems on the screen
-        
+
         let dt:CGFloat = 1.0/60.0 //determines drag and flick speed
         for (touch, node) in touchesToGems {
             if let displacement = nodeDisplacements[node] { // Get displacement of touched node.

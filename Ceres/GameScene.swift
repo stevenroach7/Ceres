@@ -50,9 +50,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var spawnSequenceManager: SpawnSequenceManager = SpawnSequenceManager()
     var audioManager: AudioManager = AudioManager()
     
-    let gamePaused = false
     
+    // This is the single source of truth for if the game is paused. Changes this variable pauses game elements and brings up pause layer or vice versa.
+    var gamePaused = false {
+        didSet {
+            pauseLayer.isHidden = !gamePaused
+            isPaused = gamePaused
+            gamePaused == true ? (physicsWorld.speed = 0) : (physicsWorld.speed = 1.0)
+            gamePaused == true ? (audioManager.pauseBackgroundMusic()) : (audioManager.resumeBackgroundMusic())
+        }
+    }
     
+    // This variable is automatically set to false when the scene is loaded which is not desired. We override it so that it always has the same value as gamePaused.
+    override var isPaused: Bool {
+        didSet {
+            if isPaused != gamePaused {
+                isPaused = gamePaused
+            }
+        }
+    }
     
     // TODO: Refactor into Animation manager class
     var collectorAtlas = SKTextureAtlas()
@@ -66,7 +82,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var selectedGems: Set<SKSpriteNode> = Set()
     var nodeDisplacements:[SKSpriteNode: CGVector] = [:] // Dictionary to map currently selected nodes to their displacements from the user's finger
     
-    let gameLayer = GameLayer()
+    let gameLayer = SKNode()
     let pauseLayer = SKNode()
     
     
@@ -74,7 +90,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
-    
+        
         physicsWorld.contactDelegate = self
         
         backgroundColor = SKColor.black
@@ -112,7 +128,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
         startTutorialMode()
         
-        addPauseLayerElements()
+        addPauseLayer()
         addChild(gameLayer)
     }
     
@@ -195,7 +211,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     
-    private func addPauseLayerElements() {
+    private func addPauseLayer() {
         
         let pauseMenu = SKSpriteNode(imageNamed: "pauseMenu")
         let pauseMenuSize = RelativeScales.PauseMenu.getAbsoluteSize(screenSize: size, nodeSize: pauseMenu.size)
@@ -227,22 +243,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         pauseLayer.addChild(restart)
         
         pauseLayer.zPosition = 100
+        pauseLayer.isHidden = true
+        addChild(pauseLayer)
     }
     
     
-    func onPauseButtonTouch() {
-        
-        if !gameLayer.gamePaused {
-            gameLayer.gamePaused = true
-            gameLayer.isPaused = true
-            addChild(pauseLayer)
-            physicsWorld.speed = 0
-            audioManager.toggleBackgroundMusic()
-            // TODO: Also Pause background music
-        }
-
+    func onPauseButtonTouch() {        
+        gamePaused = true
     }
-    
     
     public func collectGemAnimation(collector: SKSpriteNode, implosion: Bool) {
         collector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))

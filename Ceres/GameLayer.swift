@@ -14,9 +14,7 @@ import SpriteKit
 
 class GameLayer: SKNode {
     
-    
-    
-    public var gamePaused = false
+//    public var gamePaused = false
 //    {
 //        didSet {
 //            isPaused = gamePaused
