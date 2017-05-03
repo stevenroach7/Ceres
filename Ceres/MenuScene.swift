@@ -25,6 +25,7 @@ class MenuScene: SKScene {
     var aboutButton = SKSpriteNode(imageNamed: "about")
 
     var settingsButton = SKSpriteNode(imageNamed: "settings")
+    var leaderBoardButton = SKSpriteNode(imageNamed: "leaderBoard")
     
     override func didMove(to view: SKView) {
         /***
@@ -69,6 +70,12 @@ class MenuScene: SKScene {
         settingsButton.yScale = settingsButtonSize.height
         settingsButton.position = RelativePositions.SettingsButton.getAbsolutePosition(size: size)
         addChild(settingsButton)
+        
+        let leaderBoardButtonSize = RelativeScales.LeaderBoardButton.getAbsoluteSize(screenSize: size, nodeSize: leaderBoardButton.size)
+        leaderBoardButton.xScale = leaderBoardButtonSize.width
+        leaderBoardButton.yScale = leaderBoardButtonSize.height
+        leaderBoardButton.position = RelativePositions.LeaderBoardButton.getAbsolutePosition(size: size)
+        addChild(leaderBoardButton)
         
         starfield = SKEmitterNode(fileNamed: "starShower")
         starfield.position = RelativePositions.Starfield.getAbsolutePosition(size: size)

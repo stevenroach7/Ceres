@@ -25,6 +25,7 @@ public struct RelativeScales {
     static let InstructionsButton = ScaleFactor.init(width: 0.8, height: 0.075)
     static let AboutButton = ScaleFactor.init(width: 0.4, height: 0.07)
     static let SettingsButton = ScaleFactor.init(width: 0.15, height: 0.085)
+    static let LeaderBoardButton = ScaleFactor.init(width: 0.15, height: 0.085)
     static let Ship = ScaleFactor.init(width: 0.3, height: 0.15)
     
     // Instructions scaling
