@@ -31,20 +31,21 @@ class GameOverScene: SKScene {
     }
     
     public func setHighScores(){
-        var HighScores: [Int] = defaultsManager.getHighScores()
-        print(HighScores)
-        for var i in (0...4) {
-            if (score > HighScores[i]) {
-                insertArray(array: HighScores, value: score, index: i)
+        var highScores: [Int] = defaultsManager.getHighScores()
+        if (score > highScores[highScores.count - 1]){ //If the score is at least greater than the smallest element in the array
+            for var i in (0...(highScores.count - 1)) {
+                if (score > highScores[i]) {
+                    highScores[highScores.count - 1] = score
+                    highScores.sort() { $0 > $1 }
+                    break
+                }
             }
         }
-        defaultsManager.setHighScores(value: HighScores)
+        defaultsManager.setHighScores(value: highScores)
         print(defaultsManager.getHighScores())
+        print(defaultsManager.presentHighScores())
     }
     
-    private func insertArray(array: [Int], value: Int, index: Int){
-        //Implement this
-    }
     
     override func didMove(to view: SKView) {
         /***

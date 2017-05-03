@@ -23,7 +23,21 @@ class DefaultsManager {
     }
     
     public func getHighScores() -> [Int] {
-        return (defaults.array(forKey: "HighScores") as! [Int])
+        return defaults.array(forKey: "HighScores") as! [Int]
+    }
+    
+    public func presentHighScores() -> [Int] {
+        let highScores = getHighScores()
+        var highScoresWithoutZeroes = [Int]()
+        if (highScores[highScores.count - 1] == 0) {
+            for var i in (0...(highScores.count - 1)) {
+                if (highScores[i] != 0){
+                    highScoresWithoutZeroes.append(highScores[i])
+                }
+            }
+            return highScoresWithoutZeroes
+        }
+        return highScores
     }
     
     public func setHighScores(value: [Int]) {
@@ -36,6 +50,6 @@ class DefaultsManager {
     }
     
     public func registerHighScores() {
-        defaults.register(defaults: ["HighScores" : [Int]()])
+        defaults.register(defaults: ["HighScores" : Array(repeating: 0, count: 5)])
     }
 }
