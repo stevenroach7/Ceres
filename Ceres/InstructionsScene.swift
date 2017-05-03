@@ -32,11 +32,17 @@ class InstructionsScene: SKScene {
         
         backgroundColor = SKColor.black
         
-        backButton.setScale(0.175)
+//        backButton.setScale(0.175)
+        let backButtonSize = RelativeScales.BackButton.getAbsoluteSize(screenSize: size, nodeSize: backButton.size)
+        backButton.xScale = backButtonSize.width
+        backButton.yScale = backButtonSize.height
         backButton.position = RelativePositions.BackButton.getAbsolutePosition(size: size)
         addChild(backButton)
         
         text.setScale(0.9)
+        let textSize = RelativeScales.InstructionsText.getAbsoluteSize(screenSize: size, nodeSize: text.size)
+        text.xScale = textSize.width
+        text.yScale = textSize.height
         text.position = RelativePositions.InstructionsText.getAbsolutePosition(size: size)
         addChild(text)
         
