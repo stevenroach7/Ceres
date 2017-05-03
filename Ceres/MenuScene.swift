@@ -133,8 +133,15 @@ class MenuScene: SKScene {
             
             //transitions to settings screen if settings button is touched
             else if node == settingsButton {
-                let transition:SKTransition = SKTransition.fade(withDuration: 0.5)
+                let transition:SKTransition = SKTransition.push(with: .right, duration: 1)
                 let scene:SKScene = SettingsScene(size: self.size)
+                self.view?.presentScene(scene, transition: transition)
+            }
+                
+                //transitions to leader board screen if leader board button is touched
+            else if node == leaderBoardButton {
+                let transition:SKTransition = SKTransition.push(with: .left, duration: 1)
+                let scene:SKScene = LeaderBoardScene(size: self.size)
                 self.view?.presentScene(scene, transition: transition)
             }
             
@@ -149,7 +156,7 @@ class MenuScene: SKScene {
             
             //transitions to about screen if about button is touched
             else if node == aboutButton {
-                let transition:SKTransition = SKTransition.flipVertical(withDuration: 1)
+                let transition:SKTransition = SKTransition.reveal(with: .up, duration: 1)
                 let scene:SKScene = AboutScene(size: self.size)
                 self.view?.presentScene(scene, transition: transition)
             }

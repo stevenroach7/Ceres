@@ -82,7 +82,7 @@ class AboutScene: SKScene {
     }
     
     private func transitionHome() {
-        let transition:SKTransition = SKTransition.flipVertical(withDuration: 1)
+        let transition:SKTransition = SKTransition.moveIn(with: .up, duration: 1)
         let scene:SKScene = MenuScene(size: self.size)
         self.view?.presentScene(scene, transition: transition)
     }
