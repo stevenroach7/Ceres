@@ -30,6 +30,7 @@
 		B07805ED1E5506C300073DD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B07805EC1E5506C300073DD6 /* Assets.xcassets */; };
 		B07805FB1E5506C400073DD6 /* CeresTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07805FA1E5506C400073DD6 /* CeresTests.swift */; };
 		B07806061E5506C400073DD6 /* CeresUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07806051E5506C400073DD6 /* CeresUITests.swift */; };
+		B0AB74A11EBA364F00A1ECA8 /* GameLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AB74A01EBA364F00A1ECA8 /* GameLayer.swift */; };
 		B0B969AA1E56321B005C587D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B0B969A91E56321B005C587D /* .gitignore */; };
 		B0D9C08E1EB3E0B3008F1403 /* DefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D9C08D1EB3E0B3008F1403 /* DefaultsManager.swift */; };
 		B0F2D15F1EABC84D0040F6DE /* GameScene+GemSpawn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F2D15E1EABC84D0040F6DE /* GameScene+GemSpawn.swift */; };
@@ -99,6 +100,7 @@
 		B07806011E5506C400073DD6 /* CeresUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CeresUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B07806051E5506C400073DD6 /* CeresUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CeresUITests.swift; sourceTree = "<group>"; };
 		B07806071E5506C400073DD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B0AB74A01EBA364F00A1ECA8 /* GameLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLayer.swift; sourceTree = "<group>"; };
 		B0B969A91E56321B005C587D /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		B0D9C08D1EB3E0B3008F1403 /* DefaultsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultsManager.swift; sourceTree = "<group>"; };
 		B0F2D15E1EABC84D0040F6DE /* GameScene+GemSpawn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GameScene+GemSpawn.swift"; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				3C67AD9C1E84310000C8B980 /* GemSource.swift */,
 				3C67AD981E8331E100C8B980 /* StagePlanet.swift */,
 				3C67AD9A1E835C3500C8B980 /* GemCollector.swift */,
+				B0AB74A01EBA364F00A1ECA8 /* GameLayer.swift */,
 			);
 			name = GameClasses;
 			sourceTree = "<group>";
@@ -462,6 +465,7 @@
 				B03858381EB8491100665807 /* Positions.swift in Sources */,
 				A9FDA30C1EAC35C300D431E5 /* GameScene+Touch.swift in Sources */,
 				B0F2D1641EABD66F0040F6DE /* SpawnSequenceManager.swift in Sources */,
+				B0AB74A11EBA364F00A1ECA8 /* GameLayer.swift in Sources */,
 				B0F2D15F1EABC84D0040F6DE /* GameScene+GemSpawn.swift in Sources */,
 				3C55D7E41EB7C1AE004271FC /* AboutScene.swift in Sources */,
 				B07805E81E5506C300073DD6 /* GameViewController.swift in Sources */,

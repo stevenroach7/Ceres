@@ -41,9 +41,10 @@ extension GameScene { // Touching logic
             
             if let name = touchedNode.name {
                 
-                if gameLayer.isPaused {
+                if gameLayer.gamePaused {
                     switch name {
                     case "resume":
+                        gameLayer.gamePaused = false
                         gameLayer.isPaused = false
                         physicsWorld.speed = 1
                         pauseLayer.removeFromParent()

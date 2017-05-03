@@ -66,7 +66,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var selectedGems: Set<SKSpriteNode> = Set()
     var nodeDisplacements:[SKSpriteNode: CGVector] = [:] // Dictionary to map currently selected nodes to their displacements from the user's finger
     
-    let gameLayer = SKNode()
+    let gameLayer = GameLayer()
     let pauseLayer = SKNode()
     
     
@@ -232,7 +232,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     
     func onPauseButtonTouch() {
         
-        if !gameLayer.isPaused {
+        if !gameLayer.gamePaused {
+            gameLayer.gamePaused = true
             gameLayer.isPaused = true
             addChild(pauseLayer)
             physicsWorld.speed = 0
