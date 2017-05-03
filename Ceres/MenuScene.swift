@@ -124,7 +124,7 @@ class MenuScene: SKScene {
             //transitions to game screen if play button is touched
             if node == playButton {
                 if view != nil {
-                    let transition:SKTransition = SKTransition.crossFade(withDuration: 1)
+                    let transition:SKTransition = SKTransition.doorsOpenHorizontal(withDuration: 1)
                     let scene:SKScene = GameScene(size: self.size)
                     scene.name = "game"
                     self.view?.presentScene(scene, transition: transition)
@@ -133,22 +133,27 @@ class MenuScene: SKScene {
             
             //transitions to settings screen if settings button is touched
             else if node == settingsButton {
-                let transition:SKTransition = SKTransition.push(with: .right, duration: 1)
-                let scene:SKScene = SettingsScene(size: self.size)
-                self.view?.presentScene(scene, transition: transition)
+                if view != nil {
+                    let transition:SKTransition = SKTransition.push(with: .right, duration: 1)
+                    let scene:SKScene = SettingsScene(size: self.size)
+                    self.view?.presentScene(scene, transition: transition)
+
+                }
             }
                 
                 //transitions to leader board screen if leader board button is touched
             else if node == leaderBoardButton {
-                let transition:SKTransition = SKTransition.push(with: .left, duration: 1)
-                let scene:SKScene = LeaderBoardScene(size: self.size)
-                self.view?.presentScene(scene, transition: transition)
+                if view != nil {
+                    let transition:SKTransition = SKTransition.push(with: .left, duration: 1)
+                    let scene:SKScene = LeaderBoardScene(size: self.size)
+                    self.view?.presentScene(scene, transition: transition)
+                }
             }
             
             //transitions to instructions screen if instructions button is touched
             else if node == instructionsButton {
                 if view != nil {
-                    let transition:SKTransition = SKTransition.doorsOpenHorizontal(withDuration: 1)
+                    let transition:SKTransition = SKTransition.flipVertical(withDuration: 1)
                     let scene:SKScene = InstructionsScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)
                 }
