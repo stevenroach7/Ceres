@@ -65,7 +65,7 @@ class LeaderBoardScene: SKScene {
             highScore.text = "\((i + 1)). \(highScores[i])"
             highScore.fontSize = 28
             highScore.fontColor = SKColor.white
-            highScore.position = RelativePositions.HighScoresLabel.getAbsolutePosition(size: size, constantY: (-PositionConstants.leaderBoardScoresDistance * CGFloat(i)))
+            highScore.position = RelativePositions.HighScoresLabel.getAbsolutePosition(size: size, constantY: (-PositionConstants.leaderBoardScoresDistanceFactor * size.height * CGFloat(i)))
             addChild(highScore)
         }
     }
