@@ -28,7 +28,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let flickHand = SKSpriteNode(imageNamed: "touch")
     let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
     
-    
     let losingGemPlusMinus = -1 // Make this lower during testing
     
     var gemsLabel: SKLabelNode!
@@ -47,17 +46,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var timeToBeginNextSequence:Double = 0.0 // Initialize to 0.0 so sequence will start when gameplay begins
     
     
-    var spawnSequenceManager: SpawnSequenceManager = SpawnSequenceManager()
-    var audioManager: AudioManager = AudioManager()
+    var spawnSequenceManager = SpawnSequenceManager()
+    var audioManager = AudioManager()
+    var animationManager = AnimationManager()
     
-    
-    // TODO: Refactor into Animation manager class
-    var collectorAtlas = SKTextureAtlas()
-    var collectorFrames = [SKTexture]()
-    var hammerAtlas = SKTextureAtlas()
-    var hammerFrames = [SKTexture]()
-    
-    
+
     // Data structures to deal with user touches
     var touchesToGems:[UITouch: SKSpriteNode] = [:] // Dictionary to map currently selected user touches to the gems they are dragging
     var selectedGems: Set<SKSpriteNode> = Set()
@@ -92,12 +85,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         makeWall(location: CGPoint(x: -PositionConstants.wallOffScreenDistance, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
         makeWall(location: CGPoint(x: size.width + PositionConstants.wallOffScreenDistance, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
         
-        collectorAtlas = SKTextureAtlas(named: "collectorImages")
-        collectorFrames.append(SKTexture(imageNamed: "collectorActive.png"))
-        collectorFrames.append(SKTexture(imageNamed: "collectorInactive.png"))
-        hammerAtlas = SKTextureAtlas(named: "hammerImages")
-        hammerFrames.append(SKTexture(imageNamed: "hammerActive.png"))
-        hammerFrames.append(SKTexture(imageNamed: "hammerInactive.png"))
+        
+        animationManager.addAtlases()
         
         addChild(audioManager)
         audioManager.playBackgroundMusic()
@@ -184,7 +173,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     public func collectGemAnimation(collector: SKSpriteNode, implosion: Bool) {
-        collector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
+        collector.run(SKAction.repeat(SKAction.animate(with: animationManager.collectorFrames, timePerFrame: 0.25), count: 1))
         
         let tempCollectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
         tempCollectorGlow.position = RelativePositions.CollectorGlow.getAbsolutePosition(size: size)
@@ -219,7 +208,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         let gameDimmerSize = RelativeScales.GameDimmer.getAbsoluteSize(screenSize: size, nodeSize: gameDimmer.size)
         gameDimmer.xScale = gameDimmerSize.width
         gameDimmer.yScale = gameDimmerSize.height
-        
         gameDimmer.position = CGPoint(x: size.width * 0.5, y: size.height * 0.5)
         gameDimmer.zPosition = 7
         //addChild(gameDimmer)

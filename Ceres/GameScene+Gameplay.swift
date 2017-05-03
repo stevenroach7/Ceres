@@ -129,9 +129,9 @@ extension GameScene { // Gameplay
     private func animateGemSource(gemSourceLocation: GemSourceLocation) {
         switch gemSourceLocation {
         case .left:
-            leftGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
+            leftGemSource.run(SKAction.animate(with: animationManager.hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
         case .right:
-            rightGemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35))
+            rightGemSource.run(SKAction.animate(with: animationManager.hammerFrames, timePerFrame: 0.35))
         }
     }
     

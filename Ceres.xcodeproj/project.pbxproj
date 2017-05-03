@@ -31,6 +31,7 @@
 		B07805ED1E5506C300073DD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B07805EC1E5506C300073DD6 /* Assets.xcassets */; };
 		B07805FB1E5506C400073DD6 /* CeresTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07805FA1E5506C400073DD6 /* CeresTests.swift */; };
 		B07806061E5506C400073DD6 /* CeresUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07806051E5506C400073DD6 /* CeresUITests.swift */; };
+		B0AB74A31EBA963900A1ECA8 /* AnimationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AB74A21EBA963900A1ECA8 /* AnimationManager.swift */; };
 		B0B969AA1E56321B005C587D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B0B969A91E56321B005C587D /* .gitignore */; };
 		B0D9C08E1EB3E0B3008F1403 /* DefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D9C08D1EB3E0B3008F1403 /* DefaultsManager.swift */; };
 		B0F2D15F1EABC84D0040F6DE /* GameScene+GemSpawn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F2D15E1EABC84D0040F6DE /* GameScene+GemSpawn.swift */; };
@@ -101,6 +102,7 @@
 		B07806011E5506C400073DD6 /* CeresUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CeresUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B07806051E5506C400073DD6 /* CeresUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CeresUITests.swift; sourceTree = "<group>"; };
 		B07806071E5506C400073DD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B0AB74A21EBA963900A1ECA8 /* AnimationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationManager.swift; sourceTree = "<group>"; };
 		B0B969A91E56321B005C587D /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		B0D9C08D1EB3E0B3008F1403 /* DefaultsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultsManager.swift; sourceTree = "<group>"; };
 		B0F2D15E1EABC84D0040F6DE /* GameScene+GemSpawn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GameScene+GemSpawn.swift"; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 			children = (
 				B0F2D1631EABD66F0040F6DE /* SpawnSequenceManager.swift */,
 				A9406C831EAEE77B00E0EA50 /* AudioManager.swift */,
+				B0AB74A21EBA963900A1ECA8 /* AnimationManager.swift */,
 				B0D9C08D1EB3E0B3008F1403 /* DefaultsManager.swift */,
 			);
 			name = Managers;
@@ -475,6 +478,7 @@
 				A9FDA30E1EAC386E00D431E5 /* GameScene+Collision.swift in Sources */,
 				3CB7250C1E5B91B300B28AE5 /* MenuScene.swift in Sources */,
 				3C55D7E81EBA6594004271FC /* LeaderBoardScene.swift in Sources */,
+				B0AB74A31EBA963900A1ECA8 /* AnimationManager.swift in Sources */,
 				3C67AD991E8331E100C8B980 /* StagePlanet.swift in Sources */,
 				3C07FDDC1EAFD7CB004DCA78 /* SettingsScene.swift in Sources */,
 				B0F54CC61EA07E8000ACD89B /* GameScene+Tutorial.swift in Sources */,
