@@ -50,6 +50,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var spawnSequenceManager: SpawnSequenceManager = SpawnSequenceManager()
     var audioManager: AudioManager = AudioManager()
     
+    let gamePaused = false
+    
+    
     
     // TODO: Refactor into Animation manager class
     var collectorAtlas = SKTextureAtlas()
@@ -63,10 +66,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var selectedGems: Set<SKSpriteNode> = Set()
     var nodeDisplacements:[SKSpriteNode: CGVector] = [:] // Dictionary to map currently selected nodes to their displacements from the user's finger
     
+    let gameLayer = SKNode()
+    let pauseLayer = SKNode()
+    
+    
+    
     
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
-        
+    
         physicsWorld.contactDelegate = self
         
         backgroundColor = SKColor.black
@@ -74,12 +82,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         starfield.position = RelativePositions.Starfield.getAbsolutePosition(size: size)
         starfield.zPosition = -10
         starfield.advanceSimulationTime(1)
-        addChild(starfield)
+        gameLayer.addChild(starfield)
         
         pauseButton.setScale(0.175)
         pauseButton.name = "pauseButton"
         pauseButton.position = RelativePositions.PauseButton.getAbsolutePosition(size: size)
-        addChild(pauseButton)
+        gameLayer.addChild(pauseButton)
         
         setScoreLabel()
         
@@ -99,10 +107,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         hammerFrames.append(SKTexture(imageNamed: "hammerActive.png"))
         hammerFrames.append(SKTexture(imageNamed: "hammerInactive.png"))
         
-        addChild(audioManager)
+        gameLayer.addChild(audioManager) // Pausing audio manager doesn't pause audio so this doesn't have to be a child of gameLayer
         audioManager.playBackgroundMusic()
     
         startTutorialMode()
+        
+        addPauseLayerElements()
+        addChild(gameLayer)
     }
     
     
@@ -118,7 +129,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         shape.physicsBody?.categoryBitMask = PhysicsCategories.Wall;
         shape.physicsBody?.contactTestBitMask = PhysicsCategories.Gem;
         shape.physicsBody?.collisionBitMask = PhysicsCategories.None;
-        self.addChild(shape)
+        gameLayer.addChild(shape)
     }
     
     private func setScoreLabel() {
@@ -129,19 +140,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         scoreLabel.fontSize = 20
         //scoreLabel.horizontalAlignmentMode = .right
         scoreLabel.position = RelativePositions.ScoreLabel.getAbsolutePosition(size: size)
-        addChild(scoreLabel)
+        gameLayer.addChild(scoreLabel)
     }
 
     private func addStagePlanet() {
         stagePlanet.setStagePlanetProperties()  // Calls stage properties from StagePlanet class
         stagePlanet.position = RelativePositions.StagePlanet.getAbsolutePosition(size: size)
-        addChild(stagePlanet)
+        gameLayer.addChild(stagePlanet)
     }
     
     private func addGemCollector() {
         gemCollector.setGemCollectorProperties()  // Calls gem collector properties from GemCollector class
         gemCollector.position = RelativePositions.Collector.getAbsolutePosition(size: size)
-        addChild(gemCollector)
+        gameLayer.addChild(gemCollector)
     }
     
     private func addGemSources() {
@@ -150,12 +161,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         leftGemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
         leftGemSource.position = RelativePositions.LeftGemSource.getAbsolutePosition(size: size, constantY: -PositionConstants.gemSourceDistBelowAstronaut)
         leftGemSource.name = "leftGemSource"
-        addChild(leftGemSource)
+        gameLayer.addChild(leftGemSource)
         
         rightGemSource.setGemSourceProperties()  // Calls gem source properties from GemSource class
         rightGemSource.position = RelativePositions.RightGemSource.getAbsolutePosition(size: size, constantY: -PositionConstants.gemSourceDistBelowAstronaut)
         rightGemSource.name = "rightGemSource"
-        addChild(rightGemSource)
+        gameLayer.addChild(rightGemSource)
     }
     
     private func addAstronauts() {
@@ -179,9 +190,57 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         blueAstronaut.physicsBody?.isDynamic = false // Change this to true to be amused
         blueAstronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
         
-        addChild(redAstronaut)
-        addChild(blueAstronaut)
+        gameLayer.addChild(redAstronaut)
+        gameLayer.addChild(blueAstronaut)
     }
+    
+    
+    private func addPauseLayerElements() {
+        
+        let pauseMenu = SKSpriteNode(imageNamed: "pauseMenu")
+        let pauseMenuSize = RelativeScales.PauseMenu.getAbsoluteSize(screenSize: size, nodeSize: pauseMenu.size)
+        pauseMenu.xScale = pauseMenuSize.width
+        pauseMenu.xScale = pauseMenuSize.height
+        pauseMenu.position = CGPoint(x: size.width * 0.5, y: size.height * 0.55)
+        pauseMenu.zPosition = 8
+        pauseLayer.addChild(pauseMenu)
+        
+        let resume = SKSpriteNode(imageNamed: "play")
+        resume.name = "resume"
+        resume.setScale(0.3 * (size.width / resume.size.width))
+        resume.position = CGPoint(x: size.width * 0.5, y: size.height * 0.5)
+        resume.zPosition = 9
+        pauseLayer.addChild(resume)
+        
+        let back = SKSpriteNode(imageNamed: "back")
+        back.name = "back"
+        back.setScale(0.2 * (size.width / back.size.width))
+        back.position = CGPoint(x: size.width * 0.2, y: size.height * 0.5)
+        back.zPosition = 9
+        pauseLayer.addChild(back)
+        
+        let restart = SKSpriteNode(imageNamed: "replay")
+        restart.name = "restart"
+        restart.setScale(0.2 * (size.width / restart.size.width))
+        restart.zPosition = 9
+        restart.position = CGPoint(x: size.width * 0.8, y: size.height * 0.5)
+        pauseLayer.addChild(restart)
+        
+        pauseLayer.zPosition = 100
+    }
+    
+    
+    func onPauseButtonTouch() {
+        
+        if !gameLayer.isPaused {
+            gameLayer.isPaused = true
+            addChild(pauseLayer)
+            physicsWorld.speed = 0
+            // TODO: Also Pause background music
+        }
+
+    }
+    
     
     public func collectGemAnimation(collector: SKSpriteNode, implosion: Bool) {
         collector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
@@ -195,10 +254,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             tempCollectorGlow.particleColor = UIColor.red
             tempCollectorGlow.numParticlesToEmit = tempCollectorGlow.numParticlesToEmit * 2
         }
-        addChild(tempCollectorGlow)
+        gameLayer.addChild(tempCollectorGlow)
         // Remove collector glow node after 3 seconds
         run(SKAction.sequence([SKAction.wait(forDuration: 3.0), SKAction.run({tempCollectorGlow.removeFromParent()})]))
- 
     }
     
     public func flashGemsLabelAnimation(color: SKColor, percentGrowth: Double = 1.075) {
@@ -210,37 +268,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         let flashAnimation = SKAction.sequence([colorScore, expand, shrink, recolorWhite])
         
         gemsLabel.run(flashAnimation)
-    }
-    
-    func onPauseButtonTouch() { 
-        pauseAlert(title: "Game Paused", message: "")
-        
-        let pauseMenu = SKSpriteNode(imageNamed: "pauseMenu")        
-        let pauseMenuSize = RelativeScales.PauseMenu.getAbsoluteSize(screenSize: size, nodeSize: pauseMenu.size)
-        pauseMenu.xScale = pauseMenuSize.width
-        pauseMenu.xScale = pauseMenuSize.height
-        
-        pauseMenu.position = CGPoint(x: size.width * 0.5, y: size.height * 0.55)
-        pauseMenu.zPosition = 8
-        //addChild(pauseMenu)
-        
-        let resume = SKSpriteNode(imageNamed: "play")
-        resume.setScale(0.3 * (size.width / resume.size.width))
-        resume.position = CGPoint(x: size.width * 0.5, y: size.height * 0.5)
-        resume.zPosition = 9
-        //addChild(resume)
-        
-        let back = SKSpriteNode(imageNamed: "back")
-        back.setScale(0.2 * (size.width / back.size.width))
-        back.position = CGPoint(x: size.width * 0.2, y: size.height * 0.5)
-        back.zPosition = 9
-        //addChild(back)
-        
-        let restart = SKSpriteNode(imageNamed: "replay")
-        restart.setScale(0.2 * (size.width / restart.size.width))
-        restart.zPosition = 9
-        restart.position = CGPoint(x: size.width * 0.8, y: size.height * 0.5)
-        //addChild(restart)
     }
     
 }

@@ -24,7 +24,7 @@ extension GameScene { // Gameplay
         
         physicsWorld.gravity = CGVector(dx: 0, dy: 0.27) // Gravity on Ceres is 0.27 m/s²
         
-        run(SKAction.repeatForever(
+        gameLayer.run(SKAction.repeatForever(
             SKAction.sequence([
                 SKAction.run({self.animateGemSource(gemSourceLocation: .left)}),
                 SKAction.wait(forDuration: 0.35),
@@ -33,7 +33,7 @@ extension GameScene { // Gameplay
                 ])
         ))
         
-        run(SKAction.repeatForever( // Serves as timer, Could potentially refactor to use group actions later.
+        gameLayer.run(SKAction.repeatForever( // Serves as timer, Could potentially refactor to use group actions later.
             SKAction.sequence([
                 SKAction.run(spawnGems),
                 SKAction.wait(forDuration: 1.0),
@@ -119,7 +119,7 @@ extension GameScene { // Gameplay
         minus.fontColor = SKColor.red
         minus.fontSize = 30
         minus.position = RelativePositions.MinusAlert.getAbsolutePosition(size: size)
-        addChild(minus)
+        gameLayer.addChild(minus)
         
         let moveDown = SKAction.moveTo(y: size.height * 0.7, duration: 0.6)
         minus.run(moveDown)

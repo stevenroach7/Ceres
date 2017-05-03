@@ -79,7 +79,7 @@ extension GameScene { // GemSpawn
         if Double(timerSeconds) >= timeToBeginNextSequence { // Check if previous sequence has ended
             let nextSpawnAction  = spawnSequenceManager.getSpawnSequence(time: timerSeconds)
             timeToBeginNextSequence = Double(timerSeconds) + nextSpawnAction.getSpawnActionDuration()
-            run(createSKAction(spawnAction: nextSpawnAction))
+            gameLayer.run(createSKAction(spawnAction: nextSpawnAction))
         }
     }
     
@@ -98,7 +98,7 @@ extension GameScene { // GemSpawn
         }
         gem.position = position
         gem.setGemVelocity(velocity: velocity, angle: angle)
-        addChild(gem)
+        gameLayer.addChild(gem)
     }
     
     public func addRegularGem(location: GemSourceLocation, velocity: CGFloat = Utility.random(min: 170, max: 190)) {
@@ -116,7 +116,7 @@ extension GameScene { // GemSpawn
         let gemExplosion = SKEmitterNode(fileNamed: "gemExplosion")!
         
         
-        run(SKAction.sequence([
+        gameLayer.run(SKAction.sequence([
             SKAction.run({self.addGem(gem: detonatorGem, location: location, velocity: velocity)}),
             SKAction.run({self.animateDetonatorGem(detonatorGem: detonatorGem)}),
             SKAction.wait(forDuration: timeToExplosion),
@@ -158,13 +158,13 @@ extension GameScene { // GemSpawn
             detonatorGem.removeFromParent()
             
             gemExplosion.position = gemPosition
-            addChild(gemExplosion)
+            gameLayer.addChild(gemExplosion)
             audioManager.play(sound: .gemExplosionSound)
             
             gravityFieldNode.name = "gravityFieldNode"
             gravityFieldNode.strength = -30
             gravityFieldNode.position = gemPosition
-            addChild(gravityFieldNode)
+            gameLayer.addChild(gravityFieldNode)
         }
     }
     

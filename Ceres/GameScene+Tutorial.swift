@@ -24,7 +24,7 @@ extension GameScene { // Tutorial
         setGemsLabel(font: 20, position: RelativePositions.InitialGemsLabel.getAbsolutePosition(size: size))
         gemsLabel.setScale(3/2) // Set scale to be bigger than usual when label is first displayed
         collectorGlow.position = RelativePositions.CollectorGlow.getAbsolutePosition(size: size)
-        addChild(collectorGlow)
+        gameLayer.addChild(collectorGlow)
     }
     
     public func addTutorialGem() {
@@ -32,7 +32,7 @@ extension GameScene { // Tutorial
         gem.name = "gem"
         gem.setGemProperties()  // Calls gem properties from Gem class
         gem.position = RelativePositions.TutorialGem.getAbsolutePosition(size: size)
-        addChild(gem)
+        gameLayer.addChild(gem)
     }
     
     private func makeTutorialHand() {
@@ -43,7 +43,7 @@ extension GameScene { // Tutorial
         flickHand.position = RelativePositions.FlickHand.getAbsolutePosition(size: size)
         flickHand.setScale(0.3)
         flickHand.zPosition = 9
-        addChild(flickHand)
+        gameLayer.addChild(flickHand)
         
         let initiateTouch = SKAction.move(to:  RelativePositions.FlickHandTouch.getAbsolutePosition(size: size), duration: 0.6)
         let moveDownSlow = SKAction.move(to: RelativePositions.FlickHandDownSlow.getAbsolutePosition(size: size), duration: 0.75)
@@ -81,7 +81,7 @@ extension GameScene { // Tutorial
         gemsLabel.fontSize = font
         //gemsLabel.horizontalAlignmentMode = .right
         gemsLabel.position = position
-        addChild(gemsLabel)
+        gameLayer.addChild(gemsLabel)
     }
     
     public func tutorialGemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {

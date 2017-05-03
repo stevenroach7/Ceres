@@ -17,7 +17,7 @@ extension GameScene { // Touching logic
         
         var minDist: CGFloat = 1000
         var closestGem: SKSpriteNode = SKSpriteNode()
-        self.enumerateChildNodes(withName: "*"){node,_ in
+        gameLayer.enumerateChildNodes(withName: "*"){node,_ in
             if node.name == "gem" || node.name == "detonatorGem" {
                 let xDist = node.position.x - touchLocation.x
                 let yDist = node.position.y - touchLocation.y
@@ -38,22 +38,45 @@ extension GameScene { // Touching logic
             let touchLocation = touch.location(in:self)
             let touchedNode = self.atPoint(touchLocation)
             // Handle touching nodes that are not gems
+            
             if let name = touchedNode.name {
-                switch name {
-                case "rightGemSource":
-                    onGemSourceTouch(gemSourceLocation: .right)
-                case "leftGemSource":
-                    onGemSourceTouch(gemSourceLocation: .left)
-                case "pauseButton":
-                    onPauseButtonTouch()
-                default: // Check if gem is touched
-                    let (minDist, closestGem) = findNearestGem(touchLocation: touchLocation)
-                    let touchedGem = (closestGem as? SKSpriteNode)!
-                    if minDist < (44 + ((touchedGem.size.height / 2) - 3)) { //If the touch is within 44 px of gem, change touched node to gem
-                        if !selectedGems.contains(touchedGem) {
-                            selectedGems.insert(touchedGem)
-                            touchesToGems[touch] = touchedGem
-                            nodeDisplacements[touchedGem] = CGVector(dx: touchLocation.x - touchedGem.position.x, dy: touchLocation.y - touchedGem.position.y)
+                
+                if gameLayer.isPaused {
+                    switch name {
+                    case "resume":
+                        gameLayer.isPaused = false
+                        physicsWorld.speed = 1
+                        pauseLayer.removeFromParent()
+                        // TODO: Also resume background musis
+                    case "back":
+                        let transition:SKTransition = SKTransition.fade(withDuration: 3.0)
+                        let scene:SKScene = MenuScene(size: self.size)
+                        self.scene?.name = "transition" // Change name of scene since we are no longer in game once the transition begins
+                        self.view?.presentScene(scene, transition: transition)
+                    case "restart":
+                        let scene:SKScene = GameScene(size: self.size)
+                        self.view?.presentScene(scene)
+                    default:
+                        break
+                    }
+                } else {
+                    switch name {
+                    case "rightGemSource":
+                        onGemSourceTouch(gemSourceLocation: .right)
+                    case "leftGemSource":
+                        onGemSourceTouch(gemSourceLocation: .left)
+                    case "pauseButton":
+                        onPauseButtonTouch()
+                    default: // Check if gem is touched
+                        
+                        let (minDist, closestGem) = findNearestGem(touchLocation: touchLocation)
+                        let touchedGem = (closestGem as? SKSpriteNode)!
+                        if minDist < (44 + ((touchedGem.size.height / 2) - 3)) { //If the touch is within 44 px of gem, change touched node to gem
+                            if !selectedGems.contains(touchedGem) {
+                                selectedGems.insert(touchedGem)
+                                touchesToGems[touch] = touchedGem
+                                nodeDisplacements[touchedGem] = CGVector(dx: touchLocation.x - touchedGem.position.x, dy: touchLocation.y - touchedGem.position.y)
+                            }
                         }
                     }
                 }

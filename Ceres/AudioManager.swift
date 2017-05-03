@@ -49,5 +49,5 @@ class AudioManager: SKNode {
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
     }
-    
+        
 }
