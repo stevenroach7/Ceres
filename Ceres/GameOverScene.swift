@@ -32,7 +32,7 @@ class GameOverScene: SKScene {
     
     public func setHighScores(){
         var highScores: [Int] = defaultsManager.getHighScores()
-        if (score > highScores[highScores.count - 1]){ //If the score is at least greater than the smallest element in the array
+        if (score > highScores[highScores.count - 1] && score < 1000){ //If the score is at least greater than the smallest element in the array, also set score upperbound
             for i in (0...(highScores.count - 1)) {
                 if (score > highScores[i]) {
                     highScores[highScores.count - 1] = score
