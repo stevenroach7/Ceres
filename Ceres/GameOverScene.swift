@@ -32,11 +32,9 @@ class GameOverScene: SKScene {
     
     public func setHighScore(){
         let currHighScore = defaultsManager.getHighScore()
-        print(currHighScore)
         if (score > currHighScore){
             defaultsManager.setHighScore(key: "HighScore", value: score)
         }
-        print(defaultsManager.getHighScore())
     }
     
     override func didMove(to view: SKView) {
