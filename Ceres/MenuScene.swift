@@ -25,6 +25,7 @@ class MenuScene: SKScene {
     var aboutButton = SKSpriteNode(imageNamed: "about")
 
     var settingsButton = SKSpriteNode(imageNamed: "settings")
+    var leaderBoardButton = SKSpriteNode(imageNamed: "leaderBoard")
     
     override func didMove(to view: SKView) {
         /***
@@ -35,25 +36,46 @@ class MenuScene: SKScene {
         
         backgroundColor = SKColor.black
         
+//        gameTitle.setScale(0.75)
+        let gameTitleSize = RelativeScales.GameTitle.getAbsoluteSize(screenSize: size, nodeSize: gameTitle.size)
+        gameTitle.xScale = gameTitleSize.width
+        gameTitle.yScale = gameTitleSize.height
         gameTitle.position = RelativePositions.Title.getAbsolutePosition(size: size)
-        gameTitle.setScale(0.75)
         addChild(gameTitle)
         
-        playButton.setScale(0.6)
+//        playButton.setScale(0.6)
+        let playButtonSize = RelativeScales.PlayButton.getAbsoluteSize(screenSize: size, nodeSize: playButton.size)
+        playButton.xScale = playButtonSize.width
+        playButton.yScale = playButtonSize.height
         playButton.position = RelativePositions.PlayButton.getAbsolutePosition(size: size)
         addChild(playButton)
         
-        instructionsButton.setScale(0.5)
+//        instructionsButton.setScale(0.5)
+        let instructionsButtonSize = RelativeScales.InstructionsButton.getAbsoluteSize(screenSize: size, nodeSize: instructionsButton.size)
+        instructionsButton.xScale = instructionsButtonSize.width
+        instructionsButton.yScale = instructionsButtonSize.height
         instructionsButton.position = RelativePositions.InstructionsButton.getAbsolutePosition(size: size)
         addChild(instructionsButton)
         
-        aboutButton.setScale(0.5)
+//        aboutButton.setScale(0.5)
+        let aboutButtonSize = RelativeScales.AboutButton.getAbsoluteSize(screenSize: size, nodeSize: aboutButton.size)
+        aboutButton.xScale = aboutButtonSize.width
+        aboutButton.yScale = aboutButtonSize.height
         aboutButton.position = RelativePositions.AboutButton.getAbsolutePosition(size: size)
         addChild(aboutButton)
         
-        settingsButton.setScale(0.375)
+//        settingsButton.setScale(0.375)
+        let settingsButtonSize = RelativeScales.SettingsButton.getAbsoluteSize(screenSize: size, nodeSize: settingsButton.size)
+        settingsButton.xScale = settingsButtonSize.width
+        settingsButton.yScale = settingsButtonSize.height
         settingsButton.position = RelativePositions.SettingsButton.getAbsolutePosition(size: size)
         addChild(settingsButton)
+        
+        let leaderBoardButtonSize = RelativeScales.LeaderBoardButton.getAbsoluteSize(screenSize: size, nodeSize: leaderBoardButton.size)
+        leaderBoardButton.xScale = leaderBoardButtonSize.width
+        leaderBoardButton.yScale = leaderBoardButtonSize.height
+        leaderBoardButton.position = RelativePositions.LeaderBoardButton.getAbsolutePosition(size: size)
+        addChild(leaderBoardButton)
         
         starfield = SKEmitterNode(fileNamed: "starShower")
         starfield.position = RelativePositions.Starfield.getAbsolutePosition(size: size)
@@ -71,10 +93,26 @@ class MenuScene: SKScene {
         self.addChild(rightExhaust)
         rightExhaust.zPosition = -1
         
-        ship.xScale = 0.3 * (size.width / ship.size.width)
-        ship.yScale = 0.15 * (size.height / ship.size.height)
+        let shipSize = RelativeScales.Ship.getAbsoluteSize(screenSize: size, nodeSize: ship.size)
+        ship.xScale = shipSize.width
+        ship.yScale = shipSize.height
         ship.position = RelativePositions.Ship.getAbsolutePosition(size:size)
         addChild(ship)
+    }
+    
+    private func easterEggChangeColor() {
+        let randomRed:CGFloat = CGFloat(drand48())
+        let randomGreen:CGFloat = CGFloat(drand48())
+        let randomBlue:CGFloat = CGFloat(drand48())
+        let newColor = UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
+        
+        rightExhaust.particleColorSequence = nil
+        rightExhaust.particleColorBlendFactor = 1.0
+        rightExhaust.particleColor = newColor
+        
+        leftExhaust.particleColorSequence = nil
+        leftExhaust.particleColorBlendFactor = 1.0
+        leftExhaust.particleColor = newColor
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -86,7 +124,7 @@ class MenuScene: SKScene {
             //transitions to game screen if play button is touched
             if node == playButton {
                 if view != nil {
-                    let transition:SKTransition = SKTransition.crossFade(withDuration: 1)
+                    let transition:SKTransition = SKTransition.doorsOpenHorizontal(withDuration: 1)
                     let scene:SKScene = GameScene(size: self.size)
                     scene.name = "game"
                     self.view?.presentScene(scene, transition: transition)
@@ -95,15 +133,27 @@ class MenuScene: SKScene {
             
             //transitions to settings screen if settings button is touched
             else if node == settingsButton {
-                let transition:SKTransition = SKTransition.fade(withDuration: 0.5)
-                let scene:SKScene = SettingsScene(size: self.size)
-                self.view?.presentScene(scene, transition: transition)
+                if view != nil {
+                    let transition:SKTransition = SKTransition.push(with: .right, duration: 1)
+                    let scene:SKScene = SettingsScene(size: self.size)
+                    self.view?.presentScene(scene, transition: transition)
+
+                }
+            }
+                
+                //transitions to leader board screen if leader board button is touched
+            else if node == leaderBoardButton {
+                if view != nil {
+                    let transition:SKTransition = SKTransition.push(with: .left, duration: 1)
+                    let scene:SKScene = LeaderBoardScene(size: self.size)
+                    self.view?.presentScene(scene, transition: transition)
+                }
             }
             
             //transitions to instructions screen if instructions button is touched
             else if node == instructionsButton {
                 if view != nil {
-                    let transition:SKTransition = SKTransition.doorsOpenHorizontal(withDuration: 1)
+                    let transition:SKTransition = SKTransition.flipVertical(withDuration: 1)
                     let scene:SKScene = InstructionsScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)
                 }
@@ -111,9 +161,13 @@ class MenuScene: SKScene {
             
             //transitions to about screen if about button is touched
             else if node == aboutButton {
-                let transition:SKTransition = SKTransition.flipVertical(withDuration: 1)
+                let transition:SKTransition = SKTransition.reveal(with: .up, duration: 1)
                 let scene:SKScene = AboutScene(size: self.size)
                 self.view?.presentScene(scene, transition: transition)
+            }
+            
+            else if node == ship{
+                easterEggChangeColor()
             }
         }
     }

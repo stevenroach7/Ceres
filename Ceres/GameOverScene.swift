@@ -46,7 +46,6 @@ class GameOverScene: SKScene {
         print(defaultsManager.presentHighScores())
     }
     
-    
     override func didMove(to view: SKView) {
         /***
          positions labels and nodes on screen
