@@ -69,13 +69,14 @@ public struct RelativePositions {
     static let MenuButton = RelativeCoordinate.init(x: 0.5, y: 0.1)
     
     // Leaderboard positioning
-    static let TopScoresLabel = RelativeCoordinate.init(x: 0.5, y: 4/6)
+    static let HighScoresLabel = RelativeCoordinate.init(x: 0.5, y: 4/6)
 }
 
 public struct PositionConstants {
     // Holds constants used for positioning
     static let wallOffScreenDistance: CGFloat = 50
     static let gemSourceDistBelowAstronaut: CGFloat = 20
+    static let leaderBoardScoresDistance: CGFloat = 70
 }
 
 public struct RelativeCoordinate {

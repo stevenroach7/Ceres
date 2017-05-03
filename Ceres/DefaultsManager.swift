@@ -30,7 +30,7 @@ class DefaultsManager {
         let highScores = getHighScores()
         var highScoresWithoutZeroes = [Int]()
         if (highScores[highScores.count - 1] == 0) {
-            for var i in (0...(highScores.count - 1)) {
+            for i in (0...(highScores.count - 1)) {
                 if (highScores[i] != 0){
                     highScoresWithoutZeroes.append(highScores[i])
                 }

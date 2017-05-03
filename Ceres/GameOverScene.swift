@@ -33,7 +33,7 @@ class GameOverScene: SKScene {
     public func setHighScores(){
         var highScores: [Int] = defaultsManager.getHighScores()
         if (score > highScores[highScores.count - 1]){ //If the score is at least greater than the smallest element in the array
-            for var i in (0...(highScores.count - 1)) {
+            for i in (0...(highScores.count - 1)) {
                 if (score > highScores[i]) {
                     highScores[highScores.count - 1] = score
                     highScores.sort() { $0 > $1 }
@@ -42,8 +42,6 @@ class GameOverScene: SKScene {
             }
         }
         defaultsManager.setHighScores(value: highScores)
-        print(defaultsManager.getHighScores())
-        print(defaultsManager.presentHighScores())
     }
     
     override func didMove(to view: SKView) {

@@ -21,6 +21,8 @@ class LeaderBoardScene: SKScene {
     
     let swipeRightRec = UISwipeGestureRecognizer()
     
+    let defaultsManager = DefaultsManager()
+    
     override func didMove(to view: SKView) {
         
         backgroundColor = SKColor.black
@@ -52,14 +54,20 @@ class LeaderBoardScene: SKScene {
         showScores()
     }
     
-    //Testing leaderboard stuff
+    
     private func showScores(){
-        let score1 = SKLabelNode(fontNamed: "Menlo-Bold")
-        score1.text = "1. 100"
-        score1.fontSize = 32
-        score1.fontColor = SKColor.white
-        score1.position = RelativePositions.TopScoresLabel.getAbsolutePosition(size: size)
-        addChild(score1)
+        //Presents the top scores 
+        
+        let highScores = defaultsManager.presentHighScores()
+        
+        for i in 0...(highScores.count - 1) {
+            let highScore = SKLabelNode(fontNamed: "Menlo-Bold")
+            highScore.text = "\((i + 1)). \(highScores[i])"
+            highScore.fontSize = 28
+            highScore.fontColor = SKColor.white
+            highScore.position = RelativePositions.HighScoresLabel.getAbsolutePosition(size: size, constantY: (-PositionConstants.leaderBoardScoresDistance * CGFloat(i)))
+            addChild(highScore)
+        }
     }
     
     
