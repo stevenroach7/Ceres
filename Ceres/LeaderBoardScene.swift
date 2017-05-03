@@ -60,13 +60,15 @@ class LeaderBoardScene: SKScene {
         
         let highScores = defaultsManager.presentHighScores()
         
-        for i in 0...(highScores.count - 1) {
-            let highScore = SKLabelNode(fontNamed: "Menlo-Bold")
-            highScore.text = "\((i + 1)). \(highScores[i])"
-            highScore.fontSize = 28
-            highScore.fontColor = SKColor.white
-            highScore.position = RelativePositions.HighScoresLabel.getAbsolutePosition(size: size, constantY: (-PositionConstants.leaderBoardScoresDistanceFactor * size.height * CGFloat(i)))
-            addChild(highScore)
+        if (highScores.count >= 1) {
+            for i in 0...(highScores.count - 1) {
+                let highScore = SKLabelNode(fontNamed: "Menlo-Bold")
+                highScore.text = "\((i + 1)). \(highScores[i])"
+                highScore.fontSize = 28
+                highScore.fontColor = SKColor.white
+                highScore.position = RelativePositions.HighScoresLabel.getAbsolutePosition(size: size, constantY: (-PositionConstants.leaderBoardScoresDistanceFactor * size.height * CGFloat(i)))
+                addChild(highScore)
+            }
         }
     }
     
