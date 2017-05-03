@@ -93,6 +93,21 @@ class MenuScene: SKScene {
         addChild(ship)
     }
     
+    private func easterEggChangeColor() {
+        let randomRed:CGFloat = CGFloat(drand48())
+        let randomGreen:CGFloat = CGFloat(drand48())
+        let randomBlue:CGFloat = CGFloat(drand48())
+        let newColor = UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
+        
+        rightExhaust.particleColorSequence = nil
+        rightExhaust.particleColorBlendFactor = 1.0
+        rightExhaust.particleColor = newColor
+        
+        leftExhaust.particleColorSequence = nil
+        leftExhaust.particleColorBlendFactor = 1.0
+        leftExhaust.particleColor = newColor
+    }
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         //looks for a touch
         if let touch = touches.first{
@@ -130,6 +145,10 @@ class MenuScene: SKScene {
                 let transition:SKTransition = SKTransition.flipVertical(withDuration: 1)
                 let scene:SKScene = AboutScene(size: self.size)
                 self.view?.presentScene(scene, transition: transition)
+            }
+            
+            else if node == ship{
+                easterEggChangeColor()
             }
         }
     }
