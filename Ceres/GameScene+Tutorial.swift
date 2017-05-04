@@ -18,6 +18,7 @@ extension GameScene { // Tutorial
     }
     
     private func prepareTutorial() {
+        // Sets up the tutorial at the beginning of the game
         physicsWorld.gravity = CGVector(dx: 0, dy: 0.0)
         addTutorialGem()
         makeTutorialHand()
@@ -36,6 +37,8 @@ extension GameScene { // Tutorial
     }
     
     private func makeTutorialHand() {
+        // Creates hand that imitates a flicking motion
+        
         let touch = SKAction.setTexture(SKTexture(imageNamed: "touch"))
         let drag  = SKAction.setTexture(SKTexture(imageNamed: "drag"))
         let flick = SKAction.setTexture(SKTexture(imageNamed: "flick"))
@@ -79,7 +82,6 @@ extension GameScene { // Tutorial
         gemsLabel = SKLabelNode(fontNamed: "Menlo-Bold")
         gemsLabel.text = "Gems: \(gemsPlusMinus)"
         gemsLabel.fontSize = font
-        //gemsLabel.horizontalAlignmentMode = .right
         gemsLabel.position = position
         addChild(gemsLabel)
     }
@@ -97,6 +99,8 @@ extension GameScene { // Tutorial
     }
     
     public func endTutorial() {
+        // Transitions from tutorial to actual game
+        
         tutorialMode = false
         
         collectorGlow.removeFromParent()

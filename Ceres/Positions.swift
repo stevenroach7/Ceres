@@ -9,9 +9,7 @@
 import Foundation
 import SpriteKit
 
-
 // This file defines structures used for positioning.
-
 
 public struct RelativePositions {
     // Holds relative coordinates to be used for positioning

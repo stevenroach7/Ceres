@@ -68,7 +68,7 @@ class SettingsScene: SKScene {
         collectorGlow.particleColor = UIColor.red
         addChild(collectorGlow)
         
-        stagePlanet.setStagePlanetProperties()  // Calls stage properties from StagePlanet class
+        stagePlanet.setStagePlanetProperties()
         stagePlanet.position = RelativePositions.StagePlanet.getAbsolutePosition(size: size)
         addChild(stagePlanet)
         
@@ -81,9 +81,7 @@ class SettingsScene: SKScene {
         swipeRightRec.addTarget(self, action: #selector(SettingsScene.swipedRight) )
         swipeRightRec.direction = .right
         self.view!.addGestureRecognizer(swipeRightRec)
-        
     }
-    
     
     public func createMusicSwitch() {
         musicSwitch = UISwitch(frame: CGRect(x: frame.midX + size.width/10, y: size.height/4, width: 2, height: 2))
@@ -93,6 +91,7 @@ class SettingsScene: SKScene {
     }
     
     func musicSwitchOnOff(sender:UISwitch!) {
+        // Called when state of music switch changes
         if sender.isOn == false {
             defaultsManager.setValue(key:"MusicOnOff", value: false)
         } else {
@@ -101,6 +100,7 @@ class SettingsScene: SKScene {
     }
     
     private func showMusicSwitchLabel() {
+        // Places label next to music switch
         musicLabel.text = "Music"
         musicLabel.fontSize = 22
         musicLabel.fontColor = SKColor.white
@@ -116,6 +116,7 @@ class SettingsScene: SKScene {
     }
     
     func soundSwitchOnOff(sender:UISwitch!) {
+        // Called when state of sound switch changes
         if sender.isOn == false {
             defaultsManager.setValue(key:"SoundOnOff", value: false)
         } else {
@@ -124,6 +125,7 @@ class SettingsScene: SKScene {
     }
     
     private func showSoundSwitchLabel() {
+        // Places label next to sound switch
         soundLabel.text = "Sound Effects"
         soundLabel.fontSize = 22
         soundLabel.fontColor = SKColor.white
@@ -146,7 +148,6 @@ class SettingsScene: SKScene {
         }
     }
     
-    
     func swipedRight() {
         transitionHome()
     }
@@ -158,5 +159,4 @@ class SettingsScene: SKScene {
         let scene:SKScene = MenuScene(size: self.size)
         self.view?.presentScene(scene, transition: transition)
     }
-    
 }

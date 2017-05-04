@@ -81,6 +81,7 @@ class GameOverScene: SKScene {
                     self.view?.presentScene(scene, transition: transition)
                 }
             }
+            
             //transitions to main menu if main menu button is touched
             if node == menuButton {
                 if view != nil {

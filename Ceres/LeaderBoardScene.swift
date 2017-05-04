@@ -53,7 +53,6 @@ class LeaderBoardScene: SKScene {
         leaderBoardManager.showScores(scene: self, yDist: PositionConstants.leaderBoardScoresDistanceFactor, fontSize: 28, index: -1)
     }
     
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //looks for a touch
         if let touch = touches.first{
@@ -69,7 +68,6 @@ class LeaderBoardScene: SKScene {
         }
     }
     
-    
     func swipedRight() {
         transitionHome()
     }
@@ -79,6 +77,4 @@ class LeaderBoardScene: SKScene {
         let scene:SKScene = MenuScene(size: self.size)
         self.view?.presentScene(scene, transition: transition)
     }
-
-    
 }

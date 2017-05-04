@@ -26,7 +26,6 @@ class Gem: SKSpriteNode {
         physicsBody?.collisionBitMask = GameScene.PhysicsCategories.Gem | GameScene.PhysicsCategories.GemSource | GameScene.PhysicsCategories.StagePlanet;
     }
     
-    
     public func setGemVelocity(velocity: CGFloat, angle: CGFloat) {
         // Sets the Velocity Magnitude and angle of gem
         
@@ -40,5 +39,4 @@ class Gem: SKSpriteNode {
         let dy = sin(angle) * velocity
         return CGVector(dx: dx, dy: dy)
     }
-    
 }

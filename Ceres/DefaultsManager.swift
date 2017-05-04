@@ -8,9 +8,7 @@
 
 import Foundation
 
-
 class DefaultsManager {
-    
     
     private let defaults: UserDefaults = UserDefaults.standard
     
@@ -27,6 +25,8 @@ class DefaultsManager {
     }
     
     public func presentHighScores() -> [Int] {
+        // Adds new score to array of high scores in order
+        
         let highScores = getHighScores()
         var highScoresWithoutZeroes = [Int]()
         if (highScores[highScores.count - 1] == 0) {
@@ -45,11 +45,13 @@ class DefaultsManager {
     }
     
     public func registerMusicAndSound() {
+        // Sets initial boolean of switches to on
         defaults.register(defaults: ["MusicOnOff" : true])
         defaults.register(defaults: ["SoundOnOff" : true])
     }
     
     public func registerHighScores() {
+        // Sets initial values of high scores to 0
         defaults.register(defaults: ["HighScores" : Array(repeating: 0, count: 5)])
     }
 }

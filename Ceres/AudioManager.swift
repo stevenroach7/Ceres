@@ -14,7 +14,6 @@ class AudioManager: SKNode {
     private let backgroundMusic = SKAudioNode(fileNamed: "cosmos.mp3")
     private let defaultsManager = DefaultsManager()
     
-    
     public enum Sound {
         case gemCollectedSound
         case gemCreatedSound
@@ -23,6 +22,7 @@ class AudioManager: SKNode {
     }
     
     public func play(sound: Sound) {
+        // Checks if sound switch is on or off, then plays sound if on
         
         if !(defaultsManager.getValue(key: "SoundOnOff")) {
             return
@@ -42,12 +42,13 @@ class AudioManager: SKNode {
     }
     
     public func playBackgroundMusic() {
+        // Checks if music switch is on or off, plays music if on
         
         if !(defaultsManager.getValue(key: "MusicOnOff")) {
             return
         }
+        
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
     }
-    
 }

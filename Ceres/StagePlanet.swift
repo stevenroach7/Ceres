@@ -23,6 +23,5 @@ class StagePlanet: SKSpriteNode {
         physicsBody?.categoryBitMask = GameScene.PhysicsCategories.StagePlanet;
         physicsBody?.contactTestBitMask = GameScene.PhysicsCategories.Gem;
         physicsBody?.collisionBitMask = GameScene.PhysicsCategories.None;
-        
     }
 }

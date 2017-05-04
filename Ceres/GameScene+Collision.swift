@@ -9,7 +9,6 @@
 import Foundation
 import SpriteKit
 
-
 extension GameScene { // Collision logic
 
     // Determines collisions between different objects

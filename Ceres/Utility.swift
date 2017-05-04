@@ -9,7 +9,6 @@
 import Foundation
 import SpriteKit
 
-
 class Utility {
     
     // Helper methods to generate random numbers between min and max inclusive.

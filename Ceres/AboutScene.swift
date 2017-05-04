@@ -74,7 +74,6 @@ class AboutScene: SKScene {
         }
     }
     
-    
     func swipedRight() {
         transitionHome()
     }
@@ -84,5 +83,4 @@ class AboutScene: SKScene {
         let scene:SKScene = MenuScene(size: self.size)
         self.view?.presentScene(scene, transition: transition)
     }
-    
 }

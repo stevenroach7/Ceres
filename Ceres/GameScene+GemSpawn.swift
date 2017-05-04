@@ -12,7 +12,6 @@ import SpriteKit
 
 extension GameScene { // GemSpawn
     
-    
     enum SpawnAction {
         // Enum holds the actions used to build gem sequences
         
@@ -25,7 +24,6 @@ extension GameScene { // GemSpawn
         case spawnDetonatorRight
         case spawnFastGemLeft
         case spawnFastGemRight
-        
         
         public func getSpawnActionDuration() -> Double {
             // Returns the duration in seconds of the spawnAction the function is called on
@@ -46,7 +44,6 @@ extension GameScene { // GemSpawn
             }
         }
     }
-    
     
     private func createSKAction(spawnAction: SpawnAction) -> SKAction {
         // returns an SKAction to produce that sequence.
@@ -114,7 +111,6 @@ extension GameScene { // GemSpawn
         detonatorGem.name = "detonatorGem"
         let gravityFieldNode = SKFieldNode.radialGravityField()
         let gemExplosion = SKEmitterNode(fileNamed: "gemExplosion")!
-        
         
         run(SKAction.sequence([
             SKAction.run({self.addGem(gem: detonatorGem, location: location, velocity: velocity)}),

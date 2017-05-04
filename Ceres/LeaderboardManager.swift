@@ -26,6 +26,7 @@ class LeaderboardManager {
                 }
             }
         }
+        
         defaultsManager.setHighScores(value: highScores)
         return index
     }
@@ -41,10 +42,10 @@ class LeaderboardManager {
                 highScore.text = "\((i + 1)). \(highScores[i])"
                 if (i == index){
                     highScore.fontColor = SKColor.green
-                }
-                else {
+                } else {
                     highScore.fontColor = SKColor.white
                 }
+                
                 highScore.fontSize = fontSize
                 highScore.position = RelativePositions.HighScoresLabel.getAbsolutePosition(size: scene.size, constantY: (-yDist * scene.size.height * CGFloat(i)))
                 scene.addChild(highScore)

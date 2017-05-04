@@ -9,7 +9,6 @@
 import Foundation
 import SpriteKit
 
-
 class SpawnSequenceManager { 
     
     private let spawnSequence1: GameScene.SpawnAction =
@@ -91,8 +90,6 @@ class SpawnSequenceManager {
     private let pauseSequenceShort: GameScene.SpawnAction = .wait(time: 3.0)
     private let pauseSequenceLong: GameScene.SpawnAction = .wait(time: 10.0)
     
-    
-    
     // Start making sequences after this line
     
     let basicSequences: [GameScene.SpawnAction]
@@ -105,8 +102,6 @@ class SpawnSequenceManager {
     let impossibleSequences:[GameScene.SpawnAction]
     let tempSequences: [GameScene.SpawnAction]
     
-    
-    
     private let basicSequence0: GameScene.SpawnAction =
         .repeated(times: 4,
                   action: .sequence(actions: [.wait(time: 0.9), .spawnGemLeft, .wait(time: 0.9), .spawnGemRight]))
@@ -114,9 +109,6 @@ class SpawnSequenceManager {
     private let basicSequence1: GameScene.SpawnAction =
         .repeated(times: 4,
                   action: .sequence(actions: [.wait(time: 0.9), .spawnGemRight, .wait(time: 0.9), .spawnGemLeft]))
-
-
-    
     
     private let easySequence0: GameScene.SpawnAction =
         .repeated(times: 6,
@@ -140,7 +132,6 @@ class SpawnSequenceManager {
                   action: .sequence(actions: [.repeated(times: 3, action: .sequence(actions: [.wait(time: 0.5), .spawnGemRight])),
                                               .repeated(times: 3, action: .sequence(actions: [.wait(time: 0.5), .spawnGemLeft]))]))
     
-    
     private let easyMediumSequence0: GameScene.SpawnAction =
         .repeated(times: 8,
                   action: .sequence(actions: [.wait(time: 0.4), .spawnGemLeft, .wait(time: 0.25), .spawnGemRight]))
@@ -157,7 +148,6 @@ class SpawnSequenceManager {
     private let easyMediumSequence2: GameScene.SpawnAction =
         .repeated(times: 7,
                   action: .sequence(actions: [.wait(time: 0.8), .spawnGemRight, .spawnGemLeft]))
-    
 
     private let easyMediumSequence3: GameScene.SpawnAction =
         .repeated(times: 3, action:
@@ -170,9 +160,6 @@ class SpawnSequenceManager {
                                 .wait(time: 0.15),
                                 .spawnGemLeft
                 ]))
-    
-    
-    
     
     private let mediumSequence0: GameScene.SpawnAction =
         .repeated(times: 2, action:
@@ -214,7 +201,6 @@ class SpawnSequenceManager {
                             .wait(time: 1),
                             .spawnGemLeft, .spawnGemRight, .spawnGemLeft
                 ]))
-    
     
     private let mediumSequence3: GameScene.SpawnAction =
         .repeated(times: 3, action:
@@ -277,8 +263,6 @@ class SpawnSequenceManager {
                                 .wait(time: 0.20),
                                 .spawnGemRight
             ]))
-
-    
     
     private let mediumHardSequence0: GameScene.SpawnAction =
         .repeated(times: 3, action:
@@ -443,7 +427,6 @@ class SpawnSequenceManager {
                     ]))
         ])
     
-    
     private let hardSequence9: GameScene.SpawnAction =
         .repeated(times: 5, action:
             .sequence(actions: [.wait(time: 0.4),
@@ -455,8 +438,6 @@ class SpawnSequenceManager {
                                 .wait(time: 0.20),
                                 .spawnGemRight, .spawnDetonatorRight, .spawnGemLeft
                 ]))
-    
-    
     
     private let veryHardSequence0: GameScene.SpawnAction =
         .repeated(times: 2, action:
@@ -512,7 +493,6 @@ class SpawnSequenceManager {
                                 .spawnGemRight, .spawnDetonatorLeft
             ]))
    
-    
     private let veryHardSequence4: GameScene.SpawnAction =
         .sequence(actions:[
             .wait(time: 2.0),
@@ -611,7 +591,6 @@ class SpawnSequenceManager {
 //        ,  veryHardSequence0, pauseSequenceShort, veryHardSequence1, pauseSequenceShort, veryHardSequence2, pauseSequenceShort, veryHardSequence3, pauseSequenceShort, veryHardSequence4  ,  pauseSequenceLong]
         
         tempSequences = [impossibleSequence2, pauseSequenceShort]
-
     }
     
     public func getSpawnSequence(time: Int) -> GameScene.SpawnAction {
@@ -647,7 +626,6 @@ class SpawnSequenceManager {
         }
         return impossibleSequences[Utility.random(min: 0, max: impossibleSequences.count - 1)]
     }
-        
 }
 
 

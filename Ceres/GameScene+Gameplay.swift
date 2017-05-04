@@ -86,7 +86,6 @@ extension GameScene { // Gameplay
             addRegularGem(location: gemSourceLocation)
             audioManager.play(sound: .gemCreatedSound)
         }
-        
     }
     
     private func incrementTimer() {
@@ -113,6 +112,8 @@ extension GameScene { // Gameplay
     }
     
     private func minusAlert() {
+        // Notifies player that they lost points after collecting flashing gem
+        
         let minus = SKLabelNode(fontNamed: "Menlo-Bold")
         minus.text = "-5"
         minus.fontColor = SKColor.red

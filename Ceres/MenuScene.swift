@@ -132,11 +132,10 @@ class MenuScene: SKScene {
                     let transition:SKTransition = SKTransition.fade(withDuration: 0.5)
                     let scene:SKScene = SettingsScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)
-
                 }
             }
                 
-                //transitions to leader board screen if leader board button is touched
+            //transitions to leader board screen if leader board button is touched
             else if node == leaderBoardButton {
                 if view != nil {
                     let transition:SKTransition = SKTransition.fade(withDuration: 1)

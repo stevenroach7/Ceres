@@ -116,7 +116,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         scoreLabel = SKLabelNode(fontNamed: "Menlo-Bold")
         scoreLabel.text = "Score: \(timerSeconds)"
         scoreLabel.fontSize = 20
-        //scoreLabel.horizontalAlignmentMode = .right
         scoreLabel.position = RelativePositions.ScoreLabel.getAbsolutePosition(size: size)
         addChild(scoreLabel)
     }
@@ -176,10 +175,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         addChild(tempCollectorGlow)
         // Remove collector glow node after 3 seconds
         run(SKAction.sequence([SKAction.wait(forDuration: 3.0), SKAction.run({tempCollectorGlow.removeFromParent()})]))
- 
     }
     
     public func flashGemsLabelAnimation(color: SKColor, percentGrowth: Double = 1.075) {
+        // Animates gems label
         
         let colorScore = SKAction.run({self.gemsLabel.fontColor = color})
         let expand = SKAction.scale(by: CGFloat(percentGrowth), duration: 0.25)
@@ -190,7 +189,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         gemsLabel.run(flashAnimation)
     }
     
-    func onPauseButtonTouch() { 
+    func onPauseButtonTouch() {
+        // Displays pause menu on screen
         pauseAlert(title: "Game Paused", message: "")
         
         let gameDimmer = SKSpriteNode(imageNamed: "dimGame")
@@ -228,5 +228,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         restart.position = CGPoint(x: size.width * 0.8, y: size.height * 0.5)
         //addChild(restart)
     }
-    
 }

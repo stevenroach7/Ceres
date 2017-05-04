@@ -75,11 +75,9 @@ class InstructionsScene: SKScene {
         gemsLabel.position = RelativePositions.GemsLabel.getAbsolutePosition(size: size)
         addChild(gemsLabel)
         
-        
         swipeRightRec.addTarget(self, action: #selector(InstructionsScene.swipedRight) )
         swipeRightRec.direction = .right
         self.view!.addGestureRecognizer(swipeRightRec)
-
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -97,7 +95,6 @@ class InstructionsScene: SKScene {
         }
     }
     
-    
     func swipedRight() {
         transitionHome()
     }
@@ -107,6 +104,5 @@ class InstructionsScene: SKScene {
         let scene:SKScene = MenuScene(size: self.size)
         view?.presentScene(scene, transition: transition)
     }
-    
 }
 

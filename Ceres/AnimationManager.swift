@@ -9,16 +9,12 @@
 import Foundation
 import SpriteKit
 
-
-class AnimationManager {
+class AnimationManager {     // Eventually, all animation methods should be moved to this class.
     
-    
-    // TODO: Refactor into Animation manager class
     public var collectorAtlas = SKTextureAtlas()
     public var collectorFrames = [SKTexture]()
     public var hammerAtlas = SKTextureAtlas()
     public var hammerFrames = [SKTexture]()
-    
     
     public func addAtlases() {
         collectorAtlas = SKTextureAtlas(named: "collectorImages")
@@ -28,9 +24,5 @@ class AnimationManager {
         hammerFrames.append(SKTexture(imageNamed: "hammerActive.png"))
         hammerFrames.append(SKTexture(imageNamed: "hammerInactive.png"))
     }
-    
-    
-    // Eventually, all animation methods should be moved to this class.
-    
 }
 

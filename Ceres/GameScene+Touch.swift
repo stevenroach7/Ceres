@@ -91,5 +91,4 @@ extension GameScene { // Touching logic
             }
         }
     }
-
 }

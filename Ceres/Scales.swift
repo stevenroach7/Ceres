@@ -9,9 +9,7 @@
 import Foundation
 import SpriteKit
 
-
 // This file defines structures used for scaling.
-
 
 public struct RelativeScales {
     // Holds relative factors to be used for scaling
@@ -37,13 +35,7 @@ public struct RelativeScales {
     // About scaling
     static let AboutText = ScaleFactor.init(width: 0.9, height: 0.75)
     static let AboutLogo = ScaleFactor.init(width: 0.95, height: 0.5)
-    
-    
-    
-    
-    
 }
-
 
 public struct ScaleFactor {
     let width: CGFloat
