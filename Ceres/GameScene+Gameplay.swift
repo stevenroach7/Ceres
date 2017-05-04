@@ -116,11 +116,11 @@ extension GameScene { // Gameplay
         let minus = SKLabelNode(fontNamed: "Menlo-Bold")
         minus.text = "-5"
         minus.fontColor = SKColor.red
-        minus.fontSize = 30
+        minus.fontSize = 40
         minus.position = RelativePositions.MinusAlert.getAbsolutePosition(size: size)
         addChild(minus)
         
-        let moveDown = SKAction.moveTo(y: size.height * 0.7, duration: 0.6)
+        let moveDown = SKAction.moveTo(y: size.height * 0.6, duration: 0.8)
         minus.run(moveDown)
         minus.run(SKAction.fadeOut(withDuration: 1.0))
     }

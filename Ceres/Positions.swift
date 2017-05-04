@@ -38,7 +38,7 @@ public struct RelativePositions {
     static let FlickHandDownFast = RelativeCoordinate.init(x: 0.55, y: 0.225)
     static let FlickHandRelease = RelativeCoordinate.init(x: 0.575, y: 0.25)
     static let FlickHandReset = RelativeCoordinate.init(x: 0.675, y: 0.45)
-    static let MinusAlert = RelativeCoordinate.init(x: 0.9, y: 0.9)
+    static let MinusAlert = RelativeCoordinate.init(x: 0.8, y: 0.9)
     
     // Menu positioning
     static let BackButton = RelativeCoordinate.init(x: 1/12, y: 23/24)
