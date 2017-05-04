@@ -15,16 +15,16 @@ class LeaderboardManager {
     
     public func setHighScores(score: Int) -> Int {
         var highScores: [Int] = defaultsManager.getHighScores()
-        var index: Int = -1
-        if (score > highScores[highScores.count - 1] && score < 1000){ //If the score is at least greater than the smallest element in the array, also set score upperbound
+        var index: Int = -1 // Index to be used to tell showScores if and/or which new highscore to highlight
+        if (score >= highScores[highScores.count - 1] && score < 1000){ // NOTE: highScores is already sorted in descending order
             for i in (0...(highScores.count - 1)) {
-                if (score > highScores[i]) {
-                    highScores[highScores.count - 1] = score
-                    highScores.sort() { $0 > $1 }
+                if (score >= highScores[i]) {
                     index = i
                     break
                 }
             }
+            highScores[highScores.count - 1] = score
+            highScores.sort() { $0 > $1 } // Sorts array in descending order
         }
         
         defaultsManager.setHighScores(value: highScores)
