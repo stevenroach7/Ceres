@@ -24,17 +24,10 @@ class GameOverScene: SKScene {
     var menuButton = SKSpriteNode(imageNamed: "menu")
     var starfield:SKEmitterNode!
     
-    let defaultsManager = DefaultsManager()
+    let leaderboardManager = LeaderboardManager()
     
     public func setScore(score: Int) {
         self.score = score
-    }
-    
-    public func setHighScore(){
-        let currHighScore = defaultsManager.getHighScore()
-        if (score > currHighScore){
-            defaultsManager.setHighScore(key: "HighScore", value: score)
-        }
     }
     
     override func didMove(to view: SKView) {
@@ -69,6 +62,9 @@ class GameOverScene: SKScene {
         starfield.advanceSimulationTime(10)
         self.addChild(starfield)
         starfield.zPosition = -1
+        
+        leaderboardManager.setHighScores(score: score)
+        leaderboardManager.showScores(scene: self, yDist: PositionConstants.GameOverLeaderBoardScoresDistanceFactor, fontSize: 20)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

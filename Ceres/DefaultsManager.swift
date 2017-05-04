@@ -22,12 +22,26 @@ class DefaultsManager {
         defaults.set(value, forKey: key)
     }
     
-    public func getHighScore() -> Int {
-        return defaults.integer(forKey: "HighScore")
+    public func getHighScores() -> [Int] {
+        return defaults.array(forKey: "HighScores") as! [Int]
     }
     
-    public func setHighScore(key: String, value: Int) {
-        defaults.set(value, forKey: key)
+    public func presentHighScores() -> [Int] {
+        let highScores = getHighScores()
+        var highScoresWithoutZeroes = [Int]()
+        if (highScores[highScores.count - 1] == 0) {
+            for i in (0...(highScores.count - 1)) {
+                if (highScores[i] != 0){
+                    highScoresWithoutZeroes.append(highScores[i])
+                }
+            }
+            return highScoresWithoutZeroes
+        }
+        return highScores
+    }
+    
+    public func setHighScores(value: [Int]) {
+        defaults.set(value, forKey: "HighScores")
     }
     
     public func registerMusicAndSound() {
@@ -35,7 +49,7 @@ class DefaultsManager {
         defaults.register(defaults: ["SoundOnOff" : true])
     }
     
-    public func registerHighScore() {
-        defaults.register(defaults: ["HighScore" : 0])
+    public func registerHighScores() {
+        defaults.register(defaults: ["HighScores" : Array(repeating: 0, count: 5)])
     }
 }

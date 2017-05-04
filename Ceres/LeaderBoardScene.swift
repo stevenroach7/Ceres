@@ -21,6 +21,8 @@ class LeaderBoardScene: SKScene {
     
     let swipeRightRec = UISwipeGestureRecognizer()
     
+    let leaderBoardManager = LeaderboardManager()
+    
     override func didMove(to view: SKView) {
         
         backgroundColor = SKColor.black
@@ -49,17 +51,7 @@ class LeaderBoardScene: SKScene {
         swipeRightRec.direction = .right
         self.view!.addGestureRecognizer(swipeRightRec)
         
-        showScores()
-    }
-    
-    //Testing leaderboard stuff
-    private func showScores(){
-        let score1 = SKLabelNode(fontNamed: "Menlo-Bold")
-        score1.text = "1. 100"
-        score1.fontSize = 32
-        score1.fontColor = SKColor.white
-        score1.position = RelativePositions.TopScoresLabel.getAbsolutePosition(size: size)
-        addChild(score1)
+        leaderBoardManager.showScores(scene: self, yDist: PositionConstants.leaderBoardScoresDistanceFactor, fontSize: 28)
     }
     
     

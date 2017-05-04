@@ -69,13 +69,15 @@ public struct RelativePositions {
     static let MenuButton = RelativeCoordinate.init(x: 0.5, y: 0.1)
     
     // Leaderboard positioning
-    static let TopScoresLabel = RelativeCoordinate.init(x: 0.5, y: 4/6)
+    static let HighScoresLabel = RelativeCoordinate.init(x: 0.5, y: 4/6)
 }
 
 public struct PositionConstants {
     // Holds constants used for positioning
-    static let wallOffScreenDistance: CGFloat = 50
-    static let gemSourceDistBelowAstronaut: CGFloat = 20
+    static let wallOffScreenDistance: CGFloat = 50 // Based on sprite sizes which are not dependent on screen size
+    static let gemSourceDistBelowAstronaut: CGFloat = 20 // Based on sprite sizes which are not dependent on screen size
+    static let leaderBoardScoresDistanceFactor: CGFloat = 0.105 // Distance between scores is 10.5 % screen height
+    static let GameOverLeaderBoardScoresDistanceFactor: CGFloat = 0.05 // Same as above but for the GameOver scene
 }
 
 public struct RelativeCoordinate {
