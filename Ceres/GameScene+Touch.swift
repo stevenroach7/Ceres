@@ -45,9 +45,10 @@ extension GameScene { // Touching logic
                     case "resume":
                         gamePaused = false
                     case "back":
+                        // TODO: Maybe need to stop background music
+                        
                         let transition:SKTransition = SKTransition.fade(withDuration: 3.0)
                         let scene:SKScene = MenuScene(size: self.size)
-                        self.scene?.name = "transition" // Change name of scene since we are no longer in game once the transition begins
                         self.view?.presentScene(scene, transition: transition)
                     case "restart":
                         let scene: SKScene = GameScene(size: self.size)

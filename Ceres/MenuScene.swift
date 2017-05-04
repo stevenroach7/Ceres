@@ -31,7 +31,7 @@ class MenuScene: SKScene {
         positions labels and nodes on screen
         */
         
-        self.scene?.name = "menu"
+        self.name = "menu"
         
         backgroundColor = SKColor.black
         
@@ -88,7 +88,6 @@ class MenuScene: SKScene {
                 if view != nil {
                     let transition:SKTransition = SKTransition.crossFade(withDuration: 1)
                     let scene:SKScene = GameScene(size: self.size)
-                    scene.name = "game"
                     self.view?.presentScene(scene, transition: transition)
                 }
             }

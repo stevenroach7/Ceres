@@ -32,11 +32,11 @@ class GameViewController: UIViewController {
     }
     
     func pauseGameScene() {
-        // If the pause alert is not currently displayed then display it.
-        // To be called on app goes to background
-
+        // If the pauseLayer is not currently displayed then display it.
+   
         if skView?.scene?.name == "game" {
             (skView?.scene as! GameScene).onPauseButtonTouch()
+            // If scene is in transition, pauseLayer will not be shown when the transition finishes since it is a child of gameScene
         }
     }
 

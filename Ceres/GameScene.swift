@@ -91,6 +91,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
         
+        self.name = "game" // Identify scene as game so that GameViewController knows when the viewed scene is the GameScene
+
         physicsWorld.contactDelegate = self
         
         backgroundColor = SKColor.black
@@ -248,7 +250,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     }
     
     
-    func onPauseButtonTouch() {        
+    func onPauseButtonTouch() {
         gamePaused = true
     }
     

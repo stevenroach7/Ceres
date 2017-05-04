@@ -42,6 +42,8 @@ class GameOverScene: SKScene {
          positions labels and nodes on screen
          */
         
+        self.name = "gameOver"
+        
         backgroundColor = SKColor.black
         
         title.text = gameLabel

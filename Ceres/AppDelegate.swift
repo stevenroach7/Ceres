@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         defaultsManager.registerMusicAndSound() // Register values for sound and music settings in UserDefaults
         defaultsManager.registerHighScore()
         let audioSession = AVAudioSession.sharedInstance()
-        try!audioSession.setCategory(AVAudioSessionCategoryPlayback, with: AVAudioSessionCategoryOptions.mixWithOthers) // Causes audio from other sessions to be ducked (reduced in volume) while audio from this session plays
+        try!audioSession.setCategory(AVAudioSessionCategoryPlayback, with: AVAudioSessionCategoryOptions.mixWithOthers) // Causes audio from other sessions to be mixed with this session's audio.
         sleep(1)
         return true
     }
