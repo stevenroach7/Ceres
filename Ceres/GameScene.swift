@@ -10,7 +10,7 @@ import SpriteKit
 import GameplayKit
 
 
-class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var tutorialMode = false // Boolean to store whether game is in tutorialMode
     
