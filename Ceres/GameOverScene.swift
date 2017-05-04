@@ -38,8 +38,8 @@ class GameOverScene: SKScene {
         backgroundColor = SKColor.black
         
         title.text = gameLabel
-        title.fontSize = 32
-        title.fontColor = SKColor.white
+        title.fontSize = 38
+        title.fontColor = SKColor.red
         title.position = RelativePositions.Title.getAbsolutePosition(size: size)
         addChild(title)
 
@@ -63,8 +63,8 @@ class GameOverScene: SKScene {
         self.addChild(starfield)
         starfield.zPosition = -1
         
-        leaderboardManager.setHighScores(score: score)
-        leaderboardManager.showScores(scene: self, yDist: PositionConstants.GameOverLeaderBoardScoresDistanceFactor, fontSize: 20)
+        let index = leaderboardManager.setHighScores(score: score)
+        leaderboardManager.showScores(scene: self, yDist: PositionConstants.GameOverLeaderBoardScoresDistanceFactor, fontSize: 20, index: index)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

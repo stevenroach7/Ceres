@@ -51,7 +51,7 @@ class LeaderBoardScene: SKScene {
         swipeRightRec.direction = .right
         self.view!.addGestureRecognizer(swipeRightRec)
         
-        leaderBoardManager.showScores(scene: self, yDist: PositionConstants.leaderBoardScoresDistanceFactor, fontSize: 28)
+        leaderBoardManager.showScores(scene: self, yDist: PositionConstants.leaderBoardScoresDistanceFactor, fontSize: 28, index: -1)
     }
     
     
