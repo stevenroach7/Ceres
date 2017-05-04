@@ -35,7 +35,6 @@ class AboutScene: SKScene {
         starfield.zPosition = -10
         self.addChild(starfield)
         
-//        backButton.setScale(0.175)
         let backButtonSize = RelativeScales.BackButton.getAbsoluteSize(screenSize: size, nodeSize: backButton.size)
         backButton.xScale = backButtonSize.width
         backButton.yScale = backButtonSize.height
@@ -43,7 +42,6 @@ class AboutScene: SKScene {
         backButton.zPosition = 2
         addChild(backButton)
         
-//        logo.setScale(0.9)
         let logoSize = RelativeScales.AboutLogo.getAbsoluteSize(screenSize: size, nodeSize: logo.size)
         logo.xScale = logoSize.width
         logo.yScale = logoSize.height

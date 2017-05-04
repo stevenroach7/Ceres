@@ -36,35 +36,30 @@ class MenuScene: SKScene {
         
         backgroundColor = SKColor.black
         
-//        gameTitle.setScale(0.75)
         let gameTitleSize = RelativeScales.GameTitle.getAbsoluteSize(screenSize: size, nodeSize: gameTitle.size)
         gameTitle.xScale = gameTitleSize.width
         gameTitle.yScale = gameTitleSize.height
         gameTitle.position = RelativePositions.Title.getAbsolutePosition(size: size)
         addChild(gameTitle)
         
-//        playButton.setScale(0.6)
         let playButtonSize = RelativeScales.PlayButton.getAbsoluteSize(screenSize: size, nodeSize: playButton.size)
         playButton.xScale = playButtonSize.width
         playButton.yScale = playButtonSize.height
         playButton.position = RelativePositions.PlayButton.getAbsolutePosition(size: size)
         addChild(playButton)
         
-//        instructionsButton.setScale(0.5)
         let instructionsButtonSize = RelativeScales.InstructionsButton.getAbsoluteSize(screenSize: size, nodeSize: instructionsButton.size)
         instructionsButton.xScale = instructionsButtonSize.width
         instructionsButton.yScale = instructionsButtonSize.height
         instructionsButton.position = RelativePositions.InstructionsButton.getAbsolutePosition(size: size)
         addChild(instructionsButton)
         
-//        aboutButton.setScale(0.5)
         let aboutButtonSize = RelativeScales.AboutButton.getAbsoluteSize(screenSize: size, nodeSize: aboutButton.size)
         aboutButton.xScale = aboutButtonSize.width
         aboutButton.yScale = aboutButtonSize.height
         aboutButton.position = RelativePositions.AboutButton.getAbsolutePosition(size: size)
         addChild(aboutButton)
         
-//        settingsButton.setScale(0.375)
         let settingsButtonSize = RelativeScales.SettingsButton.getAbsoluteSize(screenSize: size, nodeSize: settingsButton.size)
         settingsButton.xScale = settingsButtonSize.width
         settingsButton.yScale = settingsButtonSize.height

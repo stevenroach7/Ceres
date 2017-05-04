@@ -32,7 +32,6 @@ class InstructionsScene: SKScene {
         
         backgroundColor = SKColor.black
         
-//        backButton.setScale(0.175)
         let backButtonSize = RelativeScales.BackButton.getAbsoluteSize(screenSize: size, nodeSize: backButton.size)
         backButton.xScale = backButtonSize.width
         backButton.yScale = backButtonSize.height

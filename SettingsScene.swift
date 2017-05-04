@@ -45,7 +45,6 @@ class SettingsScene: SKScene {
         addChild(titleNode)
         
         backButton = SKSpriteNode(texture: backButtonTex)
-//        backButton.setScale(0.175)
         let backButtonSize = RelativeScales.BackButton.getAbsoluteSize(screenSize: size, nodeSize: backButton.size)
         backButton.xScale = backButtonSize.width
         backButton.yScale = backButtonSize.height
