@@ -20,8 +20,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let stagePlanet = StagePlanet(imageNamed: "planet")
     let leftGemSource  = GemSource(imageNamed: "hammerInactive")
     let rightGemSource = GemSource(imageNamed: "hammerInactive")
-    let redAstronaut = SKSpriteNode(imageNamed: "redAstronaut")
-    let blueAstronaut = SKSpriteNode(imageNamed: "blueAstronaut")
+    let redAstronaut = Astronaut(imageNamed: "redAstronaut")
+    let blueAstronaut = Astronaut(imageNamed: "blueAstronaut")
     var starfield:SKEmitterNode!
     
     // Tutorial assets
@@ -151,24 +151,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         // Creates 2 astronauts on either side of the planet
         
         redAstronaut.position = RelativePositions.LeftAstronaut.getAbsolutePosition(size: size)
-        redAstronaut.setScale(0.175)
+        redAstronaut.setAstronautProperties()
         redAstronaut.name = "redAstronaut"
-        redAstronaut.zPosition = 2
-        redAstronaut.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 0.1*(size.width), height: 0.13*(size.height)))
-        redAstronaut.physicsBody?.usesPreciseCollisionDetection = true
-        redAstronaut.physicsBody?.isDynamic = false
-        redAstronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
+        addChild(redAstronaut)
         
         blueAstronaut.position = RelativePositions.RightAstronaut.getAbsolutePosition(size: size)
-        blueAstronaut.setScale(0.175)
+        blueAstronaut.setAstronautProperties()
         blueAstronaut.name = "blueAstronaut"
-        blueAstronaut.zPosition = 2
-        blueAstronaut.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 0.1*(size.width), height: 0.13*(size.height)))
-        blueAstronaut.physicsBody?.usesPreciseCollisionDetection = true
-        blueAstronaut.physicsBody?.isDynamic = false // Change this to true to be amused
-        blueAstronaut.isUserInteractionEnabled = false // Must be set to false in order to register touch events.
-        
-        addChild(redAstronaut)
         addChild(blueAstronaut)
     }
     

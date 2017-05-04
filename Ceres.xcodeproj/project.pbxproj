@@ -12,6 +12,7 @@
 		3C55D7E41EB7C1AE004271FC /* AboutScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C55D7E31EB7C1AE004271FC /* AboutScene.swift */; };
 		3C55D7E61EB91C38004271FC /* Scales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C55D7E51EB91C38004271FC /* Scales.swift */; };
 		3C55D7E81EBA6594004271FC /* LeaderBoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C55D7E71EBA6594004271FC /* LeaderBoardScene.swift */; };
+		3C55D7EA1EBAD101004271FC /* Astronaut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C55D7E91EBAD101004271FC /* Astronaut.swift */; };
 		3C67AD991E8331E100C8B980 /* StagePlanet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AD981E8331E100C8B980 /* StagePlanet.swift */; };
 		3C67AD9B1E835C3500C8B980 /* GemCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AD9A1E835C3500C8B980 /* GemCollector.swift */; };
 		3C67AD9D1E84310000C8B980 /* GemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AD9C1E84310000C8B980 /* GemSource.swift */; };
@@ -78,6 +79,7 @@
 		3C55D7E31EB7C1AE004271FC /* AboutScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutScene.swift; sourceTree = "<group>"; };
 		3C55D7E51EB91C38004271FC /* Scales.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scales.swift; sourceTree = "<group>"; };
 		3C55D7E71EBA6594004271FC /* LeaderBoardScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderBoardScene.swift; sourceTree = "<group>"; };
+		3C55D7E91EBAD101004271FC /* Astronaut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Astronaut.swift; sourceTree = "<group>"; };
 		3C67AD981E8331E100C8B980 /* StagePlanet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StagePlanet.swift; sourceTree = "<group>"; };
 		3C67AD9A1E835C3500C8B980 /* GemCollector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GemCollector.swift; sourceTree = "<group>"; };
 		3C67AD9C1E84310000C8B980 /* GemSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GemSource.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				3C67AD9C1E84310000C8B980 /* GemSource.swift */,
 				3C67AD981E8331E100C8B980 /* StagePlanet.swift */,
 				3C67AD9A1E835C3500C8B980 /* GemCollector.swift */,
+				3C55D7E91EBAD101004271FC /* Astronaut.swift */,
 			);
 			name = GameClasses;
 			sourceTree = "<group>";
@@ -468,6 +471,7 @@
 				3C3BFDC91E871CC90059D6CE /* GameOverScene.swift in Sources */,
 				A94B8DF71EBAC8540065959E /* LeaderboardManager.swift in Sources */,
 				B07805E61E5506C300073DD6 /* GameScene.swift in Sources */,
+				3C55D7EA1EBAD101004271FC /* Astronaut.swift in Sources */,
 				A9406C841EAEE77B00E0EA50 /* AudioManager.swift in Sources */,
 				B03858381EB8491100665807 /* Positions.swift in Sources */,
 				A9FDA30C1EAC35C300D431E5 /* GameScene+Touch.swift in Sources */,
