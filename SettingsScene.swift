@@ -155,7 +155,7 @@ class SettingsScene: SKScene {
     private func transitionHome() {
         musicSwitch.removeFromSuperview()
         soundSwitch.removeFromSuperview()
-        let transition:SKTransition = SKTransition.push(with: .left, duration: 1)
+        let transition:SKTransition = SKTransition.fade(withDuration: 0.5)
         let scene:SKScene = MenuScene(size: self.size)
         self.view?.presentScene(scene, transition: transition)
     }

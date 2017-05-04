@@ -76,7 +76,7 @@ class LeaderBoardScene: SKScene {
     }
     
     private func transitionHome() {
-        let transition:SKTransition = SKTransition.push(with: .right, duration: 1)
+        let transition:SKTransition = SKTransition.fade(withDuration: 1)
         let scene:SKScene = MenuScene(size: self.size)
         self.view?.presentScene(scene, transition: transition)
     }

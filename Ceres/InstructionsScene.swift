@@ -104,7 +104,7 @@ class InstructionsScene: SKScene {
     }
     
     private func transitionHome() {
-        let transition:SKTransition = SKTransition.flipVertical(withDuration: 1)
+        let transition:SKTransition = SKTransition.doorsCloseHorizontal(withDuration: 1)
         let scene:SKScene = MenuScene(size: self.size)
         view?.presentScene(scene, transition: transition)
     }
