@@ -8,11 +8,13 @@
 
 import Foundation
 import SpriteKit
+import AVFoundation
 
 class AudioManager: SKNode {
     
-    private let backgroundMusic = SKAudioNode(fileNamed: "cosmos.mp3")
+    private var backgroundMusic = AVAudioPlayer()
     private let defaultsManager = DefaultsManager()
+    
     
     public enum Sound {
         case gemCollectedSound
@@ -22,7 +24,6 @@ class AudioManager: SKNode {
     }
     
     public func play(sound: Sound) {
-        // Checks if sound switch is on or off, then plays sound if on
         
         if !(defaultsManager.getValue(key: "SoundOnOff")) {
             return
@@ -42,13 +43,57 @@ class AudioManager: SKNode {
     }
     
     public func playBackgroundMusic() {
-        // Checks if music switch is on or off, plays music if on
         
         if !(defaultsManager.getValue(key: "MusicOnOff")) {
             return
         }
         
-        backgroundMusic.autoplayLooped = true
-        addChild(backgroundMusic)
+        let path = Bundle.main.path(forResource: "cosmos.mp3", ofType:nil)!
+        let url = URL(fileURLWithPath: path)
+        
+        do {
+            backgroundMusic = try AVAudioPlayer(contentsOf: url)
+            backgroundMusic.numberOfLoops = -1
+            backgroundMusic.prepareToPlay()
+            backgroundMusic.play()
+        } catch {
+            // couldn't load file.
+            
+        }
+        
     }
+    
+    public func stopBackgroundMusic() {
+        
+        if !(defaultsManager.getValue(key: "MusicOnOff")) {
+            return
+        }
+        
+        if backgroundMusic.isPlaying {
+            backgroundMusic.stop()
+        }
+    }
+    
+    public func pauseBackgroundMusic() {
+        
+        if !(defaultsManager.getValue(key: "MusicOnOff")) {
+            return
+        }
+        
+        if backgroundMusic.isPlaying {
+            backgroundMusic.pause()
+        }
+    }
+    
+    public func resumeBackgroundMusic() {
+        
+        if !(defaultsManager.getValue(key: "MusicOnOff")) {
+            return
+        }
+        
+        if !backgroundMusic.isPlaying {
+            backgroundMusic.play()
+        }
+    }
+    
 }

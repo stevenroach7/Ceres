@@ -24,7 +24,7 @@ extension GameScene { // Gameplay
         
         physicsWorld.gravity = CGVector(dx: 0, dy: 0.27) // Gravity on Ceres is 0.27 m/s²
         
-        run(SKAction.repeatForever(
+        gameLayer.run(SKAction.repeatForever(
             SKAction.sequence([
                 SKAction.run({self.animateGemSource(gemSourceLocation: .left)}),
                 SKAction.wait(forDuration: 0.35),
@@ -33,7 +33,7 @@ extension GameScene { // Gameplay
                 ])
         ))
         
-        run(SKAction.repeatForever( // Serves as timer, Could potentially refactor to use group actions later.
+        gameLayer.run(SKAction.repeatForever( // Serves as timer, Could potentially refactor to use group actions later.
             SKAction.sequence([
                 SKAction.run(spawnGems),
                 SKAction.wait(forDuration: 1.0),
@@ -95,13 +95,16 @@ extension GameScene { // Gameplay
     private func checkGameOver() {
         // Calculates score to figure out when to end the game
         
-        if gemsPlusMinus <= losingGemPlusMinus {
+        if gemsPlusMinus <= losingGemPlusMinus && !isGameOver {
+            isGameOver = true // This flag prevents the gameOverTransition from getting called multiple times.
+            // It is used because we want to pause the gameScene but not add the pauseLayer. Simply disabling touches does not work and I don't want to add a backdoor to change the value of isPaused. SR
             gameOverTransition()
         }
     }
     
     private func gameOverTransition() {
-        isPaused = true
+        audioManager.stopBackgroundMusic()
+        
         if view != nil {
             let transition:SKTransition = SKTransition.doorsCloseVertical(withDuration: 1)
             let scene = GameOverScene(size: size)
@@ -119,7 +122,7 @@ extension GameScene { // Gameplay
         minus.fontColor = SKColor.red
         minus.fontSize = 40
         minus.position = RelativePositions.MinusAlert.getAbsolutePosition(size: size)
-        addChild(minus)
+        gameLayer.addChild(minus)
         
         let moveDown = SKAction.moveTo(y: size.height * 0.6, duration: 0.8)
         minus.run(moveDown)
