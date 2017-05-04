@@ -64,6 +64,7 @@ class GameOverScene: SKScene {
         starfield.zPosition = -1
         
         leaderboardManager.setHighScores(score: score)
+        leaderboardManager.showScores(scene: self, yDist: PositionConstants.GameOverLeaderBoardScoresDistanceFactor, fontSize: 20)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

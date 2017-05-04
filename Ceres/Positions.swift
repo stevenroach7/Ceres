@@ -76,7 +76,8 @@ public struct PositionConstants {
     // Holds constants used for positioning
     static let wallOffScreenDistance: CGFloat = 50 // Based on sprite sizes which are not dependent on screen size
     static let gemSourceDistBelowAstronaut: CGFloat = 20 // Based on sprite sizes which are not dependent on screen size
-    static let leaderBoardScoresDistanceFactor: CGFloat = 0.105 //Distance between scores is 10.5 % screen height
+    static let leaderBoardScoresDistanceFactor: CGFloat = 0.105 // Distance between scores is 10.5 % screen height
+    static let GameOverLeaderBoardScoresDistanceFactor: CGFloat = 0.05 // Same as above but for the GameOver scene
 }
 
 public struct RelativeCoordinate {
