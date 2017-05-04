@@ -29,7 +29,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
     
     
-    var losingGemPlusMinus = -1 // Make this lower during testing. This should be a constant but isn't because we change it to avoid the gameOver transition happening multiple times. TOOD: Change is back to a constant when a better solution for the gameOver is found.
+    let losingGemPlusMinus = -1 // Make this lower during testing.
+    var isGameOver = false // Need a flag to know if we have began the game over transition so that we don't start it again. Necessary because we cannot set isPaused on the game scene without pausing the screen.
+    
     
     var gemsLabel: SKLabelNode!
     var gemsPlusMinus = 0 {
@@ -55,7 +57,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let playTexture = SKTexture(imageNamed: "play")
     
     
-    // This is the single source of truth for if the game is paused. Changes this variable pauses game elements and brings up pause layer or vice versa.
+    // This is the single source of truth for if the game is paused. Changes to this variable pauses game elements and brings up pause layer or vice versa.
     var gamePaused = false {
         didSet {
             pauseLayer.isHidden = !gamePaused
