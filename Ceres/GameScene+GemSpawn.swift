@@ -113,14 +113,15 @@ extension GameScene { // GemSpawn
         let detonatorGem = Gem(imageNamed: "rottenGem")
         detonatorGem.name = "detonatorGem"
         let gravityFieldNode = SKFieldNode.radialGravityField()
-        let gemExplosion = SKEmitterNode(fileNamed: "gemExplosion")!
-        
+        var gemExplosion: SKEmitterNode = SKEmitterNode()
+        // This is a hack to make sure that the gemExplosion lifetime doesn't start until the effect begins. SR
+        // TODO: Rewrite this in a sensible way.
         
         gameLayer.run(SKAction.sequence([
             SKAction.run({self.addGem(gem: detonatorGem, location: location, velocity: velocity)}),
             SKAction.run({self.animateDetonatorGem(detonatorGem: detonatorGem)}),
             SKAction.wait(forDuration: timeToExplosion),
-            SKAction.run({self.detonateGem(detonatorGem: detonatorGem, gravityFieldNode: gravityFieldNode, gemExplosion: gemExplosion)}),
+            SKAction.run({gemExplosion = self.detonateGem(detonatorGem: detonatorGem, gravityFieldNode: gravityFieldNode)}),
             SKAction.wait(forDuration: 0.25),
             SKAction.run({self.detonationCleanup(gravityFieldNode: gravityFieldNode, gemExplosion: gemExplosion)})
             ]))
@@ -150,13 +151,14 @@ extension GameScene { // GemSpawn
             ]), count: 20))
     }
     
-    private func detonateGem(detonatorGem: Gem, gravityFieldNode: SKFieldNode, gemExplosion: SKEmitterNode) {
+    private func detonateGem(detonatorGem: Gem, gravityFieldNode: SKFieldNode) -> SKEmitterNode {
         // Takes a detonator gem and a gravityFieldNode to add to the scene and simulates the gem exploding in the scene
         
         if detonatorGem.parent != nil { // Don't simulate explosion if gem has been removed
             let gemPosition = detonatorGem.position
             detonatorGem.removeFromParent()
             
+            let gemExplosion = SKEmitterNode(fileNamed: "gemExplosion")!
             gemExplosion.position = gemPosition
             gameLayer.addChild(gemExplosion)
             audioManager.play(sound: .gemExplosionSound)
@@ -165,7 +167,9 @@ extension GameScene { // GemSpawn
             gravityFieldNode.strength = -30
             gravityFieldNode.position = gemPosition
             gameLayer.addChild(gravityFieldNode)
+            return gemExplosion
         }
+        return SKEmitterNode()
     }
     
     private func detonationCleanup(gravityFieldNode: SKFieldNode, gemExplosion: SKEmitterNode) {
@@ -178,7 +182,5 @@ extension GameScene { // GemSpawn
         if gemExplosion.parent != nil {
             gemExplosion.removeFromParent()
         }
-        
-        
     }
 }
