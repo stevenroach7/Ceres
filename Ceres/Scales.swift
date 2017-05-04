@@ -15,18 +15,19 @@ import SpriteKit
 
 public struct RelativeScales {
     // Holds relative factors to be used for scaling
+    // 16/9 : height/width proportions = 1.77
     
     // Game scaling
     static let GameDimmer = ScaleFactor.init(width: 1.0, height: 1.0)
     static let PauseMenu = ScaleFactor.init(width: 0.9, height: 0.275)
     
     // Menu scaling
-    static let GameTitle = ScaleFactor.init(width: 0.95, height: 0.16)
-    static let PlayButton = ScaleFactor.init(width: 0.35, height: 0.2)
-    static let InstructionsButton = ScaleFactor.init(width: 0.8, height: 0.075)
-    static let AboutButton = ScaleFactor.init(width: 0.4, height: 0.07)
-    static let SettingsButton = ScaleFactor.init(width: 0.15, height: 0.085)
-    static let LeaderBoardButton = ScaleFactor.init(width: 0.15, height: 0.085)
+    static let GameTitle = ScaleFactor.init(width: 0.8, height: 0.13)
+    static let PlayButton = ScaleFactor.init(width: 0.3, height: 0.17)
+    static let InstructionsButton = ScaleFactor.init(width: 0.7, height: 0.055)
+    static let AboutButton = ScaleFactor.init(width: 0.3, height: 0.055)
+    static let SettingsButton = ScaleFactor.init(width: 0.12, height: 0.0675)
+    static let LeaderBoardButton = ScaleFactor.init(width: 0.12, height: 0.0675)
     static let Ship = ScaleFactor.init(width: 0.3, height: 0.15)
     
     // Instructions scaling
