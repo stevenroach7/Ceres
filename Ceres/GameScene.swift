@@ -69,7 +69,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         starfield.advanceSimulationTime(1)
         addChild(starfield)
         
-        pauseButton.setScale(0.175)
+        let pauseButtonSize = RelativeScales.PauseButton.getAbsoluteSize(screenSize: size, nodeSize: pauseButton.size)
+        pauseButton.xScale = pauseButtonSize.width
+        pauseButton.yScale = pauseButtonSize.height
         pauseButton.name = "pauseButton"
         pauseButton.position = RelativePositions.PauseButton.getAbsolutePosition(size: size)
         addChild(pauseButton)

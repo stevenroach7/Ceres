@@ -18,6 +18,7 @@ public struct RelativeScales {
     // Game scaling
     static let GameDimmer = ScaleFactor.init(width: 1.0, height: 1.0)
     static let PauseMenu = ScaleFactor.init(width: 0.9, height: 0.275)
+    static let PauseButton = ScaleFactor.init(width: 0.12, height: 0.065)
     
     // Menu scaling
     static let GameTitle = ScaleFactor.init(width: 0.8, height: 0.14)
@@ -29,7 +30,7 @@ public struct RelativeScales {
     static let Ship = ScaleFactor.init(width: 0.3, height: 0.15)
     
     // Instructions scaling
-    static let BackButton = ScaleFactor.init(width: 0.12, height: 0.065)
+    static let BackButton = ScaleFactor.init(width: 0.12, height: 0.0675)
     static let InstructionsText = ScaleFactor.init(width: 0.8, height: 0.65)
     
     // About scaling
