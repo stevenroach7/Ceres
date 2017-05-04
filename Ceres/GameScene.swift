@@ -29,7 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
     
     
-    let losingGemPlusMinus = -1 // Make this lower during testing
+    var losingGemPlusMinus = -1 // Make this lower during testing. This should be a constant but isn't because we change it to avoid the gameOver transition happening multiple times. TOOD: Change is back to a constant when a better solution for the gameOver is found.
     
     var gemsLabel: SKLabelNode!
     var gemsPlusMinus = 0 {
@@ -51,6 +51,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
     var audioManager: AudioManager = AudioManager()
     
     
+    let pauseTexture = SKTexture(imageNamed: "pause")
+    let playTexture = SKTexture(imageNamed: "play")
+    
+    
     // This is the single source of truth for if the game is paused. Changes this variable pauses game elements and brings up pause layer or vice versa.
     var gamePaused = false {
         didSet {
@@ -58,6 +62,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
             isPaused = gamePaused
             gamePaused == true ? (physicsWorld.speed = 0) : (physicsWorld.speed = 1.0)
             gamePaused == true ? (audioManager.pauseBackgroundMusic()) : (audioManager.resumeBackgroundMusic())
+            gamePaused == true ? (pauseButton.isHidden = true) : (pauseButton.isHidden = false)
         }
     }
     
@@ -248,7 +253,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, Alerts {
         pauseLayer.isHidden = true
         addChild(pauseLayer)
     }
-    
     
     func onPauseButtonTouch() {
         gamePaused = true

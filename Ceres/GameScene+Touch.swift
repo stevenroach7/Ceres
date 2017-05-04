@@ -42,12 +42,12 @@ extension GameScene { // Touching logic
                 
                 if gamePaused {
                     switch name {
+                    case "pauseButton":
+                        gamePaused = false
                     case "resume":
                         gamePaused = false
                     case "back":
-                        // TODO: Maybe need to stop background music
-                        
-                        let transition:SKTransition = SKTransition.fade(withDuration: 3.0)
+                        let transition:SKTransition = SKTransition.fade(withDuration: 1.0)
                         let scene:SKScene = MenuScene(size: self.size)
                         self.view?.presentScene(scene, transition: transition)
                     case "restart":

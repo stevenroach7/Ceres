@@ -95,15 +95,17 @@ extension GameScene { // Gameplay
     
     private func checkGameOver() {
         // Calculates score to figure out when to end the game
-        
         if gemsPlusMinus <= losingGemPlusMinus {
+            losingGemPlusMinus = -1000000000 // This is a hack to prevent the gameOverTransition from getting called multiple times.
+            // It is used because we want to pause the gameScene but not add the pauseLayer. Simply disabling touches does not work and I don't want to add a backdoor to change the value of isPaused. SR
+            // TODO: Find a better way to do this.
             gameOverTransition()
         }
     }
     
     private func gameOverTransition() {
         audioManager.stopBackgroundMusic()
-        gamePaused = true
+        
         if view != nil {
             let transition:SKTransition = SKTransition.doorsCloseVertical(withDuration: 1)
             let scene = GameOverScene(size: size)

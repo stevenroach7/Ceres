@@ -18,7 +18,7 @@ extension GameScene { // Tutorial
     }
     
     private func prepareTutorial() {
-        physicsWorld.gravity = CGVector(dx: 0, dy: 0.0)
+        physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         addTutorialGem()
         makeTutorialHand()
         setGemsLabel(font: 20, position: RelativePositions.InitialGemsLabel.getAbsolutePosition(size: size))
