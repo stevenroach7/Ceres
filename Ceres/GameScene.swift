@@ -201,14 +201,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private func addPauseLayer() {
         
-//        let gameDimmer = SKSpriteNode(imageNamed: "dimGame")
-//        let gameDimmerSize = RelativeScales.GameDimmer.getAbsoluteSize(screenSize: size, nodeSize: gameDimmer.size)
-//        gameDimmer.xScale = gameDimmerSize.width
-//        gameDimmer.yScale = gameDimmerSize.height
-//        gameDimmer.position = CGPoint(x: size.width * 0.5, y: size.height * 0.5)
-//        gameDimmer.zPosition = 7
-//        pauseLayer.addChild(gameDimmer)
-        
         let pauseMenu = SKSpriteNode(imageNamed: "pauseMenu")
         let pauseMenuSize = RelativeScales.PauseMenu.getAbsoluteSize(screenSize: size, nodeSize: pauseMenu.size)
         pauseMenu.xScale = pauseMenuSize.width

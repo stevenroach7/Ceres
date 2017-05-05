@@ -32,7 +32,6 @@ class SettingsScene: SKScene {
     
     let stagePlanet = StagePlanet(imageNamed: "planet")
     
-    let swipeRightRec = UISwipeGestureRecognizer()
     
     override func didMove(to view: SKView) {
         
@@ -77,10 +76,6 @@ class SettingsScene: SKScene {
         
         createSoundSwitch()
         showSoundSwitchLabel()
-        
-        swipeRightRec.addTarget(self, action: #selector(SettingsScene.swipedRight) )
-        swipeRightRec.direction = .right
-        self.view!.addGestureRecognizer(swipeRightRec)
     }
     
     public func createMusicSwitch() {
@@ -148,9 +143,6 @@ class SettingsScene: SKScene {
         }
     }
     
-    func swipedRight() {
-        transitionHome()
-    }
     
     private func transitionHome() {
         musicSwitch.removeFromSuperview()

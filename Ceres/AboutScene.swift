@@ -20,7 +20,6 @@ class AboutScene: SKScene {
     let text = SKSpriteNode(imageNamed: "aboutPage")
     let logo = SKSpriteNode(imageNamed: "finalStellaNovaLogo")
     
-    let swipeRightRec = UISwipeGestureRecognizer()
     
     override func didMove(to view: SKView) {
         /***
@@ -53,10 +52,6 @@ class AboutScene: SKScene {
         text.yScale = textSize.height
         text.position = RelativePositions.AboutText.getAbsolutePosition(size: size)
         addChild(text)
-        
-        swipeRightRec.addTarget(self, action: #selector(AboutScene.swipedRight) )
-        swipeRightRec.direction = .right
-        self.view!.addGestureRecognizer(swipeRightRec)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -72,10 +67,6 @@ class AboutScene: SKScene {
                 }
             }
         }
-    }
-    
-    func swipedRight() {
-        transitionHome()
     }
     
     private func transitionHome() {

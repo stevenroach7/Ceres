@@ -19,8 +19,6 @@ class LeaderBoardScene: SKScene {
     
     var starfield:SKEmitterNode!
     
-    let swipeRightRec = UISwipeGestureRecognizer()
-    
     let leaderBoardManager = LeaderboardManager()
     
     override func didMove(to view: SKView) {
@@ -46,10 +44,6 @@ class LeaderBoardScene: SKScene {
         self.addChild(starfield)
         starfield.zPosition = -1
         
-        swipeRightRec.addTarget(self, action: #selector(SettingsScene.swipedRight) )
-        swipeRightRec.direction = .right
-        self.view!.addGestureRecognizer(swipeRightRec)
-        
         leaderBoardManager.showScores(scene: self, yDist: PositionConstants.leaderBoardScoresDistanceFactor, fontSize: 28, index: -1)
     }
     
@@ -66,10 +60,6 @@ class LeaderBoardScene: SKScene {
                 }
             }
         }
-    }
-    
-    func swipedRight() {
-        transitionHome()
     }
     
     private func transitionHome() {
