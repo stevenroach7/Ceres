@@ -10,9 +10,7 @@ import Foundation
 import SpriteKit
 
 class GameOverScene: SKScene {
-    /***
-     Initializes Nodes and Labels
-     */
+     // Initializes Nodes and Labels
     
     let gameLabel = "Game Over"
     let title = SKLabelNode(fontNamed: "GillSans-Bold")
@@ -31,9 +29,7 @@ class GameOverScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
-        /***
-         positions labels and nodes on screen
-         */
+         // positions labels and nodes on screen
         
         backgroundColor = SKColor.black
         

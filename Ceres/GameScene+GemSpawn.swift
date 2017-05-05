@@ -26,7 +26,8 @@ extension GameScene { // GemSpawn
         case spawnFastGemRight
         
         public func getSpawnActionDuration() -> Double {
-            // Returns the duration in seconds of the spawnAction the function is called on
+            // Returns the duration in seconds of the spawnAction the function is called on. Only calculates based on wait times. 
+            // This is accurate enough for our purposes.
             
             switch(self) {
             case .sequence(let actions):
@@ -111,7 +112,7 @@ extension GameScene { // GemSpawn
         detonatorGem.name = "detonatorGem"
         let gravityFieldNode = SKFieldNode.radialGravityField()
         var gemExplosion: SKEmitterNode = SKEmitterNode()
-        // This ugly way of creating an empy emitter node ensures gemExplosion lifetime doesn't start until the effect begins. SR
+        // This way of creating an empy emitter node ensures gemExplosion lifetime doesn't start until the effect begins.
         // TODO: Rewrite this in a sensible way.
         gameLayer.run(SKAction.sequence([
             SKAction.run({self.addGem(gem: detonatorGem, location: location, velocity: velocity)}),

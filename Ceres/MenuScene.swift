@@ -10,9 +10,7 @@ import Foundation
 import SpriteKit
 
 class MenuScene: SKScene {
-    /***
-    Initializes Nodes
-    */
+
     
     let gameTitle = SKSpriteNode(imageNamed: "expeditionCeresTitle")
     var ship = SKSpriteNode(imageNamed: "stellaNovaShip")
@@ -28,9 +26,8 @@ class MenuScene: SKScene {
     var leaderBoardButton = SKSpriteNode(imageNamed: "leaderBoard")
     
     override func didMove(to view: SKView) {
-        /***
-        positions labels and nodes on screen
-        */
+        // positions labels and nodes on screen
+ 
         
         self.name = "menu"
         

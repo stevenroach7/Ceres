@@ -10,9 +10,7 @@ import Foundation
 import SpriteKit
 
 class InstructionsScene: SKScene {
-    /***
-     Initializes Nodes and Labels
-     */
+     // Initializes Nodes and Labels
     
     let backButton = SKSpriteNode(imageNamed: "back")
     let text = SKSpriteNode(imageNamed: "instructionScreen")
@@ -23,9 +21,7 @@ class InstructionsScene: SKScene {
     let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
     
     override func didMove(to view: SKView) {
-        /***
-         positions labels and nodes on screen
-         */
+         // positions labels and nodes on screen
         
         backgroundColor = SKColor.black
         

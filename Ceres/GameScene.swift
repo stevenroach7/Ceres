@@ -45,7 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             scoreLabel.text = "Score: \(timerSeconds)"
         }
     }
-    var timeToBeginNextSequence:Double = 0.0 // Initialize to 0.0 so sequence will start when gameplay begins
+    var timeToBeginNextSequence: Double = 0.0 // Initialize to 0.0 so sequence will start when gameplay begins
     
     
     var spawnSequenceManager = SpawnSequenceManager()
@@ -134,6 +134,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     // Functions that add nodes to scene
+    
     private func makeWall(location: CGPoint, size: CGSize) {
         // Creates boundaries in the game that deletes gems when they come into contact
         
@@ -239,6 +240,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gamePaused = true
     }
     
+    
+    // Functions used in multiple different extensions
     
     public func collectGemAnimation(collector: SKSpriteNode, implosion: Bool) {
         collector.run(SKAction.repeat(SKAction.animate(with: animationManager.collectorFrames, timePerFrame: 0.25), count: 1))

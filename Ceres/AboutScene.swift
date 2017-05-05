@@ -10,9 +10,7 @@ import Foundation
 import SpriteKit
 
 class AboutScene: SKScene {
-    /***
-     Initializes Nodes and Labels
-     */
+     // Initializes Nodes and Labels
     
     var starfield:SKEmitterNode!
     
@@ -22,9 +20,7 @@ class AboutScene: SKScene {
     
     
     override func didMove(to view: SKView) {
-        /***
-         positions labels and nodes on screen
-         */
+        // positions labels and nodes on screen
         
         backgroundColor = SKColor.black
         

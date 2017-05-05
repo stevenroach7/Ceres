@@ -32,7 +32,7 @@ class LeaderboardManager {
     }
     
     public func showScores(scene: SKScene, yDist: CGFloat, fontSize: CGFloat, index: Int){
-        //Presents the top scores, the index parameter will highlight a new addition to the leaderboard
+        // Presents the top scores, the index parameter will highlight a new addition to the leaderboard
         
         let highScores = defaultsManager.presentHighScores()
         
