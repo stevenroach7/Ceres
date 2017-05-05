@@ -12,7 +12,7 @@ import GameplayKit
 class StagePlanet: SKSpriteNode {
     
     func setStagePlanetProperties() {
-        // Sets initial properties of the stage
+        // Sets initial properties of the stage planet
         
         setScale(0.55)
         name = "stagePlanet"

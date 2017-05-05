@@ -22,6 +22,7 @@ class LeaderBoardScene: SKScene {
     let leaderBoardManager = LeaderboardManager()
     
     override func didMove(to view: SKView) {
+        // positions labels and nodes on screen
         
         backgroundColor = SKColor.black
         
