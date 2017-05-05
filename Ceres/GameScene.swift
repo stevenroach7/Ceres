@@ -9,10 +9,10 @@
 import SpriteKit
 import GameplayKit
 
-
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var tutorialMode = false // Boolean to store whether game is in tutorialMode
+    var isGameOver = false // Need a flag to know if we have began the game over transition so that we don't start it again. Necessary because we cannot set isPaused on the game scene without pausing the screen.
     
     // Global nodes
     let pauseButton = SKSpriteNode(imageNamed: "pause")
@@ -29,8 +29,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
     
     let losingGemPlusMinus = -1 // Make this lower during testing
-    var isGameOver = false // Need a flag to know if we have began the game over transition so that we don't start it again. Necessary because we cannot set isPaused on the game scene without pausing the screen.
-    
     
     var gemsLabel: SKLabelNode!
     var gemsPlusMinus = 0 {
@@ -45,17 +43,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             scoreLabel.text = "Score: \(timerSeconds)"
         }
     }
-    var timeToBeginNextSequence: Double = 0.0 // Initialize to 0.0 so sequence will start when gameplay begins
     
+    var timeToBeginNextSequence: Double = 0.0 // Initialize to 0.0 so sequence will start when gameplay begins
     
     var spawnSequenceManager = SpawnSequenceManager()
     var audioManager = AudioManager()
     var animationManager = AnimationManager()
     
-    
     let pauseTexture = SKTexture(imageNamed: "pause")
     let playTexture = SKTexture(imageNamed: "play")
-    
     
     // This is the single source of truth for if the game is paused. Changes to this variable pauses game elements and brings up pause layer or vice versa.
     var gamePaused = false {
@@ -76,17 +72,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
-    
 
     // Data structures to deal with user touches
     var touchesToGems:[UITouch: SKSpriteNode] = [:] // Dictionary to map currently selected user touches to the gems they are dragging
     var selectedGems: Set<SKSpriteNode> = Set()
     var nodeDisplacements:[SKSpriteNode: CGVector] = [:] // Dictionary to map currently selected nodes to their displacements from the user's finger
     
-    
     let gameLayer = SKNode()
     let pauseLayer = SKNode()
-    
     
     override func didMove(to view: SKView) {
         // Called immediately after scene is presented.
@@ -119,8 +112,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         makeWall(location: CGPoint(x: size.width/2, y: size.height + PositionConstants.wallOffScreenDistance), size: CGSize(width: size.width*1.5, height: 1))
         makeWall(location: CGPoint(x: -PositionConstants.wallOffScreenDistance, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
         makeWall(location: CGPoint(x: size.width + PositionConstants.wallOffScreenDistance, y: size.height/2), size: CGSize(width: 1, height: size.height+100))
-        
-        
+
         animationManager.addAtlases()
         
         gameLayer.addChild(audioManager) // Pausing audio manager doesn't pause audio so this doesn't have to be a child of gameLayer
@@ -131,7 +123,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         startTutorialMode()
     }
-    
     
     // Functions that add nodes to scene
     
@@ -199,7 +190,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameLayer.addChild(blueAstronaut)
     }
     
-    
     private func addPauseLayer() {
         
         let pauseMenu = SKSpriteNode(imageNamed: "pauseMenu")
@@ -240,7 +230,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gamePaused = true
     }
     
-    
     // Functions used in multiple different extensions
     
     public func collectGemAnimation(collector: SKSpriteNode, implosion: Bool) {
@@ -255,6 +244,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             tempCollectorGlow.particleColor = UIColor.red
             tempCollectorGlow.numParticlesToEmit = tempCollectorGlow.numParticlesToEmit * 2
         }
+        
         gameLayer.addChild(tempCollectorGlow)
         // Remove collector glow node after 3 seconds
         gameLayer.run(SKAction.sequence([SKAction.wait(forDuration: 3.0), SKAction.run({tempCollectorGlow.removeFromParent()})]))
@@ -271,5 +261,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         gemsLabel.run(flashAnimation)
     }
-
 }
