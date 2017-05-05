@@ -66,7 +66,7 @@ extension GameScene { // Touching logic
                         
                         let (minDist, closestGem) = findNearestGem(touchLocation: touchLocation)
                         let touchedGem = (closestGem as? SKSpriteNode)!
-                        if minDist < (41 + ((touchedGem.size.height / 2))) { //If the touch is within 44 px of gem, change touched node to gem
+                        if minDist < (41 + ((touchedGem.size.height / 2))) { //If the touch is within 41 px of gem, change touched node to gem
                             // TODO: Adjust gem touch radius
                             if !selectedGems.contains(touchedGem) {
                                 selectedGems.insert(touchedGem)
