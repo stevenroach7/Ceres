@@ -213,7 +213,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let pauseMenuSize = RelativeScales.PauseMenu.getAbsoluteSize(screenSize: size, nodeSize: pauseMenu.size)
         pauseMenu.xScale = pauseMenuSize.width
         pauseMenu.xScale = pauseMenuSize.height
-        pauseMenu.position = CGPoint(x: size.width * 0.5, y: size.height * 0.55)
+        pauseMenu.position = RelativePositions.PauseMenu.getAbsolutePosition(size: size)
         pauseMenu.zPosition = 8
         pauseLayer.addChild(pauseMenu)
         
