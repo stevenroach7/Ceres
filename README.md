@@ -5,9 +5,10 @@ Expedition Ceres is a native iOS game where you have to collect precious gems as
 XCode 8.0 which can be downloaded at [XCode](https://developer.apple.com/xcode/). A helpful installation guide is provided.
 
 ## Installation
-Clone this repository.
+Clone this repository and navigate to the root directory.
 
 ```
+git clone https://github.com/stevenroach7/Ceres.git
 cd Ceres
 ```
 
