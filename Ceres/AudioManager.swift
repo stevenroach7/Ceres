@@ -48,7 +48,7 @@ class AudioManager: SKNode {
             return
         }
         
-        let path = Bundle.main.path(forResource: "cosmos.mp3", ofType:nil)!
+        let path = Bundle.main.path(forResource: "music.mp3", ofType:nil)!
         let url = URL(fileURLWithPath: path)
         
         do {

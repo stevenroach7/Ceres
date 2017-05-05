@@ -13,6 +13,7 @@
 		3C55D7E61EB91C38004271FC /* Scales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C55D7E51EB91C38004271FC /* Scales.swift */; };
 		3C55D7E81EBA6594004271FC /* LeaderBoardScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C55D7E71EBA6594004271FC /* LeaderBoardScene.swift */; };
 		3C55D7EA1EBAD101004271FC /* Astronaut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C55D7E91EBAD101004271FC /* Astronaut.swift */; };
+		3C55D7F01EBC519F004271FC /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3C55D7EF1EBC519F004271FC /* music.mp3 */; };
 		3C67AD991E8331E100C8B980 /* StagePlanet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AD981E8331E100C8B980 /* StagePlanet.swift */; };
 		3C67AD9B1E835C3500C8B980 /* GemCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AD9A1E835C3500C8B980 /* GemCollector.swift */; };
 		3C67AD9D1E84310000C8B980 /* GemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C67AD9C1E84310000C8B980 /* GemSource.swift */; };
@@ -79,6 +80,7 @@
 		3C55D7E51EB91C38004271FC /* Scales.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scales.swift; sourceTree = "<group>"; };
 		3C55D7E71EBA6594004271FC /* LeaderBoardScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderBoardScene.swift; sourceTree = "<group>"; };
 		3C55D7E91EBAD101004271FC /* Astronaut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Astronaut.swift; sourceTree = "<group>"; };
+		3C55D7EF1EBC519F004271FC /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
 		3C67AD981E8331E100C8B980 /* StagePlanet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StagePlanet.swift; sourceTree = "<group>"; };
 		3C67AD9A1E835C3500C8B980 /* GemCollector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GemCollector.swift; sourceTree = "<group>"; };
 		3C67AD9C1E84310000C8B980 /* GemSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GemSource.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 				B2D7DB4D1E97FFFC00CB4EEE /* bomb.mp3 */,
 				B212A1241E89DA3500DDEC64 /* zwip.wav */,
 				B2557EE31E8225800078C13F /* hydraulicSound.wav */,
+				3C55D7EF1EBC519F004271FC /* music.mp3 */,
 				B0708D6F1E5507CE008A9950 /* cosmos.mp3 */,
 			);
 			path = Sounds;
@@ -427,6 +430,7 @@
 				B29C67C91EB81B7D0070CC23 /* shipExhaust.sks in Resources */,
 				B212A1271E89DAEC00DDEC64 /* boop.wav in Resources */,
 				B2A6A25A1E726FD100F64EAF /* anvil.mp3 in Resources */,
+				3C55D7F01EBC519F004271FC /* music.mp3 in Resources */,
 				B29319B01E7F7C7700147924 /* collectorImages.atlas in Resources */,
 				B07805EB1E5506C300073DD6 /* Main.storyboard in Resources */,
 				B0B969AA1E56321B005C587D /* .gitignore in Resources */,
