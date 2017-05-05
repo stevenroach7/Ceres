@@ -12,7 +12,7 @@ import GameplayKit
 class Gem: SKSpriteNode {
     
     func setGemProperties() {
-        // Initializes initial properties a gem should have.
+        // Sets initial properties of the gem
         
         setScale(0.23)
         isUserInteractionEnabled = false
