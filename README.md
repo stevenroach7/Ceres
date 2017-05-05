@@ -6,7 +6,10 @@ XCode 8.0 which can be downloaded at [XCode](https://developer.apple.com/xcode/)
 
 ## Installation
 Clone this repository.
-`cd Ceres`
+
+```
+cd Ceres
+```
 
 ### To run the game on a simulator
 On the top bar of the XCode editor select the desired device next where it says Ceres along with our icon. 
