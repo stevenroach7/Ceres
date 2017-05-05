@@ -32,8 +32,8 @@ class SettingsScene: SKScene {
     
     let stagePlanet = StagePlanet(imageNamed: "planet")
     
-    
     override func didMove(to view: SKView) {
+        // positions labels and nodes on screen
         
         backgroundColor = SKColor.black
         
@@ -142,7 +142,6 @@ class SettingsScene: SKScene {
             }
         }
     }
-    
     
     private func transitionHome() {
         musicSwitch.removeFromSuperview()
