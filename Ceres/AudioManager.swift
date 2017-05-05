@@ -15,7 +15,6 @@ class AudioManager: SKNode {
     private var backgroundMusic = AVAudioPlayer()
     private let defaultsManager = DefaultsManager()
     
-    
     public enum Sound {
         case gemCollectedSound
         case gemCreatedSound
@@ -58,12 +57,11 @@ class AudioManager: SKNode {
             backgroundMusic.play()
         } catch {
             // couldn't load file.
-            
         }
-        
     }
     
     public func stopBackgroundMusic() {
+        // Ends background music when game is exited
         
         if !(defaultsManager.getValue(key: "MusicOnOff")) {
             return
@@ -75,6 +73,7 @@ class AudioManager: SKNode {
     }
     
     public func pauseBackgroundMusic() {
+        // Pauses background music when game is paused
         
         if !(defaultsManager.getValue(key: "MusicOnOff")) {
             return
@@ -86,7 +85,8 @@ class AudioManager: SKNode {
     }
     
     public func resumeBackgroundMusic() {
-        
+        // Resumes background music if music is on
+
         if !(defaultsManager.getValue(key: "MusicOnOff")) {
             return
         }
@@ -95,5 +95,4 @@ class AudioManager: SKNode {
             backgroundMusic.play()
         }
     }
-    
 }
