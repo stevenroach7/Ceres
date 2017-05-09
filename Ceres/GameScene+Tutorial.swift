@@ -108,7 +108,7 @@ extension GameScene { // Tutorial
         let scaleDown = SKAction.scale(by: 2/3, duration: 0.75)
         let moveUp = SKAction.move(to: RelativePositions.GemsLabel.getAbsolutePosition(size: size), duration: 0.75)
         
-        gemsLabel.run(scaleDown) // / Scale gems label back to normal size
+        gemsLabel.run(scaleDown) // Scale gems label back to normal size
         gemsLabel.run(moveUp)
         
         let expand = SKAction.scale(by: 3/2, duration: 1.0)

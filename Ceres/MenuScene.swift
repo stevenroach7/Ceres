@@ -24,7 +24,7 @@ class MenuScene: SKScene {
     var leaderBoardButton = SKSpriteNode(imageNamed: "leaderBoard")
     
     override func didMove(to view: SKView) {
-        // positions labels and nodes on screen
+        // Positions labels and nodes on screen
         
         self.name = "menu"
         
@@ -105,12 +105,12 @@ class MenuScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //looks for a touch
+        // Looks for a touch
         if let touch = touches.first{
             let pos = touch.location(in: self)
             let node = self.atPoint(pos)
             
-            //transitions to game screen if play button is touched
+            // Transitions to game screen if play button is touched
             if node == playButton {
                 if view != nil {
                     let transition:SKTransition = SKTransition.crossFade(withDuration: 1)
@@ -119,7 +119,7 @@ class MenuScene: SKScene {
                 }
             }
             
-            //transitions to settings screen if settings button is touched
+            // Transitions to settings screen if settings button is touched
             else if node == settingsButton {
                 if view != nil {
                     let transition:SKTransition = SKTransition.fade(withDuration: 0.5)
@@ -128,7 +128,7 @@ class MenuScene: SKScene {
                 }
             }
                 
-            //transitions to leader board screen if leader board button is touched
+            // Transitions to leader board screen if leader board button is touched
             else if node == leaderBoardButton {
                 if view != nil {
                     let transition:SKTransition = SKTransition.fade(withDuration: 1)
@@ -137,7 +137,7 @@ class MenuScene: SKScene {
                 }
             }
             
-            //transitions to instructions screen if instructions button is touched
+            // Transitions to instructions screen if instructions button is touched
             else if node == instructionsButton {
                 if view != nil {
                     let transition:SKTransition = SKTransition.doorsOpenHorizontal(withDuration: 1)
@@ -146,14 +146,14 @@ class MenuScene: SKScene {
                 }
             }
             
-            //transitions to about screen if about button is touched
+            // Transitions to about screen if about button is touched
             else if node == aboutButton {
                 let transition:SKTransition = SKTransition.flipVertical(withDuration: 1)
                 let scene:SKScene = AboutScene(size: self.size)
                 self.view?.presentScene(scene, transition: transition)
             }
             
-            else if node == ship{
+            else if node == ship {
                 easterEggChangeColor()
             }
         }

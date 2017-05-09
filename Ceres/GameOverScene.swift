@@ -29,7 +29,7 @@ class GameOverScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
-         // positions labels and nodes on screen
+         // Positions labels and nodes on screen
         
         backgroundColor = SKColor.black
         
@@ -64,12 +64,12 @@ class GameOverScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //looks for a touch
+        // Looks for a touch
         if let touch = touches.first{
             let pos = touch.location(in: self)
             let node = self.atPoint(pos)
             
-            //transitions to game screen if play button is touched
+            // Transitions to game screen if play button is touched
             if node == replayButton {
                 if view != nil {
                     let transition:SKTransition = SKTransition.doorsOpenVertical(withDuration: 1)
@@ -78,7 +78,7 @@ class GameOverScene: SKScene {
                 }
             }
             
-            //transitions to main menu if main menu button is touched
+            // Transitions to main menu if main menu button is touched
             if node == menuButton {
                 if view != nil {
                     let transition:SKTransition = SKTransition.crossFade(withDuration: 1)

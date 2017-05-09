@@ -33,7 +33,7 @@ class SettingsScene: SKScene {
     let stagePlanet = StagePlanet(imageNamed: "planet")
     
     override func didMove(to view: SKView) {
-        // positions labels and nodes on screen
+        // Positions labels and nodes on screen
         
         backgroundColor = SKColor.black
         
@@ -129,7 +129,7 @@ class SettingsScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //looks for a touch
+        // Looks for a touch
         if let touch = touches.first{
             let pos = touch.location(in: self)
             let node = self.atPoint(pos)
