@@ -31,12 +31,39 @@ extension GameScene { // Touching logic
         return (minDist, closestGem)
     }
     
+    private func findNearestHammer (touchLocation: CGPoint) -> (CGFloat, SKNode) {
+        // Method iterates over all gems and returns the gem with the closest distance to the touchLocation
+        
+        var minDist: CGFloat = 1000
+        var closestHammer: SKSpriteNode = SKSpriteNode()
+        gameLayer.enumerateChildNodes(withName: "*"){node,_ in
+            if node.name == "rightGemSource" || node.name == "leftGemSource" {
+                let xDist = node.position.x - touchLocation.x
+                let yDist = node.position.y - touchLocation.y
+                let dist = CGFloat(sqrt((xDist*xDist) + (yDist*yDist)))
+                if dist < minDist {
+                    minDist = dist
+                    closestHammer = (node as? SKSpriteNode)!
+                }
+            }
+        }
+        return (minDist, closestHammer)
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Method to handle touch events. Senses when user touches down (places finger on screen)
         for touch in touches {
+            // Handle touching nodes that are not gems
             let touchLocation = touch.location(in:self)
             let touchedNode = self.atPoint(touchLocation)
-            // Handle touching nodes that are not gems
+            
+            // Defines gem touch radius
+            let (gemMinDist, closestGem) = findNearestGem(touchLocation: touchLocation)
+            let touchedGem = (closestGem as? SKSpriteNode)!
+            
+            // Defines hammer touch radius
+            let (hammerMinDist, closestHammer) = findNearestHammer(touchLocation: touchLocation)
+            let touchedHammer = (closestHammer as? SKSpriteNode)
             
             if let name = touchedNode.name {
                 
@@ -54,27 +81,21 @@ extension GameScene { // Touching logic
                     default:
                         break
                     }
-                } else {
-                    switch name {
-                    case "rightGemSource":
-                        onGemSourceTouch(gemSourceLocation: .right)
-                    case "leftGemSource":
-                        onGemSourceTouch(gemSourceLocation: .left)
-                    case "pauseButton":
-                        onPauseButtonTouch()
-                    default: // Check if gem is touched
-                        
-                        let (minDist, closestGem) = findNearestGem(touchLocation: touchLocation)
-                        let touchedGem = (closestGem as? SKSpriteNode)!
-                        if minDist < (41 + ((touchedGem.size.height / 2))) { //If the touch is within 41 px of gem, change touched node to gem
-                            // TODO: Adjust gem touch radius
-                            if !selectedGems.contains(touchedGem) {
-                                selectedGems.insert(touchedGem)
-                                touchesToGems[touch] = touchedGem
-                                nodeDisplacements[touchedGem] = CGVector(dx: touchLocation.x - touchedGem.position.x, dy: touchLocation.y - touchedGem.position.y)
-                            }
-                        }
+                } else if gemMinDist < (41 + (touchedGem.size.height / 2)) { //If the touch is within 41 px of gem, change touched node to gem
+                        // TODO: Adjust gem touch radius
+                    if !selectedGems.contains(touchedGem) {
+                        selectedGems.insert(touchedGem)
+                        touchesToGems[touch] = touchedGem
+                        nodeDisplacements[touchedGem] = CGVector(dx: touchLocation.x - touchedGem.position.x, dy: touchLocation.y - touchedGem.position.y)
                     }
+                } else if hammerMinDist < (8 + (touchedHammer?.size.width)!) {
+                    if touchedHammer?.name == "rightGemSource" {
+                        onGemSourceTouch(gemSourceLocation: .right)
+                    } else if touchedHammer?.name == "leftGemSource" {
+                        onGemSourceTouch(gemSourceLocation: .left)
+                    }
+                } else if name == "pauseButton" {
+                    onPauseButtonTouch()
                 }
             }
         }
