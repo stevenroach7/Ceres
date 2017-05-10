@@ -140,7 +140,7 @@ extension GameScene { // Gameplay
     
     
     private func shakeAction(positionX : CGFloat) -> SKAction {
-        //returns a shaking animation
+        // Returns a shaking animation
         
         //defining a shake sequence
         var sequence = [SKAction]()

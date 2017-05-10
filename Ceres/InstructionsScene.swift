@@ -21,7 +21,7 @@ class InstructionsScene: SKScene {
     let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
     
     override func didMove(to view: SKView) {
-         // positions labels and nodes on screen
+         // Positions labels and nodes on screen
         
         backgroundColor = SKColor.black
         
@@ -70,12 +70,12 @@ class InstructionsScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //looks for a touch
+        // Looks for a touch
         if let touch = touches.first{
             let pos = touch.location(in: self)
             let node = self.atPoint(pos)
             
-            //transitions back to menu screen if back button is touched
+            // Transitions back to menu screen if back button is touched
             if node == backButton {
                 if view != nil {
                     transitionHome()

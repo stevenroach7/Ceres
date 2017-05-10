@@ -47,7 +47,7 @@ extension GameScene { // GemSpawn
     }
     
     private func createSKAction(spawnAction: SpawnAction) -> SKAction {
-        // returns an SKAction to produce that sequence.
+        // Returns an SKAction to produce that sequence.
         
         switch(spawnAction) {
         case .sequence(let actions):
@@ -82,7 +82,7 @@ extension GameScene { // GemSpawn
     }
     
     private func addGem(gem: Gem, location: GemSourceLocation, velocity: CGFloat) {
-        // Produces a Gem from the left astronaut
+        // Produces the inputted gem from the location given and the velocity given.
         
         gem.setGemProperties()  // Calls gem properties from Gem class
         let position: CGPoint, angle: CGFloat
