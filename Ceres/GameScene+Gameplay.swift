@@ -124,9 +124,7 @@ extension GameScene { // Gameplay
         minus.position = RelativePositions.MinusAlert.getAbsolutePosition(size: size)
         gameLayer.addChild(minus)
         
-        let moveDown = SKAction.moveTo(y: size.height * 0.6, duration: 0.8)
-        minus.run(moveDown)
-        minus.run(SKAction.fadeOut(withDuration: 1.0))
+        animationManager.animateMinusAlert(node: minus, size: size)
     }
     
     private func animateGemSource(gemSourceLocation: GemSourceLocation) {

@@ -24,5 +24,11 @@ class AnimationManager { // Eventually, all animation methods should be moved to
         hammerFrames.append(SKTexture(imageNamed: "hammerActive.png"))
         hammerFrames.append(SKTexture(imageNamed: "hammerInactive.png"))
     }
+    
+    public func animateMinusAlert(node: SKLabelNode, size: CGSize) {
+        let moveDown = SKAction.moveTo(y: size.height * 0.6, duration: 0.8)
+        node.run(moveDown)
+        node.run(SKAction.fadeOut(withDuration: 1.0))
+    }
 }
 
