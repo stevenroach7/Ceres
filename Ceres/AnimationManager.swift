@@ -50,5 +50,17 @@ class AnimationManager { // Eventually, all animation methods should be moved to
         let shake = SKAction.sequence(sequence)
         return shake
     }
+    
+    public func flashGemsLabelAnimation(color: SKColor, percentGrowth: Double, label: SKLabelNode) {
+        // Animates gems label
+        
+        let colorScore = SKAction.run({label.fontColor = color})
+        let expand = SKAction.scale(by: CGFloat(percentGrowth), duration: 0.25)
+        let shrink = SKAction.scale(by: CGFloat(1 / percentGrowth), duration: 0.25)
+        let recolorWhite = SKAction.run({label.fontColor = SKColor.white})
+        let flashAnimation = SKAction.sequence([colorScore, expand, shrink, recolorWhite])
+        
+        label.run(flashAnimation)
+    }
 }
 

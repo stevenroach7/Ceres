@@ -90,7 +90,7 @@ extension GameScene { // Tutorial
         // Removes gem from game scene and increments number of gems collected
         
         gemsPlusMinus += 1
-        flashGemsLabelAnimation(color: SKColor.green, percentGrowth: 1.0)
+        animationManager.flashGemsLabelAnimation(color: SKColor.green, percentGrowth: 1.0, label: gemsLabel)
         collectGemAnimation(collector: collector,implosion: false)
         audioManager.play(sound: .gemCollectedSound)
         gem.removeFromParent()

@@ -249,16 +249,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Remove collector glow node after 3 seconds
         gameLayer.run(SKAction.sequence([SKAction.wait(forDuration: 3.0), SKAction.run({tempCollectorGlow.removeFromParent()})]))
     }
-    
-    public func flashGemsLabelAnimation(color: SKColor, percentGrowth: Double = 1.075) {
-        // Animates gems label
-        
-        let colorScore = SKAction.run({self.gemsLabel.fontColor = color})
-        let expand = SKAction.scale(by: CGFloat(percentGrowth), duration: 0.25)
-        let shrink = SKAction.scale(by: CGFloat(1 / percentGrowth), duration: 0.25)
-        let recolorWhite = SKAction.run({self.gemsLabel.fontColor = SKColor.white})
-        let flashAnimation = SKAction.sequence([colorScore, expand, shrink, recolorWhite])
-        
-        gemsLabel.run(flashAnimation)
-    }
 }
