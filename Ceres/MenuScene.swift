@@ -88,40 +88,52 @@ class MenuScene: SKScene, UIGestureRecognizerDelegate {
         ship.position = RelativePositions.Ship.getAbsolutePosition(size:size)
         addChild(ship)
         
-//        let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(self.easterEggAccelerate(gestureRecognizer:)))
-//        lpgr.minimumPressDuration = 1.0
-//        lpgr.allowableMovement = 50 //Need to fine tune this value
-//        lpgr.delaysTouchesBegan = true
-//        lpgr.cancelsTouchesInView = false
-//        lpgr.delegate = self
-//        self.view?.addGestureRecognizer(lpgr)
+        let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(self.easterEggAccelerate(gestureRecognizer:)))
+        lpgr.minimumPressDuration = 1.0
+        lpgr.allowableMovement = 50 //Need to fine tune this value
+        lpgr.delaysTouchesBegan = true
+        lpgr.cancelsTouchesInView = false
+        lpgr.delegate = self
+        self.view?.addGestureRecognizer(lpgr)
         
     }
     
-//    var touchingShip: Bool = false
     
-//    @objc private func easterEggAccelerate(gestureRecognizer: UILongPressGestureRecognizer) {
-//        if (gestureRecognizer.state == .began) {
-//            var pos = gestureRecognizer.location(in: self.view)
-//            pos.y = size.height - pos.y // Converting between view and scene coordinate systems
-//            let touchedNode = self.atPoint(pos)
-//            if (touchedNode == ship){
-//                touchingShip = true
-//                leftExhaust.particleScale = leftExhaust.particleScale * 3
-//                rightExhaust.particleScale = rightExhaust.particleScale * 3
-//                starfield.resetSimulation() // Comment this out and see what you like better
-//                starfield.particleBirthRate *= 5
-//                starfield.particleSpeed *= 10
-//            }
-//        }
-//        else if (touchingShip && gestureRecognizer.state == .ended) {
-//            touchingShip = false
-//            leftExhaust.particleScale = leftExhaust.particleScale / 3
-//            rightExhaust.particleScale = rightExhaust.particleScale / 3
-//            starfield.particleBirthRate /= 5
-//            starfield.particleSpeed /= 10
-//        }
-//    }
+    override func willMove(from view: SKView) {
+        // Removes gestures from the view before transistioning
+        
+        if view.gestureRecognizers != nil {
+            for gesture in view.gestureRecognizers! {
+                view.removeGestureRecognizer(gesture)
+            }
+        }
+    }
+    
+    
+    var touchingShip: Bool = false
+    
+    @objc private func easterEggAccelerate(gestureRecognizer: UILongPressGestureRecognizer) {
+        if (gestureRecognizer.state == .began) {
+            var pos = gestureRecognizer.location(in: self.view)
+            pos.y = size.height - pos.y // Converting between view and scene coordinate systems
+            let touchedNode = self.atPoint(pos)
+            if (touchedNode == ship){
+                touchingShip = true
+                leftExhaust.particleScale = leftExhaust.particleScale * 3
+                rightExhaust.particleScale = rightExhaust.particleScale * 3
+                starfield.resetSimulation() // Comment this out and see what you like better
+                starfield.particleBirthRate *= 5
+                starfield.particleSpeed *= 10
+            }
+        }
+        else if (touchingShip && gestureRecognizer.state == .ended) {
+            touchingShip = false
+            leftExhaust.particleScale = leftExhaust.particleScale / 3
+            rightExhaust.particleScale = rightExhaust.particleScale / 3
+            starfield.particleBirthRate /= 5
+            starfield.particleSpeed /= 10
+        }
+    }
     
     private func easterEggChangeColor() {
         let randomRed:CGFloat = CGFloat(drand48())
