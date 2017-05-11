@@ -30,5 +30,25 @@ class AnimationManager { // Eventually, all animation methods should be moved to
         node.run(moveDown)
         node.run(SKAction.fadeOut(withDuration: 1.0))
     }
+    
+    public func shakeAction(positionX : CGFloat) -> SKAction {
+        // Returns a shaking animation
+        
+        //defining a shake sequence
+        var sequence = [SKAction]()
+        
+        //Filling the sequence
+        for i in (1...4).reversed() {
+            let moveRight = SKAction.moveBy(x: CGFloat(i*2), y: 0, duration: TimeInterval(0.05))
+            sequence.append(moveRight)
+            let moveLeft = SKAction.moveBy(x: CGFloat(-4*i), y: 0, duration: TimeInterval(0.1))
+            sequence.append(moveLeft)
+            let moveOriginal = SKAction.moveBy(x: CGFloat(i*2), y: 0, duration: (TimeInterval(0.05)))
+            sequence.append(moveOriginal)
+        }
+        sequence.append(SKAction.moveTo(x: positionX, duration: 0.05)) //Return to original x position
+        let shake = SKAction.sequence(sequence)
+        return shake
+    }
 }
 
