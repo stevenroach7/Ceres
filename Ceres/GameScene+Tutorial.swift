@@ -39,41 +39,12 @@ extension GameScene { // Tutorial
     private func makeTutorialHand() {
         // Creates hand that imitates a flicking motion
         
-        let touch = SKAction.setTexture(SKTexture(imageNamed: "touch"))
-        let drag  = SKAction.setTexture(SKTexture(imageNamed: "drag"))
-        let flick = SKAction.setTexture(SKTexture(imageNamed: "flick"))
-        
         flickHand.position = RelativePositions.FlickHand.getAbsolutePosition(size: size)
         flickHand.setScale(0.3)
         flickHand.zPosition = 9
         gameLayer.addChild(flickHand)
         
-        let initiateTouch = SKAction.move(to:  RelativePositions.FlickHandTouch.getAbsolutePosition(size: size), duration: 0.6)
-        let moveDownSlow = SKAction.move(to: RelativePositions.FlickHandDownSlow.getAbsolutePosition(size: size), duration: 0.75)
-        let moveDownFast = SKAction.move(to: RelativePositions.FlickHandDownFast.getAbsolutePosition(size: size), duration: 0.3)
-        let release = SKAction.move(to: RelativePositions.FlickHandRelease.getAbsolutePosition(size: size), duration: 0.15)
-        let resetHand = SKAction.move(to: RelativePositions.FlickHandReset.getAbsolutePosition(size: size), duration: 0.1)
-        let shortWait = SKAction.wait(forDuration: 0.2)
-        let longWait = SKAction.wait(forDuration: 1.25)
-        let fadeOut = SKAction.fadeOut(withDuration: 0.5)
-        let fadeIn  = SKAction.fadeIn(withDuration: 0.5)
-        
-        
-        let tutorialAnimation = SKAction.sequence([
-            touch,
-            fadeIn,
-            initiateTouch,
-            drag,
-            moveDownSlow,
-            moveDownFast,
-            flick,
-            release,
-            shortWait,
-            fadeOut,
-            resetHand,
-            longWait,
-            ])
-        flickHand.run(SKAction.repeatForever(tutorialAnimation))
+        animationManager.flickHandAnimation(size: size, node: flickHand)
     }
     
     private func setGemsLabel(font: CGFloat, position: CGPoint) {

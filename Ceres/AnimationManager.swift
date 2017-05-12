@@ -80,5 +80,39 @@ class AnimationManager { // Eventually, all animation methods should be moved to
         // Remove collector glow node after 3 seconds
         layer.run(SKAction.sequence([SKAction.wait(forDuration: 3.0), SKAction.run({tempCollectorGlow.removeFromParent()})]))
     }
+    
+    public func flickHandAnimation(size: CGSize, node: SKSpriteNode) {
+        
+        let touch = SKAction.setTexture(SKTexture(imageNamed: "touch"))
+        let drag  = SKAction.setTexture(SKTexture(imageNamed: "drag"))
+        let flick = SKAction.setTexture(SKTexture(imageNamed: "flick"))
+        
+        let initiateTouch = SKAction.move(to:  RelativePositions.FlickHandTouch.getAbsolutePosition(size: size), duration: 0.6)
+        let moveDownSlow = SKAction.move(to: RelativePositions.FlickHandDownSlow.getAbsolutePosition(size: size), duration: 0.75)
+        let moveDownFast = SKAction.move(to: RelativePositions.FlickHandDownFast.getAbsolutePosition(size: size), duration: 0.3)
+        let release = SKAction.move(to: RelativePositions.FlickHandRelease.getAbsolutePosition(size: size), duration: 0.15)
+        let resetHand = SKAction.move(to: RelativePositions.FlickHandReset.getAbsolutePosition(size: size), duration: 0.1)
+        let shortWait = SKAction.wait(forDuration: 0.2)
+        let longWait = SKAction.wait(forDuration: 1.25)
+        let fadeOut = SKAction.fadeOut(withDuration: 0.5)
+        let fadeIn  = SKAction.fadeIn(withDuration: 0.5)
+        
+        
+        let tutorialAnimation = SKAction.sequence([
+            touch,
+            fadeIn,
+            initiateTouch,
+            drag,
+            moveDownSlow,
+            moveDownFast,
+            flick,
+            release,
+            shortWait,
+            fadeOut,
+            resetHand,
+            longWait,
+            ])
+        node.run(SKAction.repeatForever(tutorialAnimation))
+    }
 }
 
