@@ -62,7 +62,7 @@ extension GameScene { // Tutorial
         
         gemsPlusMinus += 1
         animationManager.flashGemsLabelAnimation(color: SKColor.green, percentGrowth: 1.0, label: gemsLabel)
-        animationManager.collectGemAnimation(collector: collector,implosion: false, size: size, layer: gameLayer)
+        animationManager.animateGemCollector(collector: collector,implosion: false, size: size, layer: gameLayer)
         audioManager.play(sound: .gemCollectedSound)
         gem.removeFromParent()
         endTutorial()

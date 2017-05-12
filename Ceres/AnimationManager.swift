@@ -63,7 +63,7 @@ class AnimationManager { // Eventually, all animation methods should be moved to
         label.run(flashAnimation)
     }
     
-    public func collectGemAnimation(collector: SKSpriteNode, implosion: Bool, size: CGSize, layer: SKNode) {
+    public func animateGemCollector(collector: SKSpriteNode, implosion: Bool, size: CGSize, layer: SKNode) {
         collector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
         
         let tempCollectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!

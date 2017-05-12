@@ -47,7 +47,7 @@ extension GameScene { // Gameplay
         
         gemsPlusMinus += 1
         animationManager.flashGemsLabelAnimation(color: SKColor.green, percentGrowth: 1.075, label: gemsLabel)
-        animationManager.collectGemAnimation(collector: collector, implosion: false, size: size, layer: gameLayer)
+        animationManager.animateGemCollector(collector: collector, implosion: false, size: size, layer: gameLayer)
         audioManager.play(sound: .gemCollectedSound)
         gem.removeFromParent()
     }
@@ -56,13 +56,14 @@ extension GameScene { // Gameplay
         // Removes gem from game scene and increments number of gems collected
         
         let shakeCollector = animationManager.shakeAction(positionX: RelativePositions.Collector.getAbsolutePosition(size: size).x)
-        animationManager.collectGemAnimation(collector: collector, implosion: true, size: size, layer: gameLayer)
-        
         collector.run(shakeCollector)
+        animationManager.animateGemCollector(collector: collector, implosion: true, size: size, layer: gameLayer)
+        
         audioManager.play(sound: .collectorExplosionSound)
         
         let shakeGemLabel = animationManager.shakeAction(positionX: RelativePositions.GemsLabel.getAbsolutePosition(size: size).x)
         gemsLabel.run(shakeGemLabel)
+        
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         minusAlert()
         gemsPlusMinus -= 5
