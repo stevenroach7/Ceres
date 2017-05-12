@@ -47,7 +47,7 @@ extension GameScene { // Gameplay
         
         gemsPlusMinus += 1
         animationManager.flashGemsLabelAnimation(color: SKColor.green, percentGrowth: 1.075, label: gemsLabel)
-        collectGemAnimation(collector: collector, implosion: false)
+        animationManager.collectGemAnimation(collector: collector, implosion: false, size: size, layer: gameLayer)
         audioManager.play(sound: .gemCollectedSound)
         gem.removeFromParent()
     }
@@ -56,7 +56,7 @@ extension GameScene { // Gameplay
         // Removes gem from game scene and increments number of gems collected
         
         let shakeCollector = animationManager.shakeAction(positionX: RelativePositions.Collector.getAbsolutePosition(size: size).x)
-        collectGemAnimation(collector: collector, implosion: true)
+        animationManager.collectGemAnimation(collector: collector, implosion: true, size: size, layer: gameLayer)
         
         collector.run(shakeCollector)
         audioManager.play(sound: .collectorExplosionSound)
@@ -135,25 +135,4 @@ extension GameScene { // Gameplay
             rightGemSource.run(SKAction.animate(with: animationManager.hammerFrames, timePerFrame: 0.35))
         }
     }
-    
-    
-//    private func shakeAction(positionX : CGFloat) -> SKAction {
-//        // Returns a shaking animation
-//        
-//        //defining a shake sequence
-//        var sequence = [SKAction]()
-//        
-//        //Filling the sequence
-//        for i in (1...4).reversed() {
-//            let moveRight = SKAction.moveBy(x: CGFloat(i*2), y: 0, duration: TimeInterval(0.05))
-//            sequence.append(moveRight)
-//            let moveLeft = SKAction.moveBy(x: CGFloat(-4*i), y: 0, duration: TimeInterval(0.1))
-//            sequence.append(moveLeft)
-//            let moveOriginal = SKAction.moveBy(x: CGFloat(i*2), y: 0, duration: (TimeInterval(0.05)))
-//            sequence.append(moveOriginal)
-//        }
-//        sequence.append(SKAction.moveTo(x: positionX, duration: 0.05)) //Return to original x position
-//        let shake = SKAction.sequence(sequence)
-//        return shake
-//    }
 }

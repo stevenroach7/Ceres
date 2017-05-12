@@ -62,5 +62,23 @@ class AnimationManager { // Eventually, all animation methods should be moved to
         
         label.run(flashAnimation)
     }
+    
+    public func collectGemAnimation(collector: SKSpriteNode, implosion: Bool, size: CGSize, layer: SKNode) {
+        collector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
+        
+        let tempCollectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
+        tempCollectorGlow.position = RelativePositions.CollectorGlow.getAbsolutePosition(size: size)
+        tempCollectorGlow.numParticlesToEmit = 8
+        if implosion {
+            tempCollectorGlow.particleColorSequence = nil;
+            tempCollectorGlow.particleColorBlendFactor = 0.8
+            tempCollectorGlow.particleColor = UIColor.red
+            tempCollectorGlow.numParticlesToEmit = tempCollectorGlow.numParticlesToEmit * 2
+        }
+        
+        layer.addChild(tempCollectorGlow)
+        // Remove collector glow node after 3 seconds
+        layer.run(SKAction.sequence([SKAction.wait(forDuration: 3.0), SKAction.run({tempCollectorGlow.removeFromParent()})]))
+    }
 }
 

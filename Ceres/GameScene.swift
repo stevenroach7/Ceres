@@ -229,24 +229,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func onPauseButtonTouch() {
         gamePaused = true
     }
-    
-    // Functions used in multiple different extensions
-    
-    public func collectGemAnimation(collector: SKSpriteNode, implosion: Bool) {
-        collector.run(SKAction.repeat(SKAction.animate(with: animationManager.collectorFrames, timePerFrame: 0.25), count: 1))
-        
-        let tempCollectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
-        tempCollectorGlow.position = RelativePositions.CollectorGlow.getAbsolutePosition(size: size)
-        tempCollectorGlow.numParticlesToEmit = 8
-        if implosion {
-            tempCollectorGlow.particleColorSequence = nil;
-            tempCollectorGlow.particleColorBlendFactor = 0.8
-            tempCollectorGlow.particleColor = UIColor.red
-            tempCollectorGlow.numParticlesToEmit = tempCollectorGlow.numParticlesToEmit * 2
-        }
-        
-        gameLayer.addChild(tempCollectorGlow)
-        // Remove collector glow node after 3 seconds
-        gameLayer.run(SKAction.sequence([SKAction.wait(forDuration: 3.0), SKAction.run({tempCollectorGlow.removeFromParent()})]))
-    }
 }
