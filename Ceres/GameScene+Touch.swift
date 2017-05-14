@@ -81,18 +81,17 @@ extension GameScene { // Touching logic
                     default:
                         break
                     }
-                } else if gemMinDist < (41 + (touchedGem.size.height / 2)) { //If the touch is within 41 px of gem, change touched node to gem
-                        // TODO: Adjust gem touch radius
-                    if !selectedGems.contains(touchedGem) {
-                        selectedGems.insert(touchedGem)
-                        touchesToGems[touch] = touchedGem
-                        nodeDisplacements[touchedGem] = CGVector(dx: touchLocation.x - touchedGem.position.x, dy: touchLocation.y - touchedGem.position.y)
-                    }
                 } else if hammerMinDist < (8 + (touchedHammer?.size.width)!) {
                     if touchedHammer?.name == "rightGemSource" {
                         onGemSourceTouch(gemSourceLocation: .right)
                     } else if touchedHammer?.name == "leftGemSource" {
                         onGemSourceTouch(gemSourceLocation: .left)
+                    }
+                } else if gemMinDist < (35 + (touchedGem.size.height / 2)) { // If the touch is within 35 points of gem, change touched node to gem
+                    if !selectedGems.contains(touchedGem) {
+                        selectedGems.insert(touchedGem)
+                        touchesToGems[touch] = touchedGem
+                        nodeDisplacements[touchedGem] = CGVector(dx: touchLocation.x - touchedGem.position.x, dy: touchLocation.y - touchedGem.position.y)
                     }
                 } else if name == "pauseButton" {
                     onPauseButtonTouch()
