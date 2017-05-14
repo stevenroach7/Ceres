@@ -15,6 +15,7 @@ class AudioManager: SKNode {
     private var backgroundMusic = AVAudioPlayer()
     private let defaultsManager = DefaultsManager()
     
+    
     public enum Sound {
         case gemCollectedSound
         case gemCreatedSound
@@ -28,17 +29,57 @@ class AudioManager: SKNode {
             return
         }
         
-        // Creating private variables for the SKAction sounds automatically disables all other audio output. For this reason, the SKActions  to run sounds are defined on the fly.
+        // Creating private variables for the SKAction sounds automatically disables all other audio output. For this reason, the SKActions to run sounds are defined on the fly.
         switch (sound) {
         case .gemCollectedSound:
-            run(SKAction.playSoundFileNamed("hydraulicSound.wav", waitForCompletion: false))
+//            run(SKAction.playSoundFileNamed("hydraulicSound.wav", waitForCompletion: false), withKey: "soundEffect")
+            let gemCollectedSoundNode = SKAudioNode(fileNamed: "hydraulicSound.wav")
+            gemCollectedSoundNode.name = "soundEffect"
+            gemCollectedSoundNode.autoplayLooped = false
+            self.run(SKAction.sequence([SKAction.run({self.playSoundEffect(soundNode: gemCollectedSoundNode)}),
+                                   SKAction.wait(forDuration: 2.0),
+                                   SKAction.run({self.soundEffectCleanup(soundNode: gemCollectedSoundNode)})]))
         case .gemCreatedSound:
-            run(SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false))
+            run(SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false), withKey: "soundEffect")
         case .gemExplosionSound:
-            run(SKAction.playSoundFileNamed("blast.mp3", waitForCompletion: false))
+            run(SKAction.playSoundFileNamed("blast.mp3", waitForCompletion: false), withKey: "soundEffect")
         case .collectorExplosionSound:
-            run(SKAction.playSoundFileNamed("bomb.mp3", waitForCompletion: false))
+            run(SKAction.playSoundFileNamed("bomb.mp3", waitForCompletion: false), withKey: "soundEffect")
         }
+    }
+    
+    private func playSoundEffect(soundNode: SKAudioNode) {
+        addChild(soundNode)
+        soundNode.run(SKAction.play())
+    }
+    
+    private func soundEffectCleanup(soundNode: SKAudioNode) {
+        print("Cleanup")
+        if soundNode.parent != nil {
+            soundNode.removeFromParent()
+        }
+    }
+    
+    public func pauseSoundEffects() {
+        if !(defaultsManager.getValue(key: "SoundOnOff")) {
+            return
+        }
+        
+        enumerateChildNodes(withName: "soundEffect") {node,_ in
+            node.run(SKAction.pause())
+        }
+    }
+    
+    
+    public func resumeSoundEffects() {
+        if !(defaultsManager.getValue(key: "SoundOnOff")) {
+            return
+        }
+        
+        enumerateChildNodes(withName: "soundEffect") {node,_ in // Not resuming correctly when multiple sound effects are playing
+            node.run(SKAction.play())
+        }
+        
     }
     
     public func playBackgroundMusic() {

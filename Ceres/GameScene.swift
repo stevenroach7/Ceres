@@ -60,6 +60,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             isPaused = gamePaused
             gamePaused == true ? (physicsWorld.speed = 0) : (physicsWorld.speed = 1.0)
             gamePaused == true ? (audioManager.pauseBackgroundMusic()) : (audioManager.resumeBackgroundMusic())
+            gamePaused == true ? (audioManager.pauseSoundEffects()) : (audioManager.resumeSoundEffects())
             gamePaused == true ? (pauseButton.isHidden = true) : (pauseButton.isHidden = false)
         }
     }
