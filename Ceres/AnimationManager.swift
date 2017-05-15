@@ -31,7 +31,7 @@ class AnimationManager { // Eventually, all animation methods should be moved to
         node.run(SKAction.fadeOut(withDuration: 1.0))
     }
     
-    public func shakeAction(positionX : CGFloat) -> SKAction {
+    public func shakeAnimation(positionX : CGFloat) -> SKAction {
         // Returns a shaking animation
         
         //defining a shake sequence
@@ -64,6 +64,7 @@ class AnimationManager { // Eventually, all animation methods should be moved to
     }
     
     public func animateGemCollector(collector: SKSpriteNode, implosion: Bool, size: CGSize, layer: SKNode) {
+        
         collector.run(SKAction.repeat(SKAction.animate(with: collectorFrames, timePerFrame: 0.25), count: 1))
         
         let tempCollectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
@@ -82,10 +83,26 @@ class AnimationManager { // Eventually, all animation methods should be moved to
     }
     
     public func animateGemSource(gemSource: SKSpriteNode) {
+        // Switches hammer frames
+        
         gemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
     }
     
+    public func gemSourceAnimationSequence(layer: SKNode, leftGemSource: SKSpriteNode, rightGemSource: SKSpriteNode) {
+        // Alternates left and right hammer animations
+        
+        layer.run(SKAction.repeatForever(
+            SKAction.sequence([
+                SKAction.run({self.animateGemSource(gemSource: leftGemSource)}),
+                SKAction.wait(forDuration: 0.35),
+                SKAction.run({self.animateGemSource(gemSource: rightGemSource)}),
+                SKAction.wait(forDuration: 0.35),
+                ])
+        ))
+    }
+    
     public func flickHandAnimation(size: CGSize, node: SKSpriteNode) {
+        // Simulates a flicking motion
         
         let touch = SKAction.setTexture(SKTexture(imageNamed: "touch"))
         let drag  = SKAction.setTexture(SKTexture(imageNamed: "drag"))

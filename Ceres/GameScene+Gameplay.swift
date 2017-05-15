@@ -18,20 +18,9 @@ extension GameScene { // Gameplay
         case right
     }
     
-    
     public func beginGameplay() {
-        // Adjust gravity of scene
-        
+
         physicsWorld.gravity = CGVector(dx: 0, dy: 0.27) // Gravity on Ceres is 0.27 m/s²
-        
-        gameLayer.run(SKAction.repeatForever(
-            SKAction.sequence([
-                SKAction.run({self.animationManager.animateGemSource(gemSource: self.leftGemSource)}),
-                SKAction.wait(forDuration: 0.35),
-                    SKAction.run({self.animationManager.animateGemSource(gemSource: self.rightGemSource)}),
-                SKAction.wait(forDuration: 0.35),
-                ])
-        ))
         
         gameLayer.run(SKAction.repeatForever( // Serves as timer, Could potentially refactor to use group actions later.
             SKAction.sequence([
@@ -40,6 +29,8 @@ extension GameScene { // Gameplay
                 SKAction.run(incrementTimer),
                 ])
         ))
+        
+        animationManager.gemSourceAnimationSequence(layer: gameLayer, leftGemSource: leftGemSource, rightGemSource: rightGemSource)
     }
     
     public func gemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
@@ -55,13 +46,13 @@ extension GameScene { // Gameplay
     public func detonatorGemDidCollideWithCollector(gem: SKSpriteNode, collector: SKSpriteNode) {
         // Removes gem from game scene and increments number of gems collected
         
-        let shakeCollector = animationManager.shakeAction(positionX: RelativePositions.Collector.getAbsolutePosition(size: size).x)
+        let shakeCollector = animationManager.shakeAnimation(positionX: RelativePositions.Collector.getAbsolutePosition(size: size).x)
         collector.run(shakeCollector)
         animationManager.animateGemCollector(collector: collector, implosion: true, size: size, layer: gameLayer)
         
         audioManager.play(sound: .collectorExplosionSound)
         
-        let shakeGemLabel = animationManager.shakeAction(positionX: RelativePositions.GemsLabel.getAbsolutePosition(size: size).x)
+        let shakeGemLabel = animationManager.shakeAnimation(positionX: RelativePositions.GemsLabel.getAbsolutePosition(size: size).x)
         gemsLabel.run(shakeGemLabel)
         
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
@@ -127,13 +118,4 @@ extension GameScene { // Gameplay
         
         animationManager.animateMinusAlert(node: minus, size: size)
     }
-    
-//    private func animateGemSource(gemSourceLocation: GemSourceLocation) {
-//        switch gemSourceLocation {
-//        case .left:
-//            leftGemSource.run(SKAction.animate(with: animationManager.hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
-//        case .right:
-//            rightGemSource.run(SKAction.animate(with: animationManager.hammerFrames, timePerFrame: 0.35))
-//        }
-//    }
 }
