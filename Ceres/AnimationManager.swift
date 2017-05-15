@@ -81,6 +81,10 @@ class AnimationManager { // Eventually, all animation methods should be moved to
         layer.run(SKAction.sequence([SKAction.wait(forDuration: 3.0), SKAction.run({tempCollectorGlow.removeFromParent()})]))
     }
     
+    public func animateGemSource(gemSource: SKSpriteNode) {
+        gemSource.run(SKAction.animate(with: hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
+    }
+    
     public func flickHandAnimation(size: CGSize, node: SKSpriteNode) {
         
         let touch = SKAction.setTexture(SKTexture(imageNamed: "touch"))

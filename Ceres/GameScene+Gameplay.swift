@@ -26,9 +26,9 @@ extension GameScene { // Gameplay
         
         gameLayer.run(SKAction.repeatForever(
             SKAction.sequence([
-                SKAction.run({self.animateGemSource(gemSourceLocation: .left)}),
+                SKAction.run({self.animationManager.animateGemSource(gemSource: self.leftGemSource)}),
                 SKAction.wait(forDuration: 0.35),
-                SKAction.run({self.animateGemSource(gemSourceLocation: .right)}),
+                    SKAction.run({self.animationManager.animateGemSource(gemSource: self.rightGemSource)}),
                 SKAction.wait(forDuration: 0.35),
                 ])
         ))
@@ -128,12 +128,12 @@ extension GameScene { // Gameplay
         animationManager.animateMinusAlert(node: minus, size: size)
     }
     
-    private func animateGemSource(gemSourceLocation: GemSourceLocation) {
-        switch gemSourceLocation {
-        case .left:
-            leftGemSource.run(SKAction.animate(with: animationManager.hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
-        case .right:
-            rightGemSource.run(SKAction.animate(with: animationManager.hammerFrames, timePerFrame: 0.35))
-        }
-    }
+//    private func animateGemSource(gemSourceLocation: GemSourceLocation) {
+//        switch gemSourceLocation {
+//        case .left:
+//            leftGemSource.run(SKAction.animate(with: animationManager.hammerFrames, timePerFrame: 0.35)) // Animation consists of 2 frames.
+//        case .right:
+//            rightGemSource.run(SKAction.animate(with: animationManager.hammerFrames, timePerFrame: 0.35))
+//        }
+//    }
 }
