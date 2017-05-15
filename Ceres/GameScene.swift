@@ -228,5 +228,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func onPauseButtonTouch() {
         gamePaused = true
+        audioManager.play(sound: .button2Sound)
     }
 }

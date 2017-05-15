@@ -70,12 +70,15 @@ extension GameScene { // Touching logic
                 if gamePaused {
                     switch name {
                     case "resume":
+                        audioManager.play(sound: .button1Sound)
                         gamePaused = false
                     case "back":
+                        audioManager.play(sound: .button2Sound)
                         let transition:SKTransition = SKTransition.fade(withDuration: 1.0)
                         let scene:SKScene = MenuScene(size: self.size)
                         self.view?.presentScene(scene, transition: transition)
                     case "restart":
+                        audioManager.play(sound: .button3Sound)
                         let scene: SKScene = GameScene(size: self.size)
                         self.view?.presentScene(scene)
                     default:
@@ -94,6 +97,7 @@ extension GameScene { // Touching logic
                         nodeDisplacements[touchedGem] = CGVector(dx: touchLocation.x - touchedGem.position.x, dy: touchLocation.y - touchedGem.position.y)
                     }
                 } else if name == "pauseButton" {
+                    
                     onPauseButtonTouch()
                 }
             }

@@ -20,9 +20,11 @@ class LeaderBoardScene: SKScene {
     var starfield:SKEmitterNode!
     
     let leaderBoardManager = LeaderboardManager()
+    let audioManager = AudioManager()
     
     override func didMove(to view: SKView) {
         // Positions labels and nodes on screen
+        addChild(audioManager)
         
         backgroundColor = SKColor.black
         
@@ -57,6 +59,7 @@ class LeaderBoardScene: SKScene {
             // Transitions back to menu screen if back button is touched
             if node == backButton {
                 if view != nil {
+                    audioManager.play(sound: .button2Sound)
                     transitionHome()
                 }
             }

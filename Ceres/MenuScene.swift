@@ -163,7 +163,7 @@ class MenuScene: SKScene, UIGestureRecognizerDelegate {
             // Transitions to game screen if play button is touched
             if node == playButton {
                 if view != nil {
-                    audioManager.play(sound: .button2Sound)
+                    audioManager.play(sound: .button3Sound)
                     let transition:SKTransition = SKTransition.crossFade(withDuration: 1)
                     let scene:SKScene = GameScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)

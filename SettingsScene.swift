@@ -24,6 +24,7 @@ class SettingsScene: SKScene {
     var soundSwitch = UISwitch()
     
     let defaultsManager = DefaultsManager()
+    var audioManager = AudioManager()
     
     var starfield:SKEmitterNode!
     
@@ -34,6 +35,7 @@ class SettingsScene: SKScene {
     
     override func didMove(to view: SKView) {
         // Positions labels and nodes on screen
+        addChild(audioManager)
         
         backgroundColor = SKColor.black
         
@@ -138,6 +140,7 @@ class SettingsScene: SKScene {
             //transitions back to menu screen if back button is touched
             if node == backButton {
                 if view != nil {
+                    audioManager.play(sound: .button2Sound)
                     transitionHome()
                 }
             }

@@ -17,11 +17,14 @@ class InstructionsScene: SKScene {
     
     var starfield:SKEmitterNode!
     
+    var audioManager = AudioManager()
+    
     var collector = SKSpriteNode(imageNamed: "collectorActive")
     let collectorGlow = SKEmitterNode(fileNamed: "collectorGlow")!
     
     override func didMove(to view: SKView) {
          // Positions labels and nodes on screen
+        addChild(audioManager)
         
         backgroundColor = SKColor.black
         
@@ -78,6 +81,7 @@ class InstructionsScene: SKScene {
             // Transitions back to menu screen if back button is touched
             if node == backButton {
                 if view != nil {
+                    audioManager.play(sound: .button2Sound)
                     transitionHome()
                 }
             }

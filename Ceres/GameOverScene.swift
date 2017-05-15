@@ -23,6 +23,7 @@ class GameOverScene: SKScene {
     var starfield:SKEmitterNode!
     
     let leaderboardManager = LeaderboardManager()
+    var audioManager = AudioManager()
     
     public func setScore(score: Int) {
         self.score = score
@@ -30,6 +31,8 @@ class GameOverScene: SKScene {
     
     override func didMove(to view: SKView) {
          // Positions labels and nodes on screen
+        
+        addChild(audioManager)
         
         backgroundColor = SKColor.black
         
@@ -72,6 +75,7 @@ class GameOverScene: SKScene {
             // Transitions to game screen if play button is touched
             if node == replayButton {
                 if view != nil {
+                    audioManager.play(sound: .button1Sound)
                     let transition:SKTransition = SKTransition.doorsOpenVertical(withDuration: 1)
                     let scene:SKScene = GameScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)
@@ -81,6 +85,7 @@ class GameOverScene: SKScene {
             // Transitions to main menu if main menu button is touched
             if node == menuButton {
                 if view != nil {
+                    audioManager.play(sound: .button2Sound)
                     let transition:SKTransition = SKTransition.crossFade(withDuration: 1)
                     let scene:SKScene = MenuScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)
