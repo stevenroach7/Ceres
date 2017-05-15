@@ -69,6 +69,7 @@ class SettingsScene: SKScene {
         
         stagePlanet.setStagePlanetProperties()
         stagePlanet.position = RelativePositions.StagePlanet.getAbsolutePosition(size: size)
+        stagePlanet.zPosition = 1
         addChild(stagePlanet)
         
         createMusicSwitch()

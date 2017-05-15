@@ -20,6 +20,10 @@ class AudioManager: SKNode {
         case gemCreatedSound
         case gemExplosionSound
         case collectorExplosionSound
+        case screenTransitionSound
+        case button1Sound
+        case button2Sound
+        case button3Sound
     }
     
     public func play(sound: Sound) {
@@ -31,13 +35,21 @@ class AudioManager: SKNode {
         // Creating private variables for the SKAction sounds automatically disables all other audio output. For this reason, the SKActions  to run sounds are defined on the fly.
         switch (sound) {
         case .gemCollectedSound:
-            run(SKAction.playSoundFileNamed("hydraulicSound.wav", waitForCompletion: false))
+            run(SKAction.playSoundFileNamed("hydraulicCollector.mp3", waitForCompletion: false))
         case .gemCreatedSound:
-            run(SKAction.playSoundFileNamed("anvil.mp3", waitForCompletion: false))
+            run(SKAction.playSoundFileNamed("hammerHit.mp3", waitForCompletion: false))
         case .gemExplosionSound:
             run(SKAction.playSoundFileNamed("blast.mp3", waitForCompletion: false))
         case .collectorExplosionSound:
             run(SKAction.playSoundFileNamed("bomb.mp3", waitForCompletion: false))
+        case .screenTransitionSound:
+            run(SKAction.playSoundFileNamed("airLockTransition.mp3", waitForCompletion: false))
+        case .button1Sound:
+            run(SKAction.playSoundFileNamed("beep1.mp3", waitForCompletion: false))
+        case .button2Sound:
+            run(SKAction.playSoundFileNamed("beep2.mp3", waitForCompletion: false))
+        case .button3Sound:
+            run(SKAction.playSoundFileNamed("beep3.mp3", waitForCompletion: false))
         }
     }
     

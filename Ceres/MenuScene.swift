@@ -22,11 +22,14 @@ class MenuScene: SKScene, UIGestureRecognizerDelegate {
     var aboutButton = SKSpriteNode(imageNamed: "about")
     var settingsButton = SKSpriteNode(imageNamed: "settings")
     var leaderBoardButton = SKSpriteNode(imageNamed: "leaderBoard")
+    var audioManager = AudioManager()
+    
     
     override func didMove(to view: SKView) {
         // Positions labels and nodes on screen
         
         self.name = "menu"
+        addChild(audioManager)
         
         backgroundColor = SKColor.black
         
@@ -160,15 +163,18 @@ class MenuScene: SKScene, UIGestureRecognizerDelegate {
             // Transitions to game screen if play button is touched
             if node == playButton {
                 if view != nil {
+                    audioManager.play(sound: .button2Sound)
                     let transition:SKTransition = SKTransition.crossFade(withDuration: 1)
                     let scene:SKScene = GameScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)
+                    
                 }
             }
             
             // Transitions to settings screen if settings button is touched
             else if node == settingsButton {
                 if view != nil {
+                    audioManager.play(sound: .button1Sound)
                     let transition:SKTransition = SKTransition.fade(withDuration: 0.5)
                     let scene:SKScene = SettingsScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)
@@ -178,6 +184,7 @@ class MenuScene: SKScene, UIGestureRecognizerDelegate {
             // Transitions to leader board screen if leader board button is touched
             else if node == leaderBoardButton {
                 if view != nil {
+                    audioManager.play(sound: .button1Sound)
                     let transition:SKTransition = SKTransition.fade(withDuration: 1)
                     let scene:SKScene = LeaderBoardScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)
@@ -187,6 +194,7 @@ class MenuScene: SKScene, UIGestureRecognizerDelegate {
             // Transitions to instructions screen if instructions button is touched
             else if node == instructionsButton {
                 if view != nil {
+                    audioManager.play(sound: .screenTransitionSound)
                     let transition:SKTransition = SKTransition.doorsOpenHorizontal(withDuration: 1)
                     let scene:SKScene = InstructionsScene(size: self.size)
                     self.view?.presentScene(scene, transition: transition)
@@ -195,6 +203,7 @@ class MenuScene: SKScene, UIGestureRecognizerDelegate {
             
             // Transitions to about screen if about button is touched
             else if node == aboutButton {
+                audioManager.play(sound: .screenTransitionSound)
                 let transition:SKTransition = SKTransition.flipVertical(withDuration: 1)
                 let scene:SKScene = AboutScene(size: self.size)
                 self.view?.presentScene(scene, transition: transition)
