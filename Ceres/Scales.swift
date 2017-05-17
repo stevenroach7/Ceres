@@ -21,7 +21,7 @@ public struct RelativeScales {
     static let PauseButton = ScaleFactor.init(width: 0.12, height: 0.065)
     
     // Menu scaling
-    static let GameTitle = ScaleFactor.init(width: 0.8, height: 0.14)
+    static let GameTitle = ScaleFactor.init(width: 0.8, height: 0.15)
     static let PlayButton = ScaleFactor.init(width: 0.3, height: 0.17)
     static let InstructionsButton = ScaleFactor.init(width: 0.7, height: 0.055)
     static let AboutButton = ScaleFactor.init(width: 0.3, height: 0.055)
@@ -36,6 +36,12 @@ public struct RelativeScales {
     // About scaling
     static let AboutText = ScaleFactor.init(width: 0.9, height: 0.75)
     static let AboutLogo = ScaleFactor.init(width: 0.95, height: 0.5)
+    
+    // Settings scaling
+    static let SettingsTitle = ScaleFactor.init(width: 0.65, height: 0.12)
+    static let Music = ScaleFactor.init(width: 0.3, height: 0.075)
+    static let SoundEffects = ScaleFactor.init(width: 0.7, height: 0.075)
+    static let ComingSoon = ScaleFactor.init(width: 0.65, height: 0.15)
 }
 
 public struct ScaleFactor {

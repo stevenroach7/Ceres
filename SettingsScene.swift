@@ -11,17 +11,18 @@ import SpriteKit
 
 class SettingsScene: SKScene {
     
-    let title = "Settings"
-    let titleNode = SKLabelNode(fontNamed: "Menlo-Bold")
-    
     var backButton = SKSpriteNode()
     let backButtonTex = SKTexture(imageNamed: "back")
     
-    let musicLabel = SKLabelNode(fontNamed: "Menlo-Bold")
+    let titleNode = SKSpriteNode(imageNamed: "settingsTitle")
+    
+    let musicNode = SKSpriteNode(imageNamed: "music")
     var musicSwitch = UISwitch()
     
-    let soundLabel = SKLabelNode(fontNamed: "Menlo-Bold")
+    let soundNode = SKSpriteNode(imageNamed: "soundEffects")
     var soundSwitch = UISwitch()
+    
+    let comingSoonNode = SKSpriteNode(imageNamed: "comingSoon")
     
     let defaultsManager = DefaultsManager()
     var audioManager = AudioManager()
@@ -34,16 +35,10 @@ class SettingsScene: SKScene {
     let stagePlanet = StagePlanet(imageNamed: "planet")
     
     override func didMove(to view: SKView) {
-        // Positions labels and nodes on screen
+        // Positions nodes on screen
         addChild(audioManager)
         
         backgroundColor = SKColor.black
-        
-        titleNode.text = title
-        titleNode.fontSize = 32
-        titleNode.fontColor = SKColor.white
-        titleNode.position = RelativePositions.Title.getAbsolutePosition(size: size)
-        addChild(titleNode)
         
         backButton = SKSpriteNode(texture: backButtonTex)
         let backButtonSize = RelativeScales.BackButton.getAbsoluteSize(screenSize: size, nodeSize: backButton.size)
@@ -51,6 +46,18 @@ class SettingsScene: SKScene {
         backButton.yScale = backButtonSize.height
         backButton.position = RelativePositions.BackButton.getAbsolutePosition(size: size)
         addChild(backButton)
+        
+        let titleNodeSize = RelativeScales.SettingsTitle.getAbsoluteSize(screenSize: size, nodeSize: titleNode.size)
+        titleNode.xScale = titleNodeSize.width
+        titleNode.yScale = titleNodeSize.height
+        titleNode.position = RelativePositions.SettingsTitle.getAbsolutePosition(size: size)
+        addChild(titleNode)
+        
+        let comingSoonNodeSize = RelativeScales.ComingSoon.getAbsoluteSize(screenSize: size, nodeSize: comingSoonNode.size)
+        comingSoonNode.xScale = comingSoonNodeSize.width
+        comingSoonNode.yScale = comingSoonNodeSize.height
+        comingSoonNode.position = RelativePositions.ComingSoon.getAbsolutePosition(size: size)
+        addChild(comingSoonNode)
         
         starfield = SKEmitterNode(fileNamed: "starShower")
         starfield.position = RelativePositions.Starfield.getAbsolutePosition(size: size)
@@ -65,8 +72,8 @@ class SettingsScene: SKScene {
         
         collectorGlow.position = RelativePositions.CollectorGlow.getAbsolutePosition(size: size)
         collectorGlow.particleColorSequence = nil
-        collectorGlow.particleColorBlendFactor = 0.8
-        collectorGlow.particleColor = UIColor.red
+        collectorGlow.particleColorBlendFactor = 0.55
+        collectorGlow.particleColor = UIColor.green
         addChild(collectorGlow)
         
         stagePlanet.setStagePlanetProperties()
@@ -75,14 +82,14 @@ class SettingsScene: SKScene {
         addChild(stagePlanet)
         
         createMusicSwitch()
-        showMusicSwitchLabel()
+        showMusicSwitchNode()
         
         createSoundSwitch()
-        showSoundSwitchLabel()
+        showSoundSwitchNode()
     }
     
     public func createMusicSwitch() {
-        musicSwitch = UISwitch(frame: CGRect(x: frame.midX + size.width/10, y: size.height/4, width: 2, height: 2))
+        musicSwitch = UISwitch(frame: CGRect(x: frame.midX + size.width * 0.25, y: size.height/4, width: 2, height: 2))
         musicSwitch.setOn(defaultsManager.getValue(key: "MusicOnOff"), animated: false)
         musicSwitch.addTarget(self, action: #selector(musicSwitchOnOff(sender:)), for: .valueChanged)
         self.view!.addSubview(musicSwitch)
@@ -97,17 +104,17 @@ class SettingsScene: SKScene {
         }
     }
     
-    private func showMusicSwitchLabel() {
-        // Places label next to music switch
-        musicLabel.text = "Music"
-        musicLabel.fontSize = 22
-        musicLabel.fontColor = SKColor.white
-        musicLabel.position = RelativePositions.MusicLabel.getAbsolutePosition(size: size)
-        addChild(musicLabel)
+    private func showMusicSwitchNode() {
+        // Places Node next to music switch
+        let musicNodeSize = RelativeScales.Music.getAbsoluteSize(screenSize: size, nodeSize: musicNode.size)
+        musicNode.xScale = musicNodeSize.width
+        musicNode.yScale = musicNodeSize.height
+        musicNode.position = RelativePositions.Music.getAbsolutePosition(size: size)
+        addChild(musicNode)
     }
     
     public func createSoundSwitch() {
-        soundSwitch = UISwitch(frame: CGRect(x: frame.midX + size.width/10, y: size.height * 3/8, width: 2, height: 2))
+        soundSwitch = UISwitch(frame: CGRect(x: frame.midX + size.width * 0.25, y: size.height * 3/8, width: 2, height: 2))
         soundSwitch.setOn(defaultsManager.getValue(key: "SoundOnOff"), animated: false)
         soundSwitch.addTarget(self, action: #selector(soundSwitchOnOff(sender:)), for: .valueChanged)
         self.view!.addSubview(soundSwitch)
@@ -122,13 +129,13 @@ class SettingsScene: SKScene {
         }
     }
     
-    private func showSoundSwitchLabel() {
-        // Places label next to sound switch
-        soundLabel.text = "Sound Effects"
-        soundLabel.fontSize = 22
-        soundLabel.fontColor = SKColor.white
-        soundLabel.position = RelativePositions.SoundLabel.getAbsolutePosition(size: size)
-        addChild(soundLabel)
+    private func showSoundSwitchNode() {
+        // Places Node next to sound switch
+        let soundNodeSize = RelativeScales.SoundEffects.getAbsoluteSize(screenSize: size, nodeSize: soundNode.size)
+        soundNode.xScale = soundNodeSize.width
+        soundNode.yScale = soundNodeSize.height
+        soundNode.position = RelativePositions.SoundEffects.getAbsolutePosition(size: size)
+        addChild(soundNode)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
