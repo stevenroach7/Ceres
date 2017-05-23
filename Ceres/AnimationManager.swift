@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class AnimationManager { // Eventually, all animation methods should be moved to this class.
+class AnimationManager {
     
     public var collectorAtlas = SKTextureAtlas()
     public var collectorFrames = [SKTexture]()
