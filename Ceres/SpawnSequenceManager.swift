@@ -11,14 +11,14 @@ import SpriteKit
 
 class SpawnSequenceManager { 
     
-    let basicSequences: [GameScene.SpawnAction]
-    let easySequences: [GameScene.SpawnAction]
-    let easyMediumSequences: [GameScene.SpawnAction]
-    let mediumSequences: [GameScene.SpawnAction]
-    let mediumHardSequences: [GameScene.SpawnAction]
-    let hardSequences: [GameScene.SpawnAction]
-    let veryHardSequences: [GameScene.SpawnAction]
-    let impossibleSequences:[GameScene.SpawnAction]
+    var basicSequences: [GameScene.SpawnAction]
+    var easySequences: [GameScene.SpawnAction]
+    var easyMediumSequences: [GameScene.SpawnAction]
+    var mediumSequences: [GameScene.SpawnAction]
+    var mediumHardSequences: [GameScene.SpawnAction]
+    var hardSequences: [GameScene.SpawnAction]
+    var veryHardSequences: [GameScene.SpawnAction]
+    var impossibleSequences:[GameScene.SpawnAction]
     
     
     public init() {
@@ -33,25 +33,86 @@ class SpawnSequenceManager {
         impossibleSequences = [impossibleSequence0, impossibleSequence1, impossibleSequence2]
     }
     
+    // These two variables are used to make sure we do not produce the sequence twice in a row.
+    var prevTime : Int?
+    var removedSeq : GameScene.SpawnAction?
+    
+    private func insertRemovedSequence() {
+        // inserts a removed sequence into the appropriate array of sequences
+
+        
+        if (removedSeq != nil) {
+            if prevTime! <= 0 {
+                basicSequences.append(removedSeq!)
+            } else if prevTime! <= 11 {
+                easySequences.append(removedSeq!)
+            } else if prevTime! <= 18 {
+                easyMediumSequences.append(removedSeq!)
+            } else if prevTime! <= 40 {
+                mediumSequences.append(removedSeq!)
+            } else if prevTime! <= 53 {
+                mediumHardSequences.append(removedSeq!)
+            } else if prevTime! <= 85 {
+                hardSequences.append(removedSeq!)
+            } else if prevTime! <= 135 {
+                veryHardSequences.append(removedSeq!)
+            }
+            else {
+                impossibleSequences.append(removedSeq!)
+            }
+        }
+    }
     
     public func getSpawnSequence(time: Int) -> GameScene.SpawnAction {
+        // Outputs an appropriate sequence of nodes given the time, will not output the same sequence twice in a row.
+        
+        let seq : GameScene.SpawnAction
         
         if time <= 0 {
-            return basicSequences[Utility.random(min: 0, max: basicSequences.count - 1)]
+            let index = Utility.random(min: 0, max: basicSequences.count - 1)
+            seq = basicSequences[index]
+            insertRemovedSequence()
+            basicSequences.remove(at: index)
         } else if time <= 11 {
-            return easySequences[Utility.random(min: 0, max: easySequences.count - 1)]
+            let index = Utility.random(min: 0, max: easySequences.count - 1)
+            seq = easySequences[index]
+            insertRemovedSequence()
+            easySequences.remove(at: index)
         } else if time <= 18 {
-            return easyMediumSequences[Utility.random(min: 0, max: easyMediumSequences.count - 1)]
+            let index = Utility.random(min: 0, max: easyMediumSequences.count - 1)
+            seq = easyMediumSequences[index]
+            insertRemovedSequence()
+            easyMediumSequences.remove(at: index)
         } else if time <= 40 {
-            return mediumSequences[Utility.random(min: 0, max: mediumSequences.count - 1)]
+            let index = Utility.random(min: 0, max: mediumSequences.count - 1)
+            seq = mediumSequences[index]
+            insertRemovedSequence()
+            mediumSequences.remove(at: index)
         } else if time <= 53 {
-            return mediumHardSequences[Utility.random(min: 0, max: mediumHardSequences.count - 1)]
+            let index = Utility.random(min: 0, max: mediumHardSequences.count - 1)
+            seq = mediumHardSequences[index]
+            insertRemovedSequence()
+            mediumHardSequences.remove(at: index)
         } else if time <= 85 {
-            return hardSequences[Utility.random(min: 0, max: hardSequences.count - 1)]
+            let index = Utility.random(min: 0, max: hardSequences.count - 1)
+            seq = hardSequences[index]
+            insertRemovedSequence()
+            hardSequences.remove(at: index)
         } else if time <= 135 {
-            return veryHardSequences[Utility.random(min: 0, max: veryHardSequences.count - 1)]
+            let index = Utility.random(min: 0, max: veryHardSequences.count - 1)
+            seq = veryHardSequences[index]
+            insertRemovedSequence()
+            veryHardSequences.remove(at: index)
         }
-        return impossibleSequences[Utility.random(min: 0, max: impossibleSequences.count - 1)]
+        else {
+            let index = Utility.random(min: 0, max: impossibleSequences.count - 1)
+            seq = impossibleSequences[index]
+            insertRemovedSequence()
+            impossibleSequences.remove(at: index)
+        }
+        prevTime = time
+        removedSeq = seq
+        return seq
     }
     
     
