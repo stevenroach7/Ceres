@@ -11,108 +11,84 @@ import SpriteKit
 
 class SpawnSequenceManager { 
     
-    var basicSequences: [GameScene.SpawnAction]
-    var easySequences: [GameScene.SpawnAction]
-    var easyMediumSequences: [GameScene.SpawnAction]
-    var mediumSequences: [GameScene.SpawnAction]
-    var mediumHardSequences: [GameScene.SpawnAction]
-    var hardSequences: [GameScene.SpawnAction]
-    var veryHardSequences: [GameScene.SpawnAction]
-    var impossibleSequences:[GameScene.SpawnAction]
+    enum SequenceDifficulty {
+        case basic
+        case easy
+        case easyMedium
+        case medium
+        case mediumHard
+        case hard
+        case veryHard
+        case impossible
+    }
+    
+    var difficultyToSequenceArray: [SequenceDifficulty:[GameScene.SpawnAction]]
     
     
     public init() {
         
-        basicSequences = [basicSequence0, basicSequence1]
-        easySequences = [easySequence0, easySequence1, easySequence2, easySequence3]
-        easyMediumSequences = [easyMediumSequence0, easyMediumSequence1, easyMediumSequence2, easyMediumSequence3]
-        mediumSequences = [mediumSequence0, mediumSequence1, mediumSequence2, mediumSequence3, mediumSequence4, mediumSequence5,  mediumSequence6, mediumSequence7]
-        mediumHardSequences = [mediumHardSequence0, mediumHardSequence1, mediumHardSequence2, mediumHardSequence3, mediumHardSequence4]
-        hardSequences = [hardSequence0, hardSequence1, hardSequence2, hardSequence3, hardSequence4, hardSequence5, hardSequence6, hardSequence7, hardSequence8, hardSequence9]
-        veryHardSequences = [veryHardSequence0, veryHardSequence1, veryHardSequence2, veryHardSequence3, veryHardSequence4, veryHardSequence5]
-        impossibleSequences = [impossibleSequence0, impossibleSequence1, impossibleSequence2]
+        difficultyToSequenceArray = [
+            .basic: [basicSequence0, basicSequence1],
+            .easy: [easySequence0, easySequence1, easySequence2, easySequence3],
+            .easyMedium: [easyMediumSequence0, easyMediumSequence1, easyMediumSequence2, easyMediumSequence3],
+            .medium: [mediumSequence0, mediumSequence1, mediumSequence2, mediumSequence3, mediumSequence4, mediumSequence5,  mediumSequence6, mediumSequence7],
+            .mediumHard: [mediumHardSequence0, mediumHardSequence1, mediumHardSequence2, mediumHardSequence3, mediumHardSequence4],
+            .hard: [hardSequence0, hardSequence1, hardSequence2, hardSequence3, hardSequence4, hardSequence5, hardSequence6, hardSequence7, hardSequence8, hardSequence9],
+            .veryHard: [veryHardSequence0, veryHardSequence1, veryHardSequence2, veryHardSequence3, veryHardSequence4, veryHardSequence5],
+            .impossible: [impossibleSequence0, impossibleSequence1, impossibleSequence2]
+        ]
     }
     
     // These two variables are used to make sure we do not produce the sequence twice in a row.
-    var prevTime : Int?
-    var removedSeq : GameScene.SpawnAction?
+    var prevSequenceDifficulty: SpawnSequenceManager.SequenceDifficulty?
+    var removedSequence: GameScene.SpawnAction?
     
-    private func insertRemovedSequence() {
-        // inserts a removed sequence into the appropriate array of sequences
-
+    private func getSpawnSequenceDifficulty(time: Int) -> SequenceDifficulty {
         
-        if (removedSeq != nil) {
-            if prevTime! <= 0 {
-                basicSequences.append(removedSeq!)
-            } else if prevTime! <= 11 {
-                easySequences.append(removedSeq!)
-            } else if prevTime! <= 18 {
-                easyMediumSequences.append(removedSeq!)
-            } else if prevTime! <= 40 {
-                mediumSequences.append(removedSeq!)
-            } else if prevTime! <= 53 {
-                mediumHardSequences.append(removedSeq!)
-            } else if prevTime! <= 85 {
-                hardSequences.append(removedSeq!)
-            } else if prevTime! <= 135 {
-                veryHardSequences.append(removedSeq!)
-            }
-            else {
-                impossibleSequences.append(removedSeq!)
-            }
+        if time <= 0 {
+            return .basic
+        } else if time <= 11 {
+            return .easy
+        } else if time <= 18 {
+            return .easyMedium
+        } else if time <= 40 {
+            return .medium
+        } else if time <= 53 {
+            return .mediumHard
+        } else if time <= 85 {
+            return .hard
+        } else if time <= 135 {
+            return .veryHard
         }
+        return .impossible
     }
+    
     
     public func getSpawnSequence(time: Int) -> GameScene.SpawnAction {
         // Outputs an appropriate sequence of nodes given the time, will not output the same sequence twice in a row.
         
-        let seq : GameScene.SpawnAction
+        let nextSequenceDifficulty = getSpawnSequenceDifficulty(time: time)
+        // Dictionary will always return a sequence array so we can safely unwrap here
+        var nextSequenceArray = difficultyToSequenceArray[nextSequenceDifficulty]!
         
-        if time <= 0 {
-            let index = Utility.random(min: 0, max: basicSequences.count - 1)
-            seq = basicSequences[index]
-            insertRemovedSequence()
-            basicSequences.remove(at: index)
-        } else if time <= 11 {
-            let index = Utility.random(min: 0, max: easySequences.count - 1)
-            seq = easySequences[index]
-            insertRemovedSequence()
-            easySequences.remove(at: index)
-        } else if time <= 18 {
-            let index = Utility.random(min: 0, max: easyMediumSequences.count - 1)
-            seq = easyMediumSequences[index]
-            insertRemovedSequence()
-            easyMediumSequences.remove(at: index)
-        } else if time <= 40 {
-            let index = Utility.random(min: 0, max: mediumSequences.count - 1)
-            seq = mediumSequences[index]
-            insertRemovedSequence()
-            mediumSequences.remove(at: index)
-        } else if time <= 53 {
-            let index = Utility.random(min: 0, max: mediumHardSequences.count - 1)
-            seq = mediumHardSequences[index]
-            insertRemovedSequence()
-            mediumHardSequences.remove(at: index)
-        } else if time <= 85 {
-            let index = Utility.random(min: 0, max: hardSequences.count - 1)
-            seq = hardSequences[index]
-            insertRemovedSequence()
-            hardSequences.remove(at: index)
-        } else if time <= 135 {
-            let index = Utility.random(min: 0, max: veryHardSequences.count - 1)
-            seq = veryHardSequences[index]
-            insertRemovedSequence()
-            veryHardSequences.remove(at: index)
+        let index = Utility.random(min: 0, max: (nextSequenceArray.count) - 1)
+        let nextSequence = nextSequenceArray[index]
+        
+        // Remove nextSequence from array so it isn't output the next time getSpawnSequence is called
+        nextSequenceArray.remove(at: index)
+        difficultyToSequenceArray[nextSequenceDifficulty] = nextSequenceArray
+        
+        // Now put prevSequence back into the appropriate sequence array if it isn't nil
+        if prevSequenceDifficulty != nil {
+            var prevSequenceArray = difficultyToSequenceArray[prevSequenceDifficulty!]
+            prevSequenceArray!.append(removedSequence!)
+            difficultyToSequenceArray[prevSequenceDifficulty!] = prevSequenceArray
         }
-        else {
-            let index = Utility.random(min: 0, max: impossibleSequences.count - 1)
-            seq = impossibleSequences[index]
-            insertRemovedSequence()
-            impossibleSequences.remove(at: index)
-        }
-        prevTime = time
-        removedSeq = seq
-        return seq
+        
+        // Reset prevSequenceDifficulty and removedSequence variables
+        prevSequenceDifficulty = nextSequenceDifficulty
+        removedSequence = nextSequence
+        return nextSequence
     }
     
     
