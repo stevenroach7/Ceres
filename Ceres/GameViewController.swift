@@ -31,7 +31,7 @@ class GameViewController: UIViewController {
         
     }
     
-    func pauseGameScene() {
+    @objc func pauseGameScene() {
         // If the pauseLayer is not currently displayed then display it.
         
         if skView?.scene?.name == "game" {

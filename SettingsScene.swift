@@ -95,7 +95,7 @@ class SettingsScene: SKScene {
         self.view!.addSubview(musicSwitch)
     }
     
-    func musicSwitchOnOff(sender:UISwitch!) {
+    @objc func musicSwitchOnOff(sender:UISwitch!) {
         // Called when state of music switch changes
         if sender.isOn == false {
             defaultsManager.setValue(key:"MusicOnOff", value: false)
@@ -120,7 +120,7 @@ class SettingsScene: SKScene {
         self.view!.addSubview(soundSwitch)
     }
     
-    func soundSwitchOnOff(sender:UISwitch!) {
+    @objc func soundSwitchOnOff(sender:UISwitch!) {
         // Called when state of sound switch changes
         if sender.isOn == false {
             defaultsManager.setValue(key:"SoundOnOff", value: false)
