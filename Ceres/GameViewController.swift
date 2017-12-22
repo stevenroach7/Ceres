@@ -40,6 +40,17 @@ class GameViewController: UIViewController {
         }
     }
     
+    override func viewWillLayoutSubviews() {
+        // Restrict content to safe area so content fits screen of iPhone X.
+        super.viewWillLayoutSubviews()
+        
+        if #available(iOS 11.0, *) {
+            if let window = view.window {
+                view.frame = window.safeAreaLayoutGuide.layoutFrame
+            }
+        }
+    }
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
