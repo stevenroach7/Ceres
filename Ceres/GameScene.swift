@@ -22,7 +22,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let rightGemSource = GemSource(imageNamed: "hammerInactive")
     let redAstronaut = Astronaut(imageNamed: "redAstronaut")
     let blueAstronaut = Astronaut(imageNamed: "blueAstronaut")
-    var starfield:SKEmitterNode!
+    var starfield: SKEmitterNode!
     
     // Tutorial assets
     let flickHand = SKSpriteNode(imageNamed: "touch")
